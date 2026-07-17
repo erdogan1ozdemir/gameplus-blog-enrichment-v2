@@ -1,4 +1,4 @@
-# Tasarım Sistemi — v10.1 "Game+ UI" (Figma: Blog Detail / GFN Thursday)
+# Tasarım Sistemi — v10.2 "Game+ UI" (Figma: Blog Detail / GFN Thursday)
 
 Kaynak: Figma "Blog" dosyası (frame `Blog Detail - GFN Thursday (Game UI)`) + Font Kullanım Rehberi; tüm değerler node'lardan birebir çekildi. **GFN yeşili (#76b900) tamamen kaldırıldı; tek vurgu SARI.**
 
@@ -45,9 +45,16 @@ Pill: zemin renk %16, metin tam renk, r6, 4x10px, kenarlıksız, sentence case; 
 
 ## Efektler ve ikonlar
 - **Dönen sarı glow (`gp-conic`, `--gp-glow:#FFC900`):** TLDR + CTA Paketler/Oyunlar + End CTA + Öne Çıkan Oyun.
-- İkonlar: TLDR + Editör Notu → doküman (SVG_DOC); Hatırlatma → ampul (SVG_BULB); Öne Çıkan eyebrow → **gamepad** (sarı stroke; yıldız değil).
+- İkonlar: TLDR + Editör Notu → doküman (SVG_DOC); Hatırlatma → ampul (SVG_BULB); Öne Çıkan eyebrow → **gamepad**; CTA eyebrow'ları (Paketler / Oyunlar / End) → **sparkle** (`SVG_SPARKLE`, 4 uçlu sarı yıldız). **★ karakteri hiçbir yerde kullanılmaz.**
+- **TLDR okuma süresi:** başlığın sağında, 20px boşlukla, dikeyde ortalı gri "N dk okuma" (`render_tldr(items, reading_time=...)`; süre `estimate_reading_time(body)` ile gövdeden hesaplanır, sabit yazılmaz).
 - İlgili yazı kartları: gerçek kapak görseli (`img` alanı = og:image) + koyu gradient overlay + GFN THURSDAY etiketi.
 - Linkler: **alt çizgi yok, renk değişimi yeterli.** Dış platform linki: `color:inherit` + ↗ ikon (SVG_EXT_LINK).
+- **Mağaza linkleri yeni sekmede:** oyun adı ve Platform/Çıkış sütunundaki tüm mağaza linkleri `target="_blank" rel="noopener noreferrer"` taşır (`rel` güvenlik için zorunlu). Arka planda mı ön planda mı açılacağına tarayıcı karar verir; HTML bunu zorlayamaz.
+
+## Mobil (<=700px)
+- Tablo başlıkları hücreye **ortalı** (`text-align:center !important`), hücreler dikeyde ortalı; sütun genişlikleri sütun sayısına göre (3 sütunda 40/32/28). 375px'te ölçüldü: 9/9 başlıkta sapma 0px.
+- Yatay kaydırma yok (`overflow-x:visible`, `table-layout:fixed`), punto 0.76em.
+- **İçindekiler** (<=900px) `bottom:16px`'e iner (masaüstünde `top:120px` sağda). Bu kural f-string kaçış hatası yüzünden bir süre üretilmiyordu; `verify_output` artık çıktıda `{{`/`}}` kalırsa FAIL verir.
 
 ## GA4 tıklama id'leri (statik — her yazıda aynı)
 `packages-button` · `games-button` · `end-packages-button` · `end-games-button` · `featured-game-button` · `ubisoft-packages-button`

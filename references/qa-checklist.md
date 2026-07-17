@@ -27,6 +27,7 @@ ok  = print_report(res)   # FAIL yoksa True
 | Madde listesi | gövdede en az bir `render_list` (gp-list) — yoksa WARN |
 | Editör Notu | `render_editor_note` var — yoksa FAIL |
 | Hatırlatma | `render_highlight` var — yoksa FAIL |
+| CSS parantez kaçışı | çıktıda `{{` / `}}` YOK (f-string kaçış hatası CSS kurallarını geçersiz kılar) — varsa FAIL |
 | Oyun sayısı | `n_games` verildiyse: inline başlık = card-row = n_games |
 | Embed | `youtube.com/embed` varsa `aspect-ratio` var, padding-% hack yok (WARN) |
 | PlayStation | geçiyorsa WARN (GFN platform/lisans/CTA bağlamında olmamalı) |
@@ -36,7 +37,10 @@ ok  = print_report(res)   # FAIL yoksa True
 ### İçerik bütünlüğü
 - [ ] **Yazarın cümleleri DEĞİŞMEDİ** — `verify_source_preserved` çalıştırıldı ve %100 (tablolaştırılan liste satırları için isim+meta+link ayrıca doğrulandı).
 - [ ] **Üslup (kural 16):** eklenen metinlerde klişe açılış / hype yok; GFN ifadesi varyasyonlu.
-- [ ] **Karoseller:** değerler kısa/sayısal ve yazıdan; ortalı görünüyor.
+- [ ] **Karoseller:** değerler kısa (<=22 karakter; sayı ya da kısa metin/insight olabilir) ve yazıdan; ortalı görünüyor.
+- [ ] **TLDR okuma süresi** `estimate_reading_time` ile hesaplandı (elle yazılmadı).
+- [ ] **Mağaza linkleri** `target="_blank" rel="noopener noreferrer"` taşıyor; iç linkler aynı sekmede.
+- [ ] **CTA eyebrow'larında sparkle** var, ★ karakteri kalmadı.
 - [ ] **Tabloda platform linkleri:** doc'ta link varsa ilgili platform kelimesi linkli (↗); oyun adı bold değil; "Stüdyo · Yıl" kaynaklı.
 - [ ] **Uygun yerlerde madde (bullet) listesi var** (`render_list`): faydalar, farklar, uyarılar, adımlar düz paragraf değil; yazı baştan sona paragraf yığını değil.
 - [ ] Mevcut linkler ve YouTube embed'leri korundu (silinmedi, değişmedi).
@@ -73,6 +77,7 @@ ok  = print_report(res)   # FAIL yoksa True
 - [ ] Görsel alt text / caption / JSON-LD **eklenmedi** (kullanıcı istemiyor).
 - [ ] YouTube embed'ler 16:9 (`aspect-ratio`), kare görünmüyor.
 - [ ] Önizleme (`files-preview`) tarayıcıda kontrol edildi (card-table hizası, uzun rozet kırpılmıyor, mobil).
+- [ ] **Mobilde (375px):** tablo başlıkları hücreye ortalı; İçindekiler kartı alta iniyor ve içeriğin üstüne binmiyor.
 
 ## 3. Çıktı
 - [ ] **İki çıktı** üretildi: `files-preview` (GreycliffCF gömülü) + `excel` rollup. (Kullanıcı tersini demedikçe ikisi de.)

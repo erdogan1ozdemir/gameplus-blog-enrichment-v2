@@ -243,14 +243,23 @@ ANIMATED_BORDER_STYLE = '''<style>
   .table-wrap > div { overflow-x: visible !important; }
   .table-wrap table { font-size: 0.76em !important; table-layout: fixed; width: 100% !important; }
   .table-wrap th, .table-wrap td {
-    padding: 8px 7px !important; white-space: normal !important;
-    word-break: break-word; overflow-wrap: anywhere; vertical-align: top; line-height: 1.4 !important;
+    padding: 10px 7px !important; white-space: normal !important;
+    word-break: normal !important; overflow-wrap: break-word; hyphens: none;
+    vertical-align: middle !important; line-height: 1.4 !important;
   }
-  .table-wrap th { letter-spacing: 0.04em !important; }
-  .table-wrap th:nth-child(1), .table-wrap td:nth-child(1) { width: 34%; }
-  .table-wrap th:nth-child(2), .table-wrap td:nth-child(2) { width: 26%; }
-  .table-wrap th:nth-child(3), .table-wrap td:nth-child(3) { width: 20%; }
-  .table-wrap th:nth-child(4), .table-wrap td:nth-child(4) { width: 20%; }
+  /* Başlıklar mobilde de hücreye ORTALI (masaüstündeki inline text-align:center ile aynı) */
+  .table-wrap th { letter-spacing: 0.04em !important; text-align: center !important; vertical-align: middle !important; }
+  .table-wrap td { text-align: left; }
+  /* Uzun tür etiketi dar sütunda taşmasın */
+  .table-wrap .gp-genre { white-space: normal !important; }
+  /* Sütun genişlikleri sütun SAYISINA göre (3 sütunlu GFN tablosunda son sütun ezilmesin) */
+  .table-wrap tr > :first-child:nth-last-child(3) { width: 40%; }
+  .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(2) { width: 32%; }
+  .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3) { width: 28%; }
+  .table-wrap tr > :first-child:nth-last-child(4) { width: 34%; }
+  .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(2) { width: 26%; }
+  .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(3) { width: 20%; }
+  .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(4) { width: 20%; }
 
   /* --- Card-table: TEK SATIR + rozet sütunu SABİT (oyun isimleri hizalı) --- */
   .gp-card-table-inner .card-row {
@@ -291,8 +300,33 @@ ANIMATED_BORDER_STYLE = '''<style>
 </style>
 '''
 
+# --- Sparkle (4 uçlu yıldız) — CTA eyebrow'larında ★ yerine kullanılır ---
+SVG_SPARKLE = ('<svg width="14" height="14" viewBox="0 0 24 24" fill="#FFC900" style="flex-shrink:0;'
+               'margin-right:6px;vertical-align:-2px;"><path d="M12 1.5c.3 4.6 2.4 7.4 6.9 8.2'
+               '.7.1.7 1.1 0 1.2-4.5.8-6.6 3.6-6.9 8.2 0 .8-1.1.8-1.2 0-.3-4.6-2.4-7.4-6.9-8.2'
+               '-.7-.1-.7-1.1 0-1.2 4.5-.8 6.6-3.6 6.9-8.2.1-.8 1.2-.8 1.2 0z"/></svg>')
+
+# --- Okuma süresi (TLDR başlığında gösterilir) ---
+def estimate_reading_time(html, wpm=200):
+    """Gövde HTML'inden dakika cinsinden okuma süresi. Enrichment blokları da dahil edilebilir;
+    farkı 1 dk'yı geçmez. wpm=200 Türkçe için makul bir ortalamadır."""
+    import re as _re
+    text = _re.sub(r'<(script|style)[^>]*>.*?</\1>', ' ', html, flags=_re.S | _re.I)
+    text = _re.sub(r'<[^>]+>', ' ', text)
+    words = len([w for w in text.split() if any(ch.isalnum() for ch in w)])
+    return max(1, round(words / wpm))
+
 # --- TLDR "Hızlı Özet" (Figma: #161616 kart + 1px gradient kenarlık #FFC516->#545454, sarı bullet) ---
-def render_tldr(items):
+def render_tldr(items, reading_time=None):
+    """items: 3-6 madde. reading_time: dakika (int) — verilirse başlığın sağında "N dk okuma" çıkar.
+    estimate_reading_time(body) ile hesaplanabilir."""
+    rt_html = ""
+    if reading_time:
+        rt_html = (f'<span style="display:inline-flex;align-items:center;gap:8px;margin-left:20px;'
+                   f"font-family:GreycliffCF,-apple-system,sans-serif;font-size:14px;line-height:20px;"
+                   f'font-weight:500;color:#B2B2B2;">'
+                   f'<span style="width:4px;height:4px;border-radius:50%;background:#B2B2B2;flex-shrink:0;"></span>'
+                   f'{reading_time} dk okuma</span>')
     items_html = "\n".join(
         f'    <li style="display:flex;gap:10px;margin:0 0 14px;list-style:none;align-items:flex-start;">'
         f'<span style="color:#FFC900;font-weight:700;font-size:16px;line-height:24px;flex-shrink:0;">&bull;</span>'
@@ -301,7 +335,7 @@ def render_tldr(items):
     )
     return f'''<div class="tldr-block gp-conic" style="--gp-glow:#FFC900;margin:24px 0;">
 <div class="gp-conic-inner" style="background:#161616;border-radius:10.5px;padding:24px;">
-  <h2 style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-size:24px;line-height:32px;font-weight:600;color:#fff;margin:0 0 14px;display:flex;align-items:center;"><span style="color:#FFC900;display:inline-flex;">{SVG_DOC}</span>Hızlı Özet</h2>
+  <h2 style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-size:24px;line-height:32px;font-weight:600;color:#fff;margin:0 0 14px;display:flex;align-items:center;flex-wrap:wrap;"><span style="color:#FFC900;display:inline-flex;">{SVG_DOC}</span>Hızlı Özet{rt_html}</h2>
   <ul style="margin:0;padding:0;list-style:none;">
 {items_html}
   </ul>
@@ -331,7 +365,10 @@ def render_list(items, marker="dot", accent="#FFC900"):
 
 # --- Info Strip / Stat kartları (Figma: #0D0D0D kart + #29292B kenarlık; DEĞER üstte New Science 28 sarı, etiket altta gri 16) ---
 def render_info_card(badges, style="grid"):
-    """badges: [(label, value), ...] — değer üstte büyük sarı, etiket altta."""
+    """badges: [(label, value), ...] — DEĞER üstte büyük sarı, etiket altta.
+    Değer sayı olmak ZORUNDA DEĞİL: kısa bir metin ya da insight da olabilir
+    ("Monopoly", "Strateji ağırlıklı", "3 platform"). Kural: kısa tut (tercihen <= 22 karakter,
+    kartta 2 satırı geçmesin) ve yazının İÇİNDEN gelen gerçek bilgi olsun (uydurma metrik yok)."""
     if style == "checkmark":
         items = []
         for value in badges:
@@ -343,7 +380,7 @@ def render_info_card(badges, style="grid"):
     items = []
     for label, value in badges:
         items.append(f'''  <div class="gp-cell" style="background:#0D0D0D;border:1px solid #29292B;border-radius:12px;padding:20px;text-align:center;">
-    <div style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-weight:600;font-size:24px;line-height:32px;color:#FFC900;margin-bottom:6px;">{value}</div>
+    <div style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-weight:600;font-size:24px;line-height:32px;color:#FFC900;margin-bottom:6px;overflow-wrap:break-word;">{value}</div>
     <div style="color:#B2B2B2;font-size:16px;line-height:24px;font-weight:500;">{label}</div>
   </div>''')
     return f'''<div class="info-card" style="margin:24px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
@@ -388,7 +425,7 @@ def render_highlight(text, title="Hatırlatma"):
 def render_cta_paketler(headline, desc):
     return f'''<div class="cta-paketler gp-conic" style="--gp-glow:#FFC900;margin:32px 0;">
 <div class="gp-conic-inner" style="background:#161616;border-radius:10.5px;padding:24px;">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;"><span style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.08em;">&#9733; GAME+ &bull; BULUT OYUN</span></div>
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;"><span style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.08em;display:inline-flex;align-items:center;">{SVG_SPARKLE}GAME+ &bull; BULUT OYUN</span></div>
   <div style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-weight:600;font-size:24px;line-height:32px;color:#fff;margin-bottom:8px;">{headline}</div>
   <p style="color:#B2B2B2;font-size:16px;line-height:24px;margin:0 0 20px;max-width:760px;">{desc}</p>
   <a id="packages-button" href="https://gameplus.com.tr/gfn/paketler" style="display:inline-flex;align-items:center;justify-content:center;background:#FFC900;color:#131313;padding:12px 16px;border-radius:8px;font-weight:700;font-size:16px;line-height:20px;text-decoration:none;">GeForce NOW Paketleri &rarr;</a>
@@ -400,7 +437,7 @@ def render_cta_paketler(headline, desc):
 def render_cta_oyunlar(headline, desc):
     return f'''<div class="cta-oyunlar gp-conic" style="--gp-glow:#FFC900;margin:32px 0;">
 <div class="gp-conic-inner" style="background:#161616;border-radius:10.5px;padding:24px;">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;"><span style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.08em;">&#9733; GAME+ &bull; OYUN KÜTÜPHANESİ</span></div>
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;"><span style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.08em;display:inline-flex;align-items:center;">{SVG_SPARKLE}GAME+ &bull; OYUN KÜTÜPHANESİ</span></div>
   <div style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-weight:600;font-size:24px;line-height:32px;color:#fff;margin-bottom:8px;">{headline}</div>
   <p style="color:#B2B2B2;font-size:16px;line-height:24px;margin:0 0 20px;max-width:760px;">{desc}</p>
   <a id="games-button" href="https://gameplus.com.tr/gfn/oyunlar" style="display:inline-flex;align-items:center;justify-content:center;background:transparent;border:1px solid #FFC900;color:#FFC900;padding:12px 16px;border-radius:8px;font-weight:700;font-size:16px;line-height:20px;text-decoration:none;">GeForce NOW Oyunları &rarr;</a>
@@ -413,7 +450,7 @@ def render_cta_oyunlar(headline, desc):
 def render_end_cta(headline, desc, btn2_label="Güncel Fırsatlar", btn2_url="https://gameplus.com.tr/firsatlar", chip2=None, eyebrow="GAME+ &bull; BULUT OYUN"):
     return f'''<div class="cta-end gp-conic" style="--gp-glow:#FFC900;margin:40px 0 24px;">
 <div class="gp-conic-inner" style="background:#161616;border-radius:10.5px;padding:24px;">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:24px;"><span style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.08em;">&#9733; {eyebrow}</span></div>
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:24px;"><span style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.08em;display:inline-flex;align-items:center;">{SVG_SPARKLE}{eyebrow}</span></div>
   <div style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-weight:600;font-size:32px;line-height:40px;color:#fff;margin-bottom:8px;">{headline}</div>
   <p style="color:#B2B2B2;font-size:16px;line-height:20px;margin:0 0 24px;max-width:760px;">{desc}</p>
   <div style="display:flex;flex-wrap:wrap;gap:14px;">
@@ -475,13 +512,14 @@ def render_genre_tags(*genres):
     spans = []
     for g in genres:
         c = badge_color_for(g)
-        spans.append(f'<span style="display:inline-block;background:{hex_to_rgba(c,0.16)};color:{c};border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">{g}</span>')
+        spans.append(f'<span class="gp-genre" style="display:inline-block;background:{hex_to_rgba(c,0.16)};color:{c};border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">{g}</span>')
     return '<span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;">' + ''.join(spans) + '</span>'
 
 # --- Tablo oyun hücresi: isim (+link) + altında "Stüdyo · Yıl" (kural 11 ile tutarlı) ---
 def render_game_cell(name, meta=None, href=None):
     # GFN tablosu c0 hücresi: name beyaz DemiBold (satır stili tabloda); meta = 'Stüdyo · Yıl' 12px gri alt satır.
-    nm = f'<a href="{href}" style="color:inherit;text-decoration:none;">{name}</a>' if href else name
+    nm = (f'<a href="{href}" target="_blank" rel="noopener noreferrer" '
+          f'style="color:inherit;text-decoration:none;">{name}</a>') if href else name
     sub = f'<div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">{meta}</div>' if meta else ''
     return f'<div>{nm}{sub}</div>'
 
@@ -681,10 +719,13 @@ def render_inline_game_card(name, badge, badge_color, meta_lines):
 # --- İlgili Yazı Kartları (Figma "Related Card": #161616 + #29292B, 150px thumb + GFN THURSDAY etiketi,
 #     tarih 12 gri, başlık 20 bold beyaz, "Devamını oku →" sarı) ---
 def render_prev_weeks_cards(items):
+    """items: [{url, date, label, img}] — img = yazının kapak görseli (og:image). Yoksa gradient fallback."""
     cards = []
     for item in items:
+        img = item.get("img")
+        thumb_bg = f"url('{img}') center/cover no-repeat" if img else "linear-gradient(135deg,#1c1a0e,#0d0d0d 70%)"
         cards.append(f'''  <a href="{item["url"]}" class="gp-prev-week" style="display:block;text-decoration:none;background:#161616;border:1px solid #29292B;border-radius:16px;overflow:hidden;color:inherit;transition:border-color 0.25s,transform 0.25s,box-shadow 0.25s;">
-    <div style="height:150px;background:{('url(' + chr(39) + item['img'] + chr(39) + ') center/cover no-repeat' if item.get('img') else 'linear-gradient(135deg,#1c1a0e,#0d0d0d 70%')});display:flex;align-items:flex-end;padding:14px 20px;position:relative;">
+    <div style="height:150px;background-color:#0d0d0d;background:{thumb_bg};display:flex;align-items:flex-end;padding:14px 20px;position:relative;">
       <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.78), rgba(0,0,0,0.05) 60%);"></div>
       <span style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.08em;position:relative;">GFN THURSDAY</span>
     </div>
@@ -723,12 +764,12 @@ def render_floating_toc(items):
   </ul>
 </details>
 <style>
-  .floating-toc summary::-webkit-details-marker {{{{ display: none; }}}}
-  .floating-toc summary::marker {{{{ display: none; }}}}
-  .floating-toc ul li a:hover {{{{ color: #FFC900 !important; }}}}
-  @media (max-width: 900px) {{{{
-    .floating-toc {{{{ top: auto !important; bottom: 16px !important; max-width: 240px !important; }}}}
-  }}}}
+  .floating-toc summary::-webkit-details-marker {{ display: none; }}
+  .floating-toc summary::marker {{ display: none; }}
+  .floating-toc ul li a:hover {{ color: #FFC900 !important; }}
+  @media (max-width: 900px) {{
+    .floating-toc {{ top: auto !important; bottom: 16px !important; max-width: 240px !important; }}
+  }}
 </style>
 '''
 
@@ -845,6 +886,10 @@ def verify_output(final_html, blog_type="general", n_games=None, expect_faq=Fals
     if expect_faq:
         add('class="faq-block"' in final_html, "FAQ accordion", "var",
             "FAQ yok (SSS H3+P çiftleri accordion'a çevrilmeli)")
+
+    # 8z) CSS süslü parantez kaçışı (f-string hatası: çıktıda "{{" kalırsa CSS kuralı geçersiz olur)
+    add('{{' not in final_html and '}}' not in final_html, "CSS parantez kaçışı",
+        "temiz", "çıktıda çift süslü parantez var - f-string kaçış hatası, CSS kuralları geçersiz")
 
     # 8a) Editör Notu + Hatırlatma (her yazıda zorunlu)
     add('class="editor-note"' in final_html, "Editör Notu", "var", "Editör Notu yok (her yazıda zorunlu)")

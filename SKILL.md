@@ -1,13 +1,13 @@
 ---
-name: gameplus-blog-enrich
-description: Enrich gameplus.com.tr (GeForce NOW Türkiye, powered by GAME+) BLOG POSTS with premium dark-theme HTML components without rewriting the author's sentences. Takes blog drafts delivered as .docx (or html/md/text) and ADDS enrichment (TLDR, info-card, floating ToC, comparison tables, clickable game card-table, inline-tag game headings, CTA blocks, FAQ accordion, editor notes, GFN "previous weeks" grid), then outputs ready-to-paste HTML, by default an Excel rollup (title to html) or separate files / combined preview on request. Use whenever the user gives a Gameplus BLOG post (a guide, listicle, "remake nedir", "en iyi X oyunlar", weekly "GFN Thursday" roundup) and asks to enrich, format, style, add CTA/TLDR/FAQ/tables, or convert blog docs to HTML. Trigger on "blog içeriğini zenginleştir", "gfn thursday html", "bu blog yazısını formatla", "blog docx'lerini html yap", or when blog .docx files are handed over. Do NOT use for /gfn/oyunlar/* CATEGORY pages (that is gameplus-category-content).
+name: gameplus-blog-enrich-v2
+description: (v2, Figma "Game+ UI" tasarımı — sarı tema) Enrich gameplus.com.tr (GeForce NOW Türkiye, powered by GAME+) BLOG POSTS with premium dark-theme HTML components without rewriting the author's sentences. Takes blog drafts delivered as .docx (or html/md/text) and ADDS enrichment (TLDR, info-card, floating ToC, comparison tables, clickable game card-table, inline-tag game headings, CTA blocks, FAQ accordion, editor notes, GFN "previous weeks" grid), then outputs ready-to-paste HTML, by default an Excel rollup (title to html) or separate files / combined preview on request. Use whenever the user gives a Gameplus BLOG post (a guide, listicle, "remake nedir", "en iyi X oyunlar", weekly "GFN Thursday" roundup) and asks to enrich, format, style, add CTA/TLDR/FAQ/tables, or convert blog docs to HTML. Trigger on "blog içeriğini zenginleştir", "gfn thursday html", "bu blog yazısını formatla", "blog docx'lerini html yap", or when blog .docx files are handed over. Do NOT use for /gfn/oyunlar/* CATEGORY pages (that is gameplus-category-content).
 ---
 
-# Gameplus Blog Enrichment
+# Gameplus Blog Enrichment (v2 — Game+ UI / Figma tabanlı)
 
 Bu skill, **gameplus.com.tr blog yazılarını** (NVIDIA GeForce NOW powered by GAME+ Türkiye) zengin, koyu temalı, premium HTML bileşenleriyle süsler. Kritik kural: **yazarın cümlelerini değiştirmez** — sadece enrichment öğeleri EKLER (TLDR, info-card, ToC, tablolar, oyun kartları, CTA'lar, FAQ, editör notları). Çıktı CMS'e yapıştırılmaya hazır HTML'dir; varsayılan olarak Excel'de toplanır (başlık → html).
 
-Bu tasarım, Gameplus ekibiyle çok turlu revizyonla oturmuş son haldir (v9). Tüm görsel ve içerik kuralları bu skill'de hazır gelir — sıfırdan tasarlamaya gerek yok.
+Bu tasarım, Gameplus ekibiyle çok turlu revizyonla oturmuş son haldir (v10.2, Figma "Game+ UI"). Tüm görsel ve içerik kuralları bu skill'de hazır gelir — sıfırdan tasarlamaya gerek yok.
 
 ## Ne zaman tetiklenir
 
@@ -98,7 +98,7 @@ ok  = print_report(res)   # FAIL varsa TESLİM ETME, düzelt
 ```
 Otomatik doğrulananlar: **tek H1 + ilk başlık H1**, **meta header yok**, ANIMATED_BORDER_STYLE 1x, **em dash yok**, floating ToC + TLDR (3-6 madde) + info-card, FAQ (varsa), oyun sayısı (**inline başlık = card-row = n_games**, düz `<hN>Oyun</hN>` kalmamış), YouTube embed `aspect-ratio` (kare-bug yok), PlayStation uyarısı. **FAIL = kural ihlali.** Ayrıca **`verify_source_preserved(original_body, final)` + `print_source_report`** ile yazarın metninin birebir korunduğunu doğrula (halüsinasyon/silme). Yargı gerektiren maddeler için **`references/qa-checklist.md`**'yi gözden geçir (yazarın cümleleri korundu mu, tür taksonomisi tutarlı mı, CTA dürüstlüğü, lisans hatırlatması, GFN tarih sütununda "-").
 
-## Tasarım sistemi (v10.1 — "Game+ UI", Figma tabanlı)
+## Tasarım sistemi (v10.2 — "Game+ UI", Figma tabanlı)
 
 Detaylar **`references/design-system.md`**'de. Özet:
 - **Tek vurgu SARI `#FFC900`** (GFN yeşili tamamen kalktı); dolu sarı butonlarda koyu metin `#131313`.
@@ -107,8 +107,10 @@ Detaylar **`references/design-system.md`**'de. Özet:
 - **Dönen sarı glow (`gp-conic`)**: TLDR + tüm CTA'lar + Öne Çıkan Oyun.
 - **Tablolar:** `#1E1E18` başlık satırı + sarı ORTALI sütun başlıkları; hücreler gri normal (oyun adı bold DEĞİL); oyun adının altında "Stüdyo · Yıl" (KAYNAKLI); Tür hücresi `render_genre_tags` pill'leri; satır vurgusu YALNIZ hover'da.
 - **Tür rozeti paleti merkezi** (`GENRE_BADGE_COLORS`): aynı tür her içerikte AYNI renk.
-- **İkonlar:** TLDR/Editör Notu doküman, Hatırlatma ampul, Öne Çıkan'da gamepad.
-- **Linkler:** alt çizgi yok, renk yeterli; platform linkleri `color:inherit` + ↗.
+- **İkonlar:** TLDR/Editör Notu doküman, Hatırlatma ampul, Öne Çıkan'da gamepad, CTA eyebrow'larında **sparkle** (★ karakteri kullanılmaz).
+- **TLDR'da okuma süresi:** başlığın sağında "N dk okuma" (`estimate_reading_time(body)` ile hesaplanır).
+- **Linkler:** alt çizgi yok, renk yeterli; platform linkleri `color:inherit` + ↗. **Mağaza linkleri yeni sekmede** (`target="_blank" rel="noopener noreferrer"`).
+- **Mobil:** tablo başlıkları hücreye ortalı; İçindekiler `bottom:16px`'e iner.
 - **GA4 id'leri (statik):** packages-button · games-button · end-packages-button · end-games-button · featured-game-button · ubisoft-packages-button.
 
 ## İçerik kuralları (zorunlu)
@@ -128,7 +130,7 @@ Tam liste **`references/content-rules.md`**'de. En kritikleri:
 - **Madde listesi kullan (taranabilirlik):** sıralanabilir bilgileri (faydalar, farklar, uyarılar, adımlar) düz paragraf yerine `render_list` ile bullet yap. Her şey paragraf olmasın; düz `<ul><li>` yazma (content-rules 14). `verify_output` hiç liste yoksa uyarır.
 - **GFN embargo yerelleştirmesinde** (İngilizce→TR; enrichment'tan farklı olarak burada metin çevrilir): kelime oyunlarını/deyimleri **doğal ve anlamlı** Türkçeyle ver; birebir oturmuyor ve çiğ kalıyorsa ZORLAMA, espriyi/tonu taşıyan temiz bir ifadeyle değiştir (ör. "license to stream" zorlaması yerine doğal bir cümle). Mekanik/tarih/teknik bilgi birebir korunur. Detay: `references/gfn-localization.md`.
 - **Her yazıda Editör Notu + Hatırlatma bulunur** (verify FAIL verir) — kural 15.
-- **Stat karoselleri:** değer KISA/sayısal, yazıdan gerçek bilgi, kart içinde ortalı; "Stüdyo · Yıl" gibi veriler KAYNAKLI (Steam API/resmî sayfa), uydurma yok.
+- **Stat karoselleri:** değer sayı ya da kısa metin/insight olabilir (<=22 karakter), yazıdan gerçek bilgi, kart içinde ortalı; "Stüdyo · Yıl" gibi veriler KAYNAKLI (Steam API/resmî sayfa), uydurma yok.
 - **Üslup (kural 16):** klişe açılış ve hype yasak; doğal oyuncu dili; GFN ifade varyasyonu — eklediğimiz TÜM metinlerde ve bu skill ile yazılan yazılarda.
 - Görsel alt text / caption / şema markup EKLEME (kullanıcı istemiyor).
 - YouTube embed'leri ve mevcut linkleri koru.
@@ -152,6 +154,7 @@ Tam liste **`references/content-rules.md`**'de. En kritikleri:
 - `references/qa-checklist.md` — teslim öncesi çıktı kontrol listesi (`verify_output` + manuel/yargısal maddeler)
 - `references/component-api.md` — her `render_*` fonksiyonunun imzası, parametreleri, örnek çağrı
 - `references/docx-extract.md` — .docx'ten yapı çıkarma yöntemi
+- `references/ga4-tracking.md` — **CTA id'leri + GTM/GA4 kurulumu** (blog_cta_click); çalışır demo `examples/ga4-cta-tracking-demo.html`
 - `references/gfn-localization.md` — **GFN embargo (EN) → TR yerelleştirme** kuralları (canlı dil, kelime oyunu doğallığı, çıkış tarihi formatı, iç linkler, YouTube, önceki haftalar, teslim doc + `HTML Versiyon`)
 - `examples/` — v10.1 referans build script'leri (GFN Thursday + listicle) ve örnek gövde çıktısı
 

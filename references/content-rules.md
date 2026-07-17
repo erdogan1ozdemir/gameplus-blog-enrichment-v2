@@ -105,7 +105,10 @@ Her bölümü düz paragrafla geçme; **sıralanabilir bilgileri madde listesine
 
 ## 15. Zorunlu bloklar ve karosel içeriği (v10.1)
 - **Her yazıda Game+ Editör Notu ve Hatırlatma bulunur** (`render_editor_note` + `render_highlight`). Editör Notu yazının öne çıkan konusuna editoryal bir katkı verir; Hatırlatma lisans/dürüstlük mesajını taşır. `verify_output` ikisi de yoksa FAIL verir.
-- **Stat karoselleri (info-card):** üstteki değer KISA ve sayısal/sayı-benzeri olur ("12", "2.000+", "10 dk"); açıklama alttadır; içerik yazının İÇİNDEN gelen, okuyucuya değer katan gerçek bilgidir (uydurma metrik yok). Metin kart içinde ortalanır. Uzun metin değeri ("Garena Free Fire" gibi) karosele KONMAZ.
+- **Stat karoselleri (info-card):** üstteki değer **sayı olmak zorunda değil** - sayı ("12", "2.000+"), kısa metin ya da bir insight ("Strateji ağırlıklı", "Monopoly") olabilir. Kural: **kısa tut** (tercihen <=22 karakter, kartta 2 satırı geçmesin) ve içerik yazının İÇİNDEN gelen, okuyucuya değer katan gerçek bilgi olsun (uydurma metrik yok). Metin kart içinde ortalanır.
+- **TLDR okuma süresi:** "Hızlı Özet" başlığının sağında "N dk okuma" gösterilir. Süre `estimate_reading_time(body)` ile GÖVDEDEN hesaplanır; elle sabit süre yazılmaz.
+- **Mağaza linkleri yeni sekmede açılır:** oyun adı ve Platform/Çıkış sütunundaki Steam/Xbox/Epic/Ubisoft/Wargaming linkleri `target="_blank" rel="noopener noreferrer"` taşır. (İç linkler - gameplus.com.tr - aynı sekmede kalır.)
+- **CTA eyebrow ikonu sparkle'dır** (`SVG_SPARKLE`); ★ karakteri kullanılmaz.
 - Tablo satırı normal durumda vurgusuz; sarı vurgu yalnız hover'dadır. Kalıcı vurgu için `featured=[i]` bilinçli kullanılır.
 
 ## 16. Üslup ve akış (enrichment metinleri + bu skill ile yazılan yazılar)

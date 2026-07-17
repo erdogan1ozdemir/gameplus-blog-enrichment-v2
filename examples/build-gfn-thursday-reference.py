@@ -3,7 +3,7 @@
 import sys, os, re, zipfile
 import xml.etree.ElementTree as ET
 from docx import Document
-sys.path.insert(0, "/Users/Erdo/.claude/skills/gameplus-blog-enrich/scripts")
+sys.path.insert(0, "<skill>/scripts")
 from gameplus_blog_components import *
 
 OUT = "/Users/Erdo/Desktop/Claude Projects/Dispatch"
@@ -110,7 +110,7 @@ def linkify_meta(meta_html, links):
         for label in ([plat, 'Ubisoft Connect'] if plat == 'Ubisoft' else [plat, 'Game Pass'] if plat == 'Xbox' else [plat]):
             pat = re.compile(r'(?<![>\w])' + re.escape(label) + r'(?![\w<])')
             if pat.search(out):
-                out = pat.sub(f'<a href="{url}" style="color:inherit;text-decoration:none;">{label}{SVG_EXT_LINK}</a>', out, count=1)
+                out = pat.sub(f'<a href="{url}" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">{label}{SVG_EXT_LINK}</a>', out, count=1)
                 break
     return out
 
@@ -145,12 +145,12 @@ end_cta = render_end_cta(
     "Performance ve Ultimate paketleri kütüphanendeki GeForce NOW destekli yapımları donanım olmadan oynamanı sağlar. "
     "2.000'den fazla oyunu ve GFN Thursday'e eklenen yeni yapımları görmek için hemen kütüphaneye göz at!",
     btn2_label="GeForce NOW Oyunları", btn2_url="https://gameplus.com.tr/gfn/oyunlar")
-tldr = render_tldr([
+TLDR_ITEMS = [
     "Temmuz boyunca GeForce NOW kütüphanesine 12 yeni oyun ekleniyor; açılışı Monopoly: Star Wars Heroes vs. Villains yapıyor.",
     "Bu hafta 2 oyun eklendi; Temmuz takviminin tamamı ve çıkış tarihleri yazıda.",
     "Haziran'dan katılan 10 yapım kütüphanede oynanmayı bekliyor.",
     "Listedeki oyunlara sahipsen, bulut üzerinden dilediğin cihazda devam edebilirsin.",
-])
+]
 info = render_info_card([
     ("Temmuz'da eklenecek oyun", "12"),
     ("Bu hafta eklenen", "2"),
@@ -205,6 +205,7 @@ if prev_cards: out.append(render_prev_weeks_cards(prev_cards))
 body = "\n".join(out)
 body, toc_items = inject_heading_ids(body)
 toc = render_floating_toc([(l, t, a) for (l, t, a) in toc_items if l == 2])
+tldr = render_tldr(TLDR_ITEMS, reading_time=estimate_reading_time(body))
 body = body.replace('</h1>', '</h1>\n' + toc + tldr + info, 1)
 body = ensure_leading_h1(body)
 final = ANIMATED_BORDER_STYLE + "\n" + body
