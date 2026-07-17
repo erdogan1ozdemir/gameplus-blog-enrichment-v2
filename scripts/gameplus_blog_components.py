@@ -224,6 +224,8 @@ ANIMATED_BORDER_STYLE = '''<style>
 .table-wrap { border: 1px solid #29292B !important; }
 .gp-card-table-inner { border: 1px solid #29292B !important; }
 .table-wrap tbody tr:last-child td { border-bottom: none !important; }
+/* Gövde madde listeleri: nokta rengi Hızlı Özet bullet'ı ile aynı (#FFC900) */
+ul li::marker { color: #FFC900; }
 .table-wrap tbody tr { transition: background 0.15s ease; }
 .table-wrap tbody tr:hover > td { background: rgba(255,201,0,0.07) !important; }
 .table-wrap tbody tr:hover > td:first-child { color: #FFC900 !important; }
