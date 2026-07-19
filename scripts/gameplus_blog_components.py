@@ -328,12 +328,24 @@ p { font-size: 16px; line-height: 24px; }
 @media (max-width: 700px) {
   .tldr-block .gp-conic-inner > :first-child { font-size: 16px !important; line-height: 22px !important; }
 }
-/* CTA başlıkları: en fazla H2 kadar, responsive (CTA sınıflarına scoped) */
-.cta-end [style*="font-size:32px"] { font-size: 22px !important; line-height: 28px !important; }
-.cta-paketler [style*="font-size:24px"], .cta-oyunlar [style*="font-size:24px"], .cta-compact [style*="font-size:24px"] { font-size: 20px !important; line-height: 26px !important; }
+/* CTA blokları biraz küçültüldü (mobilde büyük duruyordu): başlık/eyebrow/açıklama/buton -1, iç boşluk azaldı */
+.cta-end .gp-conic-inner, .cta-paketler .gp-conic-inner, .cta-oyunlar .gp-conic-inner, .cta-compact .gp-conic-inner { padding: 20px !important; }
+.cta-end [style*="font-size:32px"] { font-size: 21px !important; line-height: 27px !important; }
+.cta-paketler [style*="font-size:24px"], .cta-oyunlar [style*="font-size:24px"], .cta-compact [style*="font-size:24px"] { font-size: 19px !important; line-height: 25px !important; }
+.cta-end [style*="font-size:12px"], .cta-paketler [style*="font-size:12px"], .cta-oyunlar [style*="font-size:12px"], .cta-compact [style*="font-size:12px"] { font-size: 11px !important; }
+.cta-end [style*="font-size:16px"], .cta-paketler [style*="font-size:16px"], .cta-oyunlar [style*="font-size:16px"], .cta-compact [style*="font-size:16px"] { font-size: 15px !important; line-height: 20px !important; }
 @media (max-width: 700px) {
-  .cta-end [style*="font-size:32px"] { font-size: 18px !important; line-height: 24px !important; }
-  .cta-paketler [style*="font-size:24px"], .cta-oyunlar [style*="font-size:24px"], .cta-compact [style*="font-size:24px"] { font-size: 17px !important; line-height: 23px !important; }
+  .cta-end .gp-conic-inner, .cta-paketler .gp-conic-inner, .cta-oyunlar .gp-conic-inner, .cta-compact .gp-conic-inner { padding: 14px 14px !important; }
+  .cta-end [style*="font-size:32px"] { font-size: 17px !important; line-height: 23px !important; }
+  .cta-paketler [style*="font-size:24px"], .cta-oyunlar [style*="font-size:24px"], .cta-compact [style*="font-size:24px"] { font-size: 16px !important; line-height: 22px !important; }
+  /* mobil YÜKSEKLİK: eleman arası boşluklar + açıklama satır aralığı + buton yüksekliği kısıldı */
+  .cta-end .gp-conic-inner > div:first-child, .cta-paketler .gp-conic-inner > div:first-child, .cta-oyunlar .gp-conic-inner > div:first-child { margin-bottom: 8px !important; }
+  .cta-end [style*="font-size:32px"], .cta-paketler [style*="font-size:24px"], .cta-oyunlar [style*="font-size:24px"], .cta-compact [style*="font-size:24px"] { margin-bottom: 4px !important; }
+  .cta-end p, .cta-paketler p, .cta-oyunlar p, .cta-compact p { margin-bottom: 12px !important; line-height: 1.32 !important; }
+  .cta-end a, .cta-paketler a, .cta-oyunlar a, .cta-compact a { padding-top: 9px !important; padding-bottom: 9px !important; }
+  /* End CTA: iki buton mobilde YAN YANA (alt alta 2 satır yerine tek sıra = ek yükseklik kazancı) */
+  .cta-end .gp-conic-inner > div:last-child { gap: 8px !important; flex-wrap: nowrap !important; }
+  .cta-end .gp-conic-inner > div:last-child > a { flex: 1 1 0 !important; min-width: 0 !important; padding-left: 8px !important; padding-right: 8px !important; font-size: 12.5px !important; line-height: 1.2 !important; text-align: center !important; white-space: normal !important; }
 }
 /* info-card / gp-cell responsive: dar ekranda taşma yok + değer-etiket küçülür */
 @media (max-width: 700px) {

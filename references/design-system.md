@@ -60,7 +60,8 @@ Pill: zemin renk %16, metin tam renk, r6, 4x10px, kenarlıksız, sentence case; 
 - **Başlık ölçekleri** yukarıdaki tabloda (masaüstü + mobil). ANIMATED_BORDER_STYLE'da `!important` ile; renk atanmaz (CMS verir).
 - **Gövde paragrafı 16/24** (mobil 15/22); inline-stilli callout/CTA paragrafları etkilenmez.
 - **"Hızlı Özet" başlığı artık `<div>`** (SEO: başlık outline'ından çıkar; İçindekiler'e zaten girmiyordu). Boyut 19px (mobil 16), iç padding 15/18, madde arası 8px.
-- **CTA başlıkları** en fazla H2 kadar, responsive (End 22/18, Paketler-Oyunlar-Öne Çıkan 20/17); CTA sınıflarına scoped, info-card 24px değerlerine dokunmaz.
+- **CTA başlıkları** en fazla H2 kadar, responsive (End 21/17, Paketler-Oyunlar-Öne Çıkan 19/16); CTA sınıflarına scoped, info-card 24px değerlerine dokunmaz.
+- **CTA yüksekliği mobilde kısaldı:** eyebrow altı 24->8, açıklama altı 24->12 + satır aralığı sıkı, başlık altı 8->4, buton yüksekliği (padding 12->9), iç boşluk 15->14; eyebrow 12->11, açıklama/buton 16->15. **End CTA'nın iki butonu mobilde YAN YANA** (12.5px, sarma serbest, ortalı) -> alt alta 2 satır yerine tek sıra. Toplam: End CTA ~378px -> ~287px (%24 kısa, 375px).
 - **info-card / gp-cell** mobilde 2 kolon `minmax(0,1fr)`, değer 19→17px / etiket 13→12px (≤700/≤400).
 - **Tablolar mobilde:** başlık satırı KALIR (thead görünür), hücreler dikey ortalı, içerik responsive; GFN-özel düzen (oyun adı 14/13, platform 11/10, tür ortalı, platform oku `nowrap` = kelimeye bitişik) **3 sütunlu tabloya scoped** (`:first-child:nth-last-child(3)`), 2/4-sütun karşılaştırma tabloları etkilenmez.
 - **Yumuşak kaydırma:** `html{scroll-behavior:smooth}` + başlıklara `scroll-margin-top:28px` (saf CSS, JS yok). NOT: scroll-reveal (fade-in) animasyonu skile EKLENMEDİ.
