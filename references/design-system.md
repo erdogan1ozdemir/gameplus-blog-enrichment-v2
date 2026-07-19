@@ -1,4 +1,4 @@
-# Tasarım Sistemi — v10.2 "Game+ UI" (Figma: Blog Detail / GFN Thursday)
+# Tasarım Sistemi — v10.3 "Game+ UI" (Figma: Blog Detail / GFN Thursday)
 
 Kaynak: Figma "Blog" dosyası (frame `Blog Detail - GFN Thursday (Game UI)`) + Font Kullanım Rehberi; tüm değerler node'lardan birebir çekildi. **GFN yeşili (#76b900) tamamen kaldırıldı; tek vurgu SARI.**
 
@@ -23,12 +23,12 @@ Kaynak: Figma "Blog" dosyası (frame `Blog Detail - GFN Thursday (Game UI)`) + F
 
 | Rol | Font | Boyut | Renk |
 |---|---|---|---|
-| H1 (yazı başlığı — gövde H1 ile başlar) | New Science SemiBold Extended | 40/48 | #fff |
-| H2 (bölüm) | New Science SemiBold Ext | 28/36 | #fff |
-| H3 | New Science SemiBold Ext | 24/32 | #fff |
-| H4 | New Science SemiBold Ext | 20/28 | #fff |
+| H1 (yazı başlığı) | New Science SemiBold Extended | 30.5/38 (mobil 20/26) | #fff |
+| H2 (bölüm) | New Science SemiBold Ext | 22/28 (mobil 17/23) | #fff |
+| H3 | New Science SemiBold Ext | 18.5/25 (mobil 15/20) | #fff |
+| H4 | New Science SemiBold Ext | 15.5/21 (mobil 14/19) | #fff |
 | Stat değeri (karosel, ortalı) | New Science SemiBold Ext | 24/32 | **#FFC900** |
-| Gövde paragraf | Greycliff CF Regular | 20/24 (mobil 16/24) | #B2B2B2 |
+| Gövde paragraf | Greycliff CF Regular | 16/24 (mobil 15/22) | #B2B2B2 |
 | Callout gövdesi | Greycliff CF | **1em/1.5 (paragrafla aynı boy)** | #fff |
 | Tablo hücre | Greycliff CF | 16/20 | tümü #B2B2B2 normal; sütun başlığı Bold **#FFC900**, ORTALI |
 | Stüdyo · Yıl alt satırı | Greycliff CF Medium | 12/16 | #B2B2B2 |
@@ -55,6 +55,15 @@ Pill: zemin renk %16, metin tam renk, r6, 4x10px, kenarlıksız, sentence case; 
 - Tablo başlıkları hücreye **ortalı** (`text-align:center !important`), hücreler dikeyde ortalı; sütun genişlikleri sütun sayısına göre (3 sütunda 40/32/28). 375px'te ölçüldü: 9/9 başlıkta sapma 0px.
 - Yatay kaydırma yok (`overflow-x:visible`, `table-layout:fixed`), punto 0.76em.
 - **İçindekiler** (<=900px) `bottom:16px`'e iner (masaüstünde `top:120px` sağda). Bu kural f-string kaçış hatası yüzünden bir süre üretilmiyordu; `verify_output` artık çıktıda `{{`/`}}` kalırsa FAIL verir.
+
+## v10.3 ince ayarlar (16 Temmuz örneğinde onaylandı, skille işlendi)
+- **Başlık ölçekleri** yukarıdaki tabloda (masaüstü + mobil). ANIMATED_BORDER_STYLE'da `!important` ile; renk atanmaz (CMS verir).
+- **Gövde paragrafı 16/24** (mobil 15/22); inline-stilli callout/CTA paragrafları etkilenmez.
+- **"Hızlı Özet" başlığı artık `<div>`** (SEO: başlık outline'ından çıkar; İçindekiler'e zaten girmiyordu). Boyut 19px (mobil 16), iç padding 15/18, madde arası 8px.
+- **CTA başlıkları** en fazla H2 kadar, responsive (End 22/18, Paketler-Oyunlar-Öne Çıkan 20/17); CTA sınıflarına scoped, info-card 24px değerlerine dokunmaz.
+- **info-card / gp-cell** mobilde 2 kolon `minmax(0,1fr)`, değer 19→17px / etiket 13→12px (≤700/≤400).
+- **Tablolar mobilde:** başlık satırı KALIR (thead görünür), hücreler dikey ortalı, içerik responsive; GFN-özel düzen (oyun adı 14/13, platform 11/10, tür ortalı, platform oku `nowrap` = kelimeye bitişik) **3 sütunlu tabloya scoped** (`:first-child:nth-last-child(3)`), 2/4-sütun karşılaştırma tabloları etkilenmez.
+- **Yumuşak kaydırma:** `html{scroll-behavior:smooth}` + başlıklara `scroll-margin-top:28px` (saf CSS, JS yok). NOT: scroll-reveal (fade-in) animasyonu skile EKLENMEDİ.
 
 ## GA4 tıklama id'leri (statik — her yazıda aynı)
 `packages-button` · `games-button` · `end-packages-button` · `end-games-button` · `featured-game-button` · `ubisoft-packages-button`

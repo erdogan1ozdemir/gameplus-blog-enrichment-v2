@@ -98,7 +98,7 @@ ok  = print_report(res)   # FAIL varsa TESLİM ETME, düzelt
 ```
 Otomatik doğrulananlar: **tek H1 + ilk başlık H1**, **meta header yok**, ANIMATED_BORDER_STYLE 1x, **em dash yok**, floating ToC + TLDR (3-6 madde) + info-card, FAQ (varsa), oyun sayısı (**inline başlık = card-row = n_games**, düz `<hN>Oyun</hN>` kalmamış), YouTube embed `aspect-ratio` (kare-bug yok), PlayStation uyarısı. **FAIL = kural ihlali.** Ayrıca **`verify_source_preserved(original_body, final)` + `print_source_report`** ile yazarın metninin birebir korunduğunu doğrula (halüsinasyon/silme). Yargı gerektiren maddeler için **`references/qa-checklist.md`**'yi gözden geçir (yazarın cümleleri korundu mu, tür taksonomisi tutarlı mı, CTA dürüstlüğü, lisans hatırlatması, GFN tarih sütununda "-").
 
-## Tasarım sistemi (v10.2 — "Game+ UI", Figma tabanlı)
+## Tasarım sistemi (v10.3 — "Game+ UI", Figma tabanlı)
 
 Detaylar **`references/design-system.md`**'de. Özet:
 - **Tek vurgu SARI `#FFC900`** (GFN yeşili tamamen kalktı); dolu sarı butonlarda koyu metin `#131313`.
@@ -108,7 +108,8 @@ Detaylar **`references/design-system.md`**'de. Özet:
 - **Tablolar:** `#1E1E18` başlık satırı + sarı ORTALI sütun başlıkları; hücreler gri normal (oyun adı bold DEĞİL); oyun adının altında "Stüdyo · Yıl" (KAYNAKLI); Tür hücresi `render_genre_tags` pill'leri; satır vurgusu YALNIZ hover'da.
 - **Tür rozeti paleti merkezi** (`GENRE_BADGE_COLORS`): aynı tür her içerikte AYNI renk.
 - **İkonlar:** TLDR/Editör Notu doküman, Hatırlatma ampul, Öne Çıkan'da gamepad, CTA eyebrow'larında **sparkle** (★ karakteri kullanılmaz).
-- **TLDR'da okuma süresi:** başlığın sağında "N dk okuma" (`estimate_reading_time(body)` ile hesaplanır).
+- **TLDR'da okuma süresi:** başlığın sağında "N dk okuma" (`estimate_reading_time(body)` ile hesaplanır). **TLDR başlığı `<div>` (heading değil).**
+- **v10.3 tipografi:** başlıklar küçültüldü (H1 30.5/H2 22/H3 18.5/H4 15.5, mobil 20/17/15/14), gövde 16/24; CTA başlıkları en çok H2; tablolar mobilde başlıklı kalır + dikey ortalı + responsive içerik; yumuşak kaydırma (CSS). Detay `references/design-system.md`.
 - **Linkler:** alt çizgi yok, renk yeterli; platform linkleri `color:inherit` + ↗. **Mağaza linkleri yeni sekmede** (`target="_blank" rel="noopener noreferrer"`).
 - **Mobil:** tablo başlıkları hücreye ortalı; İçindekiler `bottom:16px`'e iner.
 - **GA4 id'leri (statik):** packages-button · games-button · end-packages-button · end-games-button · featured-game-button · ubisoft-packages-button.

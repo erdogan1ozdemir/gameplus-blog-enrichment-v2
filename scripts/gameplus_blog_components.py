@@ -299,6 +299,80 @@ ul li::marker { color: #FFC900; }
   /* --- info-card: 2 sütun --- */
   .info-card { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
 }
+
+/* ================= v10.3: onaylanan tipografi + responsive ince ayarlar ================= */
+/* Yumuşak ToC kaydırma (saf CSS, JS yok) */
+html { scroll-behavior: smooth; }
+h1, h2, h3, h4 { scroll-margin-top: 28px; }
+/* Başlık ölçekleri (boyut + line-height; renk CMS'ten gelir, atanmaz) */
+h1 { font-size: 30.5px !important; line-height: 38px !important; }
+h2 { font-size: 22px !important;   line-height: 28px !important; }
+h3 { font-size: 18.5px !important; line-height: 25px !important; }
+h4 { font-size: 15.5px !important; line-height: 21px !important; }
+/* Gövde paragrafı (inline-stilli callout/CTA p'leri etkilenmez) */
+p { font-size: 16px; line-height: 24px; }
+@media (max-width: 700px) {
+  h1 { font-size: 20px !important; line-height: 26px !important; }
+  h2 { font-size: 17px !important; line-height: 23px !important; }
+  h3 { font-size: 15px !important; line-height: 20px !important; }
+  h4 { font-size: 14px !important; line-height: 19px !important; }
+  p  { font-size: 15px; line-height: 22px; }
+}
+/* TLDR "Hızlı Özet": başlık ölçeği + sıkı iç boşluk */
+.tldr-block .gp-conic-inner { padding: 15px 18px !important; }
+.tldr-block .gp-conic-inner > :first-child { margin: 0 0 8px !important; font-size: 19px !important; line-height: 26px !important; }
+.tldr-block ul { margin: 0 !important; }
+.tldr-block ul li { margin: 0 0 8px !important; }
+.tldr-block ul li:last-child { margin-bottom: 0 !important; }
+.tldr-block { margin: 20px 0 !important; }
+@media (max-width: 700px) {
+  .tldr-block .gp-conic-inner > :first-child { font-size: 16px !important; line-height: 22px !important; }
+}
+/* CTA başlıkları: en fazla H2 kadar, responsive (CTA sınıflarına scoped) */
+.cta-end [style*="font-size:32px"] { font-size: 22px !important; line-height: 28px !important; }
+.cta-paketler [style*="font-size:24px"], .cta-oyunlar [style*="font-size:24px"], .cta-compact [style*="font-size:24px"] { font-size: 20px !important; line-height: 26px !important; }
+@media (max-width: 700px) {
+  .cta-end [style*="font-size:32px"] { font-size: 18px !important; line-height: 24px !important; }
+  .cta-paketler [style*="font-size:24px"], .cta-oyunlar [style*="font-size:24px"], .cta-compact [style*="font-size:24px"] { font-size: 17px !important; line-height: 23px !important; }
+}
+/* info-card / gp-cell responsive: dar ekranda taşma yok + değer-etiket küçülür */
+@media (max-width: 700px) {
+  .info-card { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
+  .gp-cell { padding: 14px 10px !important; }
+  .gp-cell > div:first-child { font-size: 19px !important; line-height: 25px !important; }
+  .gp-cell > div:last-child  { font-size: 13px !important; line-height: 18px !important; }
+}
+@media (max-width: 400px) {
+  .gp-cell > div:first-child { font-size: 17px !important; line-height: 23px !important; }
+  .gp-cell > div:last-child  { font-size: 12px !important; line-height: 16px !important; }
+}
+/* Tablolar mobilde: BAŞLIK SATIRI KALIR; hücreler dikey ortalı; içerik responsive; GFN-özel düzen 3 sütuna scoped */
+@media (max-width: 700px) {
+  .table-wrap > div { overflow-x: visible !important; }
+  .table-wrap table { font-size: 12px !important; table-layout: fixed !important; width: 100% !important; }
+  .table-wrap thead { display: table-header-group !important; }
+  .table-wrap th, .table-wrap td { padding: 10px 6px !important; vertical-align: middle !important; line-height: 1.35 !important; overflow-wrap: normal !important; word-break: normal !important; hyphens: none !important; }
+  .table-wrap th { font-size: 13px !important; letter-spacing: 0.02em !important; text-align: center !important; padding: 12px 6px !important; }
+  .table-wrap td { text-align: left !important; }
+  .table-wrap td:first-child { color: #fff !important; }
+  .table-wrap td:first-child div { font-size: 10.5px !important; }
+  .table-wrap td [style*="inline-flex"] { flex-wrap: wrap !important; gap: 5px 6px !important; justify-content: center !important; }
+  .table-wrap td [style*="border-radius:6px"] { font-size: 10.5px !important; padding: 3px 7px !important; }
+  .table-wrap td svg { width: 11px !important; height: 11px !important; }
+  /* 3 sütunlu GFN tablosu (Oyun / Tür / Platform-Çıkış): oyun adı büyük, tür ortalı, platform küçük + ok bitişik */
+  .table-wrap tr > :first-child:nth-last-child(3) { width: 40% !important; font-size: 14px !important; }
+  .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(2) { width: 26% !important; text-align: center !important; }
+  .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3) { width: 34% !important; overflow-wrap: anywhere !important; font-size: 11px !important; }
+  .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3) a { white-space: nowrap !important; }
+  .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3) a svg { margin-left: 2px !important; }
+}
+@media (max-width: 400px) {
+  .table-wrap th { font-size: 12px !important; }
+  .table-wrap td [style*="border-radius:6px"] { font-size: 10px !important; padding: 2px 6px !important; }
+  .table-wrap tr > :first-child:nth-last-child(3) { font-size: 13px !important; }
+  .table-wrap tr > :first-child:nth-last-child(3) div { font-size: 10px !important; }
+  .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3) { font-size: 10px !important; }
+}
 </style>
 '''
 
@@ -337,7 +411,7 @@ def render_tldr(items, reading_time=None):
     )
     return f'''<div class="tldr-block gp-conic" style="--gp-glow:#FFC900;margin:24px 0;">
 <div class="gp-conic-inner" style="background:#161616;border-radius:10.5px;padding:24px;">
-  <h2 style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-size:24px;line-height:32px;font-weight:600;color:#fff;margin:0 0 14px;display:flex;align-items:center;flex-wrap:wrap;"><span style="color:#FFC900;display:inline-flex;">{SVG_DOC}</span>Hızlı Özet{rt_html}</h2>
+  <div style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-size:24px;line-height:32px;font-weight:600;color:#fff;margin:0 0 14px;display:flex;align-items:center;flex-wrap:wrap;"><span style="color:#FFC900;display:inline-flex;">{SVG_DOC}</span>Hızlı Özet{rt_html}</div>
   <ul style="margin:0;padding:0;list-style:none;">
 {items_html}
   </ul>

@@ -1,4 +1,4 @@
-# Component API — `gameplus_blog_components.py` (v10.2)
+# Component API — `gameplus_blog_components.py` (v10.3)
 
 ```python
 import sys; sys.path.insert(0, "<skill>/scripts")
@@ -20,7 +20,7 @@ from gameplus_blog_components import *
 - `verify_source_preserved(orig, final)` + `print_source_report` — yazar metni korunmuş mu (halüsinasyon/silme yakalar). Her build'de çalıştır.
 
 ## Bileşenler
-- `render_tldr(items, reading_time=None)` — "Hızlı Özet": #161616 kart + dönen sarı glow + doküman ikonu; maddeler sarı `•` + gri 16/24. 3-6 madde. `reading_time` verilirse başlığın sağında gri "N dk okuma" çıkar (`estimate_reading_time(body)` ile hesapla).
+- `render_tldr(items, reading_time=None)` — "Hızlı Özet": #161616 kart + dönen sarı glow + doküman ikonu; maddeler sarı `•` + gri 16/24. 3-6 madde. **Başlık `<div>`'dir (heading değil — SEO).** `reading_time` verilirse başlığın sağında gri "N dk okuma" çıkar (`estimate_reading_time(body)` ile hesapla).
 - `render_info_card([(label, value), ...])` — stat karoselleri: #0D0D0D kart; **değer üstte** New Science 24px SARI, etiket altta gri; **içerik ortalı**. Değer **sayı olmak zorunda değil** - kısa metin/insight da olabilir ("Strateji ağırlıklı"). Kısa tut (<=22 karakter) ve yazıdan gelen gerçek bilgi olsun (kural 15).
 - `render_list(items, marker="dot"|"check", accent)` — gövde içi madde listesi (kural 14).
 - `render_editor_note(text, title="GAME+ EDİTÖR NOTU")` — sarı %6 zemin + 4px sarı bar + doküman ikonu; gövde 1em (paragrafla aynı boy). **Her yazıda zorunlu.**
