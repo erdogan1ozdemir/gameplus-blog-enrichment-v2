@@ -1,7 +1,0 @@
-scripts/_fonts/*
-!scripts/_fonts/README.md
-__pycache__/
-*.pyc
-*.bak
-*.v9bak
-.DS_Store

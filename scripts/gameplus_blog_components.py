@@ -305,39 +305,41 @@ ul li::marker { color: #FFC900; }
 html { scroll-behavior: smooth; }
 h1, h2, h3, h4 { scroll-margin-top: 28px; }
 /* Başlık ölçekleri (boyut + line-height; renk CMS'ten gelir, atanmaz) */
-h1 { font-size: 30.5px !important; line-height: 38px !important; }
-h2 { font-size: 22px !important;   line-height: 28px !important; }
-h3 { font-size: 18.5px !important; line-height: 25px !important; }
-h4 { font-size: 15.5px !important; line-height: 21px !important; }
+h1 { font-size: 40px !important; line-height: 48px !important; }
+h2 { font-size: 30px !important; line-height: 38px !important; }
+h3 { font-size: 24px !important; line-height: 31px !important; }
+h4 { font-size: 20px !important; line-height: 27px !important; }
 /* Gövde paragrafı (inline-stilli callout/CTA p'leri etkilenmez) */
-p { font-size: 16px; line-height: 24px; }
+p { font-size: 18px; line-height: 27px; }
 @media (max-width: 700px) {
-  h1 { font-size: 20px !important; line-height: 26px !important; }
-  h2 { font-size: 17px !important; line-height: 23px !important; }
-  h3 { font-size: 15px !important; line-height: 20px !important; }
-  h4 { font-size: 14px !important; line-height: 19px !important; }
-  p  { font-size: 15px; line-height: 22px; }
+  h1 { font-size: 24px !important; line-height: 30px !important; }
+  h2 { font-size: 20px !important; line-height: 26px !important; }
+  h3 { font-size: 20px !important; line-height: 26px !important; }
+  h4 { font-size: 18px !important; line-height: 24px !important; }
+  p  { font-size: 17px; line-height: 26px; }
 }
 /* TLDR "Hızlı Özet": başlık ölçeği + sıkı iç boşluk */
 .tldr-block .gp-conic-inner { padding: 15px 18px !important; }
-.tldr-block .gp-conic-inner > :first-child { margin: 0 0 8px !important; font-size: 19px !important; line-height: 26px !important; }
+.tldr-block .gp-conic-inner > :first-child { margin: 0 0 8px !important; font-size: 22px !important; line-height: 29px !important; }
 .tldr-block ul { margin: 0 !important; }
 .tldr-block ul li { margin: 0 0 8px !important; }
 .tldr-block ul li:last-child { margin-bottom: 0 !important; }
+.tldr-block ul li span:last-child { font-size: 18px !important; line-height: 27px !important; }
 .tldr-block { margin: 20px 0 !important; }
 @media (max-width: 700px) {
-  .tldr-block .gp-conic-inner > :first-child { font-size: 16px !important; line-height: 22px !important; }
+  .tldr-block .gp-conic-inner > :first-child { font-size: 18px !important; line-height: 24px !important; }
+  .tldr-block ul li span:last-child { font-size: 16px !important; line-height: 24px !important; }
 }
 /* CTA blokları biraz küçültüldü (mobilde büyük duruyordu): başlık/eyebrow/açıklama/buton -1, iç boşluk azaldı */
 .cta-end .gp-conic-inner, .cta-paketler .gp-conic-inner, .cta-oyunlar .gp-conic-inner, .cta-compact .gp-conic-inner { padding: 20px !important; }
-.cta-end [style*="font-size:32px"] { font-size: 21px !important; line-height: 27px !important; }
-.cta-paketler [style*="font-size:24px"], .cta-oyunlar [style*="font-size:24px"], .cta-compact [style*="font-size:24px"] { font-size: 19px !important; line-height: 25px !important; }
+.cta-end [style*="font-size:32px"] { font-size: 24px !important; line-height: 30px !important; }
+.cta-paketler [style*="font-size:24px"], .cta-oyunlar [style*="font-size:24px"], .cta-compact [style*="font-size:24px"] { font-size: 22px !important; line-height: 28px !important; }
 .cta-end [style*="font-size:12px"], .cta-paketler [style*="font-size:12px"], .cta-oyunlar [style*="font-size:12px"], .cta-compact [style*="font-size:12px"] { font-size: 11px !important; }
-.cta-end [style*="font-size:16px"], .cta-paketler [style*="font-size:16px"], .cta-oyunlar [style*="font-size:16px"], .cta-compact [style*="font-size:16px"] { font-size: 15px !important; line-height: 20px !important; }
+.cta-end [style*="font-size:16px"], .cta-paketler [style*="font-size:16px"], .cta-oyunlar [style*="font-size:16px"], .cta-compact [style*="font-size:16px"] { font-size: 16px !important; line-height: 20px !important; }
 @media (max-width: 700px) {
   .cta-end .gp-conic-inner, .cta-paketler .gp-conic-inner, .cta-oyunlar .gp-conic-inner, .cta-compact .gp-conic-inner { padding: 14px 14px !important; }
-  .cta-end [style*="font-size:32px"] { font-size: 17px !important; line-height: 23px !important; }
-  .cta-paketler [style*="font-size:24px"], .cta-oyunlar [style*="font-size:24px"], .cta-compact [style*="font-size:24px"] { font-size: 16px !important; line-height: 22px !important; }
+  .cta-end [style*="font-size:32px"] { font-size: 20px !important; line-height: 26px !important; }
+  .cta-paketler [style*="font-size:24px"], .cta-oyunlar [style*="font-size:24px"], .cta-compact [style*="font-size:24px"] { font-size: 19px !important; line-height: 25px !important; }
   /* mobil YÜKSEKLİK: eleman arası boşluklar + açıklama satır aralığı + buton yüksekliği kısıldı */
   .cta-end .gp-conic-inner > div:first-child, .cta-paketler .gp-conic-inner > div:first-child, .cta-oyunlar .gp-conic-inner > div:first-child { margin-bottom: 8px !important; }
   .cta-end [style*="font-size:32px"], .cta-paketler [style*="font-size:24px"], .cta-oyunlar [style*="font-size:24px"], .cta-compact [style*="font-size:24px"] { margin-bottom: 4px !important; }
@@ -384,6 +386,30 @@ p { font-size: 16px; line-height: 24px; }
   .table-wrap tr > :first-child:nth-last-child(3) { font-size: 13px !important; }
   .table-wrap tr > :first-child:nth-last-child(3) div { font-size: 10px !important; }
   .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3) { font-size: 10px !important; }
+}
+
+/* ================= v10.4: kart arka planı şeffaf + not/info-card/CTA boyut + 4-sütun tablo ================= */
+/* Kart arka planları ŞEFFAF: CMS/site zaten siyah; #161616/#0D0D0D kutu izini kaldırır.
+   Parlayan kenar (conic) ve çerçeveler durduğu için kartlar yine ayrışır; not kutuları kendi tint'ini korur. */
+.tldr-block .gp-conic-inner,
+.cta-end .gp-conic-inner, .cta-paketler .gp-conic-inner, .cta-oyunlar .gp-conic-inner, .cta-compact .gp-conic-inner,
+.gp-cell, .table-wrap, .gp-table, .card-table, .gp-card-table-inner, .gp-layer { background: transparent !important; }
+/* Not kutuları (Editör Notu / Hatırlatma): gövdeyle tutarlı 18 / mobil 17 */
+.editor-note p, .highlight-box p { font-size: 18px !important; line-height: 27px !important; }
+@media (max-width: 700px) { .editor-note p, .highlight-box p { font-size: 17px !important; line-height: 26px !important; } }
+/* Info-card değer: desktop 22 (mobil skil değeri 19/17 korunur) */
+@media (min-width: 701px) { .gp-cell > div:first-child { font-size: 22px !important; line-height: 29px !important; } }
+/* CTA butonları: dar alanda "Paketleri" alt satıra, dengeli dağıt */
+.cta-end a, .cta-paketler a, .cta-oyunlar a, .cta-compact a { white-space: normal !important; text-wrap: balance; }
+/* Mobil 4-sütunlu GFN tablosu (Oyun / Tür / Stüdyo / Platform-Çıkış): oyun adı-stüdyo-platform aynı punto (12) */
+@media (max-width: 700px) {
+  .table-wrap tr > :first-child:nth-last-child(4) { width: 30% !important; }
+  .table-wrap tr > :first-child:nth-last-child(4) div { font-size: 12px !important; font-weight: 600 !important; }
+  .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(2) { width: 20% !important; text-align: center !important; }
+  .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(3) { width: 24% !important; font-size: 12px !important; }
+  .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(4) { width: 26% !important; font-size: 12px !important; overflow-wrap: anywhere !important; }
+  .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(4) a { white-space: nowrap !important; }
+  .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(4) a svg { margin-left: 2px !important; }
 }
 </style>
 '''
@@ -846,17 +872,34 @@ def render_floating_toc(items):
             f'<a href="#{anchor}" onclick="this.closest(&quot;details&quot;).removeAttribute(&quot;open&quot;)" style="color:#B2B2B2;text-decoration:none;font-size:16px;line-height:24px;">{text}</a></li>')
     body = chr(10).join(li_items)
     return f'''<details class="floating-toc" style="position:fixed;top:120px;right:16px;z-index:100;max-width:320px;background:#161616;border:1px solid #29292B;border-radius:16px;box-shadow:0 8px 28px rgba(0,0,0,0.6);">
-  <summary style="display:flex;align-items:center;padding:16px 20px;color:#fff;cursor:pointer;font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-weight:600;font-size:20px;line-height:28px;list-style:none;user-select:none;">İçindekiler</summary>
+  <summary style="display:flex;align-items:center;padding:16px 20px;color:#fff;cursor:pointer;font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-weight:600;font-size:20px;line-height:28px;list-style:none;user-select:none;">İçindekiler<span class="gp-toptop" onclick="event.stopPropagation();event.preventDefault();window.scrollTo({{top:0,behavior:'smooth'}});" title="Başa dön" style="margin-left:12px;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;border:1.5px solid #FFC900;flex-shrink:0;cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFC900" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/><line x1="12" y1="9" x2="12" y2="20"/></svg></span></summary>
   <ul style="margin:0;padding:0 20px 16px;max-height:60vh;overflow-y:auto;list-style:none;">
 {body}
   </ul>
 </details>
+<script>
+(function(){{
+  var t=document.querySelector('.floating-toc');
+  if(!t) return;
+  window.addEventListener('scroll', function(){{ if(t.hasAttribute('open')) t.removeAttribute('open'); }}, {{passive:true}});
+  document.addEventListener('click', function(e){{ if(t.hasAttribute('open') && !t.contains(e.target)) t.removeAttribute('open'); }}, true);
+}})();
+</script>
 <style>
   .floating-toc summary::-webkit-details-marker {{ display: none; }}
   .floating-toc summary::marker {{ display: none; }}
   .floating-toc ul li a:hover {{ color: #FFC900 !important; }}
+  .gp-toptop:hover {{ background: rgba(255,201,0,0.15); }}
   @media (max-width: 900px) {{
     .floating-toc {{ top: auto !important; bottom: 16px !important; max-width: 240px !important; }}
+  }}
+  @media (max-width: 700px) {{
+    .floating-toc summary {{ font-size: 16px !important; line-height: 22px !important; padding: 13px 16px !important; }}
+    .floating-toc ul {{ padding: 0 16px 13px !important; }}
+    .floating-toc ul li a {{ font-size: 13px !important; line-height: 19px !important; }}
+    .floating-toc ul li span:not(.gp-toptop) {{ font-size: 10px !important; }}
+    .gp-toptop {{ width: 21px !important; height: 21px !important; margin-left: 10px !important; }}
+    .gp-toptop svg {{ width: 12px !important; height: 12px !important; }}
   }}
 </style>
 '''
