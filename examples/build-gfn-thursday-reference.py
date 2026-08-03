@@ -208,8 +208,7 @@ toc = render_floating_toc([(l, t, a) for (l, t, a) in toc_items if l in (1, 2)])
 tldr = render_tldr(TLDR_ITEMS, reading_time=estimate_reading_time(body))
 body = body.replace('</h1>', '</h1>\n' + toc + tldr + info, 1)
 body = ensure_leading_h1(body)
-final = ANIMATED_BORDER_STYLE + "\n" + body
-
+final = wrap_gp_content(ANIMATED_BORDER_STYLE + "\n" + body)
 # ================= KONTROL NOKTALARI =================
 print("=== 1) Çıktı yapısı ===")
 ok1 = print_report(verify_output(final, blog_type="gfn", expect_faq=False))

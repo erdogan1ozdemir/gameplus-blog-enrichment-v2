@@ -114,7 +114,7 @@ SVG_TROPHY = '<svg width="24" height="24" viewBox="0 0 24 24" style="vertical-al
 # Green checkmark for TLDR/info-card items
 SVG_CHECK_GREEN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFC900" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg>'
 # External link icon (small arrow up-right)
-SVG_EXT_LINK = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>'
+SVG_EXT_LINK = '<svg class="gp-ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>'
 # Old gradient star (kept for backward compat)
 SVG_STAR_GRADIENT = SVG_TROPHY
 SVG_DOC = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-4px;margin-right:8px;flex-shrink:0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>'
@@ -128,7 +128,7 @@ SVG_ARROW = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke=
 # === DARK THEME BLOCK STYLES (CMS-portable inline) ===
 # Common animated border style + mobile responsiveness + FAQ + table fixes
 ANIMATED_BORDER_STYLE = '''<style>
-:root{--gp-surface:#161616;--gp-line:#29292b;--gp-accent:#FFC900;}
+.gp-content {--gp-surface:#161616;--gp-line:#29292b;--gp-accent:#FFC900;}
 @property --gp-conic-angle {
   syntax: '<angle>';
   initial-value: 0deg;
@@ -146,11 +146,11 @@ ANIMATED_BORDER_STYLE = '''<style>
   0%, 100% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.18); opacity: 0.85; }
 }
-.gp-animated-border { position: relative; border-radius: 12px; padding: 1px; background: linear-gradient(110deg, #FFC900 0%, #f59e0b 30%, #FFC900 60%, #f59e0b 100%); background-size: 300% 100%; animation: gameplus-border-shimmer 6s ease-in-out infinite; }
-.gp-animated-border > .gp-inner { background: transparent; border-radius: 11px; padding: 22px 24px; }
+.gp-content .gp-animated-border { position: relative; border-radius: 12px; padding: 1px; background: linear-gradient(110deg, #FFC900 0%, #f59e0b 30%, #FFC900 60%, #f59e0b 100%); background-size: 300% 100%; animation: gameplus-border-shimmer 6s ease-in-out infinite; }
+.gp-content .gp-animated-border > .gp-inner { background: transparent; border-radius: 11px; padding: 22px 24px; }
 /* V8: Rotating Conic Glow border */
-.gp-conic { position: relative; border-radius: 12px; padding: 1.5px; }
-.gp-conic::before {
+.gp-content .gp-conic { position: relative; border-radius: 12px; padding: 1.5px; }
+.gp-content .gp-conic::before {
   content:''; position:absolute; inset:0; border-radius:12px; padding:1.5px;
   background: conic-gradient(from var(--gp-conic-angle,0deg), transparent 0deg, var(--gp-glow,#FFC900) 60deg, transparent 120deg, transparent 360deg);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
@@ -159,257 +159,269 @@ ANIMATED_BORDER_STYLE = '''<style>
   animation: gp-rotate-conic 6s linear infinite;
   pointer-events: none;
 }
-.gp-conic > .gp-conic-inner { background:var(--gp-surface,#161616); border-radius:10.5px; position:relative; }
+.gp-content .gp-conic > .gp-conic-inner { background:var(--gp-surface,#161616); border-radius:10.5px; position:relative; }
 /* V9: Layered Frame */
-.gp-layer { position:relative; border-radius:12px; border:1px solid var(--gp-frame,rgba(255,201,0,0.22)); background:var(--gp-surface,#161616); }
-.gp-cell { position:relative; background:var(--gp-surface,#161616); border:1px solid var(--gp-line,#29292b); border-radius:10px; padding:14px 16px; }
-.gp-layer::before { content:''; position:absolute; inset:5px; border:1px solid #29292b; border-radius:8px; pointer-events:none; }
+.gp-content .gp-layer { position:relative; border-radius:12px; border:1px solid var(--gp-frame,rgba(255,201,0,0.22)); background:var(--gp-surface,#161616); }
+.gp-content .gp-cell { position:relative; background:var(--gp-surface,#161616); border:1px solid var(--gp-line,#29292b); border-radius:10px; padding:14px 16px; }
+.gp-content .gp-layer::before { content:''; position:absolute; inset:5px; border:1px solid #29292b; border-radius:8px; pointer-events:none; }
 /* FAQ + sign pulsing animation */
-.faq-item .faq-icon { animation: gp-pulse-plus 2.2s ease-in-out infinite; }
-.gp-card-table-inner .card-row:last-child { border-bottom: none !important; }
-.gp-card-table-inner .card-row { position: relative; }
-.gp-card-table-inner a.card-row { text-decoration: none !important; color: inherit !important; }
+.gp-content .faq-item .faq-icon { animation: gp-pulse-plus 2.2s ease-in-out infinite; }
+.gp-content .gp-card-table-inner .card-row:last-child { border-bottom: none; }
+.gp-content .gp-card-table-inner .card-row { position: relative; }
+.gp-content .gp-card-table-inner a.card-row { text-decoration: none; color: inherit; }
 /* Hover Slide Accent: colored bar slides in from left on hover (Steam list vibe) */
-.gp-card-table-inner .card-row::before { content:''; position:absolute; left:0; top:0; bottom:0; width:0; background:var(--row-c,#FFC900); transition:width 0.2s ease; }
-.gp-card-table-inner .card-row:hover::before { width:4px; }
-.gp-card-table-inner .card-row:hover { background: rgba(255,255,255,0.025) !important; }
-.gp-card-table-inner a.card-row:hover .gp-name { color: #fff !important; }
+.gp-content .gp-card-table-inner .card-row::before { content:''; position:absolute; left:0; top:0; bottom:0; width:0; background:var(--row-c,#FFC900); transition:width 0.2s ease; }
+.gp-content .gp-card-table-inner .card-row:hover::before { width:4px; }
+.gp-content .gp-card-table-inner .card-row:hover { background: rgba(255,255,255,0.025); }
+.gp-content .gp-card-table-inner a.card-row:hover .gp-name { color: #fff; }
 /* Comparison table fixes */
-.table-wrap tbody tr:last-child td { border-bottom: none !important; }
-.table-wrap table { border-radius: 12px; }
+.gp-content .table-wrap table { border-radius: 12px; }
+
+/* ================= v10.7 - Geçiş 3: tablo / card-table / oyun başlığı / tür rozeti =================
+   Inline stiller sınıflara taşındı. Dinamik kalanlar inline: tür renkleri (--row-c, background/color)
+   ve card-table rozet sütunu genişliği (--gp-bw). */
+
+/* --- Karşılaştırma / oyun tablosu --- */
+.gp-content .table-wrap { margin: 24px 0; border-radius: 16px; overflow: hidden; }
+.gp-content .gp-table-scroll { overflow-x: auto; }
+.gp-content .table-wrap table { width: 100%; border-collapse: collapse; background: transparent; }
+.gp-content .table-wrap th { background: #1E1E18; padding: 19px 24px; text-align: center; color: #FFC900;
+  font-weight: 700; font-size: 16px; line-height: 20px; border-bottom: 1px solid rgba(255,201,0,0.3); }
+.gp-content .table-wrap td { padding: 14px 24px; vertical-align: middle; color: #B2B2B2; font-weight: 400;
+  font-size: 16px; line-height: 20px; }
+.gp-content .table-wrap tbody tr + tr td { border-top: 1px solid #29292B; }
+.gp-content .table-wrap tr.gp-row-feat td { background: rgba(255,201,0,0.07); }
+.gp-content .table-wrap tr.gp-row-feat td:first-child { color: #FFC900; }
+
+/* --- Tür rozetleri (tablo 'Tür' hücresi) --- */
+.gp-content .gp-genres { display: inline-flex; flex-wrap: wrap; gap: 6px 8px; align-items: center;
+  vertical-align: middle; }
+.gp-content .gp-genre { display: inline-block; border-radius: 6px; padding: 4px 10px; font-size: 12px;
+  line-height: 16px; font-weight: 700; white-space: nowrap; }
+
+/* --- Card-table ("En İyi N ..." tıklanabilir liste) --- */
+.gp-content .card-table-wrap { margin: 28px 0; }
+.gp-content .gp-ct-head { text-align: center; margin-bottom: 14px; }
+.gp-content .card-table { overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.5); }
+.gp-content .gp-card-rows { position: relative; z-index: 1; }
+.gp-content .card-row { display: grid; grid-template-columns: var(--gp-bw,120px) 1fr auto; gap: 14px;
+  padding: 8px 18px; border-bottom: 1px solid #29292b; align-items: center;
+  transition: background 0.2s ease; text-decoration: none; color: inherit; }
+.gp-content .gp-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 12px;
+  line-height: 16px; font-weight: 700; white-space: nowrap; min-width: 120px; text-align: center; }
+.gp-content .gp-badge-link { text-decoration: none; line-height: 0; display: inline-flex; }
+.gp-content .gp-name { font-weight: 600; color: #f3f4f6; font-size: 0.98em; letter-spacing: -0.005em;
+  transition: color 0.2s; }
+.gp-content .gp-meta { color: #B2B2B2; font-size: 0.78em; text-align: right; white-space: nowrap;
+  font-weight: 500; letter-spacing: 0.01em; }
+
+/* --- Oyun başlığı (tür rozeti + isim + "Stüdyo · Yıl") --- */
+.gp-content .gp-game-head { display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  margin: 32px 0 14px; line-height: 1.4; }
+.gp-content .gp-game-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 12px;
+  line-height: 16px; font-weight: 700; white-space: nowrap; }
+.gp-content .gp-game-badge-link { text-decoration: none; display: contents; }
+.gp-content .gp-game-name { font-weight: 700; letter-spacing: -0.01em; }
+.gp-content .gp-game-meta { font-size: 0.52em; color: #B2B2B2; font-weight: 500; letter-spacing: 0.02em;
+  flex-basis: 100%; margin-top: -4px; }
+
+/* --- Tablo oyun hücresi + dış link ikonu --- */
+.gp-content .gp-tg-link { color: inherit; text-decoration: none; }
+.gp-content .gp-tg-meta { color: #B2B2B2; font-size: 12px; line-height: 16px; font-weight: 500; margin-top: 4px; }
+.gp-content .gp-ext { width: 11px; height: 11px; vertical-align: 1px; margin-left: 3px; opacity: 0.65; }
+
+/* --- Önceki haftalar kartları (Figma "Related Card") --- */
+.gp-content .prev-weeks-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  gap: 24px; margin: 24px 0 32px; }
+.gp-content .gp-prev-week { display: block; text-decoration: none; background: #161616;
+  border: 1px solid #29292B; border-radius: 16px; overflow: hidden; color: inherit;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s; }
+.gp-content .gp-prev-week:hover { border-color: rgba(255,201,0,0.5); transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5); }
+.gp-content .gp-pw-thumb { height: 150px; background-color: #0d0d0d;
+  background: var(--gp-thumb, linear-gradient(135deg,#1c1a0e,#0d0d0d 70%)) center/cover no-repeat;
+  display: flex; align-items: flex-end; padding: 14px 20px; position: relative; }
+.gp-content .gp-pw-scrim { position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.78), rgba(0,0,0,0.05) 60%); }
+.gp-content .gp-pw-tag { color: #FFC900; font-size: 12px; line-height: 16px; font-weight: 700;
+  letter-spacing: 0.08em; position: relative; }
+.gp-content .gp-pw-body { padding: 18px 20px 20px; }
+.gp-content .gp-pw-date { color: #B2B2B2; font-size: 12px; line-height: 16px; font-weight: 500; margin-bottom: 8px; }
+.gp-content .gp-pw-title { color: #fff; font-size: 20px; line-height: 24px; font-weight: 700; margin-bottom: 8px; }
+.gp-content .gp-pw-more { color: #FFC900; font-size: 16px; line-height: 20px; font-weight: 600; }
+
+/* --- Yana yaslı oyun bilgi kartı --- */
+.gp-content .gp-game-info-card { float: right; width: 210px; margin: 0 0 16px 22px; background: #161616;
+  border: 1px solid #29292b; border-radius: 10px; padding: 16px; font-size: 0.9em;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04); }
+.gp-content .gp-gic-badge { display: inline-block; color: #fff; padding: 4px 11px; border-radius: 999px;
+  font-size: 0.62em; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 2px 4px rgba(0,0,0,0.4); }
+.gp-content .gp-gic-name { font-weight: 700; color: #fff; font-size: 1.04em; line-height: 1.3;
+  margin-bottom: 8px; letter-spacing: -0.01em; }
+.gp-content .gp-gic-meta { color: #B2B2B2; font-size: 0.82em; line-height: 1.55; font-weight: 500; }
+/* ================= v10.7 - Geçiş 4: FAQ / gövde listesi / İçindekiler ================= */
+
+/* --- SSS akordiyonu --- */
+.gp-content .faq-block { margin: 24px 0; }
+.gp-content .faq-item { margin-bottom: 10px; border: 1px solid #29292b; border-radius: 10px;
+  overflow: hidden; background: transparent; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+.gp-content .faq-item summary { display: flex; align-items: center; gap: 14px; padding: 16px 20px;
+  cursor: pointer; background: transparent; font-weight: 700; color: #f3f4f6; letter-spacing: -0.005em;
+  list-style: none; }
+.gp-content .faq-item .faq-icon { display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; flex-shrink: 0; color: #FFC900; font-size: 1.5em; font-weight: 300; line-height: 1; }
+.gp-content .faq-item .faq-q { flex: 1; }
+.gp-content .faq-item > div { padding: 14px 20px 18px 56px; border-top: 1px solid #29292b; background: transparent; }
+.gp-content .faq-item > div p { margin: 0; color: #B2B2B2; line-height: 1.55; font-size: 0.94em; }
+
+/* --- Gövde madde listesi --- */
+.gp-content .gp-list { margin: 14px 0 18px; padding: 0; list-style: none; color: #B2B2B2; }
+.gp-content .gp-list li { display: flex; gap: 11px; margin: 8px 0; align-items: flex-start;
+  line-height: 1.6; list-style: none; }
+.gp-content .gp-list-dot { flex-shrink: 0; margin-top: 10px; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gp-dot,#FFC900); }
+.gp-content .gp-list-check { flex-shrink: 0; margin-top: 2px; }
 /* FAQ + indicator */
-.faq-item .faq-icon { transition: transform 0.25s ease, color 0.2s; }
-.faq-item[open] .faq-icon { transform: rotate(45deg); color: #FFC900 !important; }
-.faq-item summary:hover .faq-icon { color: #f59e0b; }
+.gp-content .faq-item .faq-icon { transition: transform 0.25s ease, color 0.2s; }
+/* transform !important ZORUNLU: .faq-icon üzerinde gp-pulse-plus animasyonu çalışıyor ve
+   CSS animasyonları normal bildirimleri ezer; !important olmadan [open] dönüşü uygulanmaz. */
+.gp-content .faq-item[open] .faq-icon { transform: rotate(45deg) !important; color: #FFC900; }
+.gp-content .faq-item summary:hover .faq-icon { color: #f59e0b; }
 /* YouTube embed wrapper smaller + centered */
-.gp-yt-wrap { max-width: 560px; margin: 1.5em 0 !important; }
 /* Mobile: card-table responsive */
 @media (max-width: 700px) {
-  .gp-card-table-inner .card-row {
-    grid-template-columns: auto 1fr !important;
-    grid-template-rows: auto auto;
-    gap: 6px 12px !important;
-    padding: 14px 16px !important;
-  }
-  .gp-card-table-inner .card-row > .gp-badge {
-    grid-row: 1; grid-column: 1;
-    font-size: 0.54em !important;
-    min-width: auto !important;
-    padding: 4px 9px !important;
-    letter-spacing: 0.08em !important;
-  }
-  .gp-card-table-inner .card-row > .gp-name {
-    grid-row: 1; grid-column: 2;
-    font-size: 0.95em !important;
-    align-self: center;
-  }
-  .gp-card-table-inner .card-row > .gp-meta {
-    grid-row: 2; grid-column: 1 / -1;
-    text-align: left !important;
-    font-size: 0.78em !important;
-    padding-left: 0 !important;
-  }
-  .gp-game-inline > aside { float: none !important; width: 100% !important; margin: 0 0 16px 0 !important; }
-  .gp-yt-wrap { margin: 1em 0 !important; }
+  .gp-content .gp-game-inline > aside { float: none; width: 100%; margin: 0 0 16px 0; }
+  .gp-content .gp-yt-wrap { margin: 1em 0 !important; }
 }
 
 /* ===== v10 genel revizeler: embed 16:9, tablo alt kapatma, kupa ortala, FAQ sol, mobil responsive ===== */
 /* ===== YouTube embed: 16:9 (kare değil), sola dayalı, küçük ===== */
-.gp-yt-wrap { max-width: 560px; margin: 1.5em 0 !important; }
-.gp-yt-wrap iframe { display: block; width: 100% !important; aspect-ratio: 16 / 9 !important; height: auto !important; border: 0; border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.5); }
+.gp-content .gp-yt-wrap { max-width: 560px; margin: 1.5em 0 !important; }
+.gp-content .gp-yt-wrap iframe { display: block; width: 100% !important; aspect-ratio: 16 / 9 !important; height: auto !important; border: 0; border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.5); }
 
 /* ===== Tabloların altını kapat: tek temiz çerçeve, son satır ayracı ===== */
-.table-wrap.gp-layer::before,
-.card-table.gp-layer::before { display: none !important; }
-.table-wrap { border: 1px solid #29292B !important; }
-.gp-card-table-inner { border: 1px solid #29292B !important; }
-.table-wrap tbody tr:last-child td { border-bottom: none !important; }
+.gp-content .table-wrap.gp-layer::before, .gp-content .card-table.gp-layer::before { display: none; }
+.gp-content .table-wrap { border: 1px solid #29292B; }
+.gp-content .gp-card-table-inner { border: 1px solid #29292B; }
 /* Gövde madde listeleri: nokta rengi Hızlı Özet bullet'ı ile aynı (#FFC900) */
-ul li::marker { color: #FFC900; }
-.table-wrap tbody tr { transition: background 0.15s ease; }
-.table-wrap tbody tr:hover > td { background: rgba(255,201,0,0.07) !important; }
-.table-wrap tbody tr:hover > td:first-child { color: #FFC900 !important; }
+.gp-content ul li::marker { color: #FFC900; }
+.gp-content .table-wrap tbody tr { transition: background 0.15s ease; }
+.gp-content .table-wrap tbody tr:hover > td { background: rgba(255,201,0,0.07); }
+.gp-content .table-wrap tbody tr:hover > td:first-child { color: #FFC900; }
 
 /* ===== Card-table başlığı (kupa + başlık) tam ortalı ===== */
-.card-table-wrap > div:first-child { text-align: center; }
-.card-table-wrap h3 { display: flex !important; align-items: center !important; justify-content: center !important; gap: 9px !important; }
-.card-table-wrap h3 > svg { margin-right: 0 !important; vertical-align: middle !important; }
-.card-table-wrap h3 > span { min-width: 0; }
+.gp-content .card-table-wrap > div:first-child { text-align: center; }
+.gp-content .card-table-wrap h3 { display: flex; align-items: center; justify-content: center; gap: 9px;
+  font-weight: 800; letter-spacing: -0.01em; margin: 0; }
+.gp-content .card-table-wrap h3 > svg { margin-right: 0; vertical-align: middle; }
+.gp-content .gp-ct-title { min-width: 0; background: linear-gradient(110deg,#FFC900,#f59e0b);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
 /* ===== FAQ soruları biraz daha sola dayalı ===== */
-.faq-item summary { padding: 14px 16px !important; gap: 10px !important; }
+.gp-content .faq-item summary { padding: 14px 16px; gap: 10px; }
 
 /* ===== MOBİL (<=700px) ===== */
 @media (max-width: 700px) {
-  /* --- Karşılaştırma tablosu: yatay kaydırma yok, tüm sütunlar görünür, okunur punto --- */
-  .table-wrap > div { overflow-x: visible !important; }
-  .table-wrap table { font-size: 0.76em !important; table-layout: fixed; width: 100% !important; }
-  .table-wrap th, .table-wrap td {
-    padding: 10px 7px !important; white-space: normal !important;
-    word-break: normal !important; overflow-wrap: break-word; hyphens: none;
-    vertical-align: middle !important; line-height: 1.4 !important;
-  }
-  /* Başlıklar mobilde de hücreye ORTALI (masaüstündeki inline text-align:center ile aynı) */
-  .table-wrap th { letter-spacing: 0.04em !important; text-align: center !important; vertical-align: middle !important; }
-  .table-wrap td { text-align: left; }
   /* Uzun tür etiketi dar sütunda taşmasın */
-  .table-wrap .gp-genre { white-space: normal !important; }
-  /* Sütun genişlikleri sütun SAYISINA göre (3 sütunlu GFN tablosunda son sütun ezilmesin) */
-  .table-wrap tr > :first-child:nth-last-child(3) { width: 40%; }
-  .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(2) { width: 32%; }
-  .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3) { width: 28%; }
-  .table-wrap tr > :first-child:nth-last-child(4) { width: 34%; }
-  .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(2) { width: 26%; }
-  .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(3) { width: 20%; }
-  .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(4) { width: 20%; }
+  .gp-content .table-wrap .gp-genre { white-space: normal; }
 
   /* --- Card-table: TEK SATIR + rozet sütunu SABİT (oyun isimleri hizalı) --- */
-  .gp-card-table-inner .card-row {
-    grid-template-columns: 108px 1fr auto !important;
-    grid-template-rows: auto !important;
-    gap: 4px 9px !important; padding: 11px 12px !important; align-items: center !important;
+  .gp-content .gp-card-table-inner .card-row {
+    grid-template-columns: 108px 1fr auto;
+    grid-template-rows: auto;
+    gap: 4px 9px; padding: 11px 12px; align-items: center;
   }
-  .gp-card-table-inner .card-row > .gp-badge {
-    grid-row: 1 !important; grid-column: 1 !important;
-    width: 100% !important; min-width: 0 !important; box-sizing: border-box;
-    font-size: 0.55em !important; padding: 3px 5px !important; letter-spacing: 0.02em !important; text-align: center;
+  .gp-content .gp-card-table-inner .card-row > .gp-badge {
+    grid-row: 1; grid-column: 1;
+    width: 100%; min-width: 0; box-sizing: border-box;
+    font-size: 0.55em; padding: 3px 5px; letter-spacing: 0.02em; text-align: center;
   }
-  .gp-card-table-inner .card-row > .gp-name {
-    grid-row: 1 !important; grid-column: 2 !important; font-size: 0.8em !important; line-height: 1.28 !important;
+  .gp-content .gp-card-table-inner .card-row > .gp-name {
+    grid-row: 1; grid-column: 2; font-size: 0.8em; line-height: 1.28;
   }
-  .gp-card-table-inner .card-row > .gp-meta {
-    grid-row: 1 !important; grid-column: 3 !important; text-align: right !important;
-    font-size: 0.62em !important; padding-left: 0 !important; white-space: normal !important;
-    max-width: 112px; line-height: 1.35 !important;
+  .gp-content .gp-card-table-inner .card-row > .gp-meta {
+    grid-row: 1; grid-column: 3; text-align: right;
+    font-size: 0.62em; padding-left: 0; white-space: normal;
+    max-width: 112px; line-height: 1.35;
   }
 
   /* --- FAQ: soru ve cevap sola dayalı, okunur --- */
-  .faq-item summary { padding: 13px 13px !important; gap: 9px !important; font-size: 0.95em !important; }
-  .faq-item > div { padding: 12px 14px 15px 14px !important; }
+  .gp-content .faq-item summary { padding: 13px 13px; gap: 9px; font-size: 0.95em; }
+  .gp-content .faq-item > div { padding: 12px 14px 15px 14px; }
 
   /* --- Hızlı Özet (TLDR): kompakt ve okunur --- */
-  .tldr-block { padding: 16px !important; }
-  .tldr-block li { gap: 9px !important; }
 
-  /* --- CTA blokları: kompakt, butonlar tam genişlik --- */
-  .cta-end .gp-conic-inner, .cta-paketler .gp-conic-inner, .cta-oyunlar .gp-conic-inner, .cta-compact .gp-conic-inner { padding: 18px 16px !important; }
-  .cta-end a, .cta-paketler a, .cta-oyunlar a { flex: 1 1 100% !important; justify-content: center !important; box-sizing: border-box; }
-  .cta-end .gp-conic-inner > div:last-child { gap: 9px !important; }
-
-  /* --- info-card: 2 sütun --- */
-  .info-card { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
-}
+  /* --- info-card: 2 sütun --- */}
 
 /* ================= v10.3: onaylanan tipografi + responsive ince ayarlar ================= */
 /* Yumuşak ToC kaydırma (saf CSS, JS yok) */
-html { scroll-behavior: smooth; }
-h1, h2, h3, h4 { scroll-margin-top: 28px; }
+
+.gp-content h1, .gp-content h2, .gp-content h3, .gp-content h4 { scroll-margin-top: 28px; }
 /* Başlık ölçekleri (boyut + line-height; renk CMS'ten gelir, atanmaz) */
-h1 { font-size: 40px !important; line-height: 48px !important; }
-h2 { font-size: 30px !important; line-height: 38px !important; }
-h3 { font-size: 24px !important; line-height: 31px !important; }
-h4 { font-size: 20px !important; line-height: 27px !important; }
+.gp-content h1 { font-size: 40px; line-height: 48px; }
+.gp-content h2 { font-size: 28px; line-height: 36px; }
+.gp-content h3 { font-size: 24px; line-height: 32px; }
+.gp-content h4 { font-size: 20px; line-height: 28px; }
 /* Gövde paragrafı (inline-stilli callout/CTA p'leri etkilenmez) */
-p { font-size: 18px; line-height: 27px; }
+.gp-content p { font-size: 20px; line-height: 24px; }
 @media (max-width: 700px) {
-  h1 { font-size: 24px !important; line-height: 30px !important; }
-  h2 { font-size: 20px !important; line-height: 26px !important; }
-  h3 { font-size: 20px !important; line-height: 26px !important; }
-  h4 { font-size: 18px !important; line-height: 24px !important; }
-  p  { font-size: 17px; line-height: 26px; }
+  .gp-content h1 { font-size: 30px; line-height: 1.15; }
+  .gp-content h2 { font-size: 22px; line-height: 1.2; }
+  .gp-content h3 { font-size: 19px; line-height: 1.25; }
+  .gp-content h4 { font-size: 17px; line-height: 1.3; }
+  .gp-content p { font-size: 16px; line-height: 24px; }
 }
 /* TLDR "Hızlı Özet": başlık ölçeği + sıkı iç boşluk */
-.tldr-block .gp-conic-inner { padding: 15px 18px !important; }
-.tldr-block .gp-conic-inner > :first-child { margin: 0 0 8px !important; font-size: 22px !important; line-height: 29px !important; }
-.tldr-block ul { margin: 0 !important; }
-.tldr-block ul li { margin: 0 0 8px !important; }
-.tldr-block ul li:last-child { margin-bottom: 0 !important; }
-.tldr-block ul li span:last-child { font-size: 18px !important; line-height: 27px !important; }
-.tldr-block { margin: 20px 0 !important; }
-@media (max-width: 700px) {
-  .tldr-block .gp-conic-inner > :first-child { font-size: 18px !important; line-height: 24px !important; }
-  .tldr-block ul li span:last-child { font-size: 16px !important; line-height: 24px !important; }
-}
-/* CTA blokları biraz küçültüldü (mobilde büyük duruyordu): başlık/eyebrow/açıklama/buton -1, iç boşluk azaldı */
-.cta-end .gp-conic-inner, .cta-paketler .gp-conic-inner, .cta-oyunlar .gp-conic-inner, .cta-compact .gp-conic-inner { padding: 20px !important; }
-.cta-end [style*="font-size:32px"] { font-size: 24px !important; line-height: 30px !important; }
-.cta-paketler [style*="font-size:24px"], .cta-oyunlar [style*="font-size:24px"], .cta-compact [style*="font-size:24px"] { font-size: 22px !important; line-height: 28px !important; }
-.cta-end [style*="font-size:12px"], .cta-paketler [style*="font-size:12px"], .cta-oyunlar [style*="font-size:12px"], .cta-compact [style*="font-size:12px"] { font-size: 11px !important; }
-.cta-end [style*="font-size:16px"], .cta-paketler [style*="font-size:16px"], .cta-oyunlar [style*="font-size:16px"], .cta-compact [style*="font-size:16px"] { font-size: 16px !important; line-height: 20px !important; }
-@media (max-width: 700px) {
-  .cta-end .gp-conic-inner, .cta-paketler .gp-conic-inner, .cta-oyunlar .gp-conic-inner, .cta-compact .gp-conic-inner { padding: 14px 14px !important; }
-  .cta-end [style*="font-size:32px"] { font-size: 20px !important; line-height: 26px !important; }
-  .cta-paketler [style*="font-size:24px"], .cta-oyunlar [style*="font-size:24px"], .cta-compact [style*="font-size:24px"] { font-size: 19px !important; line-height: 25px !important; }
-  /* mobil YÜKSEKLİK: eleman arası boşluklar + açıklama satır aralığı + buton yüksekliği kısıldı */
-  .cta-end .gp-conic-inner > div:first-child, .cta-paketler .gp-conic-inner > div:first-child, .cta-oyunlar .gp-conic-inner > div:first-child { margin-bottom: 8px !important; }
-  .cta-end [style*="font-size:32px"], .cta-paketler [style*="font-size:24px"], .cta-oyunlar [style*="font-size:24px"], .cta-compact [style*="font-size:24px"] { margin-bottom: 4px !important; }
-  .cta-end p, .cta-paketler p, .cta-oyunlar p, .cta-compact p { margin-bottom: 12px !important; line-height: 1.32 !important; }
-  .cta-end a, .cta-paketler a, .cta-oyunlar a, .cta-compact a { padding-top: 9px !important; padding-bottom: 9px !important; }
-  /* End CTA: iki buton mobilde YAN YANA (alt alta 2 satır yerine tek sıra = ek yükseklik kazancı) */
-  .cta-end .gp-conic-inner > div:last-child { gap: 8px !important; flex-wrap: nowrap !important; }
-  .cta-end .gp-conic-inner > div:last-child > a { flex: 1 1 0 !important; min-width: 0 !important; padding-left: 8px !important; padding-right: 8px !important; font-size: 12.5px !important; line-height: 1.2 !important; text-align: center !important; white-space: normal !important; }
-}
+@media (max-width: 700px) {}
 /* info-card / gp-cell responsive: dar ekranda taşma yok + değer-etiket küçülür */
-@media (max-width: 700px) {
-  .info-card { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
-  .gp-cell { padding: 14px 10px !important; }
-  .gp-cell > div:first-child { font-size: 19px !important; line-height: 25px !important; }
-  .gp-cell > div:last-child  { font-size: 13px !important; line-height: 18px !important; }
+@media (max-width: 700px) {  .gp-content .gp-cell > div:last-child { font-size: 13px; line-height: 18px; }
 }
-@media (max-width: 400px) {
-  .gp-cell > div:first-child { font-size: 17px !important; line-height: 23px !important; }
-  .gp-cell > div:last-child  { font-size: 12px !important; line-height: 16px !important; }
+@media (max-width: 400px) {  .gp-content .gp-cell > div:last-child { font-size: 12px; line-height: 16px; }
 }
 /* Tablolar mobilde: BAŞLIK SATIRI KALIR; hücreler dikey ortalı; içerik responsive; GFN-özel düzen 3 sütuna scoped */
 @media (max-width: 700px) {
-  .table-wrap > div { overflow-x: visible !important; }
-  .table-wrap table { font-size: 12px !important; table-layout: fixed !important; width: 100% !important; }
-  .table-wrap thead { display: table-header-group !important; }
-  .table-wrap th, .table-wrap td { padding: 10px 6px !important; vertical-align: middle !important; line-height: 1.35 !important; overflow-wrap: normal !important; word-break: normal !important; hyphens: none !important; }
-  .table-wrap th { font-size: 13px !important; letter-spacing: 0.02em !important; text-align: center !important; padding: 12px 6px !important; }
-  .table-wrap td { text-align: left !important; }
-  .table-wrap td:first-child { color: #fff !important; }
-  .table-wrap td:first-child div { font-size: 10.5px !important; }
-  .table-wrap td [style*="inline-flex"] { flex-wrap: wrap !important; gap: 5px 6px !important; justify-content: center !important; }
-  .table-wrap td [style*="border-radius:6px"] { font-size: 10.5px !important; padding: 3px 7px !important; }
-  .table-wrap td svg { width: 11px !important; height: 11px !important; }
+  .gp-content .table-wrap > div { overflow-x: visible; }
+  .gp-content .table-wrap table { font-size: 12px; table-layout: fixed; width: 100%; }
+  .gp-content .table-wrap thead { display: table-header-group; }
+  .gp-content .table-wrap th, .gp-content .table-wrap td { padding: 10px 6px; vertical-align: middle; line-height: 1.35; overflow-wrap: normal; word-break: normal; hyphens: none; }
+  .gp-content .table-wrap th { font-size: 13px; letter-spacing: 0.02em; text-align: center; padding: 12px 6px; }
+  .gp-content .table-wrap td { text-align: left; }
+  .gp-content .table-wrap td:first-child { color: #fff; }
+  .gp-content .table-wrap td:first-child div { font-size: 10.5px; }
+  .gp-content .table-wrap td .gp-genres { flex-wrap: wrap; gap: 5px 6px; justify-content: center; }
+  .gp-content .table-wrap td .gp-genre { font-size: 10.5px; padding: 3px 7px; }
+  .gp-content .table-wrap td svg { width: 11px; height: 11px; }
   /* 3 sütunlu GFN tablosu (Oyun / Tür / Platform-Çıkış): oyun adı büyük, tür ortalı, platform küçük + ok bitişik */
-  .table-wrap tr > :first-child:nth-last-child(3) { width: 40% !important; font-size: 14px !important; }
-  .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(2) { width: 26% !important; text-align: center !important; }
-  .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3) { width: 34% !important; overflow-wrap: anywhere !important; font-size: 11px !important; }
-  .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3) a { white-space: nowrap !important; }
-  .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3) a svg { margin-left: 2px !important; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) { width: 40%; font-size: 14px; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(2) { width: 26%; text-align: center; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3) { width: 34%; overflow-wrap: anywhere; font-size: 11px; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3) a { white-space: nowrap; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3) a svg { margin-left: 2px; }
 }
 @media (max-width: 400px) {
-  .table-wrap th { font-size: 12px !important; }
-  .table-wrap td [style*="border-radius:6px"] { font-size: 10px !important; padding: 2px 6px !important; }
-  .table-wrap tr > :first-child:nth-last-child(3) { font-size: 13px !important; }
-  .table-wrap tr > :first-child:nth-last-child(3) div { font-size: 10px !important; }
-  .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3) { font-size: 10px !important; }
+  .gp-content .table-wrap th { font-size: 12px; }
+  .gp-content .table-wrap td .gp-genre { font-size: 10px; padding: 2px 6px; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) { font-size: 13px; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) div { font-size: 10px; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3) { font-size: 10px; }
 }
 
 /* ================= v10.4: kart arka planı şeffaf + not/info-card/CTA boyut + 4-sütun tablo ================= */
 /* Kart arka planları ŞEFFAF: CMS/site zaten siyah; #161616/#0D0D0D kutu izini kaldırır.
    Parlayan kenar (conic) ve çerçeveler durduğu için kartlar yine ayrışır; not kutuları kendi tint'ini korur. */
-.tldr-block .gp-conic-inner,
-.cta-end .gp-conic-inner, .cta-paketler .gp-conic-inner, .cta-oyunlar .gp-conic-inner, .cta-compact .gp-conic-inner,
-.gp-cell, .table-wrap, .gp-table, .card-table, .gp-card-table-inner, .gp-layer { background: transparent !important; }
+.gp-content .tldr-block .gp-conic-inner, .gp-content .gp-cell, .gp-content .table-wrap, .gp-content .gp-table, .gp-content .card-table, .gp-content .gp-card-table-inner, .gp-content .gp-layer { background: transparent; }
 /* Not kutuları (Editör Notu / Hatırlatma): gövdeyle tutarlı 18 / mobil 17 */
-.editor-note p, .highlight-box p { font-size: 18px !important; line-height: 27px !important; }
-@media (max-width: 700px) { .editor-note p, .highlight-box p { font-size: 17px !important; line-height: 26px !important; } }
 /* Info-card değer: desktop 22 (mobil skil değeri 19/17 korunur) */
-@media (min-width: 701px) { .gp-cell > div:first-child { font-size: 22px !important; line-height: 29px !important; } }
-/* CTA butonları: dar alanda "Paketleri" alt satıra, dengeli dağıt */
-.cta-end a, .cta-paketler a, .cta-oyunlar a, .cta-compact a { white-space: normal !important; text-wrap: balance; }
 /* Mobil 4-sütunlu GFN tablosu (Oyun / Tür / Stüdyo / Platform-Çıkış): oyun adı-stüdyo-platform aynı punto (12) */
 @media (max-width: 700px) {
-  .table-wrap tr > :first-child:nth-last-child(4) { width: 30% !important; }
-  .table-wrap tr > :first-child:nth-last-child(4) div { font-size: 12px !important; font-weight: 600 !important; }
-  .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(2) { width: 20% !important; text-align: center !important; }
-  .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(3) { width: 24% !important; font-size: 12px !important; }
-  .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(4) { width: 26% !important; font-size: 12px !important; overflow-wrap: anywhere !important; }
-  .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(4) a { white-space: nowrap !important; }
-  .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(4) a svg { margin-left: 2px !important; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) { width: 30%; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) div { font-size: 12px; font-weight: 600; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(2) { width: 20%; text-align: center; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(3) { width: 24%; font-size: 12px; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(4) { width: 26%; font-size: 12px; overflow-wrap: anywhere; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(4) a { white-space: nowrap; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(4) a svg { margin-left: 2px; }
 }
 
 /* ================= v10.5: floating ToC kuralları ANA blokta (CLS düzeltmesi) =================
@@ -417,27 +429,172 @@ p { font-size: 18px; line-height: 27px; }
    (max-width:900px) konum top:120px -> bottom:16px değiştiği için tarayıcı elemanı önce üstte
    boyayıp sonra aşağı taşıyordu = ~0.125 CLS. Kurallar artık eleman parse edilmeden ÖNCE
    uygulandığından ilk boyama doğru konumda oluyor (kayma 0). Konum/boyut inline YAZILMAZ. */
-.floating-toc { position: fixed; top: 120px; right: 16px; z-index: 100; max-width: 320px;
+.gp-content .floating-toc { position: fixed; top: 120px; right: 16px; z-index: 100; max-width: 320px;
   background: #161616; border: 1px solid #29292B; border-radius: 16px; box-shadow: 0 8px 28px rgba(0,0,0,0.6); }
-.floating-toc > summary { display: flex; align-items: center; padding: 16px 20px; color: #fff; cursor: pointer;
+.gp-content .floating-toc > summary { display: flex; align-items: center; padding: 16px 20px; color: #fff; cursor: pointer;
   font-family: 'New Science', GreycliffCF, -apple-system, sans-serif; font-weight: 600;
   font-size: 20px; line-height: 28px; list-style: none; user-select: none; }
-.floating-toc > ul { margin: 0; padding: 0 20px 16px; max-height: 60vh; overflow-y: auto; list-style: none; }
-.floating-toc summary::-webkit-details-marker { display: none; }
-.floating-toc summary::marker { display: none; }
-.floating-toc ul li a:hover { color: #FFC900 !important; }
-.gp-toptop:hover { background: rgba(255,201,0,0.15); }
+.gp-content .floating-toc > ul { margin: 0; padding: 0 20px 16px; max-height: 60vh; overflow-y: auto; list-style: none; }
+.gp-content .floating-toc summary::-webkit-details-marker { display: none; }
+.gp-content .floating-toc summary::marker { display: none; }
+.gp-content .floating-toc ul li a:hover { color: #FFC900; }
+.gp-content .gp-toptop:hover { background: rgba(255,201,0,0.15); }
+/* --- İçindekiler maddeleri --- */
+.gp-content .floating-toc ul li { display: flex; gap: 10px; margin: 12px 0; list-style: none; }
+.gp-content .floating-toc ul li a { color: #B2B2B2; text-decoration: none; font-size: 16px; line-height: 24px; }
+.gp-content .gp-toc-num { color: #FFC900; font-size: 12px; line-height: 16px; font-weight: 700;
+  flex-shrink: 0; margin-top: 4px; }
+.gp-content .gp-toc-gap { width: 16px; flex-shrink: 0; }
+.gp-content .gp-toptop { margin-left: 12px; display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid #FFC900; flex-shrink: 0;
+  cursor: pointer; line-height: 0; vertical-align: middle; }
+.gp-content .gp-toptop svg { display: block; width: 14px; height: 14px; }
 @media (max-width: 900px) {
-  .floating-toc { top: auto; bottom: 16px; max-width: 240px; }
+  .gp-content .floating-toc { top: auto; bottom: 16px; max-width: 240px; }
 }
 @media (max-width: 700px) {
-  .floating-toc > summary { font-size: 16px; line-height: 22px; padding: 13px 16px; }
-  .floating-toc > ul { padding: 0 16px 13px; }
-  .floating-toc ul li a { font-size: 13px !important; line-height: 19px !important; }
-  .floating-toc ul li span:not(.gp-toptop) { font-size: 10px !important; }
-  .gp-toptop { width: 21px !important; height: 21px !important; margin-left: 10px !important; }
-  .gp-toptop svg { width: 12px !important; height: 12px !important; }
+  .gp-content .floating-toc > summary { font-size: 16px; line-height: 22px; padding: 13px 16px; }
+  .gp-content .floating-toc > ul { padding: 0 16px 13px; }
+  .gp-content .floating-toc ul li a { font-size: 13px; line-height: 19px; }
+  .gp-content .floating-toc ul li span:not(.gp-toptop) { font-size: 10px; }
+  .gp-content .gp-toptop { width: 21px; height: 21px; margin-left: 10px; }
+  .gp-content .gp-toptop svg { width: 12px; height: 12px; }
 }
+
+/* ================= v10.7 - Geçiş 1: TLDR / info-card / not kutuları =================
+   Inline stiller kaldırıldı; kurallar burada. .gp-content öneki specificity'yi (0,2,x)
+   yaptığı için GEREKMİYOR. Dinamik kalan tek şey: --gp-glow (conic rengi). */
+
+/* --- TLDR "Hızlı Özet" --- */
+.gp-content .tldr-block { margin: 20px 0; }
+.gp-content .tldr-block .gp-conic-inner { border-radius: 10.5px; padding: 15px 18px; }
+.gp-content .gp-tldr-title { font-family: 'New Science', GreycliffCF, -apple-system, sans-serif;
+  font-size: 22px; line-height: 29px; font-weight: 600; color: #fff; margin: 0 0 8px;
+  display: flex; align-items: center; flex-wrap: wrap; }
+.gp-content .gp-tldr-icon { color: #FFC900; display: inline-flex; }
+.gp-content .gp-tldr-rt { display: inline-flex; align-items: center; gap: 8px; margin-left: 20px;
+  font-family: GreycliffCF, -apple-system, sans-serif; font-size: 14px; line-height: 20px;
+  font-weight: 500; color: #B2B2B2; }
+.gp-content .gp-tldr-rt-dot { width: 4px; height: 4px; border-radius: 50%; background: #B2B2B2; flex-shrink: 0; }
+.gp-content .tldr-block ul { margin: 0; padding: 0; list-style: none; }
+.gp-content .tldr-block ul li { display: flex; gap: 10px; margin: 0 0 8px; list-style: none; align-items: flex-start; }
+.gp-content .tldr-block ul li:last-child { margin-bottom: 0; }
+.gp-content .gp-tldr-bullet { color: #FFC900; font-weight: 700; font-size: 16px; line-height: 24px; flex-shrink: 0; }
+.gp-content .gp-tldr-text { color: #B2B2B2; font-size: 18px; line-height: 27px; }
+@media (max-width: 700px) {
+  .gp-content .tldr-block { padding: 16px; }
+  .gp-content .tldr-block ul li { gap: 9px; }
+  .gp-content .gp-tldr-title { font-size: 18px; line-height: 24px; }
+  .gp-content .gp-tldr-text { font-size: 16px; line-height: 24px; }
+}
+
+/* --- info-card / stat hücreleri --- */
+.gp-content .info-card { margin: 24px 0; display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.gp-content .info-card.gp-check { display: block; background: #0D0D0D; border: 1px solid #29292B;
+  border-radius: 12px; padding: 16px 22px; }
+.gp-content .gp-check-row { display: flex; align-items: center; gap: 11px; margin: 8px 0; }
+.gp-content .gp-check-row span { color: #e5e7eb; font-size: 16px; font-weight: 500; }
+.gp-content .gp-cell { border: 1px solid #29292B; border-radius: 12px; padding: 20px; text-align: center; }
+.gp-content .gp-cell-value { font-family: 'New Science', GreycliffCF, -apple-system, sans-serif;
+  font-weight: 600; font-size: 22px; line-height: 29px; color: #FFC900; margin-bottom: 6px; overflow-wrap: break-word; }
+.gp-content .gp-cell-label { color: #B2B2B2; font-size: 16px; line-height: 24px; font-weight: 500; }
+@media (max-width: 700px) {
+  .gp-content .info-card { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .gp-content .gp-cell { padding: 14px 10px; }
+  .gp-content .gp-cell-value { font-size: 19px; line-height: 25px; }
+  .gp-content .gp-cell-label { font-size: 13px; line-height: 18px; }
+}
+@media (max-width: 400px) {
+  .gp-content .gp-cell-value { font-size: 17px; line-height: 23px; }
+  .gp-content .gp-cell-label { font-size: 12px; line-height: 16px; }
+}
+
+/* --- Editör Notu / Hatırlatma --- */
+.gp-content .editor-note, .gp-content .highlight-box { border-radius: 12px;
+  padding: 18px 24px 18px 20px; margin: 24px 0; display: flex; gap: 16px; align-items: stretch; }
+.gp-content .editor-note { background: rgba(255,201,0,0.06); }
+.gp-content .highlight-box { background: rgba(255,255,255,0.04); }
+.gp-content .gp-note-bar { width: 4px; border-radius: 2px; background: #FFC900; flex-shrink: 0; }
+.gp-content .gp-note-eyebrow { color: #FFC900; font-size: 12px; line-height: 16px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; display: flex; align-items: center; }
+.gp-content .editor-note p, .gp-content .highlight-box p { margin: 0; color: #fff; font-size: 18px; line-height: 27px; }
+@media (max-width: 700px) {
+  .gp-content .editor-note p, .gp-content .highlight-box p { font-size: 17px; line-height: 26px; }
+}
+
+/* ================= v10.7 - Geçiş 2: CTA blokları =================
+   4 CTA tipi (paketler / oyunlar / end / compact) inline stilden sınıfa taşındı.
+   .gp-content öneki specificity'yi yükselttiği için !important gerekmiyor. */
+.gp-content .cta-paketler, .gp-content .cta-oyunlar, .gp-content .cta-compact { margin: 32px 0; }
+.gp-content .cta-end { margin: 40px 0 24px; }
+.gp-content .cta-paketler .gp-conic-inner, .gp-content .cta-oyunlar .gp-conic-inner,
+.gp-content .cta-end .gp-conic-inner, .gp-content .cta-compact .gp-conic-inner {
+  border-radius: 10.5px; padding: 20px; background: transparent; }
+
+.gp-content .gp-cta-eyebrow { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+.gp-content .cta-end .gp-cta-eyebrow { margin-bottom: 24px; }
+.gp-content .gp-cta-eyebrow span { color: #FFC900; font-size: 11px; line-height: 16px; font-weight: 700;
+  letter-spacing: 0.08em; display: inline-flex; align-items: center; }
+
+.gp-content .gp-cta-title { font-family: 'New Science', GreycliffCF, -apple-system, sans-serif;
+  font-weight: 600; font-size: 22px; line-height: 28px; color: #fff; margin-bottom: 8px; }
+.gp-content .cta-end .gp-cta-title { font-size: 24px; line-height: 30px; }
+
+.gp-content .gp-cta-desc { color: #B2B2B2; font-size: 16px; line-height: 20px; margin: 0 0 20px; max-width: 760px; }
+.gp-content .cta-end .gp-cta-desc { margin-bottom: 24px; }
+
+.gp-content .gp-cta-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+.gp-content .gp-btn { display: inline-flex; align-items: center; justify-content: center;
+  padding: 12px 16px; border-radius: 8px; font-weight: 700; font-size: 16px; line-height: 20px;
+  text-decoration: none; white-space: normal; text-wrap: balance; box-sizing: border-box; }
+.gp-content .gp-btn-solid { background: #FFC900; color: #131313; }
+.gp-content .gp-btn-outline { background: transparent; border: 1px solid #FFC900; color: #FFC900; }
+.gp-content a.gp-btn-solid:hover { color: #131313; }
+.gp-content a.gp-btn-outline:hover { color: #FFC900; }
+
+/* compact CTA (öne çıkan oyun) */
+.gp-content .cta-compact .gp-conic-inner { display: flex; align-items: center;
+  justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.gp-content .gp-cta-compact-main { flex: 1; min-width: 260px; }
+.gp-content .gp-cta-compact-tagline { color: #B2B2B2; font-size: 16px; line-height: 20px; }
+.gp-content .gp-btn-lg { padding: 14px 24px; font-weight: 600; }
+
+@media (max-width: 700px) {
+  .gp-content .cta-paketler .gp-conic-inner, .gp-content .cta-oyunlar .gp-conic-inner,
+  .gp-content .cta-end .gp-conic-inner, .gp-content .cta-compact .gp-conic-inner { padding: 14px; }
+  .gp-content .gp-cta-eyebrow, .gp-content .cta-end .gp-cta-eyebrow { margin-bottom: 8px; }
+  .gp-content .gp-cta-title { font-size: 19px; line-height: 25px; margin-bottom: 4px; }
+  .gp-content .cta-end .gp-cta-title { font-size: 20px; line-height: 26px; }
+  .gp-content .gp-cta-desc, .gp-content .cta-end .gp-cta-desc { margin-bottom: 12px; }
+  .gp-content .gp-btn { padding-top: 9px; padding-bottom: 9px; }
+  .gp-content .cta-paketler .gp-btn, .gp-content .cta-oyunlar .gp-btn { flex: 1 1 100%; }
+  /* End CTA: iki buton mobilde YAN YANA (alt alta 2 satır yerine tek sıra) */
+  .gp-content .gp-cta-actions { gap: 8px; flex-wrap: nowrap; }
+  .gp-content .gp-cta-actions .gp-btn { flex: 1 1 0; min-width: 0;
+    padding-left: 8px; padding-right: 8px; font-size: 12.5px; line-height: 1.2; text-align: center; }
+}
+
+
+
+/* ================= v10.6: renkler içerikte (site CSS'inden bağımsız) =================
+   Frontend notu: site tipografi/renk kuralları gövdeden çekildi. İçerik artık kendi rengini
+   kendi taşır. a:hover AYRI yazılır: global.scss'teki `a:hover{color:inherit}` (0,1,1) bizim
+   (0,0,1) kuralımızı yenerdi; .gp-content a:hover (0,2,1) ile eşitlenip sıra avantajı alınır.
+   Inline stilli öğeler (CTA butonları, tablo/ToC linkleri) inline rengini korur. */
+.gp-content { color: #B2B2B2; font-family: GreycliffCF, -apple-system, 'system-ui', 'Segoe UI', Roboto, sans-serif;
+  font-size: 20px; line-height: 24px; }
+@media (max-width: 700px) { .gp-content { font-size: 16px; line-height: 24px; } }
+.gp-content strong { font-weight: 700; }
+.gp-content p { color: #B2B2B2; }
+.gp-content h1, .gp-content h2, .gp-content h3, .gp-content h4 { color: #fff;
+  /* ÖNEMLİ: font-family eskiden yalnız önizleme <head>'indeydi; CMS'e gitmediği için canlıda
+     başlıklar New Science'ı hiç istemiyordu. Artık gövde CSS'i istiyor (frontend alias'ı ekledi). */
+  font-family: 'New Science', GreycliffCF, -apple-system, sans-serif; font-weight: 600; }
+.gp-content a { color: #FFC900; text-decoration: none; }
+.gp-content a:hover { color: #ffd94d; text-decoration: none; }
+
 </style>
 '''
 
@@ -460,24 +617,20 @@ def estimate_reading_time(html, wpm=200):
 # --- TLDR "Hızlı Özet" (Figma: #161616 kart + 1px gradient kenarlık #FFC516->#545454, sarı bullet) ---
 def render_tldr(items, reading_time=None):
     """items: 3-6 madde. reading_time: dakika (int) — verilirse başlığın sağında "N dk okuma" çıkar.
-    estimate_reading_time(body) ile hesaplanabilir."""
+    Stiller .gp-content sınıflarında (v10.7); burada inline stil YOK (dinamik --gp-glow hariç)."""
     rt_html = ""
     if reading_time:
-        rt_html = (f'<span style="display:inline-flex;align-items:center;gap:8px;margin-left:20px;'
-                   f"font-family:GreycliffCF,-apple-system,sans-serif;font-size:14px;line-height:20px;"
-                   f'font-weight:500;color:#B2B2B2;">'
-                   f'<span style="width:4px;height:4px;border-radius:50%;background:#B2B2B2;flex-shrink:0;"></span>'
+        rt_html = (f'<span class="gp-tldr-rt"><span class="gp-tldr-rt-dot"></span>'
                    f'{reading_time} dk okuma</span>')
     items_html = "\n".join(
-        f'    <li style="display:flex;gap:10px;margin:0 0 14px;list-style:none;align-items:flex-start;">'
-        f'<span style="color:#FFC900;font-weight:700;font-size:16px;line-height:24px;flex-shrink:0;">&bull;</span>'
-        f'<span style="color:#B2B2B2;font-size:16px;line-height:24px;">{x}</span></li>'
+        f'    <li><span class="gp-tldr-bullet">&bull;</span>'
+        f'<span class="gp-tldr-text">{x}</span></li>'
         for x in items
     )
-    return f'''<div class="tldr-block gp-conic" style="--gp-glow:#FFC900;margin:24px 0;">
-<div class="gp-conic-inner" style="background:#161616;border-radius:10.5px;padding:24px;">
-  <div style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-size:24px;line-height:32px;font-weight:600;color:#fff;margin:0 0 14px;display:flex;align-items:center;flex-wrap:wrap;"><span style="color:#FFC900;display:inline-flex;">{SVG_DOC}</span>Hızlı Özet{rt_html}</div>
-  <ul style="margin:0;padding:0;list-style:none;">
+    return f'''<div class="tldr-block gp-conic" style="--gp-glow:#FFC900;">
+<div class="gp-conic-inner">
+  <div class="gp-tldr-title"><span class="gp-tldr-icon">{SVG_DOC}</span>Hızlı Özet{rt_html}</div>
+  <ul>
 {items_html}
   </ul>
 </div>
@@ -490,41 +643,35 @@ def render_list(items, marker="dot", accent="#FFC900"):
     kılmak için kullan: ön sipariş/paket faydaları, sürüm-ürün farkları, "nelere dikkat" uyarıları,
     adımlar, kısa "neler biliniyor" özetleri. items: HTML string listesi (madde içinde <strong> olabilir).
     marker: 'dot' (renkli nokta) | 'check' (yeşil ✓). accent: nokta rengi (uyarılarda ör. '#f59e0b').
-    Inline-CSS + class='gp-list'; koyu temayla uyumlu, CMS'te tutarlı. Düz <ul><li> yerine bunu kullan."""
+    Stiller .gp-content sınıflarında (v10.7); dinamik kalan tek şey nokta rengi (--gp-dot)."""
     lis = []
     for x in items:
         if marker == "check":
-            m = f'<span style="flex-shrink:0;margin-top:2px;">{SVG_CHECK_GREEN}</span>'
+            m = f'<span class="gp-list-check">{SVG_CHECK_GREEN}</span>'
         else:
-            m = (f'<span style="flex-shrink:0;margin-top:10px;width:6px;height:6px;border-radius:50%;'
-                 f'background:{accent};"></span>')
-        lis.append(f'<li style="display:flex;gap:11px;margin:8px 0;align-items:flex-start;'
-                   f'line-height:1.6;list-style:none;">{m}<span>{x}</span></li>')
-    return ('<ul class="gp-list" style="margin:14px 0 18px;padding:0;list-style:none;color:#B2B2B2;">\n'
-            + "\n".join(lis) + "\n</ul>")
-
+            m = '<span class="gp-list-dot"></span>'
+        lis.append(f'<li>{m}<span>{x}</span></li>')
+    style = f' style="--gp-dot:{accent};"' if marker != "check" and accent != "#FFC900" else ''
+    return (f'<ul class="gp-list"{style}>\n' + "\n".join(lis) + "\n</ul>")
 
 # --- Info Strip / Stat kartları (Figma: #0D0D0D kart + #29292B kenarlık; DEĞER üstte New Science 28 sarı, etiket altta gri 16) ---
 def render_info_card(badges, style="grid"):
     """badges: [(label, value), ...] — DEĞER üstte büyük sarı, etiket altta.
-    Değer sayı olmak ZORUNDA DEĞİL: kısa bir metin ya da insight da olabilir
-    ("Monopoly", "Strateji ağırlıklı", "3 platform"). Kural: kısa tut (tercihen <= 22 karakter,
-    kartta 2 satırı geçmesin) ve yazının İÇİNDEN gelen gerçek bilgi olsun (uydurma metrik yok)."""
+    Değer sayı olmak ZORUNDA DEĞİL; kısa tut (<=22 karakter) ve yazının İÇİNDEN gelsin.
+    Stiller .gp-content sınıflarında (v10.7)."""
     if style == "checkmark":
-        items = []
-        for value in badges:
-            items.append(f'<div style="display:flex;align-items:center;gap:11px;margin:8px 0;">{SVG_CHECK_GREEN}<span style="color:#e5e7eb;font-size:16px;font-weight:500;">{value}</span></div>')
-        return f'''<div class="info-card" style="background:#0D0D0D;border:1px solid #29292B;border-radius:12px;padding:16px 22px;margin:24px 0;">
+        items = [f'<div class="gp-check-row">{SVG_CHECK_GREEN}<span>{v}</span></div>' for v in badges]
+        return f'''<div class="info-card gp-check">
 {chr(10).join(items)}
 </div>
 '''
     items = []
     for label, value in badges:
-        items.append(f'''  <div class="gp-cell" style="background:#0D0D0D;border:1px solid #29292B;border-radius:12px;padding:20px;text-align:center;">
-    <div style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-weight:600;font-size:24px;line-height:32px;color:#FFC900;margin-bottom:6px;overflow-wrap:break-word;">{value}</div>
-    <div style="color:#B2B2B2;font-size:16px;line-height:24px;font-weight:500;">{label}</div>
+        items.append(f'''  <div class="gp-cell">
+    <div class="gp-cell-value">{value}</div>
+    <div class="gp-cell-label">{label}</div>
   </div>''')
-    return f'''<div class="info-card" style="margin:24px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
+    return f'''<div class="info-card">
 {chr(10).join(items)}
 </div>
 '''
@@ -542,46 +689,46 @@ def render_meta(date, category="GAME+ Blog"):
 
 # --- Editör Notu (Figma: rgba(255,201,0,0.06) zemin + 4px sarı sol bar + sarı eyebrow; gövde beyaz 20/32) ---
 def render_editor_note(text, title="GAME+ EDİTÖR NOTU"):
-    return f'''<div class="editor-note" style="background:rgba(255,201,0,0.06);border-radius:12px;padding:18px 24px 18px 20px;margin:24px 0;display:flex;gap:16px;align-items:stretch;">
-  <div style="width:4px;border-radius:2px;background:#FFC900;flex-shrink:0;"></div>
+    return f'''<div class="editor-note">
+  <div class="gp-note-bar"></div>
   <div>
-    <div style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;">{SVG_DOC}{title}</div>
-    <p style="margin:0;color:#fff;font-size:1em;line-height:1.5;">{text}</p>
+    <div class="gp-note-eyebrow">{SVG_DOC}{title}</div>
+    <p>{text}</p>
   </div>
 </div>
 '''
 
 # --- Hatırlatma (Figma: rgba(255,255,255,0.04) zemin + 4px sarı sol bar + sarı eyebrow; gövde beyaz 20/32) ---
 def render_highlight(text, title="Hatırlatma"):
-    return f'''<div class="highlight-box" style="background:rgba(255,255,255,0.04);border-radius:12px;padding:18px 24px 18px 20px;margin:24px 0;display:flex;gap:16px;align-items:stretch;">
-  <div style="width:4px;border-radius:2px;background:#FFC900;flex-shrink:0;"></div>
+    return f'''<div class="highlight-box">
+  <div class="gp-note-bar"></div>
   <div>
-    <div style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;">{SVG_BULB}{title}</div>
-    <p style="margin:0;color:#fff;font-size:1em;line-height:1.5;">{text}</p>
+    <div class="gp-note-eyebrow">{SVG_BULB}{title}</div>
+    <p>{text}</p>
   </div>
 </div>
 '''
 
 # --- CTA Paketler (Figma CTA kart dili: #161616, ★ eyebrow, dolu sarı buton; GA4 id=packages-button) ---
 def render_cta_paketler(headline, desc):
-    return f'''<div class="cta-paketler gp-conic" style="--gp-glow:#FFC900;margin:32px 0;">
-<div class="gp-conic-inner" style="background:#161616;border-radius:10.5px;padding:24px;">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;"><span style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.08em;display:inline-flex;align-items:center;">{SVG_SPARKLE}GAME+ &bull; BULUT OYUN</span></div>
-  <div style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-weight:600;font-size:24px;line-height:32px;color:#fff;margin-bottom:8px;">{headline}</div>
-  <p style="color:#B2B2B2;font-size:16px;line-height:24px;margin:0 0 20px;max-width:760px;">{desc}</p>
-  <a id="packages-button" href="https://gameplus.com.tr/gfn/paketler" style="display:inline-flex;align-items:center;justify-content:center;background:#FFC900;color:#131313;padding:12px 16px;border-radius:8px;font-weight:700;font-size:16px;line-height:20px;text-decoration:none;">GeForce NOW Paketleri &rarr;</a>
+    return f'''<div class="cta-paketler gp-conic" style="--gp-glow:#FFC900;">
+<div class="gp-conic-inner">
+  <div class="gp-cta-eyebrow"><span>{SVG_SPARKLE}GAME+ &bull; BULUT OYUN</span></div>
+  <div class="gp-cta-title">{headline}</div>
+  <p class="gp-cta-desc">{desc}</p>
+  <a class="gp-btn gp-btn-solid" id="packages-button" href="https://gameplus.com.tr/gfn/paketler">GeForce NOW Paketleri &rarr;</a>
 </div>
 </div>
 '''
 
 # --- CTA Oyunlar (kontur sarı buton; GA4 id=games-button) ---
 def render_cta_oyunlar(headline, desc):
-    return f'''<div class="cta-oyunlar gp-conic" style="--gp-glow:#FFC900;margin:32px 0;">
-<div class="gp-conic-inner" style="background:#161616;border-radius:10.5px;padding:24px;">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;"><span style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.08em;display:inline-flex;align-items:center;">{SVG_SPARKLE}GAME+ &bull; OYUN KÜTÜPHANESİ</span></div>
-  <div style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-weight:600;font-size:24px;line-height:32px;color:#fff;margin-bottom:8px;">{headline}</div>
-  <p style="color:#B2B2B2;font-size:16px;line-height:24px;margin:0 0 20px;max-width:760px;">{desc}</p>
-  <a id="games-button" href="https://gameplus.com.tr/gfn/oyunlar" style="display:inline-flex;align-items:center;justify-content:center;background:transparent;border:1px solid #FFC900;color:#FFC900;padding:12px 16px;border-radius:8px;font-weight:700;font-size:16px;line-height:20px;text-decoration:none;">GeForce NOW Oyunları &rarr;</a>
+    return f'''<div class="cta-oyunlar gp-conic" style="--gp-glow:#FFC900;">
+<div class="gp-conic-inner">
+  <div class="gp-cta-eyebrow"><span>{SVG_SPARKLE}GAME+ &bull; OYUN KÜTÜPHANESİ</span></div>
+  <div class="gp-cta-title">{headline}</div>
+  <p class="gp-cta-desc">{desc}</p>
+  <a class="gp-btn gp-btn-outline" id="games-button" href="https://gameplus.com.tr/gfn/oyunlar">GeForce NOW Oyunları &rarr;</a>
 </div>
 </div>
 '''
@@ -589,14 +736,14 @@ def render_cta_oyunlar(headline, desc):
 # --- End CTA (Figma "CTA - Bulutta Oyun Keyfi": #161616 kart, ★ eyebrow, New Science 32 başlık,
 #     dolu sarı + kontur sarı buton; GA4 id=end-packages-button / end-games-button) ---
 def render_end_cta(headline, desc, btn2_label="Güncel Fırsatlar", btn2_url="https://gameplus.com.tr/firsatlar", chip2=None, eyebrow="GAME+ &bull; BULUT OYUN"):
-    return f'''<div class="cta-end gp-conic" style="--gp-glow:#FFC900;margin:40px 0 24px;">
-<div class="gp-conic-inner" style="background:#161616;border-radius:10.5px;padding:24px;">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:24px;"><span style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.08em;display:inline-flex;align-items:center;">{SVG_SPARKLE}{eyebrow}</span></div>
-  <div style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-weight:600;font-size:32px;line-height:40px;color:#fff;margin-bottom:8px;">{headline}</div>
-  <p style="color:#B2B2B2;font-size:16px;line-height:20px;margin:0 0 24px;max-width:760px;">{desc}</p>
-  <div style="display:flex;flex-wrap:wrap;gap:14px;">
-    <a id="end-packages-button" href="https://gameplus.com.tr/gfn/paketler" style="display:inline-flex;align-items:center;justify-content:center;background:#FFC900;color:#131313;padding:12px 16px;border-radius:8px;font-weight:700;font-size:16px;line-height:20px;text-decoration:none;">GeForce NOW Paketleri &rarr;</a>
-    <a id="end-games-button" href="{btn2_url}" style="display:inline-flex;align-items:center;justify-content:center;background:transparent;border:1px solid #FFC900;color:#FFC900;padding:12px 16px;border-radius:8px;font-weight:700;font-size:16px;line-height:20px;text-decoration:none;">{btn2_label}</a>
+    return f'''<div class="cta-end gp-conic" style="--gp-glow:#FFC900;">
+<div class="gp-conic-inner">
+  <div class="gp-cta-eyebrow"><span>{SVG_SPARKLE}{eyebrow}</span></div>
+  <div class="gp-cta-title">{headline}</div>
+  <p class="gp-cta-desc">{desc}</p>
+  <div class="gp-cta-actions">
+    <a class="gp-btn gp-btn-solid" id="end-packages-button" href="https://gameplus.com.tr/gfn/paketler">GeForce NOW Paketleri &rarr;</a>
+    <a class="gp-btn gp-btn-outline" id="end-games-button" href="{btn2_url}">{btn2_label}</a>
   </div>
 </div>
 </div>
@@ -617,26 +764,16 @@ def render_ubisoft_cta(headline, desc):
 # --- Tablo (Figma: #161616 kap + #1E1E18 başlık + sarı 16 bold başlık metni + #29292B ayraç;
 #     oyun adı DemiBold beyaz; hover'da satır sarı %7 + ad sarı (normalde vurgu YOK); featured=[i] kalıcı vurgu) ---
 def render_table(headers, rows, featured=None, first_col_strong=True):
-    th = "".join(
-        f'<th style="background:#1E1E18;padding:19px 24px;text-align:center;color:#FFC900;font-weight:700;font-size:16px;line-height:20px;border-bottom:1px solid rgba(255,201,0,0.3);">{h}</th>'
-        for h in headers)
+    th = "".join(f'<th>{h}</th>' for h in headers)
     feat = set(featured or [])
     body_rows = []
     for i, row in enumerate(rows):
-        is_feat = i in feat
-        row_bg = 'background:rgba(255,201,0,0.07);' if is_feat else ''
-        tds = []
-        for j, c in enumerate(row):
-            if j == 0 and is_feat:
-                base = 'color:#FFC900;font-weight:400;'   # kalıcı vurgu satırı
-            else:
-                base = 'color:#B2B2B2;font-weight:400;'   # oyun adı dahil normal renk/kalınlık (kullanıcı kuralı)
-            top = '' if i == 0 else 'border-top:1px solid #29292B;'
-            tds.append(f'<td style="padding:14px 24px;vertical-align:middle;{top}{row_bg}{base}font-size:16px;line-height:20px;">{c}</td>')
-        body_rows.append(f'<tr>{"".join(tds)}</tr>')
-    return f'''<div class="table-wrap gp-table" style="background:#161616;border:1px solid #29292B;border-radius:16px;margin:24px 0;overflow:hidden;">
-  <div style="overflow-x:auto;">
-    <table style="width:100%;border-collapse:collapse;background:transparent;">
+        cls = ' class="gp-row-feat"' if i in feat else ''
+        tds = "".join(f'<td>{c}</td>' for c in row)
+        body_rows.append(f'<tr{cls}>{tds}</tr>')
+    return f'''<div class="table-wrap gp-table">
+  <div class="gp-table-scroll">
+    <table>
       <thead><tr>{th}</tr></thead>
       <tbody>
 {chr(10).join(body_rows)}
@@ -649,19 +786,19 @@ def render_table(headers, rows, featured=None, first_col_strong=True):
 # --- Tür etiketi pill'leri (Figma "Tür Tag": renk %16 zemin + tam renk 12/16 bold metin, r6, kenarlıksız) ---
 def render_genre_tags(*genres):
     """Tablo 'Tür' hücresi için pill seti: render_genre_tags('Strateji','Aile'). Renk merkezi
-    GENRE_BADGE_COLORS paletinden gelir — aynı tür her içerikte AYNI renk. Sentence case yaz."""
+    GENRE_BADGE_COLORS paletinden gelir - aynı tür her içerikte AYNI renk. Sentence case yaz."""
     spans = []
     for g in genres:
         c = badge_color_for(g)
-        spans.append(f'<span class="gp-genre" style="display:inline-block;background:{hex_to_rgba(c,0.16)};color:{c};border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">{g}</span>')
-    return '<span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;">' + ''.join(spans) + '</span>'
+        spans.append(f'<span class="gp-genre" style="background:{hex_to_rgba(c,0.16)};color:{c};">{g}</span>')
+    return '<span class="gp-genres">' + ''.join(spans) + '</span>'
 
 # --- Tablo oyun hücresi: isim (+link) + altında "Stüdyo · Yıl" (kural 11 ile tutarlı) ---
 def render_game_cell(name, meta=None, href=None):
     # GFN tablosu c0 hücresi: name beyaz DemiBold (satır stili tabloda); meta = 'Stüdyo · Yıl' 12px gri alt satır.
-    nm = (f'<a href="{href}" target="_blank" rel="noopener noreferrer" '
-          f'style="color:inherit;text-decoration:none;">{name}</a>') if href else name
-    sub = f'<div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">{meta}</div>' if meta else ''
+    nm = (f'<a class="gp-tg-link" href="{href}" target="_blank" rel="noopener noreferrer">'
+          f'{name}</a>') if href else name
+    sub = f'<div class="gp-tg-meta">{meta}</div>' if meta else ''
     return f'<div>{nm}{sub}</div>'
 
 # --- Öne Çıkan Oyun (Figma: #161616 + 1.5px rgba(255,201,0,0.5) çerçeve, ★ ÖNE ÇIKAN OYUN eyebrow,
@@ -672,14 +809,14 @@ def render_compact_cta(game_name, tagline, button_label, button_url, cta_id="fea
                '<line x1="6" y1="11" x2="10" y2="11"/><line x1="8" y1="9" x2="8" y2="13"/>'
                '<line x1="15" y1="12" x2="15.01" y2="12"/><line x1="18" y1="10" x2="18.01" y2="10"/>'
                '<rect x="2" y="6" width="20" height="12" rx="6"/></svg>')
-    return f'''<div class="cta-compact gp-conic" style="--gp-glow:#FFC900;margin:32px 0;">
-<div class="gp-conic-inner" style="background:#161616;border-radius:10.5px;padding:28px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
-  <div style="flex:1;min-width:260px;">
-    <div style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.08em;margin-bottom:8px;display:flex;align-items:center;">{gamepad}ÖNE ÇIKAN OYUN</div>
-    <div style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-weight:600;font-size:24px;line-height:32px;color:#fff;margin-bottom:8px;">{game_name}</div>
-    <div style="color:#B2B2B2;font-size:16px;line-height:24px;">{tagline}</div>
+    return f'''<div class="cta-compact gp-conic" style="--gp-glow:#FFC900;">
+<div class="gp-conic-inner">
+  <div class="gp-cta-compact-main">
+    <div class="gp-cta-eyebrow"><span>{gamepad}ÖNE ÇIKAN OYUN</span></div>
+    <div class="gp-cta-title">{game_name}</div>
+    <div class="gp-cta-compact-tagline">{tagline}</div>
   </div>
-  <a id="{cta_id}" href="{button_url}" style="display:inline-flex;align-items:center;justify-content:center;background:#FFC900;color:#131313;padding:14px 24px;border-radius:8px;font-weight:600;font-size:16px;line-height:20px;text-decoration:none;white-space:nowrap;">{button_label}</a>
+  <a class="gp-btn gp-btn-solid gp-btn-lg" id="{cta_id}" href="{button_url}">{button_label}</a>
 </div>
 </div>
 '''
@@ -757,49 +894,40 @@ def category_url_for(badge):
 
 # --- Card-Table: compact rows with text-like tags ---
 def render_card_table(title, games):
-    """games: list of {name, badge, badge_color, meta, anchor (optional)}"""
-    # Rozet sütunu TÜM satırlarda AYNI genişlikte (en uzun rozete göre) -> oyun isimleri HİZALI kalır
-    # ve uzun/birleşik rozetler (AKSİYON-MACERA vb.) KIRPILMAZ. Her .card-row ayrı grid olduğundan
-    # 'max-content' kullanılırsa sütun satır-satır değişir ve isimler kayar; bu yüzden sabit px.
-    # (Canlı blog ve önizleme aynı GreycliffCF fontunu kullandığından karakter-bazlı tahmin tutarlı.)
+    """games: list of {name, badge, badge_color, meta, anchor (optional)}
+    Rozet sütunu TÜM satırlarda AYNI genişlikte (en uzun rozete göre) -> oyun isimleri HİZALI kalır
+    ve uzun/birleşik rozetler (AKSİYON-MACERA vb.) KIRPILMAZ. Genişlik --gp-bw ile kapsayıcıya verilir."""
     _bl = [len(g.get('badge') or '') for g in games if g.get('badge')]
     bw = max(120, round(10.2 * max(_bl)) + 24) if _bl else 120
     rows = []
     for g in games:
         color = badge_color_for(g.get("badge"), g.get("badge_color"))
         tint = hex_to_rgba(color, 0.16)
-        border = hex_to_rgba(color, 0.45)
         badge_text = _badge_text(color)
         badge_html = ''
         if g.get('badge'):
-            badge_html = f'<span class="gp-badge" style="display:inline-block;color:{badge_text};background:{tint};padding:4px 10px;border-radius:6px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;min-width:120px;text-align:center;">{g["badge"]}</span>'
-        meta_html = ''
-        if g.get('meta'):
-            meta_html = f'<div class="gp-meta" style="color:#B2B2B2;font-size:0.78em;text-align:right;white-space:nowrap;font-weight:500;letter-spacing:0.01em;">{g["meta"]}</div>'
-        name_html = f'<div class="gp-name" style="font-weight:600;color:#f3f4f6;font-size:0.98em;letter-spacing:-0.005em;transition:color 0.2s;">{g["name"]}</div>'
-        # If anchor provided, make row a clickable anchor link
+            badge_html = (f'<span class="gp-badge" style="color:{badge_text};background:{tint};">'
+                          f'{g["badge"]}</span>')
+        meta_html = f'<div class="gp-meta">{g["meta"]}</div>' if g.get('meta') else ''
+        name_html = f'<div class="gp-name">{g["name"]}</div>'
         if g.get('anchor'):
-            row_tag = 'a'
-            attrs = f' href="#{g["anchor"]}"'
+            row_tag, attrs = 'a', f' href="#{g["anchor"]}"'
         else:
-            row_tag = 'div'
-            attrs = ''
-        # tür rozeti GFN kategorisine iç link — yalnızca satır kendisi link DEĞİLSE (iç içe <a> geçersiz)
+            row_tag, attrs = 'div', ''
+        # tür rozeti GFN kategorisine iç link - yalnızca satır kendisi link DEĞİLSE (iç içe <a> geçersiz)
         if g.get('badge_href') and row_tag != 'a' and badge_html:
-            badge_html = f'<a href="{g["badge_href"]}" style="text-decoration:none;line-height:0;display:inline-flex;">{badge_html}</a>'
-        rows.append(f'''  <{row_tag} class="card-row"{attrs} style="--row-c:{color};display:grid;grid-template-columns:{bw}px 1fr auto;gap:14px;padding:8px 18px;border-bottom:1px solid #29292b;align-items:center;transition:background 0.2s ease;text-decoration:none;color:inherit;">
+            badge_html = f'<a class="gp-badge-link" href="{g["badge_href"]}">{badge_html}</a>'
+        rows.append(f'''  <{row_tag} class="card-row"{attrs} style="--row-c:{color};">
     {badge_html}
     {name_html}
     {meta_html}
   </{row_tag}>''')
-    return f'''<div class="card-table-wrap" style="margin:28px 0;">
-  <div style="text-align:center;margin-bottom:14px;">
-    <h3 style="display:inline-flex;align-items:center;justify-content:center;font-size:1.3em;font-weight:800;letter-spacing:-0.01em;margin:0;">
-      {SVG_TROPHY}<span style="background:linear-gradient(110deg,#FFC900,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">{title}</span>
-    </h3>
+    return f'''<div class="card-table-wrap">
+  <div class="gp-ct-head">
+    <h3>{SVG_TROPHY}<span class="gp-ct-title">{title}</span></h3>
   </div>
-  <div class="card-table gp-layer gp-card-table-inner" style="--gp-frame:rgba(255,201,0,0.22);overflow:hidden;box-shadow:0 4px 18px rgba(0,0,0,0.5);">
-    <div style="position:relative;z-index:1;">
+  <div class="card-table gp-layer gp-card-table-inner" style="--gp-frame:rgba(255,201,0,0.22);--gp-bw:{bw}px;">
+    <div class="gp-card-rows">
 {chr(10).join(rows)}
     </div>
   </div>
@@ -834,54 +962,52 @@ def render_game_h3_inline(anchor, name, badge, badge_color, meta_text, level="h3
         inner = ''.join(seg)
     else:  # tek/saf rozet -> tüm rozet (kategori varsa)
         whole_href = GFN_CATEGORY_URLS.get(_fold(badge or ''))
-    badge_html = (f'<span style="display:inline-block;color:{badge_text};background:{tint};'
-                  f'padding:4px 10px;border-radius:6px;font-size:12px;line-height:16px;font-weight:700;'
-                  f'white-space:nowrap;">{inner}</span>')
+    badge_html = (f'<span class="gp-game-badge" style="color:{badge_text};background:{tint};">'
+                  f'{inner}</span>')
     if whole_href:
         # display:contents -> anchor kutu üretmez; rozet linksizle birebir aynı yerleşir.
-        badge_html = f'<a href="{whole_href}" style="text-decoration:none;display:contents;">{badge_html}</a>'
-    return f'''<{level} id="{anchor}" style="display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin:32px 0 14px;line-height:1.4;">
+        badge_html = f'<a class="gp-game-badge-link" href="{whole_href}">{badge_html}</a>'
+    return f'''<{level} id="{anchor}" class="gp-game-head">
   {badge_html}
-  <span style="font-weight:700;letter-spacing:-0.01em;">{name}</span>
-  <span style="font-size:0.52em;color:#B2B2B2;font-weight:500;letter-spacing:0.02em;flex-basis:100%;margin-top:-4px;">{meta_text}</span>
+  <span class="gp-game-name">{name}</span>
+  <span class="gp-game-meta">{meta_text}</span>
 </{level}>'''
 
 # --- Inline Game Card (small, premium, in game description section) ---
 def render_inline_game_card(name, badge, badge_color, meta_lines):
     """Small card to be floated alongside game description text."""
     meta_html = '<br>'.join(meta_lines)
-    return f'''<aside class="gp-game-info-card" style="float:right;width:210px;margin:0 0 16px 22px;background:{_surface()};border:1px solid #29292b;border-radius:10px;padding:16px;font-size:0.9em;box-shadow:0 4px 12px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.04);">
-  <span style="display:inline-block;background:{badge_color};color:#fff;padding:4px 11px;border-radius:999px;font-size:0.62em;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.18),0 2px 4px rgba(0,0,0,0.4);">{badge}</span>
-  <div style="font-weight:700;color:#fff;font-size:1.04em;line-height:1.3;margin-bottom:8px;letter-spacing:-0.01em;">{name}</div>
-  <div style="color:#B2B2B2;font-size:0.82em;line-height:1.55;font-weight:500;">{meta_html}</div>
+    return f'''<aside class="gp-game-info-card">
+  <span class="gp-gic-badge" style="background:{badge_color};">{badge}</span>
+  <div class="gp-gic-name">{name}</div>
+  <div class="gp-gic-meta">{meta_html}</div>
 </aside>
 '''
 
 # --- İlgili Yazı Kartları (Figma "Related Card": #161616 + #29292B, 150px thumb + GFN THURSDAY etiketi,
 #     tarih 12 gri, başlık 20 bold beyaz, "Devamını oku →" sarı) ---
 def render_prev_weeks_cards(items):
-    """items: [{url, date, label, img}] — img = yazının kapak görseli (og:image). Yoksa gradient fallback."""
+    """items: [{url, date, label, img}] - img = yazının kapak görseli (og:image). Yoksa gradient fallback.
+    Stiller ANIMATED_BORDER_STYLE'da; burada AYRI <style> bloğu ÜRETİLMEZ (ikinci stil bloğu CLS'e
+    ve CMS'te sıra sorunlarına yol açıyordu)."""
     cards = []
     for item in items:
         img = item.get("img")
-        thumb_bg = f"url('{img}') center/cover no-repeat" if img else "linear-gradient(135deg,#1c1a0e,#0d0d0d 70%)"
-        cards.append(f'''  <a href="{item["url"]}" class="gp-prev-week" style="display:block;text-decoration:none;background:#161616;border:1px solid #29292B;border-radius:16px;overflow:hidden;color:inherit;transition:border-color 0.25s,transform 0.25s,box-shadow 0.25s;">
-    <div style="height:150px;background-color:#0d0d0d;background:{thumb_bg};display:flex;align-items:flex-end;padding:14px 20px;position:relative;">
-      <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.78), rgba(0,0,0,0.05) 60%);"></div>
-      <span style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.08em;position:relative;">GFN THURSDAY</span>
+        thumb = f' style="--gp-thumb:url(\'{img}\');"' if img else ''
+        cards.append(f'''  <a class="gp-prev-week" href="{item["url"]}">
+    <div class="gp-pw-thumb"{thumb}>
+      <div class="gp-pw-scrim"></div>
+      <span class="gp-pw-tag">GFN THURSDAY</span>
     </div>
-    <div style="padding:18px 20px 20px;">
-      <div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-bottom:8px;">{item["date"]}</div>
-      <div style="color:#fff;font-size:20px;line-height:24px;font-weight:700;margin-bottom:8px;">{item["label"]}</div>
-      <div style="color:#FFC900;font-size:16px;line-height:20px;font-weight:600;">Devamını oku &rarr;</div>
+    <div class="gp-pw-body">
+      <div class="gp-pw-date">{item["date"]}</div>
+      <div class="gp-pw-title">{item["label"]}</div>
+      <div class="gp-pw-more">Devamını oku &rarr;</div>
     </div>
   </a>''')
-    return f'''<div class="prev-weeks-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin:24px 0 32px;">
+    return f'''<div class="prev-weeks-grid">
 {chr(10).join(cards)}
 </div>
-<style>
-  .gp-prev-week:hover {{ border-color: rgba(255,201,0,0.5) !important; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.5); }}
-</style>
 '''
 
 # --- İçindekiler (Figma: #161616 kart + #29292B kenarlık + New Science başlık + sarı 01/02 numaralar) ---
@@ -900,37 +1026,31 @@ def render_floating_toc(items, title=None):
     if h1 is None and title:
         h1 = (title, None)
 
-    up_arrow = ('<span style="display:inline-flex;flex-shrink:0;margin-top:3px;">'
-                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFC900" stroke-width="3" '
-                'stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/>'
-                '<line x1="12" y1="9" x2="12" y2="20"/></svg></span>')
+    def _num(n):
+        return f'<span class="gp-toc-num">{n:02d}</span>'
 
     li_items = []
+    num = 0
     if h1:
         h1_text, h1_anchor = h1
+        num = 1                           # H1 = 01; sonraki H2'ler 02, 03, ... diye devam eder
+        href = f'#{h1_anchor}' if h1_anchor else '#'
         li_items.append(
-            f'    <li style="display:flex;gap:10px;margin:12px 0;list-style:none;">{up_arrow}'
-            f'<a class="gp-toc-top" href="#{h1_anchor}" style="color:#B2B2B2;text-decoration:none;'
-            f'font-size:16px;line-height:24px;">{h1_text}</a></li>' if h1_anchor else
-            f'    <li style="display:flex;gap:10px;margin:12px 0;list-style:none;">{up_arrow}'
-            f'<a class="gp-toc-top" href="#" style="color:#B2B2B2;text-decoration:none;'
-            f'font-size:16px;line-height:24px;">{h1_text}</a></li>')
+            f'    <li>{_num(num)}<a class="gp-toc-top" href="{href}">{h1_text}</a></li>')
 
-    num = 0
     for level, text, anchor in items:
         if level == 1:
             continue                      # H1 yukarıda eklendi
         if level == 2:
             num += 1
-            marker = f'<span style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;flex-shrink:0;margin-top:4px;">{num:02d}</span>'
+            marker = _num(num)
         else:
-            marker = '<span style="width:16px;flex-shrink:0;"></span>'
+            marker = '<span class="gp-toc-gap"></span>'
         li_items.append(
-            f'    <li style="display:flex;gap:10px;margin:12px 0;list-style:none;">{marker}'
-            f'<a href="#{anchor}" style="color:#B2B2B2;text-decoration:none;font-size:16px;line-height:24px;">{text}</a></li>')
+            f'    <li>{marker}<a href="#{anchor}">{text}</a></li>')
     body = chr(10).join(li_items)
     return f'''<details class="floating-toc">
-  <summary>İçindekiler<span class="gp-toptop" title="Başa dön" style="margin-left:12px;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;border:1.5px solid #FFC900;flex-shrink:0;cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFC900" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/><line x1="12" y1="9" x2="12" y2="20"/></svg></span></summary>
+  <summary>İçindekiler<span class="gp-toptop" title="Başa dön" ><svg viewBox="0 0 24 24" fill="none" stroke="#FFC900" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 14 12 8 6 14"/><line x1="12" y1="8" x2="12" y2="16"/></svg></span></summary>
   <ul>
 {body}
   </ul>
@@ -957,22 +1077,51 @@ def render_floating_toc(items, title=None):
   t.querySelectorAll('ul li a').forEach(function(a){{ a.addEventListener('click', close); }});
   window.addEventListener('scroll', close, {{passive:true}});
   document.addEventListener('click', function(e){{ if (!t.contains(e.target)) close(); }}, true);
+
+  // html{{scroll-behavior:smooth}} kaldırıldı (scope'lanamıyor, site geneline taşıyordu).
+  // İç bağlantılarda (ToC + card-table) yumuşak kaydırma artık burada.
+  var root = t.closest('.gp-content') || document;
+  root.querySelectorAll('a[href^="#"]').forEach(function(a){{
+    if (a.classList.contains('gp-toc-top')) return;      // o zaten sayfa başına gidiyor
+    a.addEventListener('click', function(e){{
+      var id = a.getAttribute('href').slice(1);
+      if (!id) return;
+      var el = document.getElementById(id);
+      if (!el) return;
+      e.preventDefault(); close();
+      try {{ el.scrollIntoView({{behavior:'smooth', block:'start'}}); }}
+      catch (err) {{ el.scrollIntoView(); }}
+    }});
+  }});
 }})();
 </script>
 '''
+
+
+def wrap_gp_content(html):
+    """Gövdeyi .gp-content wrapper'ına alır — build'in EN SON adımı:
+        final = wrap_gp_content(ANIMATED_BORDER_STYLE + "\\n" + body)
+
+    NEDEN: Frontend ekibi site tipografi/renk kurallarını blog gövdesinden çekti. Buna karşılık
+    bizim CSS'imizdeki class'sız seçiciler (h1-h4, p, ul li::marker, html) SAYFANIN TAMAMINA
+    (sol menü, footer) taşıyordu. Artık tüm kurallar .gp-content ile başlıyor; wrapper zorunlu.
+    Ayrıca .gp-content (0,1,0) öneki specificity'yi yükselttiği için h1-h4/p'de !important gerekmiyor."""
+    if 'class="gp-content"' in html:
+        return html
+    return '<div class="gp-content">\n' + html + '\n</div>\n'
 
 # --- FAQ Accordion (premium dark, Game+ '+' indicator that rotates) ---
 def render_faq_accordion(pairs):
     items = []
     for q, a in pairs:
-        items.append(f'''  <details class="faq-item" style="margin-bottom:10px;border:1px solid #29292b;border-radius:10px;overflow:hidden;background:transparent;box-shadow:0 2px 8px rgba(0,0,0,0.4);">
-    <summary style="display:flex;align-items:center;gap:14px;padding:16px 20px;cursor:pointer;background:transparent;font-weight:700;color:#f3f4f6;letter-spacing:-0.005em;list-style:none;">
-      <span class="faq-icon" style="display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;flex-shrink:0;color:#FFC900;font-size:1.5em;font-weight:300;line-height:1;">+</span>
-      <span style="flex:1;">{q.strip()}</span>
+        items.append(f'''  <details class="faq-item">
+    <summary>
+      <span class="faq-icon">+</span>
+      <span class="faq-q">{q.strip()}</span>
     </summary>
-    <div style="padding:14px 20px 18px 56px;border-top:1px solid #29292b;background:transparent;"><p style="margin:0;color:#B2B2B2;line-height:1.55;font-size:0.94em;">{a.strip()}</p></div>
+    <div><p>{a.strip()}</p></div>
   </details>''')
-    return f'<div class="faq-block" style="margin:24px 0;">\n{chr(10).join(items)}\n</div>'
+    return f'<div class="faq-block">\n{chr(10).join(items)}\n</div>'
 
 # --- Slug helper ---
 def slugify(text):
@@ -1090,7 +1239,7 @@ def verify_output(final_html, blog_type="general", n_games=None, expect_faq=Fals
 
     # 9) Oyun sayısı tutarlı: inline başlık == card-row == n_games (genel listicle)
     if n_games is not None:
-        n_inline = final_html.count('flex-basis:100%;margin-top:-4px;')   # render_game_h3_inline imzası
+        n_inline = final_html.count('class="gp-game-head"')               # render_game_h3_inline imzası
         n_rows = final_html.count('class="card-row"')
         add(n_inline == n_games, "Inline oyun başlığı",
             f"{n_inline} başlık", f"{n_inline} inline başlık (beklenen {n_games}) — düz <hN>Oyun</hN> kalmış olabilir")
@@ -1101,6 +1250,27 @@ def verify_output(final_html, blog_type="general", n_games=None, expect_faq=Fals
         add('aspect-ratio' in final_html, "Embed aspect-ratio", "16/9", "aspect-ratio yok (embed kare görünebilir)")
         add(not re.search(r'padding-bottom:\s*5[0-9]', final_html), "Embed padding-hack yok",
             "yok", "padding-bottom % hack var — aspect-ratio kullan", warn=True)
+
+    # 10b) .gp-content wrapper (frontend zorunlu: CSS scope'u buna bağlı)
+    add('class="gp-content"' in final_html, ".gp-content wrapper",
+        "var", "YOK — wrap_gp_content(final) çağır; CSS'in tamamı .gp-content'e bağlı, wrapper'sız hiçbir stil uygulanmaz")
+    # 10c) class'sız (siteye taşan) seçici kalmamalı
+    import re as _re2
+    _css = "".join(_re2.findall(r'<style>(.*?)</style>', final_html, _re2.S))
+    _bare = [b for b in _re2.findall(r'(?m)^\s*([a-z][a-z0-9]*(?:\s*,\s*[a-z][a-z0-9]*)*)\s*\{', _css)
+             if b not in ("to", "from")]
+    add(not _bare, "CSS scope (.gp-content)", "tüm seçiciler scoped",
+        f"class'sız seçici siteye taşıyor: {_bare[:5]}")
+
+    # 10d) floating ToC'nin İLK maddesi H1 (yazı başlığı) olmalı — build'de l==2 filtresi bunu düşürür
+    if 'floating-toc' in final_html:
+        _h1m = re.search(r'<h1[^>]*>(.*?)</h1>', final_html, re.S)
+        _h1t = re.sub(r'<[^>]+>', '', _h1m.group(1)).strip() if _h1m else None
+        _toc1 = re.search(r'class="floating-toc".*?<ul>\s*<li[^>]*>.*?<a[^>]*>(.*?)</a>', final_html, re.S)
+        _t1 = re.sub(r'<[^>]+>', '', _toc1.group(1)).strip() if _toc1 else None
+        add(bool(_h1t) and _t1 == _h1t, "ToC ilk madde = H1",
+            "yazı başlığı ilk sırada",
+            f"ToC ilk maddesi H1 değil ({_t1!r}) — render_floating_toc'a items'ı l in (1,2) ile ver")
 
     # 11) PlayStation (GFN platform/lisans/CTA bağlamında YASAK — WARN, haber yazıları hariç)
     if re.search(r'playstation', final_html, re.I):

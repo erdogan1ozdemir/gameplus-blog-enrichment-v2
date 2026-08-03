@@ -67,8 +67,7 @@ body = re.sub(r'(</h1>)', r'\1\n' + toc + tldr + info, body, count=1)   # meta h
 
 # ─── 5. Birleştir + çıktı ───
 body = ensure_leading_h1(body)          # gövde tek bir H1 ile başlar (ilk başlık = yazı başlığı)
-final_body = ANIMATED_BORDER_STYLE + body
-
+final_body = wrap_gp_content(ANIMATED_BORDER_STYLE + body)
 # ─── 5b. Doğrula (her çıktıda ZORUNLU — content-rules 13; FAIL varsa düzelt) ───
 # n_games=<oyun sayısı> (listicle), expect_faq=True (SSS varsa), GFN: blog_type="gfn"
 print_report(verify_output(final_body, blog_type="general", n_games=None, expect_faq=False))

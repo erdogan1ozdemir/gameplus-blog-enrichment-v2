@@ -80,7 +80,13 @@ faq    = render_faq_accordion([(soru, cevap), ...])
 - **FAQ accordion** → SSS bölümündeki H3+P çiftlerinin yerine
 
 ### 5. Birleştir ve çıktı al
-- `body = ANIMATED_BORDER_STYLE + enriched_body` (style bloğu bir kez, en başta)
+- `final = wrap_gp_content(ANIMATED_BORDER_STYLE + "\n" + enriched_body)` — stil bloğu bir kez en başta,
+  ardından gövde tek bir `.gp-content` sarmalayıcısına alınır. **Bu son adım atlanamaz:** tüm CSS seçicileri
+  `.gp-content` önekiyle yazılıdır, sarmalayıcı yoksa hiçbir stil uygulanmaz (`verify_output` FAIL verir).
+  Sarmalayıcı aynı zamanda stillerin sol menü/footer gibi site alanlarına taşmasını engeller.
+- **Bileşenler sınıf tabanlıdır (v10.7); renderer'lar inline stil yazmaz.** Yeni bileşen eklerken sınıf tanımla
+  ve kuralı stil bloğuna `@media`'lardan ÖNCE ekle. Inline yalnız dinamik değerler için (tür rengi, `--gp-glow`,
+  `--row-c`, `--gp-bw`, `--gp-thumb`). Detay: `references/design-system.md` -> "v10.6 / v10.7".
 - Önizleme için: `PAGE_HEAD.replace("__TITLE__", baslik) + body + PAGE_FOOT`
 - **Çıktı:** `scripts/export_output.py` → `export(items, fmt="excel")`. Varsayılan Excel rollup (Başlık | HTML Part1 | HTML Part2 | Slug | Karakter). Kullanıcı farklı isterse: `fmt="files"` (ayrı body-only), `fmt="files-preview"` (tarayıcıda açılır tam HTML), `fmt="combined"` (tek dosyada toplu önizleme).
 

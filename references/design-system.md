@@ -85,3 +85,62 @@ Başa-dön'de güvenlik ağı var: smooth animasyon başlamazsa 400 ms sonra an�
 **3. H1 ToC'nin ilk maddesi.** `inject_heading_ids` artık H1'i de toplar (level 1) ve ToC'nin ilk maddesi
 yazı başlığı olur (yukarı-ok işaretli). Hedefi başa-dön butonuyla aynıdır: sayfa başı.
 `render_floating_toc(items)` çağrısında items'ı `l == 2` diye filtreleme; `l in (1, 2)` kullan.
+
+## v10.6 / v10.7 - CSS izolasyonu, sınıf tabanlı bileşenler, tipografi
+
+Frontend ekibi (3 Ağustos 2026) blog gövdesinden site tipografisini kaldırdı. İçerik artık **kendi
+kendine yeterli olmak zorunda**: kendi stilini kendi taşır, siteden bir şey ummaz, siteye de taşmaz.
+
+**1. `.gp-content` sarmalayıcı (v10.6).** Build'in EN SON adımı `wrap_gp_content(...)`. Gövdedeki tüm
+CSS seçicileri bu sınıfa bağlıdır; çıplak `h2 {}`, `p {}`, `ul li::marker {}` YAZILMAZ (bunlar sol
+menüyü ve footer'ı da boyuyordu). `html {}` kuralı hiç kullanılmaz - yumuşak kaydırma JS ile yapılır.
+
+**2. Renkler gövdeden gelir (v10.6).** Site CSS'i çekildiği için gövde artık kendi renklerini taşır:
+`p #B2B2B2` · `h1-h4 #fff` · `a #FFC900` · `a:hover #ffd94d`. **İç linkler altı çizgisizdir**
+(`text-decoration: none`); verilmezse Bootstrap varsayılanı altını çizer. `a:hover` ayrıca yazılır:
+sitenin `a:hover{color:inherit}` kuralı (0,1,1) yalnız `.gp-content a:hover` (0,2,1) ile aşılır.
+
+**3. Sınıf tabanlı bileşenler (v10.7).** Tüm inline stiller sınıflara taşındı; `.gp-content` öneki
+specificity'yi yükselttiği için `!important` gerekmiyor (211 -> 6). Dinamik değerler inline kalır:
+tür renkleri, `--gp-glow`, `--row-c`, `--gp-bw` (card-table rozet sütunu), `--gp-thumb` (kapak görseli).
+
+| Bileşen | Sınıflar |
+|---|---|
+| TLDR | `.tldr-block` `.gp-tldr-title` `.gp-tldr-rt` `.gp-tldr-bullet` `.gp-tldr-text` |
+| info-card | `.info-card` `.gp-cell` `.gp-cell-value` `.gp-cell-label` `.gp-check-row` |
+| Not kutuları | `.editor-note` `.highlight-box` `.gp-note-bar` `.gp-note-eyebrow` |
+| CTA | `.gp-cta-eyebrow` `.gp-cta-title` `.gp-cta-desc` `.gp-cta-actions` `.gp-btn` + `.gp-btn-solid` / `.gp-btn-outline` / `.gp-btn-lg` `.gp-cta-compact-main` `.gp-cta-compact-tagline` |
+| Tablo | `.table-wrap` `.gp-table-scroll` `.gp-row-feat` `.gp-tg-link` `.gp-tg-meta` `.gp-ext` |
+| Tür rozeti | `.gp-genres` `.gp-genre` |
+| Card-table | `.card-table-wrap` `.gp-ct-head` `.gp-ct-title` `.gp-card-rows` `.card-row` `.gp-badge` `.gp-badge-link` `.gp-name` `.gp-meta` |
+| Oyun başlığı | `.gp-game-head` `.gp-game-badge` `.gp-game-badge-link` `.gp-game-name` `.gp-game-meta` |
+| SSS | `.faq-block` `.faq-item` `.faq-icon` `.faq-q` |
+| Gövde listesi | `.gp-list` `.gp-list-dot` `.gp-list-check` |
+| İçindekiler | `.floating-toc` `.gp-toc-num` `.gp-toc-gap` `.gp-toc-top` `.gp-toptop` |
+| Önceki haftalar | `.prev-weeks-grid` `.gp-prev-week` `.gp-pw-thumb` `.gp-pw-scrim` `.gp-pw-tag` `.gp-pw-body` `.gp-pw-date` `.gp-pw-title` `.gp-pw-more` |
+
+**Kural sırası önemli:** taban bileşen kuralları TÜM `@media` bloklarından ÖNCE gelir. `!important`
+kalktığı için sonradan gelen taban kural mobil ölçüyü ezer.
+
+**Kalan 6 `!important` (bilinçli):**
+- `.gp-yt-wrap` ve `iframe` (5) - gömme işaretlemesi yazardan/CMS'ten geliyor, skill üretmiyor; normalize etmek gerekiyor.
+- `.faq-item[open] .faq-icon { transform }` (1) - ikon üzerinde `gp-pulse-plus` animasyonu var; CSS animasyonları normal bildirimleri ezer, `!important` olmadan 45° dönüş uygulanmaz.
+
+**4. Tek stil bloğu.** Hiçbir renderer ayrı `<style>` üretmez (`render_prev_weeks_cards`'ınki kaldırıldı).
+İkinci stil bloğu CLS'e ve CMS'te sıra sorunlarına yol açıyordu.
+
+**5. Tipografi (referans repo `game--yeni-blog-ornegi-2026-temmuz` head CSS'i esas alındı).**
+
+| | Masaüstü | Mobil (<=700) |
+|---|---|---|
+| Gövde / p | 20 / 24 | 16 / 24 |
+| H1 | 40 / 48 | 30 / 1.15 |
+| H2 | 28 / 36 | 22 / 1.2 |
+| H3 | 24 / 32 | 19 / 1.25 |
+| H4 | 20 / 28 | 17 / 1.3 |
+
+**6. İçindekiler numaralandırma.** İlk madde (H1) `01`, sonraki H2'ler `02`, `03`... tek dizi.
+Başa-dön butonundaki ok daireye tam ortalıdır (simetrik SVG + `line-height:0`).
+
+**7. Font adı.** Başlıklar `'New Science'` adıyla çağrılır; frontend `global.scss`'te bu adla alias
+`@font-face` tanımladı. **İsim değiştirilmez.** Font dosyaları gövdeye GÖMÜLMEZ (lisans).

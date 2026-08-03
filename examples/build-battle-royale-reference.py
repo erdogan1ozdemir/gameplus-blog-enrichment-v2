@@ -124,8 +124,7 @@ info = render_info_card([("İncelenen","7 Oyun"),("En Erişilebilir","Garena Fre
                          ("En Taktiksel","PUBG"),("Platform","PC · Mobil · Bulut")])
 body = body.replace('</h1>', '</h1>\n' + toc + tldr + info, 1)
 body = ensure_leading_h1(body)
-final = ANIMATED_BORDER_STYLE + "\n" + body
-
+final = wrap_gp_content(ANIMATED_BORDER_STYLE + "\n" + body)
 # === KONTROL NOKTALARI ===
 print("=== Çıktı yapısı kontrolü ===")
 ok1 = print_report(verify_output(final, blog_type="general", n_games=len(game_names), expect_faq=True))

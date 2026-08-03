@@ -38,6 +38,15 @@ from gameplus_blog_components import *
   **Inline `onclick` KULLANILMAZ** — CMS siliyor; davranışlar `<script>` içinde `addEventListener` ile bağlanır.
 - `render_game_h3_inline(anchor, name, badge, badge_color, meta, level, badge_href=None)` — oyun başlığı: pill (paletten) + isim + "Stüdyo · Yıl". badge_href None=otomatik kategori linki (birleşikte her parça), False=link yok.
 - `render_faq_accordion(pairs)` · `render_ubisoft_cta(h, d)` (buton id **ubisoft-packages-button**).
+- `wrap_gp_content(html)` — **build'in EN SON adımı; atlanamaz.** Gövdeyi `.gp-content` sarmalayıcısına alır:
+  `final = wrap_gp_content(ANIMATED_BORDER_STYLE + "\n" + body)`. Tüm CSS bu sınıfa bağlı olduğu için
+  sarmalayıcı yoksa hiçbir stil uygulanmaz. `verify_output` eksikse FAIL verir.
+
+## v10.7 notu — bileşenler SINIF tabanlıdır
+Renderer'lar artık inline stil yazmaz; kurallar `ANIMATED_BORDER_STYLE` içindedir. Yeni bir bileşen
+eklerken **inline stil kullanma** — sınıf tanımla ve kuralı stil bloğuna, `@media` bloklarından ÖNCE ekle.
+Inline kalması gereken tek şey dinamik değerlerdir (tür rengi, `--gp-glow`, `--row-c`, `--gp-bw`, `--gp-thumb`).
+Sınıf listesi ve gerekçeler: `references/design-system.md` -> "v10.6 / v10.7".
 
 ## DEPRECATED (çağırma)
 `render_meta` (meta header eklenmez) · `demote_h1` (H1 artık korunur) · `render_inline_game_card` · `linkify_platforms` (gerçek mağaza URL'si varken kullanma; doc linkleriyle platform kelimesini linkle).
