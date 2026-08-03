@@ -204,7 +204,7 @@ if prev_cards: out.append(render_prev_weeks_cards(prev_cards))
 
 body = "\n".join(out)
 body, toc_items = inject_heading_ids(body)
-toc = render_floating_toc([(l, t, a) for (l, t, a) in toc_items if l == 2])
+toc = render_floating_toc([(l, t, a) for (l, t, a) in toc_items if l in (1, 2)])  # H1 = ilk madde (sayfa başı)
 tldr = render_tldr(TLDR_ITEMS, reading_time=estimate_reading_time(body))
 body = body.replace('</h1>', '</h1>\n' + toc + tldr + info, 1)
 body = ensure_leading_h1(body)

@@ -68,3 +68,20 @@ Pill: zemin renk %16, metin tam renk, r6, 4x10px, kenarlıksız, sentence case; 
 
 ## GA4 tıklama id'leri (statik — her yazıda aynı)
 `packages-button` · `games-button` · `end-packages-button` · `end-games-button` · `featured-game-button` · `ubisoft-packages-button`
+
+## v10.5 — floating ToC: CLS düzeltmesi + CMS uyumlu davranış + H1 maddesi
+
+**1. CLS (0.125 -> 0).** `.floating-toc` kuralları eskiden elemandan SONRAKİ ayrı bir stil bloğundaydı.
+Mobilde (`max-width:900px`) konum `top:120px` -> `bottom:16px` değiştiği için tarayıcı elemanı önce
+üstte boyayıp sonra ~626px aşağı taşıyordu. Kurallar artık **`ANIMATED_BORDER_STYLE` içinde**, yani
+eleman parse edilmeden önce uygulanıyor; ilk boyama doğru konumda (ölçülen sıçrama: 0px).
+**Konum/boyut stilleri inline yazılmaz.**
+
+**2. CMS inline `onclick`'i siliyor.** Canlıda doğrulandı: `.gp-toptop` ve ToC linklerinde `onclick`
+özniteliği yok (bu yüzden başa-dön butonu çalışmıyordu). `<script>` bloğu ise çalışıyor. Tüm davranışlar
+(başa dön, link tıklayınca kapat, scroll/dışarı tıklama ile kapat) artık `addEventListener` ile bağlanır.
+Başa-dön'de güvenlik ağı var: smooth animasyon başlamazsa 400 ms sonra anında başa alınır.
+
+**3. H1 ToC'nin ilk maddesi.** `inject_heading_ids` artık H1'i de toplar (level 1) ve ToC'nin ilk maddesi
+yazı başlığı olur (yukarı-ok işaretli). Hedefi başa-dön butonuyla aynıdır: sayfa başı.
+`render_floating_toc(items)` çağrısında items'ı `l == 2` diye filtreleme; `l in (1, 2)` kullan.

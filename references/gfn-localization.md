@@ -136,7 +136,7 @@ açıklama] × N → "Bu Hafta Eklenenler" tablosu → ["Ayın Geri Kalanı" tab
 ## Build deseni (referans: `Dispatch/build_gfn28.py`, `examples/build-script-reference.py`)
 ```python
 body, toc_items = inject_heading_ids(body)
-toc = render_floating_toc([(l,t,a) for (l,t,a) in toc_items if l==2 and not t.startswith("GeForce NOW Thursday")])  # önceki-haftalar hariç
+toc = render_floating_toc([(l,t,a) for (l,t,a) in toc_items if l in (1,2) and not t.startswith("GeForce NOW Thursday")])  # önceki-haftalar hariç
 body = re.sub(r'<!--\s*EMBED:\s*(.*?)\s*([A-Za-z0-9_-]{11})\s*-->', lambda m: embed(m.group(2), m.group(1)), body)  # öne çıkan oyun videoları
 # tldr (haftalık metrik), info-card (haftalık), oyun listesi <ul> -> render_table(["Oyun","Platform ve Çıkış"], rows)
 # compact featured CTA (haftanın yıldızı), TEK End CTA, prev-weeks grid

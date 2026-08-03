@@ -32,7 +32,10 @@ from gameplus_blog_components import *
 - `render_end_cta(h, d, btn2_label, btn2_url, chip2=None, eyebrow="GAME+ • BULUT OYUN")` — glow'lu kapanış kartı; butonlar: dolu sarı (id **end-packages-button**) + kontur (id **end-games-button**). GFN'de btn2=GeForce NOW Oyunları.
 - `render_compact_cta(game, tagline, btn_label, btn_url, cta_id="featured-game-button")` — Öne Çıkan Oyun: glow + **gamepad ikonlu** eyebrow + sağda dolu sarı buton.
 - `render_prev_weeks_cards([{url, date, label, img}])` — ilgili yazı kartları; `img` = yazının og:image kapağı (koyu overlay otomatik).
-- `render_floating_toc(items)` — İçindekiler kartı: #161616 + sarı 01/02 numaralar (yalnız h2'ler numaralanır).
+- `render_floating_toc(items, title=None)` — İçindekiler kartı: #161616 + sarı 01/02 numaralar (yalnız h2'ler numaralanır).
+  **İLK madde H1'dir** (yazı başlığı, yukarı-ok işaretli); hedefi başa-dön butonuyla aynıdır: sayfa başı. `inject_heading_ids` H1'i de toplar (level 1); `items`'ı FİLTRELEME (`l in (1,2)`), yoksa başlık maddesi düşer. level-1 yoksa `title=` ile verilebilir.
+  **Konum/boyut stilleri inline YAZILMAZ** — `ANIMATED_BORDER_STYLE`'daki `.floating-toc` kuralları kullanılır (CLS).
+  **Inline `onclick` KULLANILMAZ** — CMS siliyor; davranışlar `<script>` içinde `addEventListener` ile bağlanır.
 - `render_game_h3_inline(anchor, name, badge, badge_color, meta, level, badge_href=None)` — oyun başlığı: pill (paletten) + isim + "Stüdyo · Yıl". badge_href None=otomatik kategori linki (birleşikte her parça), False=link yok.
 - `render_faq_accordion(pairs)` · `render_ubisoft_cta(h, d)` (buton id **ubisoft-packages-button**).
 

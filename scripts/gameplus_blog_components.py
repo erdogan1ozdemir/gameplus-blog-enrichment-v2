@@ -411,6 +411,33 @@ p { font-size: 18px; line-height: 27px; }
   .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(4) a { white-space: nowrap !important; }
   .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(4) a svg { margin-left: 2px !important; }
 }
+
+/* ================= v10.5: floating ToC kuralları ANA blokta (CLS düzeltmesi) =================
+   ÖNEMLİ: Bu kurallar eskiden ToC elemanından SONRAKİ ayrı bir stil bloğundaydı. Mobilde
+   (max-width:900px) konum top:120px -> bottom:16px değiştiği için tarayıcı elemanı önce üstte
+   boyayıp sonra aşağı taşıyordu = ~0.125 CLS. Kurallar artık eleman parse edilmeden ÖNCE
+   uygulandığından ilk boyama doğru konumda oluyor (kayma 0). Konum/boyut inline YAZILMAZ. */
+.floating-toc { position: fixed; top: 120px; right: 16px; z-index: 100; max-width: 320px;
+  background: #161616; border: 1px solid #29292B; border-radius: 16px; box-shadow: 0 8px 28px rgba(0,0,0,0.6); }
+.floating-toc > summary { display: flex; align-items: center; padding: 16px 20px; color: #fff; cursor: pointer;
+  font-family: 'New Science', GreycliffCF, -apple-system, sans-serif; font-weight: 600;
+  font-size: 20px; line-height: 28px; list-style: none; user-select: none; }
+.floating-toc > ul { margin: 0; padding: 0 20px 16px; max-height: 60vh; overflow-y: auto; list-style: none; }
+.floating-toc summary::-webkit-details-marker { display: none; }
+.floating-toc summary::marker { display: none; }
+.floating-toc ul li a:hover { color: #FFC900 !important; }
+.gp-toptop:hover { background: rgba(255,201,0,0.15); }
+@media (max-width: 900px) {
+  .floating-toc { top: auto; bottom: 16px; max-width: 240px; }
+}
+@media (max-width: 700px) {
+  .floating-toc > summary { font-size: 16px; line-height: 22px; padding: 13px 16px; }
+  .floating-toc > ul { padding: 0 16px 13px; }
+  .floating-toc ul li a { font-size: 13px !important; line-height: 19px !important; }
+  .floating-toc ul li span:not(.gp-toptop) { font-size: 10px !important; }
+  .gp-toptop { width: 21px !important; height: 21px !important; margin-left: 10px !important; }
+  .gp-toptop svg { width: 12px !important; height: 12px !important; }
+}
 </style>
 '''
 
@@ -858,10 +885,41 @@ def render_prev_weeks_cards(items):
 '''
 
 # --- İçindekiler (Figma: #161616 kart + #29292B kenarlık + New Science başlık + sarı 01/02 numaralar) ---
-def render_floating_toc(items):
+def render_floating_toc(items, title=None):
+    """items: inject_heading_ids çıktısı [(level, text, anchor), ...] — H1 dahil (level 1).
+    title: items içinde level-1 yoksa yazı başlığını buradan verebilirsin.
+
+    KURAL 1 (CLS): Konum/boyut stilleri INLINE YAZILMAZ; ANIMATED_BORDER_STYLE'daki .floating-toc
+    kuralları kullanılır. Inline top:120px + sonradan gelen mobil bottom:16px kuralı, elemanın ilk
+    boyamadan sonra ~626px aşağı atlamasına ve ~0.125 CLS'e yol açıyordu.
+    KURAL 2 (CMS): Inline onclick KULLANILMAZ — CMS bu öznitelikleri siliyor (canlıda doğrulandı).
+    Başa dön, link kapatma ve otomatik kapanma <script> içinde addEventListener ile bağlanır;
+    script bloğu CMS'te çalışıyor."""
+    # H1 (yazı başlığı) ToC'nin İLK maddesi olur; hedefi başa-dön butonuyla aynıdır (sayfa başı).
+    h1 = next(((t, a) for (l, t, a) in items if l == 1), None)
+    if h1 is None and title:
+        h1 = (title, None)
+
+    up_arrow = ('<span style="display:inline-flex;flex-shrink:0;margin-top:3px;">'
+                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FFC900" stroke-width="3" '
+                'stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/>'
+                '<line x1="12" y1="9" x2="12" y2="20"/></svg></span>')
+
     li_items = []
+    if h1:
+        h1_text, h1_anchor = h1
+        li_items.append(
+            f'    <li style="display:flex;gap:10px;margin:12px 0;list-style:none;">{up_arrow}'
+            f'<a class="gp-toc-top" href="#{h1_anchor}" style="color:#B2B2B2;text-decoration:none;'
+            f'font-size:16px;line-height:24px;">{h1_text}</a></li>' if h1_anchor else
+            f'    <li style="display:flex;gap:10px;margin:12px 0;list-style:none;">{up_arrow}'
+            f'<a class="gp-toc-top" href="#" style="color:#B2B2B2;text-decoration:none;'
+            f'font-size:16px;line-height:24px;">{h1_text}</a></li>')
+
     num = 0
     for level, text, anchor in items:
+        if level == 1:
+            continue                      # H1 yukarıda eklendi
         if level == 2:
             num += 1
             marker = f'<span style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;flex-shrink:0;margin-top:4px;">{num:02d}</span>'
@@ -869,39 +927,38 @@ def render_floating_toc(items):
             marker = '<span style="width:16px;flex-shrink:0;"></span>'
         li_items.append(
             f'    <li style="display:flex;gap:10px;margin:12px 0;list-style:none;">{marker}'
-            f'<a href="#{anchor}" onclick="this.closest(&quot;details&quot;).removeAttribute(&quot;open&quot;)" style="color:#B2B2B2;text-decoration:none;font-size:16px;line-height:24px;">{text}</a></li>')
+            f'<a href="#{anchor}" style="color:#B2B2B2;text-decoration:none;font-size:16px;line-height:24px;">{text}</a></li>')
     body = chr(10).join(li_items)
-    return f'''<details class="floating-toc" style="position:fixed;top:120px;right:16px;z-index:100;max-width:320px;background:#161616;border:1px solid #29292B;border-radius:16px;box-shadow:0 8px 28px rgba(0,0,0,0.6);">
-  <summary style="display:flex;align-items:center;padding:16px 20px;color:#fff;cursor:pointer;font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-weight:600;font-size:20px;line-height:28px;list-style:none;user-select:none;">İçindekiler<span class="gp-toptop" onclick="event.stopPropagation();event.preventDefault();window.scrollTo({{top:0,behavior:'smooth'}});" title="Başa dön" style="margin-left:12px;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;border:1.5px solid #FFC900;flex-shrink:0;cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFC900" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/><line x1="12" y1="9" x2="12" y2="20"/></svg></span></summary>
-  <ul style="margin:0;padding:0 20px 16px;max-height:60vh;overflow-y:auto;list-style:none;">
+    return f'''<details class="floating-toc">
+  <summary>İçindekiler<span class="gp-toptop" title="Başa dön" style="margin-left:12px;display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;border:1.5px solid #FFC900;flex-shrink:0;cursor:pointer;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFC900" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/><line x1="12" y1="9" x2="12" y2="20"/></svg></span></summary>
+  <ul>
 {body}
   </ul>
 </details>
 <script>
 (function(){{
-  var t=document.querySelector('.floating-toc');
-  if(!t) return;
-  window.addEventListener('scroll', function(){{ if(t.hasAttribute('open')) t.removeAttribute('open'); }}, {{passive:true}});
-  document.addEventListener('click', function(e){{ if(t.hasAttribute('open') && !t.contains(e.target)) t.removeAttribute('open'); }}, true);
+  var t = document.querySelector('.floating-toc');
+  if (!t) return;
+  var close = function(){{ if (t.hasAttribute('open')) t.removeAttribute('open'); }};
+  var toTop = function(e){{
+    e.stopPropagation(); e.preventDefault(); close();
+    var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+    try {{ window.scrollTo({{top:0, behavior:'smooth'}}); }} catch (err) {{ window.scrollTo(0,0); }}
+    // Güvenlik ağı: smooth animasyon başlamazsa (bazı gömülü/webview ortamları) anında başa al
+    setTimeout(function(){{
+      var y2 = window.pageYOffset || document.documentElement.scrollTop || 0;
+      if (y2 > 0 && y2 >= y - 1) window.scrollTo(0, 0);
+    }}, 400);
+  }};
+  var btn = t.querySelector('.gp-toptop');
+  if (btn) btn.addEventListener('click', toTop);
+  var first = t.querySelector('.gp-toc-top');
+  if (first) first.addEventListener('click', toTop);
+  t.querySelectorAll('ul li a').forEach(function(a){{ a.addEventListener('click', close); }});
+  window.addEventListener('scroll', close, {{passive:true}});
+  document.addEventListener('click', function(e){{ if (!t.contains(e.target)) close(); }}, true);
 }})();
 </script>
-<style>
-  .floating-toc summary::-webkit-details-marker {{ display: none; }}
-  .floating-toc summary::marker {{ display: none; }}
-  .floating-toc ul li a:hover {{ color: #FFC900 !important; }}
-  .gp-toptop:hover {{ background: rgba(255,201,0,0.15); }}
-  @media (max-width: 900px) {{
-    .floating-toc {{ top: auto !important; bottom: 16px !important; max-width: 240px !important; }}
-  }}
-  @media (max-width: 700px) {{
-    .floating-toc summary {{ font-size: 16px !important; line-height: 22px !important; padding: 13px 16px !important; }}
-    .floating-toc ul {{ padding: 0 16px 13px !important; }}
-    .floating-toc ul li a {{ font-size: 13px !important; line-height: 19px !important; }}
-    .floating-toc ul li span:not(.gp-toptop) {{ font-size: 10px !important; }}
-    .gp-toptop {{ width: 21px !important; height: 21px !important; margin-left: 10px !important; }}
-    .gp-toptop svg {{ width: 12px !important; height: 12px !important; }}
-  }}
-</style>
 '''
 
 # --- FAQ Accordion (premium dark, Game+ '+' indicator that rotates) ---
@@ -933,7 +990,8 @@ def inject_heading_ids(html):
         anchor = slugify(clean)
         toc_items.append((int(tag[1]), clean, anchor))
         return f'<{tag} id="{anchor}">{text}</{tag}>'
-    new_html = re.sub(r'<(h[23])>(.*?)</\1>', replace_h, html, flags=re.DOTALL)
+    # H1 de toplanır (level 1): floating ToC'nin İLK maddesi yazı başlığı olur, hedefi sayfa başı.
+    new_html = re.sub(r'<(h[123])>(.*?)</\1>', replace_h, html, flags=re.DOTALL)
     return new_html, toc_items
 
 
