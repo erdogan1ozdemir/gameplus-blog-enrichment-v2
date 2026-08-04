@@ -25,7 +25,10 @@ from gameplus_blog_components import *
 - `render_list(items, marker="dot"|"check", accent)` — gövde içi madde listesi (kural 14).
 - `render_editor_note(text, title="GAME+ EDİTÖR NOTU")` — sarı %6 zemin + 4px sarı bar + doküman ikonu; gövde 1em (paragrafla aynı boy). **Her yazıda zorunlu.**
 - `render_highlight(text, title="Hatırlatma")` — beyaz %4 zemin + sarı bar + ampul ikonu; 1em. **Her yazıda zorunlu.**
-- `render_table(headers, rows, featured=None)` — #161616 kap; thead #1E1E18 + SARI ORTALI başlıklar; hücreler 16/20 gri (oyun adı dahil normal); satırlar #29292B ayraçlı; **hover'da satır sarı %7 + ad sarı**; `featured=[i]` kalıcı vurgu.
+- `render_table(headers, rows, featured=None)` — mobilde tablo sıkıştırılmaz, yana kaydırılır; çıktı
+  başına **"Tabloyu yana kaydır →"** ipucu (`.gp-table-hint`) basılır (masaüstünde gizli). Ölçüler:
+  `design-system.md` → "v10.8".
+- `render_table` (eski açıklama) — #161616 kap; thead #1E1E18 + SARI ORTALI başlıklar; hücreler 16/20 gri (oyun adı dahil normal); satırlar #29292B ayraçlı; **hover'da satır sarı %7 + ad sarı**; `featured=[i]` kalıcı vurgu.
 - `render_genre_tags('Strateji','Aile')` — tür pill seti (tablo Tür hücresi); flex-wrap, üst üste binmez.
 - `render_game_cell(name, meta=None, href=None)` — tablo Oyun hücresi: isim (+link, alt çizgisiz, **yeni sekme**: `target="_blank" rel="noopener noreferrer"`) + altında "Stüdyo · Yıl" 12px gri. Stüdyo/yıl KAYNAKLI olmalı (Steam API / resmi sayfa); bilinmiyorsa meta=None.
 - `render_cta_paketler(h, d)` / `render_cta_oyunlar(h, d)` — glow'lu #161616 CTA kartı, sparkle eyebrow, New Science başlık; buton id: **packages-button / games-button**.

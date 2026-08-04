@@ -144,3 +144,50 @@ Başa-dön butonundaki ok daireye tam ortalıdır (simetrik SVG + `line-height:0
 
 **7. Font adı.** Başlıklar `'New Science'` adıyla çağrılır; frontend `global.scss`'te bu adla alias
 `@font-face` tanımladı. **İsim değiştirilmez.** Font dosyaları gövdeye GÖMÜLMEZ (lisans).
+
+## v10.8 - Marka "Font Kullanım Rehberi" + tablo yatay kaydırma (4 Ağustos 2026)
+
+Tasarım ekibinden gelen **Font Kullanım Rehberi** (masaüstü + mobil 360 px) esas alındı. Kurallar
+`ANIMATED_BORDER_STYLE`'ın **EN SONUNDA** ayrı bir "v10.8" bloğunda; önceki tüm ölçüleri bilinçli ezer.
+Yeni bileşen eklerken ölçüyü BU bloğa yaz, yoksa eski kurallar sonradan gelip ezer.
+
+| Öğe | Masaüstü | Mobil (<=700) |
+|---|---|---|
+| H1 | 40/48 #fff | 24/32 |
+| H2 | 32/40 #fff | 21/28 |
+| H3 | 28/36 **#FFC900** | 24/32 |
+| H4 | 24/32 #fff | 24/32 |
+| Gövde paragraf | 16/24 #B2B2B2 | 16/24 |
+| Hızlı Özet başlığı | 24/32 #fff | 20/24 |
+| Özet maddesi | 16/24 #B2B2B2 | 16/24 |
+| İçindekiler kutu başlığı | 24/32 #fff | 20/26 |
+| İçindekiler madde + numara | 16/20 | 12/16 |
+| İstatistik sayısı | 28/36 #FFC900 | 17/23 |
+| İstatistik etiketi | 16/24 #B2B2B2 | 13/17 |
+| Editör Notu / Hatırlatma | 16/22 #fff | 15/22 |
+| CTA başlığı (compact + end) | 32/40 #fff | 19/25 |
+| CTA metni | 16/20 #B2B2B2 | 16/20 |
+| Buton | 16/20 #131313 | 16/20 |
+| Tablo sütun başlığı | 16/20 #FFC900 | 16/20 |
+| Tablo hücresi | 16/20 #B2B2B2 | 16/20 |
+| Tablo oyun adı | 16/20 **#fff** | 16/20 |
+| İlgili yazı kartı başlığı | 20/24 #fff | 20/24 |
+| Küçük metin (eyebrow, meta, tarih, tür etiketi, stüdyo·yıl) | 12/16 | 12/16 |
+
+**Rehberden bilinçli ayrışmalar:**
+- **Tablo oyun adı beyaz** (rehber #FFC900 diyor) - marka tasarım görselinde beyaz; sütun başlıkları sarı kalıyor.
+- **Tür etiketi kendi tür renginde** (rehber #FFC900 diyor) - tür-renk taksonomisi korunuyor, yalnız boyut 12/16'ya çekildi.
+- **Editör Notu / Hatırlatma** rehberde 20/32; kullanıcı 16/22 (masaüstü) ve 15/22 (mobil) istedi.
+- **Eyebrow** rehberde iki ayrı satırda çelişiyor (20/24 "Alt Başlık Regular" vs 12/16 "Etiket Bold · eyebrow"); 12/16 seçildi.
+
+**Tablo mobilde SIKIŞTIRILMAZ, yana kaydırılır:**
+- Hücreler `white-space: nowrap`, tür rozetleri tek satır; tablo `.gp-table-scroll` içinde yatay kayar.
+- **İlk sütun (Oyun) 170 px sabit + `white-space: normal`** - uzun oyun adı alt satıra sarar, böylece
+  Tür sütunu ekrana girer ve tablonun kaydırılabilir olduğu görülür.
+- **Kaydırma çubuğu HER genişlikte gizli** (`scrollbar-width: none` + `::-webkit-scrollbar{display:none}`);
+  kaydırılabilirliği `render_table`'ın bastığı **"Tabloyu yana kaydır ->"** ipucu anlatır
+  (`.gp-table-hint`, 12/16 medium #B2B2B2, masaüstünde `display:none`).
+- Eski `.table-wrap > div { overflow-x: visible }` kuralı daha yüksek specificity'ye sahip olduğundan
+  kaydırma kabı `.table-wrap > div.gp-table-scroll` seçicisiyle hedeflenir.
+
+**İç linkler altı çizgisizdir** (`.gp-content a { text-decoration: none }`); renk yeterli.

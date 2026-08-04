@@ -183,7 +183,13 @@ ANIMATED_BORDER_STYLE = '''<style>
 
 /* --- Karşılaştırma / oyun tablosu --- */
 .gp-content .table-wrap { margin: 24px 0; border-radius: 16px; overflow: hidden; }
-.gp-content .gp-table-scroll { overflow-x: auto; }
+.gp-content .gp-table-scroll { overflow-x: auto;
+  /* Kaydırma çubuğu HER GENİŞLİKTE gizli: kaydırma çalışır, bant görünmez.
+     Kaydırılabilirliği "Tabloyu yana kaydır ->" ipucu anlatıyor. */
+  scrollbar-width: none; -ms-overflow-style: none; }
+.gp-content .gp-table-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
+.gp-content .gp-table-hint { display: none; font-size: 12px; line-height: 16px; font-weight: 500;
+  color: #B2B2B2; padding: 10px 14px 0; }
 .gp-content .table-wrap table { width: 100%; border-collapse: collapse; background: transparent; }
 .gp-content .table-wrap th { background: #1E1E18; padding: 19px 24px; text-align: center; color: #FFC900;
   font-weight: 700; font-size: 16px; line-height: 20px; border-bottom: 1px solid rgba(255,201,0,0.3); }
@@ -595,6 +601,143 @@ ANIMATED_BORDER_STYLE = '''<style>
 .gp-content a { color: #FFC900; text-decoration: none; }
 .gp-content a:hover { color: #ffd94d; text-decoration: none; }
 
+
+/* ================= v10.8 - Marka Font Kullanım Rehberi (Blog Detay) =================
+   Kaynak: markadan gelen "Font Kullanım Rehberi" (masaüstü + mobil 360px).
+   2 font ailesi: New Science (başlıklar) + GreycliffCF (gövde).
+   Bu blok EN SONDA durur; önceki tüm kuralları bilinçli olarak ezer. */
+
+/* --- MASAÜSTÜ --- */
+.gp-content { font-size: 16px; line-height: 24px; }
+.gp-content p { font-size: 16px; line-height: 24px; color: #B2B2B2; }
+.gp-content h1 { font-size: 40px; line-height: 48px; color: #fff; }
+.gp-content h2 { font-size: 32px; line-height: 40px; color: #fff; }
+.gp-content h3 { font-size: 28px; line-height: 36px; color: #FFC900; }
+.gp-content h4 { font-size: 24px; line-height: 32px; color: #fff; }
+
+/* Kart/kutu başlıkları = H4 rolü (Hızlı Özet, İçindekiler, card-table) */
+.gp-content .gp-tldr-title,
+.gp-content .floating-toc > summary,
+.gp-content .card-table-wrap h3 { font-size: 24px; line-height: 32px; color: #fff; }
+/* CTA başlıkları = H2 rolü (rehber: "Kapak başlığı, CTA ve İlgili Yazılar") */
+.gp-content .gp-cta-title, .gp-content .cta-end .gp-cta-title { font-size: 32px; line-height: 40px; }
+
+/* İstatistik sayısı = H3 rolü (New Science, sarı) */
+.gp-content .gp-cell-value { font-size: 28px; line-height: 36px; color: #FFC900; }
+.gp-content .gp-cell-label { font-size: 16px; line-height: 24px; font-weight: 500; color: #B2B2B2; }
+
+/* Gövde paragraf ailesi (16/24) */
+.gp-content .gp-tldr-text { font-size: 16px; line-height: 24px; color: #B2B2B2; }
+.gp-content .gp-tldr-bullet { font-size: 16px; line-height: 24px; font-weight: 700; color: #FFC900; }
+.gp-content .gp-list li { font-size: 16px; line-height: 24px; }
+
+/* Infobox açıklama metni (Editör Notu / Hatırlatma) = 20/32 beyaz */
+.gp-content .editor-note p, .gp-content .highlight-box p { font-size: 16px; line-height: 22px; color: #fff; }
+
+/* Gövde 16/20 ailesi: tablo, CTA metni, butonlar */
+.gp-content .table-wrap th { font-size: 16px; line-height: 20px; font-weight: 700; color: #FFC900; }
+.gp-content .table-wrap td { font-size: 16px; line-height: 20px; color: #B2B2B2; }
+.gp-content .gp-tg-link, .gp-content .table-wrap td:first-child { font-size: 16px; line-height: 20px;
+  font-weight: 600; color: #fff; }
+.gp-content .gp-cta-desc, .gp-content .gp-cta-compact-tagline { font-size: 16px; line-height: 20px; }
+.gp-content .gp-btn { font-size: 16px; line-height: 20px; font-weight: 700; }
+.gp-content .gp-pw-more { font-size: 16px; line-height: 20px; font-weight: 600; color: #FFC900; }
+
+/* İlgili yazı kartı başlığı = GreycliffCF Bold 20/24 beyaz */
+.gp-content .gp-pw-title { font-size: 20px; line-height: 24px; font-weight: 700; color: #fff; }
+
+/* Küçük metin (12/16): eyebrow, meta, ToC numarası, tür etiketi, tarih, ToC madde metni */
+.gp-content .gp-cta-eyebrow span, .gp-content .gp-note-eyebrow, .gp-content .gp-pw-tag
+  { font-size: 12px; line-height: 16px; font-weight: 700; color: #FFC900; }
+/* İçindekiler masaüstünde daha okunur: madde metni ve numarası 16/20 */
+.gp-content .gp-toc-num { font-size: 16px; line-height: 20px; font-weight: 700; color: #FFC900; }
+.gp-content .gp-genre, .gp-content .gp-badge, .gp-content .gp-game-badge {
+  font-size: 12px; line-height: 16px; font-weight: 700; }
+.gp-content .gp-pw-date, .gp-content .gp-tldr-rt { font-size: 12px; line-height: 16px;
+  font-weight: 500; color: #B2B2B2; }
+.gp-content .floating-toc ul li a { font-size: 16px; line-height: 20px; font-weight: 400; color: #B2B2B2; }
+.gp-content .gp-tg-meta, .gp-content .gp-meta, .gp-content .gp-game-meta {
+  font-size: 12px; line-height: 16px; color: #B2B2B2; }
+.gp-content .gp-name { font-size: 16px; line-height: 20px; font-weight: 600; color: #FFC900; }
+
+/* Satır hover: arka plan sarı tint + oyun adı sarı (oyun adı <a> içinde olduğu için link de hedeflenir) */
+.gp-content .table-wrap tbody tr:hover > td { background: rgba(255,201,0,0.07); }
+.gp-content .table-wrap tbody tr:hover > td:first-child,
+.gp-content .table-wrap tbody tr:hover > td:first-child .gp-tg-link { color: #FFC900; }
+.gp-content .gp-tg-link { transition: color 0.15s ease; }
+
+/* --- MOBİL (360 px) --- */
+@media (max-width: 700px) {
+  /* Rehber: hero + TÜM bölüm ve kart başlıkları tek kademe: 24/32 */
+  .gp-content h1, .gp-content h3, .gp-content h4,
+  .gp-content .card-table-wrap h3 { font-size: 24px; line-height: 32px; }
+  .gp-content h2 { font-size: 21px; line-height: 28px; }
+  .gp-content .floating-toc > summary { font-size: 20px; line-height: 26px; }
+  .gp-content h3 { color: #FFC900; }
+  /* Kullanıcı onaylı mobil ölçüler (rehberden ayrışan bilinçli değerler) */
+  .gp-content .gp-tldr-title { font-size: 20px; line-height: 24px; }
+  .gp-content .gp-cta-title, .gp-content .cta-end .gp-cta-title { font-size: 19px; line-height: 25px; }
+  .gp-content .gp-cell-value { font-size: 17px; line-height: 23px; }
+  .gp-content .gp-cell-label { font-size: 13px; line-height: 17px; }
+  .gp-content p, .gp-content .gp-tldr-text, .gp-content .gp-list li { font-size: 16px; line-height: 24px; }
+  .gp-content .editor-note p, .gp-content .highlight-box p { font-size: 15px; line-height: 22px; }
+  .gp-content .table-wrap th, .gp-content .table-wrap td,
+  .gp-content .gp-tg-link, .gp-content .table-wrap td:first-child,
+  .gp-content .gp-cta-desc, .gp-content .gp-cta-compact-tagline,
+  .gp-content .gp-btn, .gp-content .gp-pw-more, .gp-content .gp-name { font-size: 16px; line-height: 20px; }
+  .gp-content .gp-pw-title { font-size: 20px; line-height: 24px; }
+  .gp-content .gp-genre, .gp-content .gp-badge, .gp-content .gp-game-badge,
+  .gp-content .gp-toc-num, .gp-content .gp-pw-date, .gp-content .gp-tldr-rt,
+  .gp-content .floating-toc ul li a, .gp-content .gp-tg-meta, .gp-content .gp-meta,
+  .gp-content .gp-game-meta { font-size: 12px; line-height: 16px; }
+  /* Tablo dar ekranda SIKIŞTIRILMAZ: hücreler tek satırda kalır, tablo yana kaydırılır */
+  .gp-content .table-wrap > div.gp-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain; }
+  .gp-content .table-wrap table { table-layout: auto; width: auto; min-width: 100%; }
+  .gp-content .table-wrap th, .gp-content .table-wrap td { padding: 12px 14px; white-space: nowrap; }
+  /* İlk sütun (Oyun) DAR ve SARABİLİR: uzun oyun adı alt satıra iner, böylece sağdaki
+     Tür sütunu ekrana girer ve tablonun kaydırılabilir olduğu görülür. */
+  .gp-content .table-wrap th:first-child, .gp-content .table-wrap td:first-child {
+    white-space: normal; width: 170px; min-width: 170px; max-width: 170px; overflow-wrap: break-word; }
+  .gp-content .table-wrap .gp-genres { flex-wrap: nowrap; }
+  .gp-content .gp-table-hint { display: block; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(2),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(2),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(3),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(4) { width: auto; }
+  /* Eski mobil punto kuralları rehberin ölçülerini eziyordu; sütun-bazlı seçicilerle eşitleniyor */
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(2),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(2),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(3),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(4) {
+    font-size: 16px; line-height: 20px; }
+  .gp-content .table-wrap td:first-child div,
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) div,
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) div { font-size: 12px; line-height: 16px; }
+  .gp-content .table-wrap td .gp-genre { font-size: 12px !important; line-height: 16px !important;
+    padding: 4px 10px !important; }
+  .gp-content .floating-toc ul li span:not(.gp-toptop) { font-size: 12px; line-height: 16px; }
+  .gp-content .gp-cell > div:last-child { font-size: 13px; line-height: 17px; }
+  .gp-content .gp-cell > div:first-child { font-size: 17px; line-height: 23px; }
+}
+@media (max-width: 400px) {
+  /* <=400 kademesi rehberde ayrı tanımlı değil; 360 px referans alındığı için mobil ölçüler korunur */
+  .gp-content .table-wrap th, .gp-content .table-wrap td,
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) { font-size: 16px; line-height: 20px; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) div,
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) div { font-size: 12px; line-height: 16px; }
+  .gp-content .table-wrap td .gp-genre { font-size: 12px !important; padding: 4px 10px !important; }
+  .gp-content .gp-cell > div:last-child { font-size: 13px; line-height: 17px; }
+  .gp-content .gp-cell > div:first-child { font-size: 17px; line-height: 23px; }
+}
 </style>
 '''
 
@@ -772,6 +915,7 @@ def render_table(headers, rows, featured=None, first_col_strong=True):
         tds = "".join(f'<td>{c}</td>' for c in row)
         body_rows.append(f'<tr{cls}>{tds}</tr>')
     return f'''<div class="table-wrap gp-table">
+  <div class="gp-table-hint">Tabloyu yana kaydır &rarr;</div>
   <div class="gp-table-scroll">
     <table>
       <thead><tr>{th}</tr></thead>
@@ -1064,7 +1208,7 @@ def render_floating_toc(items, title=None):
     e.stopPropagation(); e.preventDefault(); close();
     var y = window.pageYOffset || document.documentElement.scrollTop || 0;
     try {{ window.scrollTo({{top:0, behavior:'smooth'}}); }} catch (err) {{ window.scrollTo(0,0); }}
-    // Güvenlik ağı: smooth animasyon başlamazsa (bazı gömülü/webview ortamları) anında başa al
+    /* Güvenlik ağı: smooth animasyon başlamazsa (bazı gömülü/webview ortamları) anında başa al */
     setTimeout(function(){{
       var y2 = window.pageYOffset || document.documentElement.scrollTop || 0;
       if (y2 > 0 && y2 >= y - 1) window.scrollTo(0, 0);
@@ -1078,11 +1222,11 @@ def render_floating_toc(items, title=None):
   window.addEventListener('scroll', close, {{passive:true}});
   document.addEventListener('click', function(e){{ if (!t.contains(e.target)) close(); }}, true);
 
-  // html{{scroll-behavior:smooth}} kaldırıldı (scope'lanamıyor, site geneline taşıyordu).
-  // İç bağlantılarda (ToC + card-table) yumuşak kaydırma artık burada.
+  /* html{{scroll-behavior:smooth}} kaldırıldı (scope'lanamıyor, site geneline taşıyordu). */
+  /* İç bağlantılarda (ToC + card-table) yumuşak kaydırma artık burada. */
   var root = t.closest('.gp-content') || document;
   root.querySelectorAll('a[href^="#"]').forEach(function(a){{
-    if (a.classList.contains('gp-toc-top')) return;      // o zaten sayfa başına gidiyor
+    if (a.classList.contains('gp-toc-top')) return;      /* o zaten sayfa başına gidiyor */
     a.addEventListener('click', function(e){{
       var id = a.getAttribute('href').slice(1);
       if (!id) return;
