@@ -247,3 +247,35 @@ TAM ad üzerinden yapılır. Karşılığı olmayan paragraf yerinde bırakılı
 - **Tüm tablolarda oyun adları BOLD DEĞİL** (font-weight 400). Kalın yazı tabloda gereksiz yer
   kaplıyordu; hiyerarşi zaten renk (beyaz) ve sütun başlığıyla kuruluyor. Hem GFN oyun tablosunda
   hem sıralama tablosunda geçerli.
+
+## v10.11 - İçindekiler numaralandırma + H3 başlıklar ToC'de + azalan mobil başlık ölçeği
+
+**İçindekiler (`render_floating_toc`):**
+
+| Seviye | ToC'de | Numara |
+|---|---|---|
+| H1 (yazı başlığı) | var, ilk madde | **numarasız** (hizayı korumak için boş yer tutucu) |
+| H2 | var | 01, 02, 03 ... |
+| H3 | var, hafif girintili (`.gp-toc-alt`) | bağlı olduğu H2'ye göre **2.1, 2.2, 3.1** ... |
+| H4 | **yok** | - |
+
+SSS bölümü ToC'de tek satırdır ("Sıkça Sorulan Sorular"); sorular `<summary>` olduğu için zaten
+başlık sayılmaz.
+
+**`inject_heading_ids` düzeltmesi:** eski regex yalnız `<h3>` (özniteliksiz) eşleşiyordu; oyun
+başlıkları `<h3 id="..." class="gp-game-head">` olarak basıldığı için ToC'ye HİÇ girmiyordu.
+Artık öznitelikli başlıklar da toplanıyor ve mevcut id korunuyor. Oyun başlığında ToC metni
+yalnız oyun adıdır (tür rozeti ve "Stüdyo · Yıl" alınmaz).
+
+**Oyun başlığı ölçüsü:** oyun adı, başlığın KENDİ seviyesinin ölçüsünü kullanır (h3 ise h3 gibi).
+Bunun düzgün çalışması için mobil başlık ölçeği azalan yapıldı:
+
+| | Masaüstü | Mobil |
+|---|---|---|
+| H1 | 40/48 | 24/32 |
+| H2 | 32/40 | 21/28 |
+| H3 | 28/36 | **19/26** |
+| H4 | 24/32 | **17/24** |
+
+(Önceki durumda mobilde h3/h4 24/32 iken h2 21/28'di; oyun başlıkları bölüm başlıklarından büyük
+görünüyordu. "Oyun adını H2 ölçüsüne sabitle" geçici çözümü kaldırıldı.)

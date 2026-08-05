@@ -266,12 +266,9 @@ ANIMATED_BORDER_STYLE = '''<style>
 /* --- Oyun başlığı (tür rozeti + isim + "Stüdyo · Yıl") --- */
 .gp-content .gp-game-head { display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
   margin: 32px 0 14px; line-height: 1.4; }
-/* Oyun adı H2 ÖLÇÜSÜNDE basılır; yazıda oyuna ayrı bir başlık seviyesi verilmediği için
-   h3/h4 ile render edilse bile H2'den BÜYÜK görünmemeli (mobilde h3 24/32 iken h2 21/28). */
-.gp-content .gp-game-head .gp-game-name { font-size: 32px; line-height: 40px; color: #fff; }
-@media (max-width: 700px) {
-  .gp-content .gp-game-head .gp-game-name { font-size: 21px; line-height: 28px; }
-}
+/* Oyun adı, başlığın KENDİ seviyesinin ölçüsünü kullanır (h3 ise h3 gibi görünür).
+   Bunun çalışması için mobil başlık ölçeğinin azalan olması şart: h1 > h2 > h3 > h4. */
+.gp-content .gp-game-head .gp-game-name { color: #fff; }
 .gp-content .gp-game-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 12px;
   line-height: 16px; font-weight: 700; white-space: nowrap; }
 .gp-content .gp-game-badge-link { text-decoration: none; display: contents; }
@@ -491,6 +488,8 @@ ANIMATED_BORDER_STYLE = '''<style>
 .gp-content .gp-toc-num { color: #FFC900; font-size: 12px; line-height: 16px; font-weight: 700;
   flex-shrink: 0; margin-top: 4px; }
 .gp-content .gp-toc-gap { width: 16px; flex-shrink: 0; }
+.gp-content .gp-toc-alt { padding-left: 14px; }
+.gp-content .gp-toc-alt .gp-toc-num { opacity: 0.85; }
 .gp-content .gp-toptop { margin-left: 12px; display: inline-flex; align-items: center; justify-content: center;
   width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid #FFC900; flex-shrink: 0;
   cursor: pointer; line-height: 0; vertical-align: middle; }
@@ -714,9 +713,10 @@ ANIMATED_BORDER_STYLE = '''<style>
 /* --- MOBİL (360 px) --- */
 @media (max-width: 700px) {
   /* Rehber: hero + TÜM bölüm ve kart başlıkları tek kademe: 24/32 */
-  .gp-content h1, .gp-content h3, .gp-content h4,
-  .gp-content .card-table-wrap h3 { font-size: 24px; line-height: 32px; }
+  .gp-content h1 { font-size: 24px; line-height: 32px; }
   .gp-content h2 { font-size: 21px; line-height: 28px; }
+  .gp-content h3 { font-size: 19px; line-height: 26px; }
+  .gp-content h4 { font-size: 17px; line-height: 24px; }
   .gp-content .gp-ct-title { font-size: 21px; line-height: 28px; }
   .gp-content .floating-toc > summary { font-size: 20px; line-height: 26px; }
   /* Kullanıcı onaylı mobil ölçüler (rehberden ayrışan bilinçli değerler) */
@@ -1265,27 +1265,31 @@ def render_floating_toc(items, title=None):
         h1 = (title, None)
 
     def _num(n):
-        return f'<span class="gp-toc-num">{n:02d}</span>'
+        etiket = f'{n:02d}' if isinstance(n, int) else str(n)
+        return f'<span class="gp-toc-num">{etiket}</span>'
 
     li_items = []
-    num = 0
     if h1:
         h1_text, h1_anchor = h1
-        num = 1                           # H1 = 01; sonraki H2'ler 02, 03, ... diye devam eder
         href = f'#{h1_anchor}' if h1_anchor else '#'
+        # H1 (yazı başlığı) NUMARASIZ; hizayı bozmamak için boş yer tutucu konur.
         li_items.append(
-            f'    <li>{_num(num)}<a class="gp-toc-top" href="{href}">{h1_text}</a></li>')
+            f'    <li><span class="gp-toc-gap"></span>'
+            f'<a class="gp-toc-top" href="{href}">{h1_text}</a></li>')
 
+    # H2 -> 1, 2, 3 ... ; H3 -> bağlı olduğu H2'ye göre 2.1, 2.2 ... ; H4 ToC'ye girmez.
+    h2_no, h3_no = 0, 0
     for level, text, anchor in items:
         if level == 1:
-            continue                      # H1 yukarıda eklendi
+            continue
         if level == 2:
-            num += 1
-            marker = _num(num)
-        else:
-            marker = '<span class="gp-toc-gap"></span>'
-        li_items.append(
-            f'    <li>{marker}<a href="#{anchor}">{text}</a></li>')
+            h2_no += 1; h3_no = 0
+            li_items.append(f'    <li>{_num(h2_no)}<a href="#{anchor}">{text}</a></li>')
+        elif level == 3:
+            h3_no += 1
+            li_items.append(f'    <li class="gp-toc-alt">'
+                            f'{_num(f"{h2_no}.{h3_no}" if h2_no else str(h3_no))}'
+                            f'<a href="#{anchor}">{text}</a></li>')
     body = chr(10).join(li_items)
     return f'''<details class="floating-toc">
   <summary>İçindekiler<span class="gp-toptop" title="Başa dön" ><svg viewBox="0 0 24 24" fill="none" stroke="#FFC900" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 14 12 8 6 14"/><line x1="12" y1="8" x2="12" y2="16"/></svg></span></summary>
@@ -1369,18 +1373,27 @@ def slugify(text):
     return text[:60]
 
 def inject_heading_ids(html):
-    toc_items = []
-    def replace_h(match):
-        tag = match.group(1)
-        text = match.group(2)
-        clean = re.sub(r'<[^>]+>', '', text)
-        anchor = slugify(clean)
-        toc_items.append((int(tag[1]), clean, anchor))
-        return f'<{tag} id="{anchor}">{text}</{tag}>'
-    # H1 de toplanır (level 1): floating ToC'nin İLK maddesi yazı başlığı olur, hedefi sayfa başı.
-    new_html = re.sub(r'<(h[123])>(.*?)</\1>', replace_h, html, flags=re.DOTALL)
-    return new_html, toc_items
+    """H1-H3'e id ekler ve ToC listesini döndürür.
 
+    Zaten id'si OLAN başlıklar da toplanır: `render_game_h3_inline` oyun başlıklarını
+    `<h3 id="..." class="gp-game-head">` olarak basar; eski regex yalnız `<h3>` (özniteliksiz)
+    eşleştiği için oyun başlıkları İçindekiler'e hiç girmiyordu.
+    Oyun başlığında ToC metni yalnız oyun adıdır (tür rozeti ve "Stüdyo · Yıl" alınmaz).
+    H4 toplanmaz - ToC'de yer almaz."""
+    toc_items, parcalar, son = [], [], 0
+    for m in re.finditer(r'<(h[123])\b([^>]*)>(.*?)</\1>', html, re.S):
+        tag, attrs, ic = m.group(1), m.group(2), m.group(3)
+        oyun_adi = re.search(r'<span class="gp-game-name">(.*?)</span>', ic, re.S)
+        kaynak = oyun_adi.group(1) if oyun_adi else ic
+        duz = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', kaynak)).strip()
+        var_id = re.search(r'id="([^"]+)"', attrs)
+        anchor = var_id.group(1) if var_id else slugify(duz)
+        toc_items.append((int(tag[1]), duz, anchor))
+        parcalar.append(html[son:m.start()])
+        parcalar.append(m.group(0) if var_id else f'<{tag}{attrs} id="{anchor}">{ic}</{tag}>')
+        son = m.end()
+    parcalar.append(html[son:])
+    return "".join(parcalar), toc_items
 
 def ensure_leading_h1(html):
     """Blog gövdesi İLK başlığıyla (yazı başlığı) bir H1 olarak başlar. Taslakta zaten <h1> varsa
