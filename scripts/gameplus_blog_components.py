@@ -110,6 +110,7 @@ def embed_fonts(html):
 
 # === SVG ICONS (premium replacements for emoji) ===
 # Trophy icon for "Best Of" lists (replaces star)
+# DEPRECATED (v10.10): kupa ikonu kaldırıldı, artık kullanılmıyor. Yeni içerikte ÇAĞIRMA.
 SVG_TROPHY = '<svg width="24" height="24" viewBox="0 0 24 24" style="vertical-align:-6px;margin-right:10px;flex-shrink:0;"><defs><linearGradient id="gp-grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FFC900"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path fill="url(#gp-grad)" d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></svg>'
 # Green checkmark for TLDR/info-card items
 SVG_CHECK_GREEN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFC900" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg>'
@@ -200,7 +201,7 @@ ANIMATED_BORDER_STYLE = '''<style>
 .gp-content .table-wrap th.gp-col-num, .gp-content .table-wrap td.gp-col-num {
   width: 1%; white-space: nowrap; text-align: center; padding-left: 20px; padding-right: 20px; }
 /* Sıralama tablosu (ilk sütun sıra no): oyun adları card-table'daki gibi beyaz ve yarı kalın */
-.gp-content .gp-table-rank td:not(.gp-col-num) { color: #fff; font-weight: 600; }
+.gp-content .gp-table-rank td:not(.gp-col-num) { color: #fff; font-weight: 400; }
 /* Sıralama tablosunda hover: TÜM hücreler sarıya döner. Genel hover kuralı yalnız
    `td:first-child`'ı hedefliyor; orada sıra numarası olduğu için oyun adları beyaz kalıyordu. */
 .gp-content .table-wrap.gp-table-rank tbody tr:hover > td,
@@ -244,7 +245,10 @@ ANIMATED_BORDER_STYLE = '''<style>
 
 /* --- Card-table ("En İyi N ..." tıklanabilir liste) --- */
 .gp-content .card-table-wrap { margin: 28px 0; }
-.gp-content .gp-ct-head { text-align: center; margin-bottom: 14px; }
+/* Tablo üstü başlık: h-tag DEĞİL (SEO outline'ına girmesin), ama H2 tipografisinde.
+   Kupa ikonu v10.10'da kaldırıldı; gradient yerine düz sarı. */
+.gp-content .gp-ct-title { font-family: 'New Science', GreycliffCF, -apple-system, sans-serif;
+  font-weight: 600; color: #FFC900; margin: 0 0 14px; text-align: left; }
 .gp-content .card-table { overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.5); }
 .gp-content .gp-card-rows { position: relative; z-index: 1; }
 .gp-content .card-row { display: grid; grid-template-columns: var(--gp-bw,120px) 1fr auto; gap: 14px;
@@ -359,12 +363,6 @@ ANIMATED_BORDER_STYLE = '''<style>
 .gp-content .table-wrap tbody tr { transition: background 0.15s ease; }
 
 /* ===== Card-table başlığı (kupa + başlık) tam ortalı ===== */
-.gp-content .card-table-wrap > div:first-child { text-align: center; }
-.gp-content .card-table-wrap h3 { display: flex; align-items: center; justify-content: center; gap: 9px;
-  font-weight: 800; letter-spacing: -0.01em; margin: 0; }
-.gp-content .card-table-wrap h3 > svg { margin-right: 0; vertical-align: middle; }
-.gp-content .gp-ct-title { min-width: 0; background: linear-gradient(110deg,#FFC900,#f59e0b);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
 /* ===== FAQ soruları biraz daha sola dayalı ===== */
 .gp-content .faq-item summary { padding: 14px 16px; gap: 10px; }
@@ -659,8 +657,8 @@ ANIMATED_BORDER_STYLE = '''<style>
 
 /* Kart/kutu başlıkları = H4 rolü (Hızlı Özet, İçindekiler, card-table) */
 .gp-content .gp-tldr-title,
-.gp-content .floating-toc > summary,
-.gp-content .card-table-wrap h3 { font-size: 24px; line-height: 32px; color: #fff; }
+.gp-content .floating-toc > summary { font-size: 24px; line-height: 32px; color: #fff; }
+.gp-content .gp-ct-title { font-size: 32px; line-height: 40px; }
 /* CTA başlıkları = H2 rolü (rehber: "Kapak başlığı, CTA ve İlgili Yazılar") */
 .gp-content .gp-cta-title, .gp-content .cta-end .gp-cta-title { font-size: 32px; line-height: 40px; }
 
@@ -680,7 +678,7 @@ ANIMATED_BORDER_STYLE = '''<style>
 .gp-content .table-wrap th { font-size: 16px; line-height: 20px; font-weight: 700; color: #FFC900; }
 .gp-content .table-wrap td { font-size: 16px; line-height: 20px; color: #B2B2B2; }
 .gp-content .gp-tg-link, .gp-content .table-wrap td:first-child { font-size: 16px; line-height: 20px;
-  font-weight: 600; color: #fff; }
+  font-weight: 400; color: #fff; }
 .gp-content .gp-cta-desc, .gp-content .gp-cta-compact-tagline { font-size: 16px; line-height: 20px; }
 .gp-content .gp-btn { font-size: 16px; line-height: 20px; font-weight: 700; }
 .gp-content .gp-pw-more { font-size: 16px; line-height: 20px; font-weight: 600; color: #FFC900; }
@@ -719,6 +717,7 @@ ANIMATED_BORDER_STYLE = '''<style>
   .gp-content h1, .gp-content h3, .gp-content h4,
   .gp-content .card-table-wrap h3 { font-size: 24px; line-height: 32px; }
   .gp-content h2 { font-size: 21px; line-height: 28px; }
+  .gp-content .gp-ct-title { font-size: 21px; line-height: 28px; }
   .gp-content .floating-toc > summary { font-size: 20px; line-height: 26px; }
   /* Kullanıcı onaylı mobil ölçüler (rehberden ayrışan bilinçli değerler) */
   .gp-content .gp-tldr-title { font-size: 20px; line-height: 24px; }
@@ -1169,9 +1168,7 @@ def render_card_table(title, games, headers=("Oyun", "Tür", "Stüdyo · Yıl"))
         rows.append([ad, badge_html, g.get('meta', '')])
     tablo = render_table(list(headers), rows)
     return f'''<div class="card-table-wrap">
-  <div class="gp-ct-head">
-    <h3>{SVG_TROPHY}<span class="gp-ct-title">{title}</span></h3>
-  </div>
+  <div class="gp-ct-title">{title}</div>
 {tablo}</div>
 '''
 

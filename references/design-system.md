@@ -236,3 +236,14 @@ Eski grid kuralları (`.card-row`, `.gp-name`, `.gp-badge`, `--gp-bw`) geriye d�
 baştaki "Oyun Adı:" önekini kaldırır. Adlar UZUNDAN KISAYA denenir ve paragraf "sahiplenilir"
 (yoksa "Halo 3", "Halo 3: ODST: ..." paragrafını kapar). Başlık eşleşmesi `.gp-game-name` içinde
 TAM ad üzerinden yapılır. Karşılığı olmayan paragraf yerinde bırakılır.
+
+## v10.10 - Kupa ikonu kaldırıldı, tablo başlığı h-tag değil, oyun adları bold değil
+
+- **Kupa ikonu (trophy) ARTIK KULLANILMIYOR.** `render_card_table` çıktısında yok; `SVG_TROPHY`
+  sabiti geriye dönük uyumluluk için duruyor ama DEPRECATED - yeni içerikte çağırma.
+- **Tablo üstü başlık h-tag DEĞİL.** `<h3>` yerine `<div class="gp-ct-title">`; SEO başlık
+  outline'ına girmiyor ama **H2 tipografisinde** görünüyor: masaüstü 32/40, mobil 21/28,
+  New Science 600, düz `#FFC900` (gradient kaldırıldı), sola yaslı.
+- **Tüm tablolarda oyun adları BOLD DEĞİL** (font-weight 400). Kalın yazı tabloda gereksiz yer
+  kaplıyordu; hiyerarşi zaten renk (beyaz) ve sütun başlığıyla kuruluyor. Hem GFN oyun tablosunda
+  hem sıralama tablosunda geçerli.
