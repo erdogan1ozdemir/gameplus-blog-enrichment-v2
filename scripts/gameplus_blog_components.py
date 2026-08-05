@@ -1559,6 +1559,38 @@ def verify_output(final_html, blog_type="general", n_games=None, expect_faq=Fals
             "yazı başlığı ilk sırada",
             f"ToC ilk maddesi H1 değil ({_t1!r}) — render_floating_toc'a items'ı l in (1,2) ile ver")
 
+    # ---- SAFEGUARD: teslim edilen HTML'de OLMAMASI gerekenler ----
+    # Bu kontroller "hatırlamaya" değil koda bağlıdır; kural unutulursa build FAIL verir.
+    yorum_css = final_html.count("/*")
+    yorum_html = final_html.count("<!--")
+    add(yorum_css == 0 and yorum_html == 0, "Çıktıda yorum yok",
+        "yorum yok",
+        f"{yorum_css} CSS/JS + {yorum_html} HTML yorumu var - CMS'e giden HTML'de yorum bulunmaz "
+        f"(stil bloğu _yorumsuz()'dan geçmeli; renderer'lara elle yorum yazma)")
+
+    add("data:font" not in final_html, "Gömülü font yok",
+        "yok", "gövdede base64 font var - LİSANS İHLALİ; embed_fonts yalnız ÖNİZLEME içindir")
+
+    add("onclick=" not in final_html, "Inline onclick yok",
+        "yok", "inline onclick var - CMS on* özniteliklerini siliyor, addEventListener kullan")
+
+    dengesiz = []
+    for _t in ("div", "table", "tbody", "tr", "td", "th", "p", "details", "style", "ul", "li"):
+        _ac = len(re.findall(r"<" + _t + r"[\s>]", final_html))
+        _kp = len(re.findall(r"</" + _t + r">", final_html))
+        if _ac != _kp:
+            dengesiz.append(f"{_t} {_ac}/{_kp}")
+    add(not dengesiz, "Etiket dengesi",
+        "tüm etiketler dengeli",
+        f"DENGESİZ: {', '.join(dengesiz)} - bozuk HTML tarayıcıda/CMS'te açılmaz")
+
+    _govde = final_html.split("</style>")[-1]
+    _kamp = len(re.findall(r"[Kk]ampanya", re.sub(r"<[^>]+>", " ", _govde)))
+    add(_kamp == 0, "Kural 17: 'kampanya' yok", "yok",
+        f"'kampanya' {_kamp} kez geçiyor - oyunun hikaye moduna 'kampanya' denmez; "
+        f"'hikaye modu (campaign)' kullan (oyun adının parçasıysa aynen kalır)", warn=True)
+
+
     # 11) PlayStation (GFN platform/lisans/CTA bağlamında YASAK — WARN, haber yazıları hariç)
     if re.search(r'playstation', final_html, re.I):
         add(False, "PlayStation geçiyor", "",

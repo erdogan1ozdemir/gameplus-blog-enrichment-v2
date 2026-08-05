@@ -81,3 +81,20 @@ ok  = print_report(res)   # FAIL yoksa True
 
 ## 3. Çıktı
 - [ ] **İki çıktı** üretildi: `files-preview` (GreycliffCF gömülü) + `excel` rollup. (Kullanıcı tersini demedikçe ikisi de.)
+
+## Otomatik SAFEGUARD'lar (verify_output - build FAIL verir)
+
+Bu kurallar artık "hatırlamaya" değil KODA bağlı. `verify_output` her build'de çalışır ve ihlalde
+build durur; kural unutulsa bile çıktıya sızamaz.
+
+| Kontrol | Sonuç | Neden |
+|---|---|---|
+| **Çıktıda yorum yok** | FAIL | CMS'e giden HTML'de `/* ... */` ve `<!-- ... -->` bulunmaz. Sürüm notu, "Geçiş 1", gerekçe açıklaması vb. çıktıya girmez. Stil bloğu `_yorumsuz()`'dan geçer; renderer'lara ELLE yorum yazma. |
+| **Gömülü font yok** | FAIL | Gövdede `data:font` = lisans ihlali. `embed_fonts()` yalnız ÖNİZLEME içindir. |
+| **Inline onclick yok** | FAIL | CMS `on*` özniteliklerini siliyor; davranış `<script>` içinde `addEventListener` ile bağlanır. |
+| **Etiket dengesi** | FAIL | div/table/tbody/tr/td/th/p/details/style/ul/li açılış-kapanış sayısı eşit olmalı. Bozuk HTML görüntüleyicide/CMS'te açılmaz. (Bir teslimde fazladan bir `</div>` bu yüzden fark edilmemişti.) |
+| **Kural 17: 'kampanya' yok** | WARN | Oyunun hikaye moduna Türkçe metinde "kampanya" denmez; "hikaye modu (campaign)". Oyun adının parçasıysa (Halo: Campaign Evolved) aynen kalır. |
+
+Mevcut kontrollerle birlikte (tek H1, tek stil bloğu, em dash yok, `.gp-content` scope, ToC ilk
+madde = H1, Editör Notu/Hatırlatma zorunlu, oyun sayısı tutarlılığı ...) `verify_output` her
+build'in ZORUNLU son adımıdır. `print_report()` False dönerse çıktı TESLİM EDİLMEZ.

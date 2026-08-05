@@ -153,6 +153,12 @@ Tam liste **`references/content-rules.md`**'de. En kritikleri:
 
 Çıkışı CWD'ye yaz (genelde `/Users/Erdo/Desktop/Claude Projects/Dispatch/`). **Varsayılan: her zaman İKİ çıktıyı birden üret** — (1) `files-preview` (canlı tipografili, `embed_fonts()` ile GreycliffCF gömülü, bire bir önizleme; markaya/müşteriye gösterilir, istenirse GitHub/Vercel'e push edilir) ve (2) `excel` rollup (body HTML; markanın CMS'e yapıştırıp canlıya alması için). Kullanıcı tersini söylemedikçe ikisini de teslim et. Önizleme tipografisi `PAGE_HEAD`'de gameplus blog ile birebir (GreycliffCF @font-face, 1200px kolon, 20px gövde, h1 40 / h2 32 / h3 22.75px); bu yalnızca önizleme içindir, CMS body'si etkilenmez.
 
+
+- **Çıktıya yorum YAZMA.** CMS'e giden HTML'de CSS/JS/HTML yorumu, sürüm notu ("v10.7", "Geçiş 1"),
+  gerekçe açıklaması bulunmaz. Stil bloğu `_yorumsuz()`'dan geçer; renderer'lara elle yorum ekleme.
+  `verify_output` "Çıktıda yorum yok" kontrolüyle bunu ZORLAR - ihlalde build FAIL verir.
+  Açıklamalar Python kaynağında ve `references/` altında tutulur.
+
 ## Referans dosyaları
 
 - `references/design-system.md` — tüm renkler, V8/V9 efektleri, bileşen görünümleri
