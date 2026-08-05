@@ -128,7 +128,7 @@ SVG_ARROW = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke=
 
 # === DARK THEME BLOCK STYLES (CMS-portable inline) ===
 # Common animated border style + mobile responsiveness + FAQ + table fixes
-ANIMATED_BORDER_STYLE = '''<style>
+_STYLE_KAYNAK = '''<style>
 .gp-content {--gp-surface:#161616;--gp-line:#29292b;--gp-accent:#FFC900;}
 @property --gp-conic-angle {
   syntax: '<angle>';
@@ -800,6 +800,20 @@ ANIMATED_BORDER_STYLE = '''<style>
 </style>
 '''
 
+def _yorumsuz(kod):
+    """Üretilen HTML'e yorum GİRMEZ: /* ... */ blokları atılır, oluşan boş satırlar toplanır.
+    Yorumlar Python kaynağında (_STYLE_KAYNAK ve script şablonları) KALIR - bakım için gerekli;
+    yalnızca çıktı sadeleşir. Tırnak içindeki metinler etkilenmez (kodda /* geçen string yok)."""
+    kod = re.sub(r'/\*.*?\*/', '', kod, flags=re.S)
+    kod = re.sub(r'[ \t]+$', '', kod, flags=re.M)      # satır sonu boşlukları
+    kod = re.sub(r'\n{3,}', '\n\n', kod)                # 3+ boş satır -> 1
+    kod = re.sub(r'\{\n\n+', '{\n', kod)
+    return kod
+
+
+ANIMATED_BORDER_STYLE = _yorumsuz(_STYLE_KAYNAK)
+
+
 # --- Sparkle (4 uçlu yıldız) — CTA eyebrow'larında ★ yerine kullanılır ---
 SVG_SPARKLE = ('<svg width="14" height="14" viewBox="0 0 24 24" fill="#FFC900" style="flex-shrink:0;'
                'margin-right:6px;vertical-align:-2px;"><path d="M12 1.5c.3 4.6 2.4 7.4 6.9 8.2'
@@ -1299,7 +1313,7 @@ def render_floating_toc(items, title=None):
             li_items.append(f'    <li>{_num(h2_no)}<a href="#{anchor}">{text}</a></li>')
 
     body = chr(10).join(li_items)
-    return f'''<details class="floating-toc">
+    _cikti = f'''<details class="floating-toc">
   <summary>İçindekiler<span class="gp-toptop" title="Başa dön" ><svg viewBox="0 0 24 24" fill="none" stroke="#FFC900" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 14 12 8 6 14"/><line x1="12" y1="8" x2="12" y2="16"/></svg></span></summary>
   <ul>
 {body}
@@ -1346,6 +1360,7 @@ def render_floating_toc(items, title=None):
 }})();
 </script>
 '''
+    return _yorumsuz(_cikti)
 
 
 def wrap_gp_content(html):

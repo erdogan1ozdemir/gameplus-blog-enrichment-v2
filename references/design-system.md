@@ -278,3 +278,14 @@ seviyesinin ölçüsünü kullanır (h3 ise h3 gibi); bu yüzden ölçeğin azal
 **Karşılaştırma tablosunda sıra:** çıkış sırası yazının başında zaten verildiyse karşılaştırma
 tablosunda ÖNCE hikaye (kronolojik) sırası gelir, sonra çıkış sırası. Tablonun üstüne ne olduğunu
 anlatan bir başlık konur.
+
+## Çıktıda yorum YOK
+
+CMS'e giden HTML'de CSS/JS yorumu bulunmaz. Kaynakta yorumlar KALIR (bakım için gerekli):
+`_STYLE_KAYNAK` ham stil bloğudur, `ANIMATED_BORDER_STYLE = _yorumsuz(_STYLE_KAYNAK)` ile
+temizlenmiş hali üretilir. `render_floating_toc` da `<script>` bloğunu aynı süzgeçten geçirir.
+
+`_yorumsuz(kod)`: `/* ... */` bloklarını atar, satır sonu boşluklarını siler, 3+ boş satırı tek
+boş satıra indirir. Yeni kural yazarken yorumu rahatça ekleyebilirsin - çıktıya düşmez.
+
+Etki: stil bloğu 44.993 -> 36.115 karakter; tipik yazı ~9.000 karakter küçüldü.
