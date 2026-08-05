@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""GFN Thursday 2 Temmuz 2026 — ham docx -> v10.1 enriched. Yazar metni KORUNUR; checkpoint'li."""
+"""GFN Thursday 2 Temmuz 2026 — ham docx -> zenginleştirilmiş HTML. Yazar metni KORUNUR; checkpoint'li."""
 import sys, os, re, zipfile
 import xml.etree.ElementTree as ET
 from docx import Document
@@ -123,9 +123,9 @@ def game_row(pp):
     return [c0, render_genre_tags(*genres_for(name)), linkify_meta(esc(meta), links)], (name, meta, href)
 
 def yt(vid, t=""):
-    return (f'<div class="gp-yt-wrap" style="max-width:560px;margin:1.6em 0;"><iframe src="https://www.youtube.com/embed/{vid}" '
+    return (f'<div class="gp-yt-wrap"><iframe src="https://www.youtube.com/embed/{vid}" '
             f'title="{esc(t)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" '
-            f'allowfullscreen loading="lazy" style="display:block;width:100%;aspect-ratio:16/9;height:auto;border:0;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.5);"></iframe></div>')
+            f'allowfullscreen loading="lazy"></iframe></div>')
 def ytid(u):
     m = re.search(r'v=([A-Za-z0-9_-]{11})', u); return m.group(1) if m else ''
 
@@ -204,7 +204,7 @@ if prev_cards: out.append(render_prev_weeks_cards(prev_cards))
 
 body = "\n".join(out)
 body, toc_items = inject_heading_ids(body)
-toc = render_floating_toc([(l, t, a) for (l, t, a) in toc_items if l in (1, 2)])  # H1 = ilk madde (sayfa başı)
+toc = render_floating_toc(toc_items)  # inject_heading_ids zaten yalnız H1 + H2 döndürür  # H1 = ilk madde (sayfa başı)
 tldr = render_tldr(TLDR_ITEMS, reading_time=estimate_reading_time(body))
 body = body.replace('</h1>', '</h1>\n' + toc + tldr + info, 1)
 body = ensure_leading_h1(body)
@@ -215,6 +215,10 @@ ok1 = print_report(verify_output(final, blog_type="gfn", expect_faq=False))
 print("=== 2) Yazar metni korundu mu (tablo satırları hariç, onlar yapısal dönüşüm) ===")
 orig = "".join(f"<p>{esc(t)}</p>" for t in source_chunks)
 ok2 = print_source_report(orig, final)
+
+# Kontroller FAIL verirse ÇIKTI ÜRETİLMEZ (qa-checklist: 'FAIL varsa teslim etme').
+if not (ok1 and ok2):
+    sys.exit('Kontroller FAIL - çıktı yazılmadı')
 print("=== 3) Oyun satırları: isim + platform/tarih + link birebir mi ===")
 _plain = re.sub(r'\s+', '', re.sub(r'<[^>]+>', ' ', final))   # tag'siz, boşluksuz metin (ikon tag'leri boşluk bırakır)
 miss = 0
@@ -236,10 +240,10 @@ preview = embed_fonts(PAGE_HEAD.replace("__TITLE__", TITLE) + final + PAGE_FOOT)
 open(os.path.join(OUT, f"ornek-blog-{SLUG}.html"), "w", encoding="utf-8").write(preview)
 open(os.path.join(OUT, f"{SLUG}-body.html"), "w", encoding="utf-8").write(final)
 doc = Document()
-doc.add_heading("GFN Thursday 2 Temmuz 2026 - v10.1 Enriched HTML (CMS gövdesi)", level=1)
+doc.add_heading("GFN Thursday 2 Temmuz 2026 - Zenginleştirilmiş HTML (CMS gövdesi) (CMS gövdesi)", level=1)
 doc.add_paragraph("CMS gövdesine yapıştırılacak kod. Yazar metni birebir korunmuştur; yalnız enrichment eklenmiştir.")
 for line in final.split("\n"):
     p = doc.add_paragraph(line)
     for r in p.runs: r.font.name = "Courier New"
-doc.save(os.path.join(OUT, "GFN 2 Temmuz - v10 HTML.docx"))
-print(f"\nÇıktılar: ornek-blog-{SLUG}.html | {SLUG}-body.html | GFN 2 Temmuz - v10 HTML.docx | chars: {len(final)}")
+doc.save(os.path.join(OUT, "GFN 2 Temmuz  - HTML.docx"))
+print(f"\nÇıktılar: ornek-blog-{SLUG}.html | {SLUG}-body.html | GFN 2 Temmuz  - HTML.docx | chars: {len(final)}")

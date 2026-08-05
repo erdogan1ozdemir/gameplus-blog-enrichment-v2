@@ -52,3 +52,22 @@ Farklar:
 - Her `replace`/`sub` için `count=1` — yanlışlıkla çoklu enjeksiyon olmasın.
 - **Enjeksiyondan sonra `verify_output(final_body, blog_type=..., n_games=..., expect_faq=...)` + `print_report(...)` çalıştır** (content-rules 13 + `references/qa-checklist.md`): tek H1 + ilk başlık H1, meta header yok, ANIMATED_BORDER_STYLE 1x, ToC/TLDR(3-6)/info-card, oyun sayısı (inline başlık = card-row), embed aspect-ratio, em dash yok. **FAIL varsa teslim etme, düzelt.**
 - Çoklu blog: her biri için aynı pipeline; sonda `export(items, fmt=...)`.
+
+## Birleştirme (son adım) ve güncel notlar
+
+```python
+final = wrap_gp_content(ANIMATED_BORDER_STYLE + "\n" + body)
+```
+`wrap_gp_content` ATLANAMAZ: tüm CSS seçicileri `.gp-content` önekiyle yazılıdır.
+
+- **Çapa `</h1>`**: ToC + TLDR + info-card buraya enjekte edilir; gövde enjeksiyondan ÖNCE bir H1
+  içermelidir. Taslakta H1 yoksa `ensure_leading_h1(body)` enjeksiyondan ÖNCE çağrılmalıdır.
+- **`move_game_descriptions(body, oyun_adlari)`**: sıralamayı tablo olarak verdiğin yazılarda
+  (Çıkış/Oynama Sırası) "Oyun Adı: açıklama" paragraflarını ilgili oyunun başlık + fragman
+  bloğunun altına taşır. Tuple döndürür.
+- **EMBED işaretçisi yalnız taslak içindir**: build sonunda gövdede tek bir HTML yorumu bile
+  kalmamalıdır (`verify_output` "Çıktıda yorum yok" FAIL verir).
+- **Oyun başlıkları tercihen H3'tür.** H2 kullanılırsa başlık İçindekiler'e girer.
+- **GFN oyun listesinde** ilk hücre `render_game_cell(ad, "Stüdyo · Yıl", magaza_url)` ile üretilir;
+  oyun adına elle `<strong>` YAZILMAZ.
+- **`verify_output` kontrol listesi** için tek kaynak: `references/qa-checklist.md`.

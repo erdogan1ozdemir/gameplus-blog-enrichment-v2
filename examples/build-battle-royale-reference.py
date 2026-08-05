@@ -3,7 +3,7 @@
 import sys, os, re, zipfile
 import xml.etree.ElementTree as ET
 from docx import Document
-sys.path.insert(0, "/Users/Erdo/.claude/skills/gameplus-blog-enrich/scripts")
+sys.path.insert(0, os.path.expanduser("~/.claude/skills/gameplus-blog-enrich-v2/scripts"))
 from gameplus_blog_components import *
 
 OUT = "/Users/Erdo/Desktop/Claude Projects/Dispatch"
@@ -58,20 +58,39 @@ GENRE = {'Fortnite':'Aksiyon','PUBG: BATTLEGROUNDS':'FPS','Call of Duty: Warzone
 def ytid(u):
     m = re.search(r'v=([A-Za-z0-9_-]{11})', u); return m.group(1) if m else ''
 def yt(vid, t=""):
-    return (f'<div class="gp-yt-wrap" style="max-width:560px;margin:1.6em 0;"><iframe src="https://www.youtube.com/embed/{vid}" '
+    return (f'<div class="gp-yt-wrap"><iframe src="https://www.youtube.com/embed/{vid}" '
             f'title="{esc(t)}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" '
-            f'allowfullscreen loading="lazy" style="display:block;width:100%;aspect-ratio:16/9;height:auto;border:0;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.5);"></iframe></div>')
+            f'allowfullscreen loading="lazy"></iframe></div>')
 
 n = len(blocks)
 game_idx = [i for i in range(n) if blocks[i][0]=='h3' and i+1<n and blocks[i+1][0]=='yt']
 game_names = [blocks[i][2] for i in game_idx]
 first_game = game_idx[0] if game_idx else None
+# "Stüdyo · Yıl" KAYNAKLI olmalı (Steam Store API / resmi sayfa) - uydurma yok.
+# Bilinmiyorsa META'ya ekleme; meta=None geçilir (content-rules kural 11).
+META = {
+    "Fortnite": "Epic Games · 2017",
+    "Apex Legends": "Respawn Entertainment · 2019",
+    "PUBG: BATTLEGROUNDS": "KRAFTON · 2017",
+    "Call of Duty: Warzone": "Infinity Ward · 2020",
+    "Naraka: Bladepoint": "24 Entertainment · 2021",
+    "The Finals": "Embark Studios · 2023",
+    "Fall Guys": "Mediatonic · 2020",
+}
+# Editör Notu ve Hatırlatma HER YAZIDA ZORUNLU (verify_output FAIL verir).
+editor_note = render_editor_note(
+    "Battle royale yapımlarında kare hızı, nişan alma hassasiyetini doğrudan etkiliyor. Bulut üzerinden "
+    "oynarken kablolu bağlantı ya da 5 GHz Wi-Fi, gecikmeyi belirgin biçimde azaltabilir.")
+hatirlatma = render_highlight(
+    "GeForce NOW oyun satmaz; sahip olduğun oyunları bulutta çalıştırır. Yukarıdaki yapımları oynamak için "
+    "ilgili mağazada (Steam, Epic Games Store, Xbox / Game Pass) geçerli bir lisansa ya da aboneliğe sahip olman gerekir.")
+
 card_table = render_card_table("En İyi 7 Battle Royale Oyunu",
-    [{'name':nm, 'badge':GENRE.get(nm,'FPS'), 'anchor':slugify(nm)} for nm in game_names])
+    [{'name':nm, 'badge':GENRE.get(nm,'FPS'), 'meta':META.get(nm), 'anchor':slugify(nm)} for nm in game_names])
 
 cta_paketler = render_cta_paketler("Donanımın yetmese de son çembere kal",
     "Battle Royale yapımlarını yüksek performanslı bir bilgisayar almadan oynamak mümkün. GeForce NOW ile kütüphanendeki GeForce NOW destekli oyunları telefon, tablet ya da dizüstünden buluttan başlatabilirsin.")
-end_cta = render_end_cta("Buluttan oynamaya hazır mısın?",
+end_cta = render_end_cta("Donanım yükseltmeden oynamaya devam et",
     "Performance ve Ultimate paketleriyle kütüphanendeki GeForce NOW destekli yapımları donanım yükseltmeden oyna.",
     btn2_label="GeForce NOW Oyunları", btn2_url="https://gameplus.com.tr/gfn/oyunlar", chip2="Oyunlar")
 
@@ -88,6 +107,7 @@ while i < n:
                 if blocks[j][0]=='h3' and j+1<n and blocks[j+1][0]=='p':
                     pairs.append((blocks[j][2], blocks[j+1][1])); j += 2
                 else: j += 1
+            out.append(hatirlatma)
             out.append(end_cta)
             out.append(f'<h2>{html}</h2>')
             out.append(render_faq_accordion(pairs))
@@ -103,8 +123,9 @@ while i < n:
         out.append(f'<h2>{html}</h2>'); i += 1; continue
     if k == 'h3' and i+1 < n and blocks[i+1][0]=='yt':
         if i == first_game: out.append(card_table)
+        if i == first_game: out.append(editor_note)
         nm = txt
-        out.append(render_game_h3_inline(slugify(nm), nm, GENRE.get(nm,'FPS'), None, "", level="h3"))
+        out.append(render_game_h3_inline(slugify(nm), nm, GENRE.get(nm,'FPS'), None, META.get(nm, ""), level="h3"))
         out.append(yt(ytid(blocks[i+1][1]), nm))
         i += 2; continue
     if k == 'yt':
@@ -113,13 +134,13 @@ while i < n:
 
 body = "\n".join(out)
 body, toc_items = inject_heading_ids(body)
-toc = render_floating_toc([(l,t,a) for (l,t,a) in toc_items])
+toc = render_floating_toc(toc_items)
 tldr = render_tldr([
     "<strong>Battle Royale nedir:</strong> Onlarca oyuncunun ekipmansız başlayıp son kalan olmak için mücadele ettiği hayatta kalma türü.",
     "<strong>7 öne çıkan yapım:</strong> Fortnite, PUBG: BATTLEGROUNDS, Call of Duty: Warzone, Apex Legends, Naraka: Bladepoint, Garena Free Fire, Battlefield REDSEC.",
     "<strong>Tarzına göre seçim:</strong> Yapı kurma, taktiksel simülasyon, yüksek FPS, yakın dövüş veya mobil; her oyuncuya uygun bir seçenek var.",
     "<strong>Donanımın yetmiyorsa:</strong> GeForce NOW ile bu yapımların GeForce NOW destekli olanlarını buluttan oynayabilirsin.",
-])
+], reading_time=estimate_reading_time(body))
 info = render_info_card([("İncelenen","7 Oyun"),("En Erişilebilir","Garena Free Fire"),
                          ("En Taktiksel","PUBG"),("Platform","PC · Mobil · Bulut")])
 body = body.replace('</h1>', '</h1>\n' + toc + tldr + info, 1)

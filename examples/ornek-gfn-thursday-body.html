@@ -1,5 +1,6 @@
+<div class="gp-content">
 <style>
-:root{--gp-surface:#161616;--gp-line:#29292b;--gp-accent:#FFC900;}
+.gp-content {--gp-surface:#161616;--gp-line:#29292b;--gp-accent:#FFC900;}
 @property --gp-conic-angle {
   syntax: '<angle>';
   initial-value: 0deg;
@@ -17,11 +18,11 @@
   0%, 100% { transform: scale(1); opacity: 1; }
   50% { transform: scale(1.18); opacity: 0.85; }
 }
-.gp-animated-border { position: relative; border-radius: 12px; padding: 1px; background: linear-gradient(110deg, #FFC900 0%, #f59e0b 30%, #FFC900 60%, #f59e0b 100%); background-size: 300% 100%; animation: gameplus-border-shimmer 6s ease-in-out infinite; }
-.gp-animated-border > .gp-inner { background: transparent; border-radius: 11px; padding: 22px 24px; }
-/* V8: Rotating Conic Glow border */
-.gp-conic { position: relative; border-radius: 12px; padding: 1.5px; }
-.gp-conic::before {
+.gp-content .gp-animated-border { position: relative; border-radius: 12px; padding: 1px; background: linear-gradient(110deg, #FFC900 0%, #f59e0b 30%, #FFC900 60%, #f59e0b 100%); background-size: 300% 100%; animation: gameplus-border-shimmer 6s ease-in-out infinite; }
+.gp-content .gp-animated-border > .gp-inner { background: transparent; border-radius: 11px; padding: 22px 24px; }
+
+.gp-content .gp-conic { position: relative; border-radius: 12px; padding: 1.5px; }
+.gp-content .gp-conic::before {
   content:''; position:absolute; inset:0; border-radius:12px; padding:1.5px;
   background: conic-gradient(from var(--gp-conic-angle,0deg), transparent 0deg, var(--gp-glow,#FFC900) 60deg, transparent 120deg, transparent 360deg);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
@@ -30,334 +31,778 @@
   animation: gp-rotate-conic 6s linear infinite;
   pointer-events: none;
 }
-.gp-conic > .gp-conic-inner { background:var(--gp-surface,#161616); border-radius:10.5px; position:relative; }
-/* V9: Layered Frame */
-.gp-layer { position:relative; border-radius:12px; border:1px solid var(--gp-frame,rgba(255,201,0,0.22)); background:var(--gp-surface,#161616); }
-.gp-cell { position:relative; background:var(--gp-surface,#161616); border:1px solid var(--gp-line,#29292b); border-radius:10px; padding:14px 16px; }
-.gp-layer::before { content:''; position:absolute; inset:5px; border:1px solid #29292b; border-radius:8px; pointer-events:none; }
-/* FAQ + sign pulsing animation */
-.faq-item .faq-icon { animation: gp-pulse-plus 2.2s ease-in-out infinite; }
-.gp-card-table-inner .card-row:last-child { border-bottom: none !important; }
-.gp-card-table-inner .card-row { position: relative; }
-.gp-card-table-inner a.card-row { text-decoration: none !important; color: inherit !important; }
-/* Hover Slide Accent: colored bar slides in from left on hover (Steam list vibe) */
-.gp-card-table-inner .card-row::before { content:''; position:absolute; left:0; top:0; bottom:0; width:0; background:var(--row-c,#FFC900); transition:width 0.2s ease; }
-.gp-card-table-inner .card-row:hover::before { width:4px; }
-.gp-card-table-inner .card-row:hover { background: rgba(255,255,255,0.025) !important; }
-.gp-card-table-inner a.card-row:hover .gp-name { color: #fff !important; }
-/* Comparison table fixes */
-.table-wrap tbody tr:last-child td { border-bottom: none !important; }
-.table-wrap table { border-radius: 12px; }
-/* FAQ + indicator */
-.faq-item .faq-icon { transition: transform 0.25s ease, color 0.2s; }
-.faq-item[open] .faq-icon { transform: rotate(45deg); color: #FFC900 !important; }
-.faq-item summary:hover .faq-icon { color: #f59e0b; }
-/* YouTube embed wrapper smaller + centered */
-.gp-yt-wrap { max-width: 560px; margin: 1.5em 0 !important; }
-/* Mobile: card-table responsive */
+.gp-content .gp-conic > .gp-conic-inner { background:var(--gp-surface,#161616); border-radius:10.5px; position:relative; }
+
+.gp-content .gp-layer { position:relative; border-radius:12px; border:1px solid var(--gp-frame,rgba(255,201,0,0.22)); background:var(--gp-surface,#161616); }
+.gp-content .gp-cell { position:relative; background:var(--gp-surface,#161616); border:1px solid var(--gp-line,#29292b); border-radius:10px; padding:14px 16px; }
+.gp-content .gp-layer::before { content:''; position:absolute; inset:5px; border:1px solid #29292b; border-radius:8px; pointer-events:none; }
+
+.gp-content .faq-item .faq-icon { animation: gp-pulse-plus 2.2s ease-in-out infinite; }
+.gp-content .gp-card-table-inner .card-row:last-child { border-bottom: none; }
+.gp-content .gp-card-table-inner .card-row { position: relative; }
+.gp-content .gp-card-table-inner a.card-row { text-decoration: none; color: inherit; }
+
+.gp-content .gp-card-table-inner .card-row::before { content:''; position:absolute; left:0; top:0; bottom:0; width:0; background:var(--row-c,#FFC900); transition:width 0.2s ease; }
+.gp-content .gp-card-table-inner .card-row:hover::before { width:4px; }
+.gp-content .gp-card-table-inner .card-row:hover { background: rgba(255,255,255,0.025); }
+.gp-content .gp-card-table-inner a.card-row:hover .gp-name { color: #fff; }
+
+.gp-content .table-wrap table { border-radius: 12px; }
+
+.gp-content .table-wrap { margin: 24px 0; border-radius: 16px; overflow: hidden; }
+.gp-content .gp-table-scroll { overflow-x: auto;
+
+  scrollbar-width: none; -ms-overflow-style: none; }
+.gp-content .gp-table-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
+.gp-content .gp-table-hint { display: none; font-size: 12px; line-height: 16px; font-weight: 500;
+  color: #B2B2B2; padding: 10px 14px 0; }
+.gp-content .table-wrap table { width: 100%; border-collapse: collapse; background: transparent; }
+.gp-content .table-wrap th { background: #1E1E18; padding: 19px 24px; text-align: left; color: #FFC900;
+  font-weight: 700; font-size: 16px; line-height: 20px; border-bottom: 1px solid rgba(255,201,0,0.3); }
+.gp-content .table-wrap td { padding: 14px 24px; vertical-align: middle; color: #B2B2B2; font-weight: 400;
+  font-size: 16px; line-height: 20px; }
+.gp-content .table-wrap tbody tr + tr td { border-top: 1px solid #29292B; }
+
+.gp-content .table-wrap th.gp-col-num, .gp-content .table-wrap td.gp-col-num {
+  width: 1%; white-space: nowrap; text-align: center; padding-left: 20px; padding-right: 20px; }
+
+.gp-content .gp-table-rank td:not(.gp-col-num) { color: #fff; font-weight: 400; }
+
+.gp-content .table-wrap.gp-table-rank tbody tr:hover > td,
+.gp-content .table-wrap.gp-table-rank tbody tr:hover > td .gp-tg-link,
+.gp-content .table-wrap.gp-table-rank tr.gp-row-feat > td,
+.gp-content .table-wrap.gp-table-rank tr.gp-row-feat > td .gp-tg-link { color: #FFC900; }
+
+.gp-content .table-wrap.gp-table-rank tr th:not(.gp-col-num),
+.gp-content .table-wrap.gp-table-rank tr td:not(.gp-col-num) { text-align: left; }
+.gp-content .table-wrap.gp-table-rank tr th.gp-col-num,
+.gp-content .table-wrap.gp-table-rank tr td.gp-col-num { text-align: center; }
+
+.gp-content .table-wrap.gp-table-rank tr > :first-child:nth-last-child(3) ~ :nth-child(2),
+.gp-content .table-wrap.gp-table-rank tr > :first-child:nth-last-child(3) ~ :nth-child(3),
+.gp-content .table-wrap.gp-table-rank tr > :first-child:nth-last-child(4) ~ :nth-child(2),
+.gp-content .table-wrap.gp-table-rank tr > :first-child:nth-last-child(4) ~ :nth-child(3),
+.gp-content .table-wrap.gp-table-rank tr > :first-child:nth-last-child(4) ~ :nth-child(4) { text-align: left; }
+
 @media (max-width: 700px) {
-  .gp-card-table-inner .card-row {
-    grid-template-columns: auto 1fr !important;
-    grid-template-rows: auto auto;
-    gap: 6px 12px !important;
-    padding: 14px 16px !important;
-  }
-  .gp-card-table-inner .card-row > .gp-badge {
-    grid-row: 1; grid-column: 1;
-    font-size: 0.54em !important;
-    min-width: auto !important;
-    padding: 4px 9px !important;
-    letter-spacing: 0.08em !important;
-  }
-  .gp-card-table-inner .card-row > .gp-name {
-    grid-row: 1; grid-column: 2;
-    font-size: 0.95em !important;
-    align-self: center;
-  }
-  .gp-card-table-inner .card-row > .gp-meta {
-    grid-row: 2; grid-column: 1 / -1;
-    text-align: left !important;
-    font-size: 0.78em !important;
-    padding-left: 0 !important;
-  }
-  .gp-game-inline > aside { float: none !important; width: 100% !important; margin: 0 0 16px 0 !important; }
-  .gp-yt-wrap { margin: 1em 0 !important; }
+  .gp-content .table-wrap.gp-table-rank tr > :first-child:nth-last-child(3) ~ :nth-child(2),
+  .gp-content .table-wrap.gp-table-rank tr > :first-child:nth-last-child(3) ~ :nth-child(3) {
+    white-space: normal; width: 44%; overflow-wrap: break-word; }
+  .gp-content .table-wrap.gp-table-rank tr > :first-child:nth-last-child(3) { width: 12%; }
+
+  .gp-content .table-wrap td .gp-genres { flex-wrap: wrap; }
+}
+.gp-content .table-wrap tr.gp-row-feat td { background: rgba(255,201,0,0.12); }
+.gp-content .table-wrap tr.gp-row-feat td:first-child,
+.gp-content .table-wrap tr.gp-row-feat td:first-child .gp-tg-link { color: #FFC900; }
+
+.gp-content .gp-genres { display: inline-flex; flex-wrap: wrap; gap: 6px 8px; align-items: center;
+  vertical-align: middle; }
+.gp-content .gp-genre { display: inline-block; border-radius: 6px; padding: 4px 10px; font-size: 12px;
+  line-height: 16px; font-weight: 700; white-space: nowrap; }
+
+.gp-content .card-table-wrap { margin: 28px 0; }
+
+.gp-content .gp-ct-title { font-family: 'New Science', GreycliffCF, -apple-system, sans-serif;
+  font-weight: 600; color: #fff; margin: 28px 0 14px; text-align: left; }
+.gp-content .card-table { overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.5); }
+.gp-content .gp-card-rows { position: relative; z-index: 1; }
+.gp-content .card-row { display: grid; grid-template-columns: var(--gp-bw,120px) 1fr auto; gap: 14px;
+  padding: 8px 18px; border-bottom: 1px solid #29292b; align-items: center;
+  transition: background 0.2s ease; text-decoration: none; color: inherit; }
+.gp-content .gp-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 12px;
+  line-height: 16px; font-weight: 700; white-space: nowrap; width: 100%; box-sizing: border-box;
+  text-align: center; }
+.gp-content .gp-badge-link { text-decoration: none; line-height: 0; display: inline-flex; }
+.gp-content .gp-name { font-weight: 600; color: #f3f4f6; font-size: 0.98em; letter-spacing: -0.005em;
+  transition: color 0.2s; }
+.gp-content .gp-meta { color: #B2B2B2; font-size: 0.78em; text-align: right; white-space: nowrap;
+  font-weight: 500; letter-spacing: 0.01em; }
+
+.gp-content .gp-game-head { display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
+  margin: 32px 0 14px; line-height: 1.4; }
+
+.gp-content .gp-game-head .gp-game-name { color: #fff; }
+.gp-content .gp-game-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 12px;
+  line-height: 16px; font-weight: 700; white-space: nowrap; }
+.gp-content .gp-game-badge-link { text-decoration: none; display: contents; }
+.gp-content .gp-game-name { font-weight: 700; letter-spacing: -0.01em; }
+.gp-content .gp-game-meta { font-size: 0.52em; color: #B2B2B2; font-weight: 500; letter-spacing: 0.02em;
+  flex-basis: 100%; margin-top: -4px; }
+
+.gp-content .gp-tg-link { color: inherit; text-decoration: none; }
+.gp-content .gp-tg-meta { color: #B2B2B2; font-size: 12px; line-height: 16px; font-weight: 500; margin-top: 4px; }
+.gp-content .gp-ext { width: 11px; height: 11px; vertical-align: 1px; margin-left: 3px; opacity: 0.65; }
+
+.gp-content .prev-weeks-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+  gap: 24px; margin: 24px 0 32px; }
+.gp-content .gp-prev-week { display: block; text-decoration: none; background: #161616;
+  border: 1px solid #29292B; border-radius: 16px; overflow: hidden; color: inherit;
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s; }
+.gp-content .gp-prev-week:hover { border-color: rgba(255,201,0,0.5); transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5); }
+.gp-content .gp-pw-thumb { height: 150px; background-color: #0d0d0d;
+  background: var(--gp-thumb, linear-gradient(135deg,#1c1a0e,#0d0d0d 70%)) center/cover no-repeat;
+  display: flex; align-items: flex-end; padding: 14px 20px; position: relative; }
+.gp-content .gp-pw-scrim { position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.78), rgba(0,0,0,0.05) 60%); }
+.gp-content .gp-pw-tag { color: #FFC900; font-size: 12px; line-height: 16px; font-weight: 700;
+  letter-spacing: 0.08em; position: relative; }
+.gp-content .gp-pw-body { padding: 18px 20px 20px; }
+.gp-content .gp-pw-date { color: #B2B2B2; font-size: 12px; line-height: 16px; font-weight: 500; margin-bottom: 8px; }
+.gp-content .gp-pw-title { color: #fff; font-size: 20px; line-height: 24px; font-weight: 700; margin-bottom: 8px; }
+.gp-content .gp-pw-more { color: #FFC900; font-size: 16px; line-height: 20px; font-weight: 600; }
+
+.gp-content .gp-game-info-card { float: right; width: 210px; margin: 0 0 16px 22px; background: #161616;
+  border: 1px solid #29292b; border-radius: 10px; padding: 16px; font-size: 0.9em;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04); }
+.gp-content .gp-gic-badge { display: inline-block; color: #fff; padding: 4px 11px; border-radius: 999px;
+  font-size: 0.62em; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 2px 4px rgba(0,0,0,0.4); }
+.gp-content .gp-gic-name { font-weight: 700; color: #fff; font-size: 1.04em; line-height: 1.3;
+  margin-bottom: 8px; letter-spacing: -0.01em; }
+.gp-content .gp-gic-meta { color: #B2B2B2; font-size: 0.82em; line-height: 1.55; font-weight: 500; }
+
+.gp-content .faq-block { margin: 24px 0; }
+.gp-content .faq-item { margin-bottom: 10px; border: 1px solid #29292b; border-radius: 10px;
+  overflow: hidden; background: transparent; box-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+.gp-content .faq-item summary { display: flex; align-items: center; gap: 14px; padding: 16px 20px;
+  cursor: pointer; background: transparent; font-weight: 700; color: #f3f4f6; letter-spacing: -0.005em;
+  list-style: none; }
+.gp-content .faq-item .faq-icon { display: inline-flex; align-items: center; justify-content: center;
+  width: 22px; height: 22px; flex-shrink: 0; color: #FFC900; font-size: 1.5em; font-weight: 300; line-height: 1; }
+.gp-content .faq-item .faq-q { flex: 1; }
+.gp-content .faq-item > div { padding: 14px 20px 18px 56px; border-top: 1px solid #29292b; background: transparent; }
+.gp-content .faq-item > div p { margin: 0; color: #B2B2B2; line-height: 1.55; font-size: 0.94em; }
+
+.gp-content .gp-list { margin: 14px 0 18px; padding: 0; list-style: none; color: #B2B2B2; }
+.gp-content .gp-list li { display: flex; gap: 11px; margin: 8px 0; align-items: flex-start;
+  line-height: 1.6; list-style: none; }
+.gp-content .gp-list-dot { flex-shrink: 0; margin-top: 10px; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gp-dot,#FFC900); }
+.gp-content .gp-list-check { flex-shrink: 0; margin-top: 2px; }
+
+.gp-content .faq-item .faq-icon { transition: transform 0.25s ease, color 0.2s; }
+
+.gp-content .faq-item[open] .faq-icon { transform: rotate(45deg) !important; color: #FFC900; }
+.gp-content .faq-item summary:hover .faq-icon { color: #f59e0b; }
+
+@media (max-width: 700px) {
+  .gp-content .gp-game-inline > aside { float: none; width: 100%; margin: 0 0 16px 0; }
+  .gp-content .gp-yt-wrap { margin: 1em 0 !important; }
 }
 
-/* ===== v10 genel revizeler: embed 16:9, tablo alt kapatma, kupa ortala, FAQ sol, mobil responsive ===== */
-/* ===== YouTube embed: 16:9 (kare değil), sola dayalı, küçük ===== */
-.gp-yt-wrap { max-width: 560px; margin: 1.5em 0 !important; }
-.gp-yt-wrap iframe { display: block; width: 100% !important; aspect-ratio: 16 / 9 !important; height: auto !important; border: 0; border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.5); }
+.gp-content .gp-yt-wrap { max-width: 560px; margin: 1.5em 0 !important; }
+.gp-content .gp-yt-wrap iframe { display: block; width: 100% !important; aspect-ratio: 16 / 9 !important; height: auto !important; border: 0; border-radius: 12px; box-shadow: 0 4px 14px rgba(0,0,0,0.5); }
 
-/* ===== Tabloların altını kapat: tek temiz çerçeve, son satır ayracı ===== */
-.table-wrap.gp-layer::before,
-.card-table.gp-layer::before { display: none !important; }
-.table-wrap { border: 1px solid #29292B !important; }
-.gp-card-table-inner { border: 1px solid #29292B !important; }
-.table-wrap tbody tr:last-child td { border-bottom: none !important; }
-.table-wrap tbody tr { transition: background 0.15s ease; }
-.table-wrap tbody tr:hover > td { background: rgba(255,201,0,0.07) !important; }
-.table-wrap tbody tr:hover > td:first-child { color: #FFC900 !important; }
+.gp-content .table-wrap.gp-layer::before, .gp-content .card-table.gp-layer::before { display: none; }
+.gp-content .table-wrap { border: 1px solid #29292B; }
+.gp-content .gp-card-table-inner { border: 1px solid #29292B; }
 
-/* ===== Card-table başlığı (kupa + başlık) tam ortalı ===== */
-.card-table-wrap > div:first-child { text-align: center; }
-.card-table-wrap h3 { display: flex !important; align-items: center !important; justify-content: center !important; gap: 9px !important; }
-.card-table-wrap h3 > svg { margin-right: 0 !important; vertical-align: middle !important; }
-.card-table-wrap h3 > span { min-width: 0; }
+.gp-content ul li::marker { color: #FFC900; }
+.gp-content .table-wrap tbody tr { transition: background 0.15s ease; }
 
-/* ===== FAQ soruları biraz daha sola dayalı ===== */
-.faq-item summary { padding: 14px 16px !important; gap: 10px !important; }
+.gp-content .faq-item summary { padding: 14px 16px; gap: 10px; }
 
-/* ===== MOBİL (<=700px) ===== */
 @media (max-width: 700px) {
-  /* --- Karşılaştırma tablosu: yatay kaydırma yok, tüm sütunlar görünür, okunur punto --- */
-  .table-wrap > div { overflow-x: visible !important; }
-  .table-wrap table { font-size: 0.76em !important; table-layout: fixed; width: 100% !important; }
-  .table-wrap th, .table-wrap td {
-    padding: 10px 7px !important; white-space: normal !important;
-    word-break: normal !important; overflow-wrap: break-word; hyphens: none;
-    vertical-align: middle !important; line-height: 1.4 !important;
-  }
-  /* Başlıklar mobilde de hücreye ORTALI (masaüstündeki inline text-align:center ile aynı) */
-  .table-wrap th { letter-spacing: 0.04em !important; text-align: center !important; vertical-align: middle !important; }
-  .table-wrap td { text-align: left; }
-  /* Uzun tür etiketi dar sütunda taşmasın */
-  .table-wrap .gp-genre { white-space: normal !important; }
-  /* Sütun genişlikleri sütun SAYISINA göre (3 sütunlu GFN tablosunda son sütun ezilmesin) */
-  .table-wrap tr > :first-child:nth-last-child(3) { width: 40%; }
-  .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(2) { width: 32%; }
-  .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3) { width: 28%; }
-  .table-wrap tr > :first-child:nth-last-child(4) { width: 34%; }
-  .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(2) { width: 26%; }
-  .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(3) { width: 20%; }
-  .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(4) { width: 20%; }
+  .gp-content .table-wrap .gp-genre { white-space: normal; }
 
-  /* --- Card-table: TEK SATIR + rozet sütunu SABİT (oyun isimleri hizalı) --- */
-  .gp-card-table-inner .card-row {
-    grid-template-columns: 108px 1fr auto !important;
-    grid-template-rows: auto !important;
-    gap: 4px 9px !important; padding: 11px 12px !important; align-items: center !important;
+  .gp-content .gp-card-table-inner .card-row {
+    grid-template-columns: var(--gp-bw,96px) 1fr auto;
+    grid-template-rows: auto;
+    gap: 4px 9px; padding: 11px 12px; align-items: center;
   }
-  .gp-card-table-inner .card-row > .gp-badge {
-    grid-row: 1 !important; grid-column: 1 !important;
-    width: 100% !important; min-width: 0 !important; box-sizing: border-box;
-    font-size: 0.55em !important; padding: 3px 5px !important; letter-spacing: 0.02em !important; text-align: center;
+  .gp-content .gp-card-table-inner .card-row > .gp-badge {
+    grid-row: 1; grid-column: 1;
+    width: 100%; box-sizing: border-box;
+    font-size: 0.55em; padding: 3px 5px; letter-spacing: 0.02em; text-align: center;
   }
-  .gp-card-table-inner .card-row > .gp-name {
-    grid-row: 1 !important; grid-column: 2 !important; font-size: 0.8em !important; line-height: 1.28 !important;
+  .gp-content .gp-card-table-inner .card-row > .gp-name {
+    grid-row: 1; grid-column: 2; font-size: 0.8em; line-height: 1.28;
   }
-  .gp-card-table-inner .card-row > .gp-meta {
-    grid-row: 1 !important; grid-column: 3 !important; text-align: right !important;
-    font-size: 0.62em !important; padding-left: 0 !important; white-space: normal !important;
-    max-width: 112px; line-height: 1.35 !important;
+  .gp-content .gp-card-table-inner .card-row > .gp-meta {
+    grid-row: 1; grid-column: 3; text-align: right;
+    font-size: 0.62em; padding-left: 0; white-space: normal;
+    max-width: 112px; line-height: 1.35;
   }
 
-  /* --- FAQ: soru ve cevap sola dayalı, okunur --- */
-  .faq-item summary { padding: 13px 13px !important; gap: 9px !important; font-size: 0.95em !important; }
-  .faq-item > div { padding: 12px 14px 15px 14px !important; }
+  .gp-content .faq-item summary { padding: 13px 13px; gap: 9px; font-size: 0.95em; }
+  .gp-content .faq-item > div { padding: 12px 14px 15px 14px; }
 
-  /* --- Hızlı Özet (TLDR): kompakt ve okunur --- */
-  .tldr-block { padding: 16px !important; }
-  .tldr-block li { gap: 9px !important; }
+  }
 
-  /* --- CTA blokları: kompakt, butonlar tam genişlik --- */
-  .cta-end .gp-conic-inner, .cta-paketler .gp-conic-inner, .cta-oyunlar .gp-conic-inner, .cta-compact .gp-conic-inner { padding: 18px 16px !important; }
-  .cta-end a, .cta-paketler a, .cta-oyunlar a { flex: 1 1 100% !important; justify-content: center !important; box-sizing: border-box; }
-  .cta-end .gp-conic-inner > div:last-child { gap: 9px !important; }
+.gp-content h1, .gp-content h2, .gp-content h3, .gp-content h4 { scroll-margin-top: 28px; }
 
-  /* --- info-card: 2 sütun --- */
-  .info-card { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+.gp-content h1 { font-size: 40px; line-height: 48px; }
+.gp-content h2 { font-size: 28px; line-height: 36px; }
+.gp-content h3 { font-size: 24px; line-height: 32px; }
+.gp-content h4 { font-size: 20px; line-height: 28px; }
+
+.gp-content p { font-size: 20px; line-height: 24px; }
+@media (max-width: 700px) {
+  .gp-content h1 { font-size: 30px; line-height: 1.15; }
+  .gp-content h2 { font-size: 22px; line-height: 1.2; }
+  .gp-content h3 { font-size: 19px; line-height: 1.25; }
+  .gp-content h4 { font-size: 17px; line-height: 1.3; }
+  .gp-content p { font-size: 16px; line-height: 24px; }
+}
+
+@media (max-width: 700px) {}
+
+@media (max-width: 700px) {  .gp-content .gp-cell > div:last-child { font-size: 13px; line-height: 18px; }
+}
+@media (max-width: 400px) {  .gp-content .gp-cell > div:last-child { font-size: 12px; line-height: 16px; }
+}
+
+@media (max-width: 700px) {
+  .gp-content .table-wrap > div { overflow-x: visible; }
+  .gp-content .table-wrap table { font-size: 12px; table-layout: fixed; width: 100%; }
+  .gp-content .table-wrap thead { display: table-header-group; }
+  .gp-content .table-wrap th, .gp-content .table-wrap td { padding: 10px 6px; vertical-align: middle; line-height: 1.35; overflow-wrap: normal; word-break: normal; hyphens: none; }
+  .gp-content .table-wrap th { font-size: 13px; letter-spacing: 0.02em; text-align: center; padding: 12px 6px; }
+  .gp-content .table-wrap td { text-align: left; }
+  .gp-content .table-wrap td:first-child { color: #fff; }
+  .gp-content .table-wrap td:first-child div { font-size: 10.5px; }
+  .gp-content .table-wrap td .gp-genres { flex-wrap: wrap; gap: 5px 6px; justify-content: center; }
+  .gp-content .table-wrap td .gp-genre { font-size: 10.5px; padding: 3px 7px; }
+  .gp-content .table-wrap td svg { width: 11px; height: 11px; }
+
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) { width: 40%; font-size: 14px; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(2) { width: 26%; text-align: center; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3) { width: 34%; overflow-wrap: anywhere; font-size: 11px; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3) a { white-space: nowrap; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3) a svg { margin-left: 2px; }
+}
+@media (max-width: 400px) {
+  .gp-content .table-wrap th { font-size: 12px; }
+  .gp-content .table-wrap td .gp-genre { font-size: 10px; padding: 2px 6px; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) { font-size: 13px; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) div { font-size: 10px; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3) { font-size: 10px; }
+}
+
+.gp-content .tldr-block .gp-conic-inner, .gp-content .gp-cell, .gp-content .table-wrap, .gp-content .gp-table, .gp-content .card-table, .gp-content .gp-card-table-inner, .gp-content .gp-layer { background: transparent; }
+
+@media (max-width: 700px) {
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) { width: 30%; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) div { font-size: 12px; font-weight: 600; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(2) { width: 20%; text-align: center; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(3) { width: 24%; font-size: 12px; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(4) { width: 26%; font-size: 12px; overflow-wrap: anywhere; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(4) a { white-space: nowrap; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(4) a svg { margin-left: 2px; }
+}
+
+.gp-content .floating-toc { position: fixed; top: 120px; right: 16px; z-index: 100; max-width: 320px;
+  background: #161616; border: 1px solid #29292B; border-radius: 16px; box-shadow: 0 8px 28px rgba(0,0,0,0.6); }
+.gp-content .floating-toc > summary { display: flex; align-items: center; padding: 16px 20px; color: #fff; cursor: pointer;
+  font-family: 'New Science', GreycliffCF, -apple-system, sans-serif; font-weight: 600;
+  font-size: 20px; line-height: 28px; list-style: none; user-select: none; }
+.gp-content .floating-toc > ul { margin: 0; padding: 0 20px 16px; max-height: 60vh; overflow-y: auto; list-style: none; }
+.gp-content .floating-toc summary::-webkit-details-marker { display: none; }
+.gp-content .floating-toc summary::marker { display: none; }
+.gp-content .floating-toc ul li a:hover { color: #FFC900; }
+.gp-content .gp-toptop:hover { background: rgba(255,201,0,0.15); }
+
+.gp-content .floating-toc ul li { display: flex; gap: 10px; margin: 12px 0; list-style: none; }
+.gp-content .floating-toc ul li a { color: #B2B2B2; text-decoration: none; font-size: 16px; line-height: 24px; }
+.gp-content .gp-toc-num { color: #FFC900; font-size: 12px; line-height: 16px; font-weight: 700;
+  flex-shrink: 0; margin-top: 4px; }
+.gp-content .gp-toc-gap { width: 16px; flex-shrink: 0; }
+
+.gp-content .gp-toc-dot { width: 6px; height: 6px; border-radius: 50%; background: #FFC900;
+  flex-shrink: 0; margin: 8px 5px 0; }
+.gp-content .gp-toc-alt { padding-left: 14px; }
+.gp-content .gp-toc-alt .gp-toc-num { opacity: 0.85; }
+.gp-content .gp-toptop { margin-left: 12px; display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid #FFC900; flex-shrink: 0;
+  cursor: pointer; line-height: 0; vertical-align: middle; }
+.gp-content .gp-toptop svg { display: block; width: 14px; height: 14px; }
+@media (max-width: 900px) {
+  .gp-content .floating-toc { top: auto; bottom: 16px; max-width: 240px; }
+}
+@media (max-width: 700px) {
+  .gp-content .floating-toc > summary { font-size: 16px; line-height: 22px; padding: 13px 16px; }
+  .gp-content .floating-toc > ul { padding: 0 16px 13px; }
+  .gp-content .floating-toc ul li a { font-size: 13px; line-height: 19px; }
+  .gp-content .floating-toc ul li span:not(.gp-toptop) { font-size: 10px; }
+  .gp-content .gp-toptop { width: 21px; height: 21px; margin-left: 10px; }
+  .gp-content .gp-toptop svg { width: 12px; height: 12px; }
+}
+
+.gp-content .tldr-block { margin: 20px 0; }
+.gp-content .tldr-block .gp-conic-inner { border-radius: 10.5px; padding: 15px 18px; }
+.gp-content .gp-tldr-title { font-family: 'New Science', GreycliffCF, -apple-system, sans-serif;
+  font-size: 22px; line-height: 29px; font-weight: 600; color: #fff; margin: 0 0 8px;
+  display: flex; align-items: center; flex-wrap: wrap; }
+.gp-content .gp-tldr-icon { color: #FFC900; display: inline-flex; }
+.gp-content .gp-tldr-rt { display: inline-flex; align-items: center; gap: 8px; margin-left: 20px;
+  font-family: GreycliffCF, -apple-system, sans-serif; font-size: 14px; line-height: 20px;
+  font-weight: 500; color: #B2B2B2; }
+.gp-content .gp-tldr-rt-dot { width: 4px; height: 4px; border-radius: 50%; background: #B2B2B2; flex-shrink: 0; }
+.gp-content .tldr-block ul { margin: 0; padding: 0; list-style: none; }
+.gp-content .tldr-block ul li { display: flex; gap: 10px; margin: 0 0 8px; list-style: none; align-items: flex-start; }
+.gp-content .tldr-block ul li:last-child { margin-bottom: 0; }
+.gp-content .gp-tldr-bullet { color: #FFC900; font-weight: 700; font-size: 16px; line-height: 24px; flex-shrink: 0; }
+.gp-content .gp-tldr-text { color: #B2B2B2; font-size: 18px; line-height: 27px; }
+@media (max-width: 700px) {
+  .gp-content .tldr-block { padding: 16px; }
+  .gp-content .tldr-block ul li { gap: 9px; }
+  .gp-content .gp-tldr-title { font-size: 18px; line-height: 24px; }
+  .gp-content .gp-tldr-text { font-size: 16px; line-height: 24px; }
+}
+
+.gp-content .info-card { margin: 24px 0; display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+.gp-content .info-card.gp-check { display: block; background: #0D0D0D; border: 1px solid #29292B;
+  border-radius: 12px; padding: 16px 22px; }
+.gp-content .gp-check-row { display: flex; align-items: center; gap: 11px; margin: 8px 0; }
+.gp-content .gp-check-row span { color: #e5e7eb; font-size: 16px; font-weight: 500; }
+.gp-content .gp-cell { border: 1px solid #29292B; border-radius: 12px; padding: 20px; text-align: center; }
+.gp-content .gp-cell-value { font-family: 'New Science', GreycliffCF, -apple-system, sans-serif;
+  font-weight: 600; font-size: 22px; line-height: 29px; color: #FFC900; margin-bottom: 6px; overflow-wrap: break-word; }
+.gp-content .gp-cell-label { color: #B2B2B2; font-size: 16px; line-height: 24px; font-weight: 500; }
+@media (max-width: 700px) {
+  .gp-content .info-card { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .gp-content .gp-cell { padding: 14px 10px; }
+  .gp-content .gp-cell-value { font-size: 19px; line-height: 25px; }
+  .gp-content .gp-cell-label { font-size: 13px; line-height: 18px; }
+}
+@media (max-width: 400px) {
+  .gp-content .gp-cell-value { font-size: 17px; line-height: 23px; }
+  .gp-content .gp-cell-label { font-size: 12px; line-height: 16px; }
+}
+
+.gp-content .editor-note, .gp-content .highlight-box { border-radius: 12px;
+  padding: 18px 24px 18px 20px; margin: 24px 0; display: flex; gap: 16px; align-items: stretch; }
+.gp-content .editor-note { background: rgba(255,201,0,0.06); }
+.gp-content .highlight-box { background: rgba(255,255,255,0.04); }
+.gp-content .gp-note-bar { width: 4px; border-radius: 2px; background: #FFC900; flex-shrink: 0; }
+.gp-content .gp-note-eyebrow { color: #FFC900; font-size: 12px; line-height: 16px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; display: flex; align-items: center; }
+.gp-content .editor-note p, .gp-content .highlight-box p { margin: 0; color: #fff; font-size: 18px; line-height: 27px; }
+@media (max-width: 700px) {
+  .gp-content .editor-note p, .gp-content .highlight-box p { font-size: 17px; line-height: 26px; }
+}
+
+.gp-content .cta-paketler, .gp-content .cta-oyunlar, .gp-content .cta-compact { margin: 32px 0; }
+.gp-content .cta-end { margin: 40px 0 24px; }
+.gp-content .cta-paketler .gp-conic-inner, .gp-content .cta-oyunlar .gp-conic-inner,
+.gp-content .cta-end .gp-conic-inner, .gp-content .cta-compact .gp-conic-inner {
+  border-radius: 10.5px; padding: 20px; background: transparent; }
+
+.gp-content .gp-cta-eyebrow { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+.gp-content .cta-end .gp-cta-eyebrow { margin-bottom: 24px; }
+.gp-content .gp-cta-eyebrow span { color: #FFC900; font-size: 11px; line-height: 16px; font-weight: 700;
+  letter-spacing: 0.08em; display: inline-flex; align-items: center; }
+
+.gp-content .gp-cta-title { font-family: 'New Science', GreycliffCF, -apple-system, sans-serif;
+  font-weight: 600; font-size: 22px; line-height: 28px; color: #fff; margin-bottom: 8px; }
+.gp-content .cta-end .gp-cta-title { font-size: 24px; line-height: 30px; }
+
+.gp-content .gp-cta-desc { color: #B2B2B2; font-size: 16px; line-height: 20px; margin: 0 0 20px; max-width: 760px; }
+.gp-content .cta-end .gp-cta-desc { margin-bottom: 24px; }
+
+.gp-content .gp-cta-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+.gp-content .gp-btn { display: inline-flex; align-items: center; justify-content: center;
+  padding: 12px 16px; border-radius: 8px; font-weight: 700; font-size: 16px; line-height: 20px;
+  text-decoration: none; white-space: normal; text-wrap: balance; box-sizing: border-box; }
+.gp-content .gp-btn-solid { background: #FFC900; color: #131313; }
+.gp-content .gp-btn-outline { background: transparent; border: 1px solid #FFC900; color: #FFC900; }
+.gp-content a.gp-btn-solid:hover { color: #131313; }
+.gp-content a.gp-btn-outline:hover { color: #FFC900; }
+
+.gp-content .cta-compact .gp-conic-inner { display: flex; align-items: center;
+  justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.gp-content .gp-cta-compact-main { flex: 1; min-width: 260px; }
+.gp-content .gp-cta-compact-tagline { color: #B2B2B2; font-size: 16px; line-height: 20px; }
+.gp-content .gp-btn-lg { padding: 14px 24px; font-weight: 600; }
+
+@media (max-width: 700px) {
+  .gp-content .cta-paketler .gp-conic-inner, .gp-content .cta-oyunlar .gp-conic-inner,
+  .gp-content .cta-end .gp-conic-inner, .gp-content .cta-compact .gp-conic-inner { padding: 14px; }
+  .gp-content .gp-cta-eyebrow, .gp-content .cta-end .gp-cta-eyebrow { margin-bottom: 8px; }
+  .gp-content .gp-cta-title { font-size: 19px; line-height: 25px; margin-bottom: 4px; }
+  .gp-content .cta-end .gp-cta-title { font-size: 20px; line-height: 26px; }
+  .gp-content .gp-cta-desc, .gp-content .cta-end .gp-cta-desc { margin-bottom: 12px; }
+  .gp-content .gp-btn { padding-top: 9px; padding-bottom: 9px; }
+  .gp-content .cta-paketler .gp-btn, .gp-content .cta-oyunlar .gp-btn { flex: 1 1 100%; }
+
+  .gp-content .gp-cta-actions { gap: 8px; flex-wrap: nowrap; }
+  .gp-content .gp-cta-actions .gp-btn { flex: 1 1 0; min-width: 0;
+    padding-left: 8px; padding-right: 8px; font-size: 12.5px; line-height: 1.2; text-align: center; }
+}
+
+.gp-content { color: #B2B2B2; font-family: GreycliffCF, -apple-system, 'system-ui', 'Segoe UI', Roboto, sans-serif;
+  font-size: 20px; line-height: 24px; }
+@media (max-width: 700px) { .gp-content { font-size: 16px; line-height: 24px; } }
+.gp-content strong { font-weight: 700; }
+.gp-content p { color: #B2B2B2; }
+.gp-content h1, .gp-content h2, .gp-content h3, .gp-content h4 { color: #fff;
+
+  font-family: 'New Science', GreycliffCF, -apple-system, sans-serif; font-weight: 600; }
+.gp-content a { color: #FFC900; text-decoration: none; }
+.gp-content a:hover { color: #ffd94d; text-decoration: none; }
+
+.gp-content { font-size: 16px; line-height: 24px; }
+.gp-content p { font-size: 16px; line-height: 24px; color: #B2B2B2; }
+.gp-content h1 { font-size: 40px; line-height: 48px; color: #fff; }
+.gp-content h2 { font-size: 32px; line-height: 40px; color: #fff; }
+.gp-content h3 { font-size: 28px; line-height: 36px; color: #fff; }
+.gp-content h4 { font-size: 24px; line-height: 32px; color: #fff; }
+
+.gp-content .gp-tldr-title,
+.gp-content .floating-toc > summary { font-size: 24px; line-height: 32px; color: #fff; }
+.gp-content .gp-ct-title { font-size: 28px; line-height: 36px; }
+
+.gp-content .gp-cta-title, .gp-content .cta-end .gp-cta-title { font-size: 32px; line-height: 40px; }
+
+.gp-content .gp-cell-value { font-size: 28px; line-height: 36px; color: #FFC900; }
+.gp-content .gp-cell-label { font-size: 16px; line-height: 24px; font-weight: 500; color: #B2B2B2; }
+
+.gp-content .gp-tldr-text { font-size: 16px; line-height: 24px; color: #B2B2B2; }
+.gp-content .gp-tldr-bullet { font-size: 16px; line-height: 24px; font-weight: 700; color: #FFC900; }
+.gp-content .gp-list li { font-size: 16px; line-height: 24px; }
+
+.gp-content .editor-note p, .gp-content .highlight-box p { font-size: 16px; line-height: 22px; color: #fff; }
+
+.gp-content .table-wrap th { font-size: 16px; line-height: 20px; font-weight: 700; color: #FFC900;
+  text-align: left; }
+
+.gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(2),
+.gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(2) { text-align: left; }
+.gp-content .table-wrap td .gp-genres { justify-content: flex-start; }
+.gp-content .table-wrap td { font-size: 16px; line-height: 20px; color: #B2B2B2; }
+.gp-content .gp-tg-link, .gp-content .table-wrap td:first-child { font-size: 16px; line-height: 20px;
+  font-weight: 400; color: #fff; }
+.gp-content .gp-cta-desc, .gp-content .gp-cta-compact-tagline { font-size: 16px; line-height: 20px; }
+.gp-content .gp-btn { font-size: 16px; line-height: 20px; font-weight: 700; }
+.gp-content .gp-pw-more { font-size: 16px; line-height: 20px; font-weight: 600; color: #FFC900; }
+
+.gp-content .gp-pw-title { font-size: 20px; line-height: 24px; font-weight: 700; color: #fff; }
+
+.gp-content .gp-cta-eyebrow span, .gp-content .gp-note-eyebrow, .gp-content .gp-pw-tag
+  { font-size: 12px; line-height: 16px; font-weight: 700; color: #FFC900; }
+
+.gp-content .gp-toc-num { font-size: 16px; line-height: 20px; font-weight: 700; color: #FFC900; }
+.gp-content .gp-genre, .gp-content .gp-badge, .gp-content .gp-game-badge {
+  font-size: 12px; line-height: 16px; font-weight: 700; }
+.gp-content .gp-pw-date, .gp-content .gp-tldr-rt { font-size: 12px; line-height: 16px;
+  font-weight: 500; color: #B2B2B2; }
+.gp-content .floating-toc ul li a { font-size: 16px; line-height: 20px; font-weight: 400; color: #B2B2B2; }
+.gp-content .gp-tg-meta, .gp-content .gp-meta, .gp-content .gp-game-meta {
+  font-size: 12px; line-height: 16px; color: #B2B2B2; }
+.gp-content .gp-name { font-size: 16px; line-height: 20px; font-weight: 600; color: #fff; }
+
+.gp-content .table-wrap tbody tr:hover > td { background: rgba(255,201,0,0.12); }
+.gp-content .table-wrap tbody tr:hover > td:first-child,
+.gp-content .table-wrap tbody tr:hover > td:first-child .gp-tg-link { color: #FFC900; }
+.gp-content .table-wrap tr.gp-row-feat > td { background: rgba(255,201,0,0.12); }
+.gp-content .table-wrap tr.gp-row-feat > td:first-child,
+.gp-content .table-wrap tr.gp-row-feat > td:first-child .gp-tg-link { color: #FFC900; }
+.gp-content .gp-tg-link { transition: color 0.15s ease; }
+
+@media (max-width: 700px) {
+  .gp-content h1 { font-size: 24px; line-height: 32px; }
+  .gp-content h2 { font-size: 21px; line-height: 28px; }
+  .gp-content h3 { font-size: 19px; line-height: 26px; }
+  .gp-content h4 { font-size: 17px; line-height: 24px; }
+  .gp-content .gp-ct-title { font-size: 19px; line-height: 26px; }
+  .gp-content .floating-toc > summary { font-size: 20px; line-height: 26px; }
+
+  .gp-content .gp-tldr-title { font-size: 20px; line-height: 24px; }
+  .gp-content .gp-cta-title, .gp-content .cta-end .gp-cta-title { font-size: 19px; line-height: 25px; }
+  .gp-content .gp-cell-value { font-size: 17px; line-height: 23px; }
+  .gp-content .gp-cell-label { font-size: 13px; line-height: 17px; }
+  .gp-content p, .gp-content .gp-tldr-text, .gp-content .gp-list li { font-size: 16px; line-height: 24px; }
+  .gp-content .editor-note p, .gp-content .highlight-box p { font-size: 15px; line-height: 22px; }
+  .gp-content .table-wrap th, .gp-content .table-wrap td,
+  .gp-content .gp-tg-link, .gp-content .table-wrap td:first-child,
+  .gp-content .gp-cta-desc, .gp-content .gp-cta-compact-tagline,
+  .gp-content .gp-btn, .gp-content .gp-pw-more, .gp-content .gp-name { font-size: 16px; line-height: 20px; }
+  .gp-content .gp-pw-title { font-size: 20px; line-height: 24px; }
+  .gp-content .gp-genre, .gp-content .gp-badge, .gp-content .gp-game-badge,
+  .gp-content .gp-toc-num, .gp-content .gp-pw-date, .gp-content .gp-tldr-rt,
+  .gp-content .floating-toc ul li a, .gp-content .gp-tg-meta, .gp-content .gp-meta,
+  .gp-content .gp-game-meta { font-size: 12px; line-height: 16px; }
+
+  .gp-content .table-wrap > div.gp-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain; }
+  .gp-content .table-wrap table { table-layout: auto; width: auto; min-width: 100%; }
+  .gp-content .table-wrap th, .gp-content .table-wrap td { padding: 12px 14px; white-space: nowrap; }
+
+  .gp-content .table-wrap th:first-child:not(.gp-col-num),
+  .gp-content .table-wrap td:first-child:not(.gp-col-num) {
+    white-space: normal; width: 170px; min-width: 170px; max-width: 170px; overflow-wrap: break-word; }
+
+  .gp-content .table-wrap:not(.gp-table-rank) th:last-child,
+  .gp-content .table-wrap:not(.gp-table-rank) td:last-child {
+    white-space: normal; min-width: 220px; overflow-wrap: break-word; }
+  .gp-content .table-wrap td:last-child a { white-space: nowrap; }
+  .gp-content .table-wrap th.gp-col-num, .gp-content .table-wrap td.gp-col-num {
+    padding-left: 14px; padding-right: 14px; }
+  .gp-content .table-wrap .gp-genres { flex-wrap: nowrap; }
+  .gp-content .gp-table-hint { display: block; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(2),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(2),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(3),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(4) { width: auto; }
+
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(2),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(2),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(3),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(4) {
+    font-size: 16px; line-height: 20px; }
+  .gp-content .table-wrap td:first-child div,
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) div,
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) div { font-size: 12px; line-height: 16px; }
+  .gp-content .table-wrap td .gp-genre { font-size: 12px !important; line-height: 16px !important;
+    padding: 4px 10px !important; }
+  .gp-content .floating-toc ul li span:not(.gp-toptop) { font-size: 12px; line-height: 16px; }
+  .gp-content .gp-cell > div:last-child { font-size: 13px; line-height: 17px; }
+  .gp-content .gp-cell > div:first-child { font-size: 17px; line-height: 23px; }
+}
+@media (max-width: 400px) {
+  .gp-content .table-wrap th, .gp-content .table-wrap td,
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(3),
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) { font-size: 16px; line-height: 20px; }
+  .gp-content .table-wrap tr > :first-child:nth-last-child(3) div,
+  .gp-content .table-wrap tr > :first-child:nth-last-child(4) div { font-size: 12px; line-height: 16px; }
+  .gp-content .table-wrap td .gp-genre { font-size: 12px !important; padding: 4px 10px !important; }
+  .gp-content .gp-cell > div:last-child { font-size: 13px; line-height: 17px; }
+  .gp-content .gp-cell > div:first-child { font-size: 17px; line-height: 23px; }
 }
 </style>
 
-
-<h1>Temmuz Boyu Oyun Keyfi: 12 Yeni Oyun GeForce NOW’da!</h1>
-<details class="floating-toc" style="position:fixed;top:120px;right:16px;z-index:100;max-width:320px;background:#161616;border:1px solid #29292B;border-radius:16px;box-shadow:0 8px 28px rgba(0,0,0,0.6);">
-  <summary style="display:flex;align-items:center;padding:16px 20px;color:#fff;cursor:pointer;font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-weight:600;font-size:20px;line-height:28px;list-style:none;user-select:none;">İçindekiler</summary>
-  <ul style="margin:0;padding:0 20px 16px;max-height:60vh;overflow-y:auto;list-style:none;">
-    <li style="display:flex;gap:10px;margin:12px 0;list-style:none;"><span style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;flex-shrink:0;margin-top:4px;">01</span><a href="#galakside-tercihini-yap-aydinlik-taraf-mi-yoksa-karanlik-tar" onclick="this.closest(&quot;details&quot;).removeAttribute(&quot;open&quot;)" style="color:#B2B2B2;text-decoration:none;font-size:16px;line-height:24px;">Galakside Tercihini Yap: Aydınlık Taraf mı Yoksa Karanlık Taraf mı?</a></li>
-    <li style="display:flex;gap:10px;margin:12px 0;list-style:none;"><span style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;flex-shrink:0;margin-top:4px;">02</span><a href="#haziran-dan-kalan-efsane-oyunlar" onclick="this.closest(&quot;details&quot;).removeAttribute(&quot;open&quot;)" style="color:#B2B2B2;text-decoration:none;font-size:16px;line-height:24px;">Haziran’dan Kalan Efsane Oyunlar</a></li>
-    <li style="display:flex;gap:10px;margin:12px 0;list-style:none;"><span style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;flex-shrink:0;margin-top:4px;">03</span><a href="#geforce-now-thursday-de-onceki-haftalarda-neler-oldu" onclick="this.closest(&quot;details&quot;).removeAttribute(&quot;open&quot;)" style="color:#B2B2B2;text-decoration:none;font-size:16px;line-height:24px;">GeForce NOW Thursday’de Önceki Haftalarda Neler Oldu?</a></li>
+<h1 id="geforce-now-da-yeni-durak-path-of-exile-curse-of-the-allflam">GeForce NOW'da Yeni Durak: Path of Exile: Curse of the Allflame</h1>
+<details class="floating-toc">
+  <summary>İçindekiler<span class="gp-toptop" title="Başa dön" ><svg viewBox="0 0 24 24" fill="none" stroke="#FFC900" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 14 12 8 6 14"/><line x1="12" y1="8" x2="12" y2="16"/></svg></span></summary>
+  <ul>
+    <li><span class="gp-toc-dot"></span><a class="gp-toc-top" href="#geforce-now-da-yeni-durak-path-of-exile-curse-of-the-allflam">GeForce NOW'da Yeni Durak: Path of Exile: Curse of the Allflame</a></li>
+    <li><span class="gp-toc-num">01</span><a href="#yeni-cagriya-kulak-ver">Yeni Çağrıya Kulak Ver</a></li>
+    <li><span class="gp-toc-num">02</span><a href="#rutbeleri-kazan-zirveye-yuksel">Rütbeleri Kazan, Zirveye Yüksel</a></li>
+    <li><span class="gp-toc-num">03</span><a href="#ejderhalar-ve-dinozorlar-parmaklarinin-ucunda">Ejderhalar ve Dinozorlar Parmaklarının Ucunda</a></li>
+    <li><span class="gp-toc-num">04</span><a href="#spartanlar-sahaya-erken-cikiyor">Spartanlar Sahaya Erken Çıkıyor</a></li>
+    <li><span class="gp-toc-num">05</span><a href="#geforce-now-thursday-de-onceki-haftalarda-neler-oldu">GeForce NOW Thursday’de Önceki Haftalarda Neler Oldu?</a></li>
   </ul>
 </details>
-<style>
-  .floating-toc summary::-webkit-details-marker { display: none; }
-  .floating-toc summary::marker { display: none; }
-  .floating-toc ul li a:hover { color: #FFC900 !important; }
-  @media (max-width: 900px) {
-    .floating-toc { top: auto !important; bottom: 16px !important; max-width: 240px !important; }
+<script>
+(function(){
+  var t = document.querySelector('.floating-toc');
+  if (!t) return;
+  var close = function(){ if (t.hasAttribute('open')) t.removeAttribute('open'); };
+  var toTop = function(e){
+    e.stopPropagation(); e.preventDefault(); close();
+    var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+    try { window.scrollTo({top:0, behavior:'smooth'}); } catch (err) { window.scrollTo(0,0); }
+
+    setTimeout(function(){
+      var y2 = window.pageYOffset || document.documentElement.scrollTop || 0;
+      if (y2 > 0 && y2 >= y - 1) window.scrollTo(0, 0);
+    }, 400);
+  };
+  var btn = t.querySelector('.gp-toptop');
+  if (btn) btn.addEventListener('click', toTop);
+  var first = t.querySelector('.gp-toc-top');
+  if (first) first.addEventListener('click', toTop);
+  t.querySelectorAll('ul li a').forEach(function(a){ a.addEventListener('click', close); });
+  window.addEventListener('scroll', close, {passive:true});
+  document.addEventListener('click', function(e){ if (!t.contains(e.target)) close(); }, true);
+
+  var root = t.closest('.gp-content') || document;
+  root.querySelectorAll('a[href^="#"]').forEach(function(a){
+    if (a.classList.contains('gp-toc-top')) return;
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href').slice(1);
+      if (!id) return;
+      var el = document.getElementById(id);
+      if (!el) return;
+      e.preventDefault(); close();
+      try { el.scrollIntoView({behavior:'smooth', block:'start'}); }
+      catch (err) { el.scrollIntoView(); }
+    });
+  });
+
+  var ipucuGuncelle = function(){
+    root.querySelectorAll('.gp-table-scroll').forEach(function(k){
+      var ip = k.parentNode.querySelector('.gp-table-hint');
+      if (ip) ip.style.display = (k.scrollWidth > k.clientWidth + 1) ? '' : 'none';
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){ setTimeout(ipucuGuncelle, 60); });
+  } else {
+    setTimeout(ipucuGuncelle, 60);
   }
-</style>
-<div class="tldr-block gp-conic" style="--gp-glow:#FFC900;margin:24px 0;">
-<div class="gp-conic-inner" style="background:#161616;border-radius:10.5px;padding:24px;">
-  <h2 style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-size:24px;line-height:32px;font-weight:600;color:#fff;margin:0 0 14px;display:flex;align-items:center;flex-wrap:wrap;"><span style="color:#FFC900;display:inline-flex;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-4px;margin-right:8px;flex-shrink:0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg></span>Hızlı Özet<span style="display:inline-flex;align-items:center;gap:8px;margin-left:20px;font-family:GreycliffCF,-apple-system,sans-serif;font-size:14px;line-height:20px;font-weight:500;color:#B2B2B2;"><span style="width:4px;height:4px;border-radius:50%;background:#B2B2B2;flex-shrink:0;"></span>4 dk okuma</span></h2>
-  <ul style="margin:0;padding:0;list-style:none;">
-    <li style="display:flex;gap:10px;margin:0 0 14px;list-style:none;align-items:flex-start;"><span style="color:#FFC900;font-weight:700;font-size:16px;line-height:24px;flex-shrink:0;">&bull;</span><span style="color:#B2B2B2;font-size:16px;line-height:24px;">Temmuz boyunca GeForce NOW kütüphanesine 12 yeni oyun ekleniyor; açılışı Monopoly: Star Wars Heroes vs. Villains yapıyor.</span></li>
-    <li style="display:flex;gap:10px;margin:0 0 14px;list-style:none;align-items:flex-start;"><span style="color:#FFC900;font-weight:700;font-size:16px;line-height:24px;flex-shrink:0;">&bull;</span><span style="color:#B2B2B2;font-size:16px;line-height:24px;">Bu hafta 2 oyun eklendi; Temmuz takviminin tamamı ve çıkış tarihleri yazıda.</span></li>
-    <li style="display:flex;gap:10px;margin:0 0 14px;list-style:none;align-items:flex-start;"><span style="color:#FFC900;font-weight:700;font-size:16px;line-height:24px;flex-shrink:0;">&bull;</span><span style="color:#B2B2B2;font-size:16px;line-height:24px;">Haziran'dan katılan 10 yapım kütüphanede oynanmayı bekliyor.</span></li>
-    <li style="display:flex;gap:10px;margin:0 0 14px;list-style:none;align-items:flex-start;"><span style="color:#FFC900;font-weight:700;font-size:16px;line-height:24px;flex-shrink:0;">&bull;</span><span style="color:#B2B2B2;font-size:16px;line-height:24px;">Listedeki oyunlara sahipsen, bulut üzerinden dilediğin cihazda devam edebilirsin.</span></li>
+  window.addEventListener('load', ipucuGuncelle);
+  window.addEventListener('resize', ipucuGuncelle, {passive:true});
+})();
+</script>
+<div class="tldr-block gp-conic" style="--gp-glow:#FFC900;">
+<div class="gp-conic-inner">
+  <div class="gp-tldr-title"><span class="gp-tldr-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-4px;margin-right:8px;flex-shrink:0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg></span>Hızlı Özet<span class="gp-tldr-rt"><span class="gp-tldr-rt-dot"></span>5 dk okuma</span></div>
+  <ul>
+    <li><span class="gp-tldr-bullet">&bull;</span><span class="gp-tldr-text"><strong>Path of Exile: Curse of the Allflame</strong> 24 Temmuz Cuma yayınlanıyor; Frozen Seas, Scion için Luminary Ascendancy ve yenilenen soket sistemi geliyor.</span></li>
+    <li><span class="gp-tldr-bullet">&bull;</span><span class="gp-tldr-text"><strong>Battlefield 6 Season 4</strong> ile Tsuru Reef ve Wake Island haritaları, Özel Lobiler ve Seyirci Modu ekleniyor.</span></li>
+    <li><span class="gp-tldr-bullet">&bull;</span><span class="gp-tldr-text">Capcom klasikleri <strong>Breath of Fire IV</strong>, <strong>Dino Crisis</strong> ve <strong>Dino Crisis 2</strong> GeForce NOW kütüphanesine katılıyor.</span></li>
+    <li><span class="gp-tldr-bullet">&bull;</span><span class="gp-tldr-text"><strong>Halo: Campaign Evolved</strong> Premium Sürümü'nü ön sipariş verenler, 28 Temmuz'daki küresel lansmandan önce erken erişimle başlayabiliyor.</span></li>
+    <li><span class="gp-tldr-bullet">&bull;</span><span class="gp-tldr-text">Bu hafta kütüphaneye <strong>9 yeni oyun</strong> ekleniyor; tam liste, tür ve platform bilgileri yazıda.</span></li>
   </ul>
 </div>
 </div>
-<div class="info-card" style="margin:24px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
-  <div class="gp-cell" style="background:#0D0D0D;border:1px solid #29292B;border-radius:12px;padding:20px;text-align:center;">
-    <div style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-weight:600;font-size:24px;line-height:32px;color:#FFC900;margin-bottom:6px;">12</div>
-    <div style="color:#B2B2B2;font-size:16px;line-height:24px;font-weight:500;">Temmuz'da eklenecek oyun</div>
+<div class="info-card">
+  <div class="gp-cell">
+    <div class="gp-cell-value">9 Oyun</div>
+    <div class="gp-cell-label">Bu Hafta Eklenen</div>
   </div>
-  <div class="gp-cell" style="background:#0D0D0D;border:1px solid #29292B;border-radius:12px;padding:20px;text-align:center;">
-    <div style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-weight:600;font-size:24px;line-height:32px;color:#FFC900;margin-bottom:6px;">2</div>
-    <div style="color:#B2B2B2;font-size:16px;line-height:24px;font-weight:500;">Bu hafta eklenen</div>
+  <div class="gp-cell">
+    <div class="gp-cell-value">Path of Exile</div>
+    <div class="gp-cell-label">Haftanın Öne Çıkanı</div>
   </div>
-  <div class="gp-cell" style="background:#0D0D0D;border:1px solid #29292B;border-radius:12px;padding:20px;text-align:center;">
-    <div style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-weight:600;font-size:24px;line-height:32px;color:#FFC900;margin-bottom:6px;">10</div>
-    <div style="color:#B2B2B2;font-size:16px;line-height:24px;font-weight:500;">Haziran'dan katılan</div>
+  <div class="gp-cell">
+    <div class="gp-cell-value">Battlefield 6 S4</div>
+    <div class="gp-cell-label">Öne Çıkan Sezon</div>
   </div>
-  <div class="gp-cell" style="background:#0D0D0D;border:1px solid #29292B;border-radius:12px;padding:20px;text-align:center;">
-    <div style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-weight:600;font-size:24px;line-height:32px;color:#FFC900;margin-bottom:6px;">18</div>
-    <div style="color:#B2B2B2;font-size:16px;line-height:24px;font-weight:500;">Geçen ay duyurulan</div>
+  <div class="gp-cell">
+    <div class="gp-cell-value">Steam · Xbox</div>
+    <div class="gp-cell-label">Platformlar</div>
   </div>
 </div>
 
-<p>Yaz tüm hızıyla devam ederken <a href="https://gameplus.com.tr/gfn">GeForce NOW</a> da oyuncuları yeni maceralarla buluşturuyor.</p>
-<p>Temmuz ayına nereden başlayacağını bilmiyorsan biz söyleyelim: Monopoly: Star Wars Heroes vs. Villains artık GeForce NOW kütüphanesinde. Uzak bir galaksiyi Monopoly dünyasına taşıyan bu yapımın dışında listeye toplam 12 yeni oyun ekleniyor.</p>
-<h2 id="galakside-tercihini-yap-aydinlik-taraf-mi-yoksa-karanlik-tar">Galakside Tercihini Yap: Aydınlık Taraf mı Yoksa Karanlık Taraf mı?</h2>
-<div class="editor-note" style="background:rgba(255,201,0,0.06);border-radius:12px;padding:18px 24px 18px 20px;margin:24px 0;display:flex;gap:16px;align-items:stretch;">
-  <div style="width:4px;border-radius:2px;background:#FFC900;flex-shrink:0;"></div>
+<p>Bulutun gücünü hissetmeye hazır ol! Bu haftaki GFN Thursday, indirme beklemeden deneyimleyebileceğin yeni güncellemeler ve yepyeni maceralarla geliyor.</p>
+<p>Bu hafta Path of Exile: Curse of the Allflame ile denizlere açıl, Battlefield 6 Season 4 ile aksiyonun tam ortasına dal. Her iki yapım da üyeler için büyük içerik güncellemeleri yapıyor.</p>
+<p>Sırada Capcom'un efsanevi yapımları Breath of Fire IV, Dino Crisis ve Dino Crisis 2'yi yeniden keşfetmek var. Ayrıca Halo: Campaign Evolved Advanced Access ile maceraya erkenden başlayabilir ve bu hafta <a href="https://gameplus.com.tr/gfn">GeForce NOW</a> kütüphanesine katılan dokuz diğer oyunu da inceleyebilirsin.</p>
+<h2 id="yeni-cagriya-kulak-ver">Yeni Çağrıya Kulak Ver</h2>
+<div class="gp-yt-wrap" style="max-width:720px;margin:1.6em auto;"><iframe src="https://www.youtube.com/embed/ARFSbodxJZU" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" style="display:block;width:100%;aspect-ratio:16/9;height:auto;border:0;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.5);"></iframe></div>
+<p>Wraeclast'ın acımasız sularına yelken açmaya hazırlan. Path of Exile: Curse of the Allflame, 24 Temmuz Cuma günü yayınlanıyor ve sürgün edilmiş oyuncuları Frozen Seas'in tehlikelerle dolu sularına davet ediyor.</p>
+<p>Oyuncular, korkusuz korsan kaptanı Valerie ve lanetli kılavuzu Vesper'ın rehberliğinde dağılmış hazine haritalarını bir araya getiriyor, efsanevi Sovereign gemisine çıkıyor ve rotasını uçsuz bucaksız karanlığa çeviriyor. Allflame Lantern'ları kullanarak denizin derinliklerine inebilir, dalgaların altında gizlenen tehlikelerle mücadele ederken değerli kalıntıları keşfedebilirsin.</p>
+<p>Yeni güncelleme; soket ve bağlantı sisteminin tamamen yenilenmesi başta olmak üzere kapsamlı değişiklikler sunuyor. Scion sınıfı için yeni Luminary Ascendancy uzmanlığı oyuna ekleniyor. Güncellemeyle birlikte Trarthus Paralı Askerleri geri dönerken Atlas'ın farklı bölgelerinde ortaya çıkan gizemli olaylar da oyuncuları bekliyor. Ayrıca Abyss, Legion ve Talisman mekanikleri de yenilenmiş oynanış sistemleri ve özel ödüllerle güncelleniyor.</p>
+<ul class="gp-list">
+<li><span class="gp-list-dot"></span><span><strong>Soket sistemi:</strong> soket ve bağlantı sistemi tamamen yenilendi</span></li>
+<li><span class="gp-list-dot"></span><span><strong>Yeni uzmanlık:</strong> Scion sınıfı için Luminary Ascendancy</span></li>
+<li><span class="gp-list-dot"></span><span><strong>Geri dönenler:</strong> Trarthus Paralı Askerleri ve Atlas'taki gizemli olaylar</span></li>
+<li><span class="gp-list-dot"></span><span><strong>Yenilenen mekanikler:</strong> Abyss, Legion ve Talisman, özel ödüllerle</span></li>
+</ul>
+<p>GeForce NOW üyeleri, oyun yayınlanır yayınlanmaz indirme süresini beklemeden uyumlu cihazlarında maceraya başlayabilir. Güncellemeyle ilgili tüm ayrıntılar için Path of Exile'ın resmi web sitesini <a href="https://www.pathofexile.com/forum/view-thread/3985355">ziyaret edebilirsin</a>.</p>
+<div class="editor-note">
+  <div class="gp-note-bar"></div>
   <div>
-    <div style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-4px;margin-right:8px;flex-shrink:0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>GAME+ EDİTÖR NOTU</div>
-    <p style="margin:0;color:#fff;font-size:1em;line-height:1.5;">Monopoly: Star Wars Heroes vs. Villains, tanıdık Monopoly kurallarını Star Wars karakterleriyle birleştiriyor. Sıra tabanlı yapısı kısa oturumlara uygun; bulut üzerinden telefonda başladığın maçı televizyonda sürdürebilirsin.</p>
+    <div class="gp-note-eyebrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-4px;margin-right:8px;flex-shrink:0;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>GAME+ EDİTÖR NOTU</div>
+    <p>Curse of the Allflame 24 Temmuz Cuma yayınlanıyor; GeForce NOW üyeleri indirme ve kurulum beklemeden aynı gün başlayabiliyor. Güncellemenin tüm ayrıntıları Path of Exile'ın resmi duyurusunda yer alıyor.</p>
   </div>
 </div>
 
-<div class="gp-yt-wrap" style="max-width:560px;margin:1.6em 0;"><iframe src="https://www.youtube.com/embed/ZRA24kqGCg8" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" style="display:block;width:100%;aspect-ratio:16/9;height:auto;border:0;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.5);"></iframe></div>
-<p>Zafere ulaşmak için skor tahtasına hükmetmelisin. Monopoly: Star Wars Heroes vs. Villains, klasik emlak alım satım oyununu Star Wars evreninin ikonik karakterleri, unutulmaz mekanları ve efsanevi rekabetleriyle yeniden yorumluyor.</p>
-<p>Her biri kendine özgü yeteneklere sahip kahramanlar veya kötü karakterler arasından seçim yapabilir, kendi ekibini kurabilir ve serinin farklı dönemlerinden ilham alan bölgelerde ailenle ya da arkadaşlarınla mücadele edebilirsin. Attığın her zar, galakside üstünlüğünü kurmak ve zafere bir adım daha yaklaşmak için yeni fırsatlar sunuyor.</p>
-<p>GeForce NOW sayesinde Aydınlık Taraf ile Karanlık Taraf arasındaki mücadeleyi neredeyse dilediğin her cihazda yaşayabilirsin. Düşük donanımlı bir PC, Mac, telefon, televizyon, tablet veya elde taşınabilir oyun cihazından oyuna anında bağlanarak maceraya kaldığın yerden devam etmen mümkün.</p>
-<p>Bu hafta GeForce NOW kütüphanesine eklenen diğer oyunlara da göz atabilirsin:</p>
-<div class="table-wrap gp-table" style="background:#161616;border:1px solid #29292B;border-radius:16px;margin:24px 0;overflow:hidden;">
-  <div style="overflow-x:auto;">
-    <table style="width:100%;border-collapse:collapse;background:transparent;">
-      <thead><tr><th style="background:#1E1E18;padding:19px 24px;text-align:center;color:#FFC900;font-weight:700;font-size:16px;line-height:20px;border-bottom:1px solid rgba(255,201,0,0.3);">Oyun</th><th style="background:#1E1E18;padding:19px 24px;text-align:center;color:#FFC900;font-weight:700;font-size:16px;line-height:20px;border-bottom:1px solid rgba(255,201,0,0.3);">Tür</th><th style="background:#1E1E18;padding:19px 24px;text-align:center;color:#FFC900;font-weight:700;font-size:16px;line-height:20px;border-bottom:1px solid rgba(255,201,0,0.3);">Platform/Çıkış</th></tr></thead>
+<div class="cta-compact gp-conic" style="--gp-glow:#FFC900;">
+<div class="gp-conic-inner">
+  <div class="gp-cta-compact-main">
+    <div class="gp-cta-eyebrow"><span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFC900" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-right:8px;"><line x1="6" y1="11" x2="10" y2="11"/><line x1="8" y1="9" x2="8" y2="13"/><line x1="15" y1="12" x2="15.01" y2="12"/><line x1="18" y1="10" x2="18.01" y2="10"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>ÖNE ÇIKAN OYUN</span></div>
+    <div class="gp-cta-title">Path of Exile: Curse of the Allflame</div>
+    <div class="gp-cta-compact-tagline">24 Temmuz'da yayınlanan yeni içerik, indirme sırası beklemeden uyumlu cihazında açılıyor.</div>
+  </div>
+  <a class="gp-btn gp-btn-solid gp-btn-lg" id="featured-game-button" href="https://gameplus.com.tr/gfn/paketler">GeForce NOW Paketleri</a>
+</div>
+</div>
+
+<h2 id="rutbeleri-kazan-zirveye-yuksel">Rütbeleri Kazan, Zirveye Yüksel</h2>
+<div class="gp-yt-wrap" style="max-width:720px;margin:1.6em auto;"><iframe src="https://www.youtube.com/embed/7JMgEoOv6gY" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" style="display:block;width:100%;aspect-ratio:16/9;height:auto;border:0;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.5);"></iframe></div>
+<p>Battlefield 6, 4. Sezon ile savaşın dozunu artırıyor. Yeni savaş alanları, daha kapsamlı ilerleme sistemi ve yepyeni oynanış seçenekleri oyuncuları bekliyor.</p>
+<p>İkinci aşamada oyuna eklenecek devasa Tsuru Reef ve oyuncuların favorileri arasında yer alan Wake Island ile kara, hava ve deniz cephelerinde sen de mücadeleye katılabilirsin. Her iki haritada da aktif uçuş güvertelerine sahip uçak gemileri, yeni deniz araçları ve her karşılaşmanın akışını değiştiren dinamik dalga sistemi yer alıyor. Güncelleme ayrıca Özel Lobiler ve Seyirci Modu'nu da oyuna ekleyerek oynanışı daha da zenginleştiriyor.</p>
+<p>GeForce NOW’da büyük ölçekli çok oyunculu savaşlardan yoğun araç çatışmalarına kadar Battlefield deneyimini neredeyse dilediğin her cihazda yaşayabilirsin. Üstelik hiç beklemeden!</p>
+<h2 id="ejderhalar-ve-dinozorlar-parmaklarinin-ucunda">Ejderhalar ve Dinozorlar Parmaklarının Ucunda</h2>
+<div class="gp-yt-wrap" style="max-width:720px;margin:1.6em auto;"><iframe src="https://www.youtube.com/embed/qJisPio9sfE" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" style="display:block;width:100%;aspect-ratio:16/9;height:auto;border:0;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.5);"></iframe></div>
+<p>Capcom'un üç ikonik oyunu bu hafta GeForce NOW kütüphanesine katılıyor. Efsane yapımları yeniden deneyimlemek isteyenler ve onları ilk kez keşfedecek oyuncular için bu harika bir fırsat olabilir.</p>
+<p>Ryu ve Fou-Lu'nun iç içe geçen hikayelerini konu alan rol yapma oyunu Breath of Fire IV ile zengin bir fantastik dünyaya adım at. Farklı yetenek ve büyülerde ustalaşarak savaşlarda stratejik üstünlük kur, ejderha formuna dönüşerek düşmanlara meydan oku.</p>
+<p>Diğer yandan Dino Crisis ve Dino Crisis 2; yüksek tempolu aksiyonu, sınırlı kaynaklarla hayatta kalma mücadelesini ve nefes kesen dinozor karşılaşmalarını bir araya getiriyor. İlk oyunda araştırma tesisinden kurtulmaya çalışırken ikinci oyunda Kretase Dönemi'nde tarih öncesi yırtıcılara karşı hayatta kalmak için mücadele ediyorsun.</p>
+<p>İster unutulmaz anıları yeniden yaşa ister bu efsane oyunları ilk kez keşfet, GeForce NOW sayesinde Chromebook, Fire TV ve Steam Deck gibi desteklenen cihazlarda ek bir eski nesil donanıma ihtiyaç duymadan oyun tarihinin unutulmaz yapımlarını deneyimleyebilirsin.</p>
+<h2 id="spartanlar-sahaya-erken-cikiyor">Spartanlar Sahaya Erken Çıkıyor</h2>
+<div class="gp-yt-wrap" style="max-width:720px;margin:1.6em auto;"><iframe src="https://www.youtube.com/embed/0MxBFXH2a_U" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" style="display:block;width:100%;aspect-ratio:16/9;height:auto;border:0;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.5);"></iframe></div>
+<p>Spartanlar sahaya çıkmak için beklemek zorunda değil. Halo: Campaign Evolved Premium Sürümü'nü ön sipariş veren oyuncular, oyunun 28 Temmuz Salı günkü küresel lansmanından önce erken erişim ile mücadeleye başlayabilir.</p>
+<p>Ayrıca hafta sonuna GeForce NOW kütüphanesine katılan yepyeni oyunlarla başlayabilirsin:</p>
+<div class="table-wrap gp-table">
+  <div class="gp-table-hint">Tabloyu yana kaydır &rarr;</div>
+  <div class="gp-table-scroll">
+    <table>
+      <thead><tr><th>Oyun</th><th>Tür</th><th>Platform/Çıkış</th></tr></thead>
       <tbody>
-<tr><td style="padding:14px 24px;vertical-align:middle;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div><a href="https://store.steampowered.com/app/3936610/Monopoly_Star_Wars_Heroes_vs_Villains/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Monopoly: Star Wars Heroes vs. Villains</a><div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">Behaviour Interactive · 2026</div></div></td><td style="padding:14px 24px;vertical-align:middle;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(91,141,239,0.16);color:#5B8DEF;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Strateji</span><span style="display:inline-block;background:rgba(52,211,153,0.16);color:#34D399;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Aile</span></span></td><td style="padding:14px 24px;vertical-align:middle;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><a href="https://store.steampowered.com/app/3936610/Monopoly_Star_Wars_Heroes_vs_Villains/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a> ve <a href="https://www.ubisoft.com/en-us/games/monopoly-star-wars-heroes-vs-villains" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Ubisoft<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a> Çıkış Tarihi: 30 Haziran</td></tr>
-<tr><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div><a href="https://store.steampowered.com/app/4704690/MECCHA_CHAMELEON/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Meccha Chameleon</a><div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">lemorion_1224 · 2026</div></div></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(255,92,92,0.16);color:#FF5C5C;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Aksiyon</span><span style="display:inline-block;background:rgba(163,230,53,0.16);color:#A3E635;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Bağımsız</span></span></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><a href="https://store.steampowered.com/app/4704690/MECCHA_CHAMELEON/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a></td></tr>
+<tr><td><div><a class="gp-tg-link" href="https://store.steampowered.com/app/1605850/ZeroSpace/" target="_blank" rel="noopener noreferrer">ZeroSpace</a><div class="gp-tg-meta">Starlance Studios · 2026</div></div></td><td><span class="gp-genres"><span class="gp-genre" style="background:rgba(91,141,239,0.16);color:#5B8DEF;">Strateji</span></span></td><td><a href="https://store.steampowered.com/app/1605850/ZeroSpace/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg class="gp-ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a> Çıkış Tarihi: 20 Temmuz</td></tr>
+<tr><td><div><a class="gp-tg-link" href="https://store.steampowered.com/app/2936290?utm_source=nvidia&utm_campaign=geforce_now" target="_blank" rel="noopener noreferrer">The Life and Suffering of Prince Jerian</a><div class="gp-tg-meta">Schisma Games · 2026</div></div></td><td><span class="gp-genres"><span class="gp-genre" style="background:rgba(163,230,53,0.16);color:#A3E635;">Bağımsız</span><span class="gp-genre" style="background:rgba(129,140,248,0.16);color:#818CF8;">RPG</span></span></td><td><a href="https://store.steampowered.com/app/2936290?utm_source=nvidia&utm_campaign=geforce_now" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg class="gp-ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a> Çıkış Tarihi: 20 Temmuz</td></tr>
+<tr><td><div><a class="gp-tg-link" href="https://www.xbox.com/en-US/games/store/the-planet-crafter/9n072vv7mfk7?utm_source=nvidia&utm_campaign=geforce_now" target="_blank" rel="noopener noreferrer">The Planet Crafter</a><div class="gp-tg-meta">Miju Games · 2024</div></div></td><td><span class="gp-genres"><span class="gp-genre" style="background:rgba(255,159,67,0.16);color:#FF9F43;">Macera</span><span class="gp-genre" style="background:rgba(74,222,128,0.16);color:#4ADE80;">Hayatta Kalma</span></span></td><td><a href="https://www.xbox.com/en-US/games/store/the-planet-crafter/9n072vv7mfk7?utm_source=nvidia&utm_campaign=geforce_now" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Xbox<svg class="gp-ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a> ve Game Pass Çıkış Tarihi: 21 Temmuz</td></tr>
+<tr><td><div><a class="gp-tg-link" href="https://store.steampowered.com/app/1181550/Carnival_Hunt/" target="_blank" rel="noopener noreferrer">Carnival Hunt</a><div class="gp-tg-meta">Crytivo · 2026</div></div></td><td><span class="gp-genres"><span class="gp-genre" style="background:rgba(244,114,182,0.16);color:#F472B6;">Korku</span><span class="gp-genre" style="background:rgba(34,211,238,0.16);color:#22D3EE;">Co-op</span></span></td><td><a href="https://store.steampowered.com/app/1181550/Carnival_Hunt/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg class="gp-ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a> Çıkış Tarihi: 23 Temmuz</td></tr>
+<tr><td><div><a class="gp-tg-link" href="https://store.steampowered.com/app/3440070/Dinoblade/" target="_blank" rel="noopener noreferrer">Dinoblade</a><div class="gp-tg-meta">Team Spino · 2026</div></div></td><td><span class="gp-genres"><span class="gp-genre" style="background:rgba(255,92,92,0.16);color:#FF5C5C;">Aksiyon</span><span class="gp-genre" style="background:rgba(129,140,248,0.16);color:#818CF8;">RPG</span></span></td><td><a href="https://store.steampowered.com/app/3440070/Dinoblade/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg class="gp-ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a> Çıkış Tarihi: 23 Temmuz</td></tr>
+<tr><td><div><a class="gp-tg-link" href="https://store.steampowered.com/app/4249150/Breath_of_Fire_IV/" target="_blank" rel="noopener noreferrer">Breath of Fire IV</a><div class="gp-tg-meta">Capcom · 2026</div></div></td><td><span class="gp-genres"><span class="gp-genre" style="background:rgba(129,140,248,0.16);color:#818CF8;">RPG</span></span></td><td><a href="https://store.steampowered.com/app/4249150/Breath_of_Fire_IV/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg class="gp-ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a></td></tr>
+<tr><td><div><a class="gp-tg-link" href="https://www.xbox.com/games/store/cloverpit/9p8v7hr160b4?utm_source=nvidia&utm_campaign=geforce_now" target="_blank" rel="noopener noreferrer">CloverPit</a><div class="gp-tg-meta">Panik Arcade · 2025</div></div></td><td><span class="gp-genres"><span class="gp-genre" style="background:rgba(163,230,53,0.16);color:#A3E635;">Bağımsız</span><span class="gp-genre" style="background:rgba(251,191,36,0.16);color:#FBBF24;">Arcade</span></span></td><td><a href="https://www.xbox.com/games/store/cloverpit/9p8v7hr160b4?utm_source=nvidia&utm_campaign=geforce_now" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Xbox<svg class="gp-ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a> ve Game Pass’te mevcut</td></tr>
+<tr><td><div><a class="gp-tg-link" href="https://store.steampowered.com/app/4249130/Dino_Crisis/" target="_blank" rel="noopener noreferrer">Dino Crisis</a><div class="gp-tg-meta">Capcom · 2026</div></div></td><td><span class="gp-genres"><span class="gp-genre" style="background:rgba(255,92,92,0.16);color:#FF5C5C;">Aksiyon</span><span class="gp-genre" style="background:rgba(255,159,67,0.16);color:#FF9F43;">Macera</span></span></td><td><a href="https://store.steampowered.com/app/4249130/Dino_Crisis/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg class="gp-ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a></td></tr>
+<tr><td><div><a class="gp-tg-link" href="https://store.steampowered.com/app/4249140/Dino_Crisis_2/" target="_blank" rel="noopener noreferrer">Dino Crisis 2</a><div class="gp-tg-meta">Capcom · 2026</div></div></td><td><span class="gp-genres"><span class="gp-genre" style="background:rgba(255,92,92,0.16);color:#FF5C5C;">Aksiyon</span><span class="gp-genre" style="background:rgba(255,159,67,0.16);color:#FF9F43;">Macera</span></span></td><td><a href="https://store.steampowered.com/app/4249140/Dino_Crisis_2/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg class="gp-ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a></td></tr>
       </tbody>
     </table>
   </div>
 </div>
 
-<p>Ay boyunca GeForce NOW kütüphanesine katılacak diğer oyunlara da buradan göz atabilirsin:</p>
-<div class="gp-yt-wrap" style="max-width:560px;margin:1.6em 0;"><iframe src="https://www.youtube.com/embed/CYLxd2T05UQ" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" style="display:block;width:100%;aspect-ratio:16/9;height:auto;border:0;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.5);"></iframe></div>
-<div class="table-wrap gp-table" style="background:#161616;border:1px solid #29292B;border-radius:16px;margin:24px 0;overflow:hidden;">
-  <div style="overflow-x:auto;">
-    <table style="width:100%;border-collapse:collapse;background:transparent;">
-      <thead><tr><th style="background:#1E1E18;padding:19px 24px;text-align:center;color:#FFC900;font-weight:700;font-size:16px;line-height:20px;border-bottom:1px solid rgba(255,201,0,0.3);">Oyun</th><th style="background:#1E1E18;padding:19px 24px;text-align:center;color:#FFC900;font-weight:700;font-size:16px;line-height:20px;border-bottom:1px solid rgba(255,201,0,0.3);">Tür</th><th style="background:#1E1E18;padding:19px 24px;text-align:center;color:#FFC900;font-weight:700;font-size:16px;line-height:20px;border-bottom:1px solid rgba(255,201,0,0.3);">Platform/Çıkış</th></tr></thead>
-      <tbody>
-<tr><td style="padding:14px 24px;vertical-align:middle;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div><a href="https://store.steampowered.com/app/3767660/Embers_of_the_Uncrowned/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Assassin’s Creed Black Flag Resynced</a><div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">Ubisoft Singapore · 2026</div></div></td><td style="padding:14px 24px;vertical-align:middle;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(255,92,92,0.16);color:#FF5C5C;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Aksiyon</span><span style="display:inline-block;background:rgba(255,159,67,0.16);color:#FF9F43;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Macera</span></span></td><td style="padding:14px 24px;vertical-align:middle;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><a href="https://store.steampowered.com/app/3767660/Embers_of_the_Uncrowned/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a> ve <a href="https://www.ubisoft.com/en-us/game/assassins-creed/black-flag-resynced" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Ubisoft<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a> Connect Çıkış Tarihi: 9 Temmuz</td></tr>
-<tr><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div><a href="https://store.steampowered.com/app/2524850/Denshattack/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Denshattack!</a><div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">Undercoders · 2026</div></div></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(163,230,53,0.16);color:#A3E635;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Bağımsız</span><span style="display:inline-block;background:rgba(255,92,92,0.16);color:#FF5C5C;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Aksiyon</span></span></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><a href="https://store.steampowered.com/app/2524850/Denshattack/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a>, <a href="https://www.xbox.com/games/store/denshattack/9n18l56xhk8z?utm_source=nvidia&utm_campaign=geforce_now" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Xbox<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a>, Game Pass Çıkış Tarihi: 15 Temmuz</td></tr>
-<tr><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div><a href="https://store.steampowered.com/app/2569760/The_Mound_Omen_of_Cthulhu/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">The Mound: Omen of Cthulhu</a><div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">ACE Team · 2026</div></div></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(244,114,182,0.16);color:#F472B6;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Korku</span></span></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><a href="https://store.steampowered.com/app/2569760/The_Mound_Omen_of_Cthulhu/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a> Çıkış Tarihi: 15 Temmuz</td></tr>
-<tr><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div><a href="https://store.steampowered.com/app/2802740/Heave_Ho_2/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Heave Ho 2</a><div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">Le Cartel Studio · 2026</div></div></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(251,191,36,0.16);color:#FBBF24;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Parti</span><span style="display:inline-block;background:rgba(163,230,53,0.16);color:#A3E635;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Bağımsız</span></span></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><a href="https://store.steampowered.com/app/2802740/Heave_Ho_2/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a> Çıkış Tarihi: 16 Temmuz</td></tr>
-<tr><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div><a href="https://store.steampowered.com/app/3219010/Fogpiercer/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Fogpiercer</a><div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">Mad Cookies Studio · 2026</div></div></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(91,141,239,0.16);color:#5B8DEF;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Strateji</span><span style="display:inline-block;background:rgba(167,139,250,0.16);color:#A78BFA;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Roguelike</span></span></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><a href="https://store.steampowered.com/app/3219010/Fogpiercer/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a>, <a href="https://www.xbox.com/games/store/fogpiercer/9p2pp895lsbj?utm_source=nvidia&utm_campaign=geforce_now" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Xbox<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a>, Game Pass Çıkış Tarihi: 17 Temmuz</td></tr>
-<tr><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div><a href="https://store.steampowered.com/app/1605850/ZeroSpace/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">ZeroSpace</a><div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">Starlance Studios · 2026</div></div></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(96,165,250,0.16);color:#60A5FA;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Gerçek Zamanlı Strateji</span></span></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><a href="https://store.steampowered.com/app/1605850/ZeroSpace/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a> Çıkış Tarihi: 20 Temmuz</td></tr>
-<tr><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div><a href="https://www.xbox.com/games/store/the-planet-crafter/9n072vv7mfk7?utm_source=nvidia&utm_campaign=geforce_now" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">The Planet Crafter</a><div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">Miju Games · 2024</div></div></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(74,222,128,0.16);color:#4ADE80;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Hayatta Kalma</span></span></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><a href="https://www.xbox.com/games/store/the-planet-crafter/9n072vv7mfk7?utm_source=nvidia&utm_campaign=geforce_now" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Xbox<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a>, Game Pass Çıkış Tarihi: 21 Temmuz</td></tr>
-<tr><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div><a href="https://store.steampowered.com/app/1181550/Carnival_Hunt/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Carnival Hunt</a><div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">Crytivo · 2026</div></div></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(244,114,182,0.16);color:#F472B6;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Korku</span><span style="display:inline-block;background:rgba(34,211,238,0.16);color:#22D3EE;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Co-op</span></span></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><a href="https://store.steampowered.com/app/1181550/Carnival_Hunt/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a> Çıkış Tarihi: 23 Temmuz</td></tr>
-<tr><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div><a href="https://store.steampowered.com/app/1501310/The_Ranchers/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">The Ranchers</a><div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">The Ranchers · 2026</div></div></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(56,189,248,0.16);color:#38BDF8;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Simülasyon</span></span></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><a href="https://store.steampowered.com/app/1501310/The_Ranchers/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a> Çıkış Tarihi: 30 Temmuz</td></tr>
-<tr><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div><a href="https://store.steampowered.com/app/1368140/Corsair_Cove/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Corsair Cove</a><div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">Limbic Entertainment · 2026</div></div></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(255,159,67,0.16);color:#FF9F43;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Macera</span><span style="display:inline-block;background:rgba(34,211,238,0.16);color:#22D3EE;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Co-op</span></span></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><a href="https://store.steampowered.com/app/1368140/Corsair_Cove/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a>, <a href="https://www.xbox.com/games/store/corsair-cove/9phs0189k408?utm_source=nvidia&utm_campaign=geforce_now" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Xbox<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a>, Game Pass Çıkış Tarihi: 31 Temmuz</td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<div class="cta-compact gp-conic" style="--gp-glow:#FFC900;margin:32px 0;">
-<div class="gp-conic-inner" style="background:#161616;border-radius:10.5px;padding:28px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
-  <div style="flex:1;min-width:260px;">
-    <div style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.08em;margin-bottom:8px;display:flex;align-items:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFC900" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-right:8px;"><line x1="6" y1="11" x2="10" y2="11"/><line x1="8" y1="9" x2="8" y2="13"/><line x1="15" y1="12" x2="15.01" y2="12"/><line x1="18" y1="10" x2="18.01" y2="10"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>ÖNE ÇIKAN OYUN</div>
-    <div style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-weight:600;font-size:24px;line-height:32px;color:#fff;margin-bottom:8px;">Monopoly: Star Wars Heroes vs. Villains</div>
-    <div style="color:#B2B2B2;font-size:16px;line-height:24px;">Ayın ilk büyük eklemesi: sıra tabanlı Star Wars mücadelesi, kurulum beklemeden bulutta.</div>
-  </div>
-  <a id="featured-game-button" href="https://gameplus.com.tr/gfn/paketler" style="display:inline-flex;align-items:center;justify-content:center;background:#FFC900;color:#131313;padding:14px 24px;border-radius:8px;font-weight:600;font-size:16px;line-height:20px;text-decoration:none;white-space:nowrap;">GeForce NOW Paketleri</a>
-</div>
-</div>
-
-<h2 id="haziran-dan-kalan-efsane-oyunlar">Haziran’dan Kalan Efsane Oyunlar</h2>
-<p>Geçtiğimiz ay duyurulan 18 oyuna ek olarak 10 oyun daha GeForce NOW kütüphanesine katıldı.</p>
-<div class="table-wrap gp-table" style="background:#161616;border:1px solid #29292B;border-radius:16px;margin:24px 0;overflow:hidden;">
-  <div style="overflow-x:auto;">
-    <table style="width:100%;border-collapse:collapse;background:transparent;">
-      <thead><tr><th style="background:#1E1E18;padding:19px 24px;text-align:center;color:#FFC900;font-weight:700;font-size:16px;line-height:20px;border-bottom:1px solid rgba(255,201,0,0.3);">Oyun</th><th style="background:#1E1E18;padding:19px 24px;text-align:center;color:#FFC900;font-weight:700;font-size:16px;line-height:20px;border-bottom:1px solid rgba(255,201,0,0.3);">Tür</th><th style="background:#1E1E18;padding:19px 24px;text-align:center;color:#FFC900;font-weight:700;font-size:16px;line-height:20px;border-bottom:1px solid rgba(255,201,0,0.3);">Platform/Çıkış</th></tr></thead>
-      <tbody>
-<tr><td style="padding:14px 24px;vertical-align:middle;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div><a href="https://store.steampowered.com/app/1803140/Deer__Boy/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Deer &amp; Boy</a><div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">Lifeline Games · 2026</div></div></td><td style="padding:14px 24px;vertical-align:middle;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(192,132,252,0.16);color:#C084FC;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Bulmaca</span><span style="display:inline-block;background:rgba(163,230,53,0.16);color:#A3E635;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Bağımsız</span></span></td><td style="padding:14px 24px;vertical-align:middle;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><a href="https://store.steampowered.com/app/1803140/Deer__Boy/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a></td></tr>
-<tr><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div><a href="https://store.epicgames.com/p/doom-eternal?utm_source=nvidia&utm_campaign=geforce_now" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">DOOM Eternal</a><div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">id Software · 2020</div></div></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(251,113,133,0.16);color:#FB7185;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">FPS</span><span style="display:inline-block;background:rgba(255,92,92,0.16);color:#FF5C5C;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Aksiyon</span></span></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><a href="https://store.epicgames.com/p/doom-eternal?utm_source=nvidia&utm_campaign=geforce_now" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Epic Games Store<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a></td></tr>
-<tr><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div>Embers of the Uncrowned Demo<div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">NEXON · 2026</div></div></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(129,140,248,0.16);color:#818CF8;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">RPG</span></span></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;">Steam</td></tr>
-<tr><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div><a href="https://store.steampowered.com/app/4323990/EMPULSE/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">EMPULSE</a><div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">1047 Games · 2026</div></div></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(255,92,92,0.16);color:#FF5C5C;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Aksiyon</span></span></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><a href="https://store.steampowered.com/app/4323990/EMPULSE/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a></td></tr>
-<tr><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div><a href="https://www.xbox.com/en-US/games/store/the-elder-scrolls-online-standard-edition/brkx5crmrtc2?utm_source=nvidia&utm_campaign=geforce_now" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">The Elder Scrolls Online</a><div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">ZeniMax Online Studios · 2014</div></div></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(45,212,191,0.16);color:#2DD4BF;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">MMORPG</span></span></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><a href="https://www.xbox.com/en-US/games/store/the-elder-scrolls-online-standard-edition/brkx5crmrtc2?utm_source=nvidia&utm_campaign=geforce_now" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Xbox<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a> ve Game Pass’te mevcut</td></tr>
-<tr><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div><a href="https://store.steampowered.com/app/2866670/NBA_THE_RUN/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">NBA THE RUN</a><div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">Play by Play Studios · 2026</div></div></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(250,204,21,0.16);color:#FACC15;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Spor</span></span></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><a href="https://store.steampowered.com/app/2866670/NBA_THE_RUN/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a></td></tr>
-<tr><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div><a href="https://store.steampowered.com/app/1431300/SAND_Raiders_of_Sophie/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">SAND: Raiders of Sophie</a><div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">Hologryph · 2026</div></div></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(255,92,92,0.16);color:#FF5C5C;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Aksiyon</span><span style="display:inline-block;background:rgba(232,121,249,0.16);color:#E879F9;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">MMO</span></span></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><a href="https://store.steampowered.com/app/1431300/SAND_Raiders_of_Sophie/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a></td></tr>
-<tr><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div><a href="https://store.steampowered.com/app/2004680/Voidling_Bound/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Voidling Bound</a><div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">Hatchery Games · 2026</div></div></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(167,139,250,0.16);color:#A78BFA;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Roguelike</span></span></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><a href="https://store.steampowered.com/app/2004680/Voidling_Bound/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a></td></tr>
-<tr><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div><a href="https://store.steampowered.com/app/2679100/Witchspire/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Witchspire</a><div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">Envar Games · 2026</div></div></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(255,92,92,0.16);color:#FF5C5C;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Aksiyon</span><span style="display:inline-block;background:rgba(167,139,250,0.16);color:#A78BFA;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Roguelike</span></span></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><a href="https://store.steampowered.com/app/2679100/Witchspire/" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Steam<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a></td></tr>
-<tr><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><div><a href="https://wotheat.com/?utm_source=nvidia&utm_campaign=geforce_now" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">World of Tanks: HEAT</a><div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-top:4px;">Wargaming · 2026</div></div></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><span style="display:inline-flex;flex-wrap:wrap;gap:6px 8px;align-items:center;vertical-align:middle;"><span style="display:inline-block;background:rgba(255,92,92,0.16);color:#FF5C5C;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">Aksiyon</span><span style="display:inline-block;background:rgba(232,121,249,0.16);color:#E879F9;border-radius:6px;padding:4px 10px;font-size:12px;line-height:16px;font-weight:700;white-space:nowrap;">MMO</span></span></td><td style="padding:14px 24px;vertical-align:middle;border-top:1px solid #29292B;color:#B2B2B2;font-weight:400;font-size:16px;line-height:20px;"><a href="https://wotheat.com/?utm_source=nvidia&utm_campaign=geforce_now" target="_blank" rel="noopener noreferrer" style="color:inherit;text-decoration:none;">Wargaming<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:1px;margin-left:3px;opacity:0.65;"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg></a></td></tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<div class="highlight-box" style="background:rgba(255,255,255,0.04);border-radius:12px;padding:18px 24px 18px 20px;margin:24px 0;display:flex;gap:16px;align-items:stretch;">
-  <div style="width:4px;border-radius:2px;background:#FFC900;flex-shrink:0;"></div>
+<div class="highlight-box">
+  <div class="gp-note-bar"></div>
   <div>
-    <div style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-4px;margin-right:8px;flex-shrink:0;"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14a5 5 0 1 0-6.18 0c.66.49 1.09 1.27 1.09 2.1V17h4v-.9c0-.83.43-1.61 1.09-2.1z"/></svg>Hatırlatma</div>
-    <p style="margin:0;color:#fff;font-size:1em;line-height:1.5;">GeForce NOW oyun satmaz; sahip olduğun oyunları bulutta çalıştırır. Listedeki yapımları oynamak için ilgili mağazada (Steam, Epic Games Store, Xbox) geçerli bir lisansa ya da aboneliğe sahip olman gerekir.</p>
+    <div class="gp-note-eyebrow"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-4px;margin-right:8px;flex-shrink:0;"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14a5 5 0 1 0-6.18 0c.66.49 1.09 1.27 1.09 2.1V17h4v-.9c0-.83.43-1.61 1.09-2.1z"/></svg>Hatırlatma</div>
+    <p>GeForce NOW oyun satmaz; sahip olduğun oyunları bulutta çalıştırır. Yukarıdaki yapımları oynamak için ilgili mağazada (Steam, Xbox / Xbox Game Pass) geçerli bir lisansa ya da aboneliğe sahip olman gerekir.</p>
   </div>
 </div>
 
-<div class="cta-end gp-conic" style="--gp-glow:#FFC900;margin:40px 0 24px;">
-<div class="gp-conic-inner" style="background:#161616;border-radius:10.5px;padding:24px;">
-  <div style="display:flex;align-items:center;gap:8px;margin-bottom:24px;"><span style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.08em;display:inline-flex;align-items:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="#FFC900" style="flex-shrink:0;margin-right:6px;vertical-align:-2px;"><path d="M12 1.5c.3 4.6 2.4 7.4 6.9 8.2.7.1.7 1.1 0 1.2-4.5.8-6.6 3.6-6.9 8.2 0 .8-1.1.8-1.2 0-.3-4.6-2.4-7.4-6.9-8.2-.7-.1-.7-1.1 0-1.2 4.5-.8 6.6-3.6 6.9-8.2.1-.8 1.2-.8 1.2 0z"/></svg>GAME+ &bull; BULUT OYUN</span></div>
-  <div style="font-family:'New Science',GreycliffCF,-apple-system,sans-serif;font-weight:600;font-size:32px;line-height:40px;color:#fff;margin-bottom:8px;">Game+ ile bulutta oyun keyfine hazır mısın?</div>
-  <p style="color:#B2B2B2;font-size:16px;line-height:20px;margin:0 0 24px;max-width:760px;">Performance ve Ultimate paketleri kütüphanendeki GeForce NOW destekli yapımları donanım olmadan oynamanı sağlar. 2.000'den fazla oyunu ve GFN Thursday'e eklenen yeni yapımları görmek için hemen kütüphaneye göz at!</p>
-  <div style="display:flex;flex-wrap:wrap;gap:14px;">
-    <a id="end-packages-button" href="https://gameplus.com.tr/gfn/paketler" style="display:inline-flex;align-items:center;justify-content:center;background:#FFC900;color:#131313;padding:12px 16px;border-radius:8px;font-weight:700;font-size:16px;line-height:20px;text-decoration:none;">GeForce NOW Paketleri &rarr;</a>
-    <a id="end-games-button" href="https://gameplus.com.tr/gfn/oyunlar" style="display:inline-flex;align-items:center;justify-content:center;background:transparent;border:1px solid #FFC900;color:#FFC900;padding:12px 16px;border-radius:8px;font-weight:700;font-size:16px;line-height:20px;text-decoration:none;">GeForce NOW Oyunları</a>
+<div class="cta-end gp-conic" style="--gp-glow:#FFC900;">
+<div class="gp-conic-inner">
+  <div class="gp-cta-eyebrow"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="#FFC900" style="flex-shrink:0;margin-right:6px;vertical-align:-2px;"><path d="M12 1.5c.3 4.6 2.4 7.4 6.9 8.2.7.1.7 1.1 0 1.2-4.5.8-6.6 3.6-6.9 8.2 0 .8-1.1.8-1.2 0-.3-4.6-2.4-7.4-6.9-8.2-.7-.1-.7-1.1 0-1.2 4.5-.8 6.6-3.6 6.9-8.2.1-.8 1.2-.8 1.2 0z"/></svg>GAME+ &bull; BULUT OYUN</span></div>
+  <div class="gp-cta-title">Game+ ile bulutta oyun keyfine hazır mısın?</div>
+  <p class="gp-cta-desc">Performance ve Ultimate paketleri, kütüphanendeki GeForce NOW destekli yapımları güçlü bir donanım olmadan oynamanı sağlar. Bu hafta eklenen oyunları ve tüm kütüphaneyi hemen inceleyebilirsin.</p>
+  <div class="gp-cta-actions">
+    <a class="gp-btn gp-btn-solid" id="end-packages-button" href="https://gameplus.com.tr/gfn/paketler">GeForce NOW Paketleri &rarr;</a>
+    <a class="gp-btn gp-btn-outline" id="end-games-button" href="https://gameplus.com.tr/gfn/oyunlar">GeForce NOW Oyunları</a>
   </div>
 </div>
 </div>
 
 <h2 id="geforce-now-thursday-de-onceki-haftalarda-neler-oldu">GeForce NOW Thursday’de Önceki Haftalarda Neler Oldu?</h2>
-<p>GeForce NOW kütüphanesi her hafta yeni oyunlarla büyümeye devam ediyor. Büyük yapımlardan bağımsız oyunlara kadar birçok yeni deneyim, bulut üzerinden oyuncularla buluşurken sahip olduğun oyunlara dilediğin uyumlu cihazdan kolayca erişebilirsin. İndirme, kurulum ve uzun güncelleme süreçleriyle uğraşmadan oyun keyfine anında başlayabilir, GeForce NOW'a eklenen yeni yapımları ve platformdaki son gelişmeleri takip etmek için <a href="https://gameplus.com.tr/blog">Gameplus Blog</a> sayfasındaki GFN Thursday içeriklerini inceleyebilirsin.</p>
-<div class="prev-weeks-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin:24px 0 32px;">
-  <a href="https://gameplus.com.tr/blog/gfn-thursday-geforce-now-da-bu-hafta-25-haziran-2026" class="gp-prev-week" style="display:block;text-decoration:none;background:#161616;border:1px solid #29292B;border-radius:16px;overflow:hidden;color:inherit;transition:border-color 0.25s,transform 0.25s,box-shadow 0.25s;">
-    <div style="height:150px;background-color:#0d0d0d;background:url('https://gameplus.com.tr/gameplus-static-resources/images/blog/gfn-this-week-6-25-nv-blog.webp') center/cover no-repeat;display:flex;align-items:flex-end;padding:14px 20px;position:relative;">
-      <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.78), rgba(0,0,0,0.05) 60%);"></div>
-      <span style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.08em;position:relative;">GFN THURSDAY</span>
+<p>GeForce NOW, her hafta kütüphanesine eklenen yeni oyunlar ve güncellemelerle oyunculara daha fazla seçenek sunuyor. İster yeni çıkan büyük yapımları ister sevilen bağımsız oyunları tercih et, desteklenen oyunlarını uyumlu cihazlarında bulut üzerinden anında oynayabilirsin. Platforma eklenen oyunlar, dikkat çeken yenilikler ve GFN Thursday kapsamındaki son gelişmeler için <a href="https://gameplus.com.tr/blog">Gameplus Blog</a>'u takip etmeyi unutma. Son haftalarda öne çıkan içerikler ise şöyle:</p>
+<div class="prev-weeks-grid">
+  <a class="gp-prev-week" href="https://gameplus.com.tr/blog/gfn-thursday-geforce-now-da-bu-hafta-9-temmuz-2026">
+    <div class="gp-pw-thumb" style="--gp-thumb:url('https://gameplus.com.tr/gameplus-static-resources/images/blog/gfn-this-week-7-9-social-post-20.webp');">
+      <div class="gp-pw-scrim"></div>
+      <span class="gp-pw-tag">GFN THURSDAY</span>
     </div>
-    <div style="padding:18px 20px 20px;">
-      <div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-bottom:8px;">25 Haziran 2026</div>
-      <div style="color:#fff;font-size:20px;line-height:24px;font-weight:700;margin-bottom:8px;">GFN Thursday GeForce Now’da Bu Hafta (25 Haziran 2026)</div>
-      <div style="color:#FFC900;font-size:16px;line-height:20px;font-weight:600;">Devamını oku &rarr;</div>
-    </div>
-  </a>
-  <a href="https://gameplus.com.tr/blog/gfn-thursday-geforce-now-da-bu-hafta--18-haziran-2026" class="gp-prev-week" style="display:block;text-decoration:none;background:#161616;border:1px solid #29292B;border-radius:16px;overflow:hidden;color:inherit;transition:border-color 0.25s,transform 0.25s,box-shadow 0.25s;">
-    <div style="height:150px;background-color:#0d0d0d;background:url('https://gameplus.com.tr/gameplus-static-resources/images/blog/gfn-this-week-6-18-blog-post-204.webp') center/cover no-repeat;display:flex;align-items:flex-end;padding:14px 20px;position:relative;">
-      <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.78), rgba(0,0,0,0.05) 60%);"></div>
-      <span style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.08em;position:relative;">GFN THURSDAY</span>
-    </div>
-    <div style="padding:18px 20px 20px;">
-      <div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-bottom:8px;">18 Haziran 2026</div>
-      <div style="color:#fff;font-size:20px;line-height:24px;font-weight:700;margin-bottom:8px;">GFN Thursday GeForce Now’da Bu Hafta (18 Haziran 2026)</div>
-      <div style="color:#FFC900;font-size:16px;line-height:20px;font-weight:600;">Devamını oku &rarr;</div>
+    <div class="gp-pw-body">
+      <div class="gp-pw-date">9 Temmuz 2026</div>
+      <div class="gp-pw-title">GFN Thursday GeForce Now’da Bu Hafta (9 Temmuz 2026)</div>
+      <div class="gp-pw-more">Devamını oku &rarr;</div>
     </div>
   </a>
-  <a href="https://gameplus.com.tr/blog/gfn-thursday-geforce-now-da-bu-hafta-11-haziran-2026" class="gp-prev-week" style="display:block;text-decoration:none;background:#161616;border:1px solid #29292B;border-radius:16px;overflow:hidden;color:inherit;transition:border-color 0.25s,transform 0.25s,box-shadow 0.25s;">
-    <div style="height:150px;background-color:#0d0d0d;background:url('https://gameplus.com.tr/gameplus-static-resources/images/blog/gfn-this-week-6-11-blog.webp') center/cover no-repeat;display:flex;align-items:flex-end;padding:14px 20px;position:relative;">
-      <div style="position:absolute;inset:0;background:linear-gradient(to top, rgba(0,0,0,0.78), rgba(0,0,0,0.05) 60%);"></div>
-      <span style="color:#FFC900;font-size:12px;line-height:16px;font-weight:700;letter-spacing:0.08em;position:relative;">GFN THURSDAY</span>
+  <a class="gp-prev-week" href="https://gameplus.com.tr/blog/gfn-thursday-geforce-now-da-bu-hafta-2-temmuz-2026">
+    <div class="gp-pw-thumb" style="--gp-thumb:url('https://gameplus.com.tr/gameplus-static-resources/images/blog/gfn-2-temmuz.webp');">
+      <div class="gp-pw-scrim"></div>
+      <span class="gp-pw-tag">GFN THURSDAY</span>
     </div>
-    <div style="padding:18px 20px 20px;">
-      <div style="color:#B2B2B2;font-size:12px;line-height:16px;font-weight:500;margin-bottom:8px;">11 Haziran 2026</div>
-      <div style="color:#fff;font-size:20px;line-height:24px;font-weight:700;margin-bottom:8px;">GFN Thursday GeForce Now’da Bu Hafta (11 Haziran 2026)</div>
-      <div style="color:#FFC900;font-size:16px;line-height:20px;font-weight:600;">Devamını oku &rarr;</div>
+    <div class="gp-pw-body">
+      <div class="gp-pw-date">2 Temmuz 2026</div>
+      <div class="gp-pw-title">GFN Thursday GeForce Now’da Bu Hafta (2 Temmuz 2026)</div>
+      <div class="gp-pw-more">Devamını oku &rarr;</div>
+    </div>
+  </a>
+  <a class="gp-prev-week" href="https://gameplus.com.tr/blog/gfn-thursday-geforce-now-da-bu-hafta-25-haziran-2026">
+    <div class="gp-pw-thumb" style="--gp-thumb:url('https://gameplus.com.tr/gameplus-static-resources/images/blog/gfn-this-week-6-25-nv-blog.webp');">
+      <div class="gp-pw-scrim"></div>
+      <span class="gp-pw-tag">GFN THURSDAY</span>
+    </div>
+    <div class="gp-pw-body">
+      <div class="gp-pw-date">25 Haziran 2026</div>
+      <div class="gp-pw-title">GFN Thursday GeForce Now’da Bu Hafta (25 Haziran 2026)</div>
+      <div class="gp-pw-more">Devamını oku &rarr;</div>
     </div>
   </a>
 </div>
-<style>
-  .gp-prev-week:hover { border-color: rgba(255,201,0,0.5) !important; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.5); }
-</style>
+
+</div>

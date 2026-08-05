@@ -25,7 +25,7 @@ from gameplus_blog_components import *
 - `render_list(items, marker="dot"|"check", accent)` — gövde içi madde listesi (kural 14).
 - `render_editor_note(text, title="GAME+ EDİTÖR NOTU")` — sarı %6 zemin + 4px sarı bar + doküman ikonu; gövde 1em (paragrafla aynı boy). **Her yazıda zorunlu.**
 - `render_highlight(text, title="Hatırlatma")` — beyaz %4 zemin + sarı bar + ampul ikonu; 1em. **Her yazıda zorunlu.**
-- `render_table(headers, rows, featured=None, title=None)` — `title` verilirse tablonun üstüne
+- `render_table(headers, rows, featured=None, first_col_strong=True, title=None)` — `title` verilirse tablonun üstüne
   `.gp-ct-title` başlığı basar (h-tag değil, H3 renk/ölçüsünde) ve bu başlık İçindekiler'e girer.
   Karşılaştırma tablolarında ne olduğunu anlatan bir başlık KONUR.
 - `render_table` (eski açıklama) — mobilde tablo sıkıştırılmaz, yana kaydırılır; çıktı
@@ -39,10 +39,11 @@ from gameplus_blog_components import *
 - `render_compact_cta(game, tagline, btn_label, btn_url, cta_id="featured-game-button")` — Öne Çıkan Oyun: glow + **gamepad ikonlu** eyebrow + sağda dolu sarı buton.
 - `render_card_table(title, games, headers=("Oyun","Tür","Stüdyo · Yıl"))` — **v10.9'dan beri GERÇEK TABLO**
   (`render_table` çağırır): başlık satırı, satır hover vurgusu, yana kaydırma ve tipografi GFN oyun
-  tablosuyla birebir aynı. Kupa ikonlu gradient başlık tablonun üstünde. `anchor` verilirse oyun adı
+  tablosuyla birebir aynı. Tablonun üstünde `.gp-ct-title` başlığı (h-tag DEĞİL, ikonsuz, düz beyaz, H3 ölçüsünde). `anchor` verilirse oyun adı
   yazı içindeki bölüme bağlanır.
-- `move_game_descriptions(html, game_names)` — "Oyun Adı: açıklama" paragraflarını ilgili oyunun
-  başlık + fragman bloğunun altına taşır, öneki kaldırır. Sıralama tablo olarak verilen yazılarda kullan.
+- `move_game_descriptions(html, game_names)` -> **(html, tasinanlar)** TUPLE döndürür. "Oyun Adı: açıklama"
+  paragraflarını ilgili oyunun başlık + fragman bloğunun altına taşır, öneki kaldırır. Kullanım:
+  `body, tasinan = move_game_descriptions(body, oyun_adlari)`. Sıralama tablo olarak verilen yazılarda kullan.
 - `render_prev_weeks_cards([{url, date, label, img}])` — ilgili yazı kartları; `img` = yazının og:image kapağı (koyu overlay otomatik).
 - `render_floating_toc(items, title=None)` — İçindekiler kartı: #161616 + sarı 01/02 numaralar (yalnız h2'ler numaralanır).
   **İLK madde H1'dir** (yazı başlığı, yukarı-ok işaretli); hedefi başa-dön butonuyla aynıdır: sayfa başı. `inject_heading_ids` H1'i de toplar (level 1); `items`'ı FİLTRELEME (`l in (1,2)`), yoksa başlık maddesi düşer. level-1 yoksa `title=` ile verilebilir.
@@ -62,3 +63,18 @@ Sınıf listesi ve gerekçeler: `references/design-system.md` -> "v10.6 / v10.7"
 
 ## DEPRECATED (çağırma)
 `render_meta` (meta header eklenmez) · `demote_h1` (H1 artık korunur) · `render_inline_game_card` · `linkify_platforms` (gerçek mağaza URL'si varken kullanma; doc linkleriyle platform kelimesini linkle).
+
+## Çıktı hijyeni (yeni bileşen yazarken)
+
+Yeni bir renderer'ın çıktısında ŞUNLAR OLMAZ - `verify_output` bunları FAIL ile yakalar:
+HTML/CSS/JS yorumu · inline `on*` özniteliği · base64 gömülü font · sürüm etiketi ("v10.x").
+Stil bloğu `_yorumsuz()` süzgecinden geçer; renderer'a elle yorum yazma.
+
+**Inline kalması gereken TEK şey dinamik değerlerdir:** `--gp-glow` (conic glow rengi),
+`--gp-dot` (`render_list` nokta rengi), `--gp-thumb` (önceki hafta kapak görseli) ve tür renkleri.
+(`--row-c` ve `--gp-bw` v10.9'da kaldırıldı; artık hiçbir renderer basmıyor.)
+
+`embed_fonts(html)` YALNIZ yerel önizleme içindir; CMS'e giden gövdeye UYGULANMAZ
+(lisans + `verify_output` "Gömülü font yok" FAIL verir).
+
+`SVG_TROPHY` / `SVG_STAR_GRADIENT` DEPRECATED (kupa ikonu v10.10'da kaldırıldı) - çağırma.

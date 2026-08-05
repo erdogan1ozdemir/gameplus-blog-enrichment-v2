@@ -61,7 +61,7 @@ body = shrink_youtube_embeds(body)
 
 tldr   = render_tldr(["<strong>…:</strong> …", ...])           # ✓ tikli maddeler (meta header EKLENMEZ)
 liste  = render_list(["…", "…"], marker="check")               # uygun yerlerde bullet listesi (content-rules 14)
-info   = render_info_card([("İncelenen", "12 Yapım"), ...])    # sadece genel blog
+info   = render_info_card([("İncelenen", "12 Yapım"), ...])    # her iki blog tipinde de ZORUNLU (GFN'de metrikleri o haftaya göre seç)
 toc    = render_floating_toc(toc_items)
 cta_p  = render_cta_paketler(headline, desc)
 table  = render_table(["Tip","Kapsam",...], [[...],[...]])
@@ -109,9 +109,9 @@ Otomatik doğrulananlar: **tek H1 + ilk başlık H1**, **meta header yok**, ANIM
 Detaylar **`references/design-system.md`**'de. Özet:
 - **Tek vurgu SARI `#FFC900`** (GFN yeşili tamamen kalktı); dolu sarı butonlarda koyu metin `#131313`.
 - **Kartlar `#161616`** (stat karoselleri `#0D0D0D`), ayraç `#29292B`, ikincil metin `#B2B2B2`.
-- **Başlıklar New Science SemiBold Extended** (H1 40 · H2 28 · H3 24 · H4 20), gövde Greycliff CF 20/24.
+- **Başlıklar New Science SemiBold Extended** (H1 40/48 · H2 32/40 · H3 28/36 · H4 24/32), gövde Greycliff CF 20/24.
 - **Dönen sarı glow (`gp-conic`)**: TLDR + tüm CTA'lar + Öne Çıkan Oyun.
-- **Tablolar:** `#1E1E18` başlık satırı + sarı ORTALI sütun başlıkları; hücreler gri normal (oyun adı bold DEĞİL); oyun adının altında "Stüdyo · Yıl" (KAYNAKLI); Tür hücresi `render_genre_tags` pill'leri; satır vurgusu YALNIZ hover'da.
+- **Tablolar:** `#1E1E18` başlık satırı + sarı SOLA YASLI sütun başlıkları (yalnız sıra-no sütunu .gp-col-num ortalı); hücreler gri normal (oyun adı bold DEĞİL); oyun adının altında "Stüdyo · Yıl" (KAYNAKLI); Tür hücresi `render_genre_tags` pill'leri; satır vurgusu YALNIZ hover'da.
 - **Tür rozeti paleti merkezi** (`GENRE_BADGE_COLORS`): aynı tür her içerikte AYNI renk.
 - **İkonlar:** TLDR/Editör Notu doküman, Hatırlatma ampul, Öne Çıkan'da gamepad, CTA eyebrow'larında **sparkle** (★ karakteri kullanılmaz).
 - **TLDR'da okuma süresi:** başlığın sağında "N dk okuma" (`estimate_reading_time(body)` ile hesaplanır). **TLDR başlığı `<div>` (heading değil).**
@@ -158,6 +158,15 @@ Tam liste **`references/content-rules.md`**'de. En kritikleri:
   gerekçe açıklaması bulunmaz. Stil bloğu `_yorumsuz()`'dan geçer; renderer'lara elle yorum ekleme.
   `verify_output` "Çıktıda yorum yok" kontrolüyle bunu ZORLAR - ihlalde build FAIL verir.
   Açıklamalar Python kaynağında ve `references/` altında tutulur.
+
+
+- **Kural 17:** oyunun tek oyunculu hikaye moduna Türkçe metinde "kampanya" DENMEZ ->
+  "hikaye modu (campaign)". Oyun adının parçasıysa aynen kalır (*Halo: Campaign Evolved*).
+- **Sıralamayı tablo olarak verdiğin yazılarda** `body, tasinan = move_game_descriptions(body, adlar)`
+  ile oyun açıklamalarını başlık + fragman altına taşı.
+- **`shrink_youtube_embeds` bir HTML YORUMU işaretçisine bağlıdır** (`<!-- Embed Başlangıcı -->`);
+  bu işaretçiler taslakta kalır ama BUILD SONUNDA gövdede hiçbir HTML yorumu kalmamalıdır.
+- **`verify_output` kontrol listesi** için tek kaynak: `references/qa-checklist.md`.
 
 ## Referans dosyaları
 

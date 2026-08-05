@@ -756,6 +756,16 @@ _STYLE_KAYNAK = '''<style>
   .gp-content .table-wrap th:first-child:not(.gp-col-num),
   .gp-content .table-wrap td:first-child:not(.gp-col-num) {
     white-space: normal; width: 170px; min-width: 170px; max-width: 170px; overflow-wrap: break-word; }
+  /* Son sütun (Platform / Çıkış): SARAR ama satırı uzatmaz.
+     `min-width` (width DEĞİL) şart: table-layout:auto ile `width` yalnız öneridir, tarayıcı her
+     şeyi kapsayıcıya sıkıştırır ve sütun daralıp satır uzar. min-width sütunu gerçekten
+     genişletir; tablo ekranı aşarsa yatay kaydırmayla erişilir. Böylece satır yüksekliğini
+     OYUN sütunu belirler, platform metni değil.
+     Sıralama tablosu (gp-table-rank) hariç - onun sütun genişlikleri ayrı tanımlı. */
+  .gp-content .table-wrap:not(.gp-table-rank) th:last-child,
+  .gp-content .table-wrap:not(.gp-table-rank) td:last-child {
+    white-space: normal; min-width: 220px; overflow-wrap: break-word; }
+  .gp-content .table-wrap td:last-child a { white-space: nowrap; }
   .gp-content .table-wrap th.gp-col-num, .gp-content .table-wrap td.gp-col-num {
     padding-left: 14px; padding-right: 14px; }
   .gp-content .table-wrap .gp-genres { flex-wrap: nowrap; }
@@ -1357,6 +1367,24 @@ def render_floating_toc(items, title=None):
       catch (err) {{ el.scrollIntoView(); }}
     }});
   }});
+
+  /* "Tabloyu yana kaydır" ipucu YALNIZ gerçekten taşan tablolarda görünür.
+     Medya sorgusu yetmiyor: aynı genişlikte bir tablo sığarken diğeri taşabiliyor. */
+  var ipucuGuncelle = function(){{
+    root.querySelectorAll('.gp-table-scroll').forEach(function(k){{
+      var ip = k.parentNode.querySelector('.gp-table-hint');
+      if (ip) ip.style.display = (k.scrollWidth > k.clientWidth + 1) ? '' : 'none';
+    }});
+  }};
+  /* Script ToC ile birlikte gövdenin BAŞINDA duruyor; tablolar henüz DOM'da yok.
+     Bu yüzden ilk ölçüm DOM hazır olduktan (ve yazı tipleri yerleştikten) sonra yapılır. */
+  if (document.readyState === 'loading') {{
+    document.addEventListener('DOMContentLoaded', function(){{ setTimeout(ipucuGuncelle, 60); }});
+  }} else {{
+    setTimeout(ipucuGuncelle, 60);
+  }}
+  window.addEventListener('load', ipucuGuncelle);
+  window.addEventListener('resize', ipucuGuncelle, {{passive:true}});
 }})();
 </script>
 '''
