@@ -25,7 +25,10 @@ from gameplus_blog_components import *
 - `render_list(items, marker="dot"|"check", accent)` — gövde içi madde listesi (kural 14).
 - `render_editor_note(text, title="GAME+ EDİTÖR NOTU")` — sarı %6 zemin + 4px sarı bar + doküman ikonu; gövde 1em (paragrafla aynı boy). **Her yazıda zorunlu.**
 - `render_highlight(text, title="Hatırlatma")` — beyaz %4 zemin + sarı bar + ampul ikonu; 1em. **Her yazıda zorunlu.**
-- `render_table(headers, rows, featured=None)` — mobilde tablo sıkıştırılmaz, yana kaydırılır; çıktı
+- `render_table(headers, rows, featured=None, title=None)` — `title` verilirse tablonun üstüne
+  `.gp-ct-title` başlığı basar (h-tag değil, H3 renk/ölçüsünde) ve bu başlık İçindekiler'e girer.
+  Karşılaştırma tablolarında ne olduğunu anlatan bir başlık KONUR.
+- `render_table` (eski açıklama) — mobilde tablo sıkıştırılmaz, yana kaydırılır; çıktı
   başına **"Tabloyu yana kaydır →"** ipucu (`.gp-table-hint`) basılır (masaüstünde gizli). Ölçüler:
   `design-system.md` → "v10.8".
 - `render_table` (eski açıklama) — #161616 kap; thead #1E1E18 + SARI ORTALI başlıklar; hücreler 16/20 gri (oyun adı dahil normal); satırlar #29292B ayraçlı; **hover'da satır sarı %7 + ad sarı**; `featured=[i]` kalıcı vurgu.

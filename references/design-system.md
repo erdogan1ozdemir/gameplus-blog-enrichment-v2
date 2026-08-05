@@ -248,34 +248,33 @@ TAM ad üzerinden yapılır. Karşılığı olmayan paragraf yerinde bırakılı
   kaplıyordu; hiyerarşi zaten renk (beyaz) ve sütun başlığıyla kuruluyor. Hem GFN oyun tablosunda
   hem sıralama tablosunda geçerli.
 
-## v10.11 - İçindekiler numaralandırma + H3 başlıklar ToC'de + azalan mobil başlık ölçeği
+## v10.11 - İçindekiler: bölümler + TABLO ÜSTÜ BAŞLIKLAR; azalan mobil başlık ölçeği
 
-**İçindekiler (`render_floating_toc`):**
+**İçindekiler'e ne girer:**
 
-| Seviye | ToC'de | Numara |
+| Öğe | ToC'de | Numara |
 |---|---|---|
-| H1 (yazı başlığı) | var, ilk madde | **numarasız** (hizayı korumak için boş yer tutucu) |
-| H2 | var | 01, 02, 03 ... |
-| H3 | var, hafif girintili (`.gp-toc-alt`) | bağlı olduğu H2'ye göre **2.1, 2.2, 3.1** ... |
+| H1 (yazı başlığı) | ilk madde | **numarasız** (hizayı korumak için boş yer tutucu) |
+| H2 (bölümler) | var | 01, 02, 03 ... |
+| **Tablo üstü başlık** (`div.gp-ct-title`) | var, girintili | bağlı olduğu H2'ye göre **2.1, 3.1** ... |
+| H3 oyun başlıkları | **yok** | - |
 | H4 | **yok** | - |
 
-SSS bölümü ToC'de tek satırdır ("Sıkça Sorulan Sorular"); sorular `<summary>` olduğu için zaten
-başlık sayılmaz.
+Oyun başlıkları listeyi şişiriyordu; okuyucunun aradığı kırılım tablolar. SSS bölümü tek satırdır
+(sorular `<summary>` olduğu için zaten başlık sayılmaz).
 
-**`inject_heading_ids` düzeltmesi:** eski regex yalnız `<h3>` (özniteliksiz) eşleşiyordu; oyun
-başlıkları `<h3 id="..." class="gp-game-head">` olarak basıldığı için ToC'ye HİÇ girmiyordu.
-Artık öznitelikli başlıklar da toplanıyor ve mevcut id korunuyor. Oyun başlığında ToC metni
-yalnız oyun adıdır (tür rozeti ve "Stüdyo · Yıl" alınmaz).
+**Tablo üstü başlık (`.gp-ct-title`):** h-tag DEĞİL (SEO outline'ına girmez) ama **H3 ile aynı
+renk ve ölçü**: masaüstü 28/36 beyaz, mobil 19/26. `render_card_table` her zaman basar;
+`render_table(..., title="...")` ile normal tablolara da eklenebilir. Otomatik `id` alır ve
+`inject_heading_ids` tarafından ToC'ye level 3 olarak toplanır.
 
-**Oyun başlığı ölçüsü:** oyun adı, başlığın KENDİ seviyesinin ölçüsünü kullanır (h3 ise h3 gibi).
-Bunun düzgün çalışması için mobil başlık ölçeği azalan yapıldı:
+**Tüm tablolarda sütunlar SOLA yaslı** (yalnız `.gp-col-num` sıra-no sütunu ortalı). Eski GFN
+kuralı 2. sütunu ortalıyordu (`tr > :first-child:nth-last-child(3) ~ :nth-child(2)`, (0,5,1));
+aynı desen sonra tekrarlanarak aşılır. Tür rozetleri de `justify-content: flex-start`.
 
-| | Masaüstü | Mobil |
-|---|---|---|
-| H1 | 40/48 | 24/32 |
-| H2 | 32/40 | 21/28 |
-| H3 | 28/36 | **19/26** |
-| H4 | 24/32 | **17/24** |
+**Mobil başlık ölçeği AZALAN:** h1 24/32 > h2 21/28 > h3 19/26 > h4 17/24. Oyun başlığı kendi
+seviyesinin ölçüsünü kullanır (h3 ise h3 gibi); bu yüzden ölçeğin azalan olması şart.
 
-(Önceki durumda mobilde h3/h4 24/32 iken h2 21/28'di; oyun başlıkları bölüm başlıklarından büyük
-görünüyordu. "Oyun adını H2 ölçüsüne sabitle" geçici çözümü kaldırıldı.)
+**Karşılaştırma tablosunda sıra:** çıkış sırası yazının başında zaten verildiyse karşılaştırma
+tablosunda ÖNCE hikaye (kronolojik) sırası gelir, sonra çıkış sırası. Tablonun üstüne ne olduğunu
+anlatan bir başlık konur.

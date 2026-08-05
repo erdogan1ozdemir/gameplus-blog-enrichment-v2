@@ -192,7 +192,7 @@ ANIMATED_BORDER_STYLE = '''<style>
 .gp-content .gp-table-hint { display: none; font-size: 12px; line-height: 16px; font-weight: 500;
   color: #B2B2B2; padding: 10px 14px 0; }
 .gp-content .table-wrap table { width: 100%; border-collapse: collapse; background: transparent; }
-.gp-content .table-wrap th { background: #1E1E18; padding: 19px 24px; text-align: center; color: #FFC900;
+.gp-content .table-wrap th { background: #1E1E18; padding: 19px 24px; text-align: left; color: #FFC900;
   font-weight: 700; font-size: 16px; line-height: 20px; border-bottom: 1px solid rgba(255,201,0,0.3); }
 .gp-content .table-wrap td { padding: 14px 24px; vertical-align: middle; color: #B2B2B2; font-weight: 400;
   font-size: 16px; line-height: 20px; }
@@ -247,8 +247,9 @@ ANIMATED_BORDER_STYLE = '''<style>
 .gp-content .card-table-wrap { margin: 28px 0; }
 /* Tablo üstü başlık: h-tag DEĞİL (SEO outline'ına girmesin), ama H2 tipografisinde.
    Kupa ikonu v10.10'da kaldırıldı; gradient yerine düz sarı. */
+/* Tablo üstü başlık: h-tag DEĞİL (SEO outline'ına girmez) ama H3 ile aynı renk ve ölçü. */
 .gp-content .gp-ct-title { font-family: 'New Science', GreycliffCF, -apple-system, sans-serif;
-  font-weight: 600; color: #FFC900; margin: 0 0 14px; text-align: left; }
+  font-weight: 600; color: #fff; margin: 28px 0 14px; text-align: left; }
 .gp-content .card-table { overflow: hidden; box-shadow: 0 4px 18px rgba(0,0,0,0.5); }
 .gp-content .gp-card-rows { position: relative; z-index: 1; }
 .gp-content .card-row { display: grid; grid-template-columns: var(--gp-bw,120px) 1fr auto; gap: 14px;
@@ -657,7 +658,7 @@ ANIMATED_BORDER_STYLE = '''<style>
 /* Kart/kutu başlıkları = H4 rolü (Hızlı Özet, İçindekiler, card-table) */
 .gp-content .gp-tldr-title,
 .gp-content .floating-toc > summary { font-size: 24px; line-height: 32px; color: #fff; }
-.gp-content .gp-ct-title { font-size: 32px; line-height: 40px; }
+.gp-content .gp-ct-title { font-size: 28px; line-height: 36px; }
 /* CTA başlıkları = H2 rolü (rehber: "Kapak başlığı, CTA ve İlgili Yazılar") */
 .gp-content .gp-cta-title, .gp-content .cta-end .gp-cta-title { font-size: 32px; line-height: 40px; }
 
@@ -674,7 +675,14 @@ ANIMATED_BORDER_STYLE = '''<style>
 .gp-content .editor-note p, .gp-content .highlight-box p { font-size: 16px; line-height: 22px; color: #fff; }
 
 /* Gövde 16/20 ailesi: tablo, CTA metni, butonlar */
-.gp-content .table-wrap th { font-size: 16px; line-height: 20px; font-weight: 700; color: #FFC900; }
+.gp-content .table-wrap th { font-size: 16px; line-height: 20px; font-weight: 700; color: #FFC900;
+  text-align: left; }
+/* TÜM tablolarda sütunlar sola yaslı. Eski GFN kuralı 2. sütunu ortalıyordu
+   (`tr > :first-child:nth-last-child(3) ~ :nth-child(2)`, (0,5,1)); aynı desen sonra
+   tekrarlanarak aşılıyor. Sıra-no sütunu (.gp-col-num) ortalı kalır. */
+.gp-content .table-wrap tr > :first-child:nth-last-child(3) ~ :nth-child(2),
+.gp-content .table-wrap tr > :first-child:nth-last-child(4) ~ :nth-child(2) { text-align: left; }
+.gp-content .table-wrap td .gp-genres { justify-content: flex-start; }
 .gp-content .table-wrap td { font-size: 16px; line-height: 20px; color: #B2B2B2; }
 .gp-content .gp-tg-link, .gp-content .table-wrap td:first-child { font-size: 16px; line-height: 20px;
   font-weight: 400; color: #fff; }
@@ -717,7 +725,7 @@ ANIMATED_BORDER_STYLE = '''<style>
   .gp-content h2 { font-size: 21px; line-height: 28px; }
   .gp-content h3 { font-size: 19px; line-height: 26px; }
   .gp-content h4 { font-size: 17px; line-height: 24px; }
-  .gp-content .gp-ct-title { font-size: 21px; line-height: 28px; }
+  .gp-content .gp-ct-title { font-size: 19px; line-height: 26px; }
   .gp-content .floating-toc > summary { font-size: 20px; line-height: 26px; }
   /* Kullanıcı onaylı mobil ölçüler (rehberden ayrışan bilinçli değerler) */
   .gp-content .gp-tldr-title { font-size: 20px; line-height: 24px; }
@@ -954,7 +962,7 @@ def render_ubisoft_cta(headline, desc):
 
 # --- Tablo (Figma: #161616 kap + #1E1E18 başlık + sarı 16 bold başlık metni + #29292B ayraç;
 #     oyun adı DemiBold beyaz; hover'da satır sarı %7 + ad sarı (normalde vurgu YOK); featured=[i] kalıcı vurgu) ---
-def render_table(headers, rows, featured=None, first_col_strong=True):
+def render_table(headers, rows, featured=None, first_col_strong=True, title=None):
     """İlk sütun KISA ise (sıra numarası, '#', yıl gibi <=4 karakter) otomatik olarak
     `gp-col-num` sınıfını alır: içeriği kadar yer kaplar, iki yanında eşit boşluk kalır.
     Oyun adı gibi geniş ilk sütunlar etkilenmez."""
@@ -970,7 +978,8 @@ def render_table(headers, rows, featured=None, first_col_strong=True):
         cls = ' class="gp-row-feat"' if i in feat else ''
         tds = "".join(f'<td{kolon_cls if j == 0 else ""}>{c}</td>' for j, c in enumerate(row))
         body_rows.append(f'<tr{cls}>{tds}</tr>')
-    return f'''<div class="{sar_cls}">
+    ust = f'<div class="gp-ct-title" id="{slugify(title)}">{title}</div>\n' if title else ''
+    return f'''{ust}<div class="{sar_cls}">
   <div class="gp-table-hint">Tabloyu yana kaydır &rarr;</div>
   <div class="gp-table-scroll">
     <table>
@@ -1168,7 +1177,7 @@ def render_card_table(title, games, headers=("Oyun", "Tür", "Stüdyo · Yıl"))
         rows.append([ad, badge_html, g.get('meta', '')])
     tablo = render_table(list(headers), rows)
     return f'''<div class="card-table-wrap">
-  <div class="gp-ct-title">{title}</div>
+  <div class="gp-ct-title" id="{slugify(title)}">{title}</div>
 {tablo}</div>
 '''
 
@@ -1373,24 +1382,35 @@ def slugify(text):
     return text[:60]
 
 def inject_heading_ids(html):
-    """H1-H3'e id ekler ve ToC listesini döndürür.
+    """H1-H3'e id ekler; ToC listesini döndürür.
 
-    Zaten id'si OLAN başlıklar da toplanır: `render_game_h3_inline` oyun başlıklarını
-    `<h3 id="..." class="gp-game-head">` olarak basar; eski regex yalnız `<h3>` (özniteliksiz)
-    eşleştiği için oyun başlıkları İçindekiler'e hiç girmiyordu.
-    Oyun başlığında ToC metni yalnız oyun adıdır (tür rozeti ve "Stüdyo · Yıl" alınmaz).
-    H4 toplanmaz - ToC'de yer almaz."""
+    ToC'ye GİRENLER: H1 (yazı başlığı) · H2 (bölümler) · TABLO ÜSTÜ BAŞLIKLAR
+    (`div.gp-ct-title` - "Halo Serisi: Çıkış Sırası" gibi), level 3 olarak.
+    ToC'ye GİRMEYENLER: H3 oyun başlıkları ve H4. Oyun başlıkları listede çok yer kaplıyordu;
+    okuyucunun aradığı kırılım tablolar.
+    """
     toc_items, parcalar, son = [], [], 0
-    for m in re.finditer(r'<(h[123])\b([^>]*)>(.*?)</\1>', html, re.S):
-        tag, attrs, ic = m.group(1), m.group(2), m.group(3)
-        oyun_adi = re.search(r'<span class="gp-game-name">(.*?)</span>', ic, re.S)
-        kaynak = oyun_adi.group(1) if oyun_adi else ic
-        duz = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', kaynak)).strip()
-        var_id = re.search(r'id="([^"]+)"', attrs)
-        anchor = var_id.group(1) if var_id else slugify(duz)
-        toc_items.append((int(tag[1]), duz, anchor))
-        parcalar.append(html[son:m.start()])
-        parcalar.append(m.group(0) if var_id else f'<{tag}{attrs} id="{anchor}">{ic}</{tag}>')
+    desen = r'<(h[123])\b([^>]*)>(.*?)</\1>|<div class="gp-ct-title"([^>]*)>(.*?)</div>'
+    for m in re.finditer(desen, html, re.S):
+        if m.group(1):                                    # normal başlık
+            tag, attrs, ic = m.group(1), m.group(2), m.group(3)
+            seviye = int(tag[1])
+            duz = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', ic)).strip()
+            var_id = re.search(r'id="([^"]+)"', attrs)
+            anchor = var_id.group(1) if var_id else slugify(duz)
+            if seviye in (1, 2):                          # H3 ToC'ye girmez
+                toc_items.append((seviye, duz, anchor))
+            parcalar.append(html[son:m.start()])
+            parcalar.append(m.group(0) if var_id else f'<{tag}{attrs} id="{anchor}">{ic}</{tag}>')
+        else:                                             # tablo üstü başlık
+            attrs, ic = m.group(4), m.group(5)
+            duz = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', ic)).strip()
+            var_id = re.search(r'id="([^"]+)"', attrs)
+            anchor = var_id.group(1) if var_id else slugify(duz)
+            toc_items.append((3, duz, anchor))
+            parcalar.append(html[son:m.start()])
+            parcalar.append(m.group(0) if var_id
+                            else f'<div class="gp-ct-title"{attrs} id="{anchor}">{ic}</div>')
         son = m.end()
     parcalar.append(html[son:])
     return "".join(parcalar), toc_items
