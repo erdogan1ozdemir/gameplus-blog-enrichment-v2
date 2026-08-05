@@ -252,16 +252,16 @@ TAM ad üzerinden yapılır. Karşılığı olmayan paragraf yerinde bırakılı
 
 **İçindekiler'e ne girer:**
 
-| Öğe | ToC'de | Numara |
+| Öğe | ToC'de | İşaret |
 |---|---|---|
-| H1 (yazı başlığı) | ilk madde | **numarasız** (hizayı korumak için boş yer tutucu) |
+| H1 (yazı başlığı) | ilk madde | **küçük nokta** (metinle aynı renk, #B2B2B2) |
 | H2 (bölümler) | var | 01, 02, 03 ... |
-| **Tablo üstü başlık** (`div.gp-ct-title`) | var, girintili | bağlı olduğu H2'ye göre **2.1, 3.1** ... |
 | H3 oyun başlıkları | **yok** | - |
 | H4 | **yok** | - |
+| Tablo üstü başlıklar | **yok** | (id alırlar, bağlantı verilebilir) |
 
-Oyun başlıkları listeyi şişiriyordu; okuyucunun aradığı kırılım tablolar. SSS bölümü tek satırdır
-(sorular `<summary>` olduğu için zaten başlık sayılmaz).
+Alt numaralandırma (2.1 / 3.1) denendi ve VAZGEÇİLDİ - liste sadeliğini bozuyordu.
+SSS bölümü tek satırdır (sorular `<summary>` olduğu için zaten başlık sayılmaz).
 
 **Tablo üstü başlık (`.gp-ct-title`):** h-tag DEĞİL (SEO outline'ına girmez) ama **H3 ile aynı
 renk ve ölçü**: masaüstü 28/36 beyaz, mobil 19/26. `render_card_table` her zaman basar;

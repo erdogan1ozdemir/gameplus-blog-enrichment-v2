@@ -489,6 +489,8 @@ ANIMATED_BORDER_STYLE = '''<style>
 .gp-content .gp-toc-num { color: #FFC900; font-size: 12px; line-height: 16px; font-weight: 700;
   flex-shrink: 0; margin-top: 4px; }
 .gp-content .gp-toc-gap { width: 16px; flex-shrink: 0; }
+.gp-content .gp-toc-dot { width: 6px; height: 6px; border-radius: 50%; background: #B2B2B2;
+  flex-shrink: 0; margin: 8px 5px 0; }
 .gp-content .gp-toc-alt { padding-left: 14px; }
 .gp-content .gp-toc-alt .gp-toc-num { opacity: 0.85; }
 .gp-content .gp-toptop { margin-left: 12px; display: inline-flex; align-items: center; justify-content: center;
@@ -1281,24 +1283,20 @@ def render_floating_toc(items, title=None):
     if h1:
         h1_text, h1_anchor = h1
         href = f'#{h1_anchor}' if h1_anchor else '#'
-        # H1 (yazı başlığı) NUMARASIZ; hizayı bozmamak için boş yer tutucu konur.
+        # H1 (yazı başlığı) numarasız; numara yerine metinle aynı renkte küçük bir nokta.
         li_items.append(
-            f'    <li><span class="gp-toc-gap"></span>'
+            f'    <li><span class="gp-toc-dot"></span>'
             f'<a class="gp-toc-top" href="{href}">{h1_text}</a></li>')
 
-    # H2 -> 1, 2, 3 ... ; H3 -> bağlı olduğu H2'ye göre 2.1, 2.2 ... ; H4 ToC'ye girmez.
-    h2_no, h3_no = 0, 0
+    # Yalnız H2'ler numaralanır: 01, 02, 03 ...
+    h2_no = 0
     for level, text, anchor in items:
         if level == 1:
             continue
         if level == 2:
-            h2_no += 1; h3_no = 0
+            h2_no += 1
             li_items.append(f'    <li>{_num(h2_no)}<a href="#{anchor}">{text}</a></li>')
-        elif level == 3:
-            h3_no += 1
-            li_items.append(f'    <li class="gp-toc-alt">'
-                            f'{_num(f"{h2_no}.{h3_no}" if h2_no else str(h3_no))}'
-                            f'<a href="#{anchor}">{text}</a></li>')
+
     body = chr(10).join(li_items)
     return f'''<details class="floating-toc">
   <summary>İçindekiler<span class="gp-toptop" title="Başa dön" ><svg viewBox="0 0 24 24" fill="none" stroke="#FFC900" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 14 12 8 6 14"/><line x1="12" y1="8" x2="12" y2="16"/></svg></span></summary>
@@ -1384,10 +1382,9 @@ def slugify(text):
 def inject_heading_ids(html):
     """H1-H3'e id ekler; ToC listesini döndürür.
 
-    ToC'ye GİRENLER: H1 (yazı başlığı) · H2 (bölümler) · TABLO ÜSTÜ BAŞLIKLAR
-    (`div.gp-ct-title` - "Halo Serisi: Çıkış Sırası" gibi), level 3 olarak.
-    ToC'ye GİRMEYENLER: H3 oyun başlıkları ve H4. Oyun başlıkları listede çok yer kaplıyordu;
-    okuyucunun aradığı kırılım tablolar.
+    ToC'ye GİRENLER: yalnız H1 (yazı başlığı) ve H2 (bölümler).
+    GİRMEYENLER: H3 oyun başlıkları, H4 ve tablo üstü başlıklar - liste sadeliğini korumak için.
+    Tablo üstü başlıklar yine id alır (gerekirse bağlantı verilebilsin).
     """
     toc_items, parcalar, son = [], [], 0
     desen = r'<(h[123])\b([^>]*)>(.*?)</\1>|<div class="gp-ct-title"([^>]*)>(.*?)</div>'
@@ -1407,7 +1404,8 @@ def inject_heading_ids(html):
             duz = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', ic)).strip()
             var_id = re.search(r'id="([^"]+)"', attrs)
             anchor = var_id.group(1) if var_id else slugify(duz)
-            toc_items.append((3, duz, anchor))
+            # Tablo üstü başlıklar ToC'ye GİRMEZ (2.1 / 3.1 numaralandırmasından vazgeçildi);
+            # yine de id alırlar ki gerekirse bağlantı verilebilsin.
             parcalar.append(html[son:m.start()])
             parcalar.append(m.group(0) if var_id
                             else f'<div class="gp-ct-title"{attrs} id="{anchor}">{ic}</div>')
