@@ -489,7 +489,8 @@ ANIMATED_BORDER_STYLE = '''<style>
 .gp-content .gp-toc-num { color: #FFC900; font-size: 12px; line-height: 16px; font-weight: 700;
   flex-shrink: 0; margin-top: 4px; }
 .gp-content .gp-toc-gap { width: 16px; flex-shrink: 0; }
-.gp-content .gp-toc-dot { width: 6px; height: 6px; border-radius: 50%; background: #B2B2B2;
+/* H1 maddesinin noktası ToC numaralarıyla AYNI renkte (sarı). */
+.gp-content .gp-toc-dot { width: 6px; height: 6px; border-radius: 50%; background: #FFC900;
   flex-shrink: 0; margin: 8px 5px 0; }
 .gp-content .gp-toc-alt { padding-left: 14px; }
 .gp-content .gp-toc-alt .gp-toc-num { opacity: 0.85; }

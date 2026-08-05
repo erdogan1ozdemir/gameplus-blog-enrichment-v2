@@ -254,7 +254,7 @@ TAM ad üzerinden yapılır. Karşılığı olmayan paragraf yerinde bırakılı
 
 | Öğe | ToC'de | İşaret |
 |---|---|---|
-| H1 (yazı başlığı) | ilk madde | **küçük nokta** (metinle aynı renk, #B2B2B2) |
+| H1 (yazı başlığı) | ilk madde | **küçük nokta** (numaralarla aynı renk, #FFC900) |
 | H2 (bölümler) | var | 01, 02, 03 ... |
 | H3 oyun başlıkları | **yok** | - |
 | H4 | **yok** | - |
