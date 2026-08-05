@@ -146,3 +146,4 @@ body = re.sub(r'(<h2 id="[^"]*">GeForce NOW Thursday)', endcta + r'\1', body, co
 body = ensure_leading_h1(body)  # gövde tek bir H1 ile başlar (ilk başlık = yazı başlığı)
 print_report(verify_output(ANIMATED_BORDER_STYLE+body, blog_type="gfn", expect_faq=False))  # content-rules 13
 ```
+- **"Campaign" -> "hikaye modu"** (ilk geçişte "hikaye modu (campaign)"). **"kampanya" YAZMA** - Türkçede pazarlama kampanyası olarak okunuyor. Oyun adının parçasıysa aynen kalır (*Halo: Campaign Evolved*). Detay: content-rules kural 17.

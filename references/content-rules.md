@@ -117,3 +117,20 @@ Skill yazarın metnine DOKUNMAZ; ama eklediğimiz her metin (TLDR, karosel, CTA,
 - **Hype/süperlatif YASAK → doğal karşılık:** "müthiş adrenalin salgılıyor"→"ilk saniyeden gerginlik başlıyor"; "kasıp kavuruyor"→"hâlâ en çok oynananlar arasında"; "efsanevi/başyapıt/muazzam/nefes kesen/baş döndürücü/eğlence fırtınası"→ölçülü, somut betimleme. Sıfat yerine sahne göster.
 - **GFN ifade varyasyonu:** "bulut tabanlı oyun platformu GeForce NOW destekli yapımları" kalıbını tekrarlamak yerine eş anlamlı döngü kullan ("bulutta oynayabileceğin oyunlar", "kütüphanendeki desteklenen yapımlar", "GeForce NOW ile eriştiğin oyunlar"). CTA dürüstlüğü (kural 2) korunur.
 - **Paragraf ritmi (tam yazı yazarken):** gövde paragrafı 2-4 cümle / ~40-80 kelime; arada tek cümlelik vurucu paragraf; 5+ cümlelik blok bölünür; her bölümün ilk cümlesi soruyu net yanıtlar (answer-first).
+
+## Kural 17: "Campaign" = hikaye modu, "kampanya" YAZMA
+
+Oyunun tek oyunculu hikaye moduna Türkçe metinde **"kampanya"** denmez - bu kelime Türkçede
+pazarlama kampanyası olarak okunuyor. Kullanım:
+
+- İlk geçişte: **"hikaye modu (campaign)"**
+- Sonraki geçişlerde: **"hikaye modu"** ya da yerleşik terim olarak **"campaign"**
+- Oyun adının parçasıysa AYNEN kalır: *Halo: Campaign Evolved* (çeviri yapılmaz)
+
+| Kullanma | Kullan |
+|---|---|
+| orijinal Combat Evolved kampanyasının yeniden yapımı | orijinal Combat Evolved hikaye modunun (campaign) yeniden yapımı |
+| kampanya odaklı nişancılar | hikaye odaklı nişancılar |
+| kampanya modu | hikaye modu |
+
+Aynı kural GFN Thursday yerelleştirmesinde de geçerlidir (İngilizce "campaign" -> "hikaye modu").

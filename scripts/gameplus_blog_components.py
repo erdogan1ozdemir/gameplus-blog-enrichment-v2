@@ -262,12 +262,11 @@ ANIMATED_BORDER_STYLE = '''<style>
 /* --- Oyun başlığı (tür rozeti + isim + "Stüdyo · Yıl") --- */
 .gp-content .gp-game-head { display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
   margin: 32px 0 14px; line-height: 1.4; }
-/* Oyun adına başlık seviyesi verilmediyse (div/span) CTA başlığıyla aynı ölçü kullanılır. */
-.gp-content div.gp-game-head .gp-game-name, .gp-content span.gp-game-head .gp-game-name {
-  font-size: 32px; line-height: 40px; color: #fff; }
+/* Oyun adı H2 ÖLÇÜSÜNDE basılır; yazıda oyuna ayrı bir başlık seviyesi verilmediği için
+   h3/h4 ile render edilse bile H2'den BÜYÜK görünmemeli (mobilde h3 24/32 iken h2 21/28). */
+.gp-content .gp-game-head .gp-game-name { font-size: 32px; line-height: 40px; color: #fff; }
 @media (max-width: 700px) {
-  .gp-content div.gp-game-head .gp-game-name, .gp-content span.gp-game-head .gp-game-name {
-    font-size: 19px; line-height: 25px; }
+  .gp-content .gp-game-head .gp-game-name { font-size: 21px; line-height: 28px; }
 }
 .gp-content .gp-game-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 12px;
   line-height: 16px; font-weight: 700; white-space: nowrap; }
