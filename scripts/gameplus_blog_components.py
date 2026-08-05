@@ -196,8 +196,45 @@ ANIMATED_BORDER_STYLE = '''<style>
 .gp-content .table-wrap td { padding: 14px 24px; vertical-align: middle; color: #B2B2B2; font-weight: 400;
   font-size: 16px; line-height: 20px; }
 .gp-content .table-wrap tbody tr + tr td { border-top: 1px solid #29292B; }
-.gp-content .table-wrap tr.gp-row-feat td { background: rgba(255,201,0,0.07); }
-.gp-content .table-wrap tr.gp-row-feat td:first-child { color: #FFC900; }
+/* Sıra numarası sütunu: içeriği kadar yer kaplar, iki yanında eşit boşluk */
+.gp-content .table-wrap th.gp-col-num, .gp-content .table-wrap td.gp-col-num {
+  width: 1%; white-space: nowrap; text-align: center; padding-left: 20px; padding-right: 20px; }
+/* Sıralama tablosu (ilk sütun sıra no): oyun adları card-table'daki gibi beyaz ve yarı kalın */
+.gp-content .gp-table-rank td:not(.gp-col-num) { color: #fff; font-weight: 600; }
+/* Sıralama tablosunda hover: TÜM hücreler sarıya döner. Genel hover kuralı yalnız
+   `td:first-child`'ı hedefliyor; orada sıra numarası olduğu için oyun adları beyaz kalıyordu. */
+.gp-content .table-wrap.gp-table-rank tbody tr:hover > td,
+.gp-content .table-wrap.gp-table-rank tbody tr:hover > td .gp-tg-link,
+.gp-content .table-wrap.gp-table-rank tr.gp-row-feat > td,
+.gp-content .table-wrap.gp-table-rank tr.gp-row-feat > td .gp-tg-link { color: #FFC900; }
+/* Sıralama tablosunda başlık ve hücreler SOLA yaslı; yalnız sıra-no sütunu ortalı.
+   `tr` eklenmesi bilinçli: eski GFN 3-sütun kuralı (:nth-last-child(3) ~ :nth-child(2))
+   2. sütunu ortalıyor ve specificity'si (0,4,2); eşitlemek için gerekiyor. */
+.gp-content .table-wrap.gp-table-rank tr th:not(.gp-col-num),
+.gp-content .table-wrap.gp-table-rank tr td:not(.gp-col-num) { text-align: left; }
+.gp-content .table-wrap.gp-table-rank tr th.gp-col-num,
+.gp-content .table-wrap.gp-table-rank tr td.gp-col-num { text-align: center; }
+/* Eski GFN kuralı (:first-child:nth-last-child(3) ~ :nth-child(2)) 2. sütunu ortalıyor ve
+   specificity'si (0,5,1); sıralama tablosunda aynı deseni .gp-table-rank ile (0,6,1) yapıp aşıyoruz. */
+.gp-content .table-wrap.gp-table-rank tr > :first-child:nth-last-child(3) ~ :nth-child(2),
+.gp-content .table-wrap.gp-table-rank tr > :first-child:nth-last-child(3) ~ :nth-child(3),
+.gp-content .table-wrap.gp-table-rank tr > :first-child:nth-last-child(4) ~ :nth-child(2),
+.gp-content .table-wrap.gp-table-rank tr > :first-child:nth-last-child(4) ~ :nth-child(3),
+.gp-content .table-wrap.gp-table-rank tr > :first-child:nth-last-child(4) ~ :nth-child(4) { text-align: left; }
+
+/* --- v10.9: iki tablo tipinde de sütunlar dar, taşan metin ALTA sarar --- */
+@media (max-width: 700px) {
+  /* Sıralama tablosu: iki sıra sütunu eşit paylaşsın, uzun oyun adı alt satıra insin */
+  .gp-content .table-wrap.gp-table-rank tr > :first-child:nth-last-child(3) ~ :nth-child(2),
+  .gp-content .table-wrap.gp-table-rank tr > :first-child:nth-last-child(3) ~ :nth-child(3) {
+    white-space: normal; width: 44%; overflow-wrap: break-word; }
+  .gp-content .table-wrap.gp-table-rank tr > :first-child:nth-last-child(3) { width: 12%; }
+  /* Tür sütunu (rozetler) dar kalsın, rozetler alt alta sarsın */
+  .gp-content .table-wrap td .gp-genres { flex-wrap: wrap; }
+}
+.gp-content .table-wrap tr.gp-row-feat td { background: rgba(255,201,0,0.12); }
+.gp-content .table-wrap tr.gp-row-feat td:first-child,
+.gp-content .table-wrap tr.gp-row-feat td:first-child .gp-tg-link { color: #FFC900; }
 
 /* --- Tür rozetleri (tablo 'Tür' hücresi) --- */
 .gp-content .gp-genres { display: inline-flex; flex-wrap: wrap; gap: 6px 8px; align-items: center;
@@ -214,7 +251,8 @@ ANIMATED_BORDER_STYLE = '''<style>
   padding: 8px 18px; border-bottom: 1px solid #29292b; align-items: center;
   transition: background 0.2s ease; text-decoration: none; color: inherit; }
 .gp-content .gp-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 12px;
-  line-height: 16px; font-weight: 700; white-space: nowrap; min-width: 120px; text-align: center; }
+  line-height: 16px; font-weight: 700; white-space: nowrap; width: 100%; box-sizing: border-box;
+  text-align: center; }
 .gp-content .gp-badge-link { text-decoration: none; line-height: 0; display: inline-flex; }
 .gp-content .gp-name { font-weight: 600; color: #f3f4f6; font-size: 0.98em; letter-spacing: -0.005em;
   transition: color 0.2s; }
@@ -224,6 +262,13 @@ ANIMATED_BORDER_STYLE = '''<style>
 /* --- Oyun başlığı (tür rozeti + isim + "Stüdyo · Yıl") --- */
 .gp-content .gp-game-head { display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
   margin: 32px 0 14px; line-height: 1.4; }
+/* Oyun adına başlık seviyesi verilmediyse (div/span) CTA başlığıyla aynı ölçü kullanılır. */
+.gp-content div.gp-game-head .gp-game-name, .gp-content span.gp-game-head .gp-game-name {
+  font-size: 32px; line-height: 40px; color: #fff; }
+@media (max-width: 700px) {
+  .gp-content div.gp-game-head .gp-game-name, .gp-content span.gp-game-head .gp-game-name {
+    font-size: 19px; line-height: 25px; }
+}
 .gp-content .gp-game-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 12px;
   line-height: 16px; font-weight: 700; white-space: nowrap; }
 .gp-content .gp-game-badge-link { text-decoration: none; display: contents; }
@@ -313,8 +358,6 @@ ANIMATED_BORDER_STYLE = '''<style>
 /* Gövde madde listeleri: nokta rengi Hızlı Özet bullet'ı ile aynı (#FFC900) */
 .gp-content ul li::marker { color: #FFC900; }
 .gp-content .table-wrap tbody tr { transition: background 0.15s ease; }
-.gp-content .table-wrap tbody tr:hover > td { background: rgba(255,201,0,0.07); }
-.gp-content .table-wrap tbody tr:hover > td:first-child { color: #FFC900; }
 
 /* ===== Card-table başlığı (kupa + başlık) tam ortalı ===== */
 .gp-content .card-table-wrap > div:first-child { text-align: center; }
@@ -334,13 +377,13 @@ ANIMATED_BORDER_STYLE = '''<style>
 
   /* --- Card-table: TEK SATIR + rozet sütunu SABİT (oyun isimleri hizalı) --- */
   .gp-content .gp-card-table-inner .card-row {
-    grid-template-columns: 108px 1fr auto;
+    grid-template-columns: var(--gp-bw,96px) 1fr auto;
     grid-template-rows: auto;
     gap: 4px 9px; padding: 11px 12px; align-items: center;
   }
   .gp-content .gp-card-table-inner .card-row > .gp-badge {
     grid-row: 1; grid-column: 1;
-    width: 100%; min-width: 0; box-sizing: border-box;
+    width: 100%; box-sizing: border-box;
     font-size: 0.55em; padding: 3px 5px; letter-spacing: 0.02em; text-align: center;
   }
   .gp-content .gp-card-table-inner .card-row > .gp-name {
@@ -612,7 +655,7 @@ ANIMATED_BORDER_STYLE = '''<style>
 .gp-content p { font-size: 16px; line-height: 24px; color: #B2B2B2; }
 .gp-content h1 { font-size: 40px; line-height: 48px; color: #fff; }
 .gp-content h2 { font-size: 32px; line-height: 40px; color: #fff; }
-.gp-content h3 { font-size: 28px; line-height: 36px; color: #FFC900; }
+.gp-content h3 { font-size: 28px; line-height: 36px; color: #fff; }
 .gp-content h4 { font-size: 24px; line-height: 32px; color: #fff; }
 
 /* Kart/kutu başlıkları = H4 rolü (Hızlı Özet, İçindekiler, card-table) */
@@ -658,12 +701,17 @@ ANIMATED_BORDER_STYLE = '''<style>
 .gp-content .floating-toc ul li a { font-size: 16px; line-height: 20px; font-weight: 400; color: #B2B2B2; }
 .gp-content .gp-tg-meta, .gp-content .gp-meta, .gp-content .gp-game-meta {
   font-size: 12px; line-height: 16px; color: #B2B2B2; }
-.gp-content .gp-name { font-size: 16px; line-height: 20px; font-weight: 600; color: #FFC900; }
+.gp-content .gp-name { font-size: 16px; line-height: 20px; font-weight: 600; color: #fff; }
 
 /* Satır hover: arka plan sarı tint + oyun adı sarı (oyun adı <a> içinde olduğu için link de hedeflenir) */
-.gp-content .table-wrap tbody tr:hover > td { background: rgba(255,201,0,0.07); }
+/* Satır vurgusu (hover + seçili): arka plan ve oyun adı BİRLİKTE sarıya döner - marka tasarım görseli.
+   Tipografi bloklarından SONRA durmalı; yoksa .gp-tg-link beyaz kuralı rengi geri alır. */
+.gp-content .table-wrap tbody tr:hover > td { background: rgba(255,201,0,0.12); }
 .gp-content .table-wrap tbody tr:hover > td:first-child,
 .gp-content .table-wrap tbody tr:hover > td:first-child .gp-tg-link { color: #FFC900; }
+.gp-content .table-wrap tr.gp-row-feat > td { background: rgba(255,201,0,0.12); }
+.gp-content .table-wrap tr.gp-row-feat > td:first-child,
+.gp-content .table-wrap tr.gp-row-feat > td:first-child .gp-tg-link { color: #FFC900; }
 .gp-content .gp-tg-link { transition: color 0.15s ease; }
 
 /* --- MOBİL (360 px) --- */
@@ -673,7 +721,6 @@ ANIMATED_BORDER_STYLE = '''<style>
   .gp-content .card-table-wrap h3 { font-size: 24px; line-height: 32px; }
   .gp-content h2 { font-size: 21px; line-height: 28px; }
   .gp-content .floating-toc > summary { font-size: 20px; line-height: 26px; }
-  .gp-content h3 { color: #FFC900; }
   /* Kullanıcı onaylı mobil ölçüler (rehberden ayrışan bilinçli değerler) */
   .gp-content .gp-tldr-title { font-size: 20px; line-height: 24px; }
   .gp-content .gp-cta-title, .gp-content .cta-end .gp-cta-title { font-size: 19px; line-height: 25px; }
@@ -697,8 +744,11 @@ ANIMATED_BORDER_STYLE = '''<style>
   .gp-content .table-wrap th, .gp-content .table-wrap td { padding: 12px 14px; white-space: nowrap; }
   /* İlk sütun (Oyun) DAR ve SARABİLİR: uzun oyun adı alt satıra iner, böylece sağdaki
      Tür sütunu ekrana girer ve tablonun kaydırılabilir olduğu görülür. */
-  .gp-content .table-wrap th:first-child, .gp-content .table-wrap td:first-child {
+  .gp-content .table-wrap th:first-child:not(.gp-col-num),
+  .gp-content .table-wrap td:first-child:not(.gp-col-num) {
     white-space: normal; width: 170px; min-width: 170px; max-width: 170px; overflow-wrap: break-word; }
+  .gp-content .table-wrap th.gp-col-num, .gp-content .table-wrap td.gp-col-num {
+    padding-left: 14px; padding-right: 14px; }
   .gp-content .table-wrap .gp-genres { flex-wrap: nowrap; }
   .gp-content .gp-table-hint { display: block; }
   .gp-content .table-wrap tr > :first-child:nth-last-child(3),
@@ -907,14 +957,22 @@ def render_ubisoft_cta(headline, desc):
 # --- Tablo (Figma: #161616 kap + #1E1E18 başlık + sarı 16 bold başlık metni + #29292B ayraç;
 #     oyun adı DemiBold beyaz; hover'da satır sarı %7 + ad sarı (normalde vurgu YOK); featured=[i] kalıcı vurgu) ---
 def render_table(headers, rows, featured=None, first_col_strong=True):
-    th = "".join(f'<th>{h}</th>' for h in headers)
+    """İlk sütun KISA ise (sıra numarası, '#', yıl gibi <=4 karakter) otomatik olarak
+    `gp-col-num` sınıfını alır: içeriği kadar yer kaplar, iki yanında eşit boşluk kalır.
+    Oyun adı gibi geniş ilk sütunlar etkilenmez."""
+    def _duz(x):
+        return re.sub(r'<[^>]+>', '', str(x)).strip()
+    ilk_dar = bool(rows) and all(len(_duz(r[0])) <= 4 for r in rows if r)
+    kolon_cls = ' class="gp-col-num"' if ilk_dar else ''
+    sar_cls = "table-wrap gp-table gp-table-rank" if ilk_dar else "table-wrap gp-table"
+    th = "".join(f'<th{kolon_cls if j == 0 else ""}>{h}</th>' for j, h in enumerate(headers))
     feat = set(featured or [])
     body_rows = []
     for i, row in enumerate(rows):
         cls = ' class="gp-row-feat"' if i in feat else ''
-        tds = "".join(f'<td>{c}</td>' for c in row)
+        tds = "".join(f'<td{kolon_cls if j == 0 else ""}>{c}</td>' for j, c in enumerate(row))
         body_rows.append(f'<tr{cls}>{tds}</tr>')
-    return f'''<div class="table-wrap gp-table">
+    return f'''<div class="{sar_cls}">
   <div class="gp-table-hint">Tabloyu yana kaydır &rarr;</div>
   <div class="gp-table-scroll">
     <table>
@@ -936,6 +994,59 @@ def render_genre_tags(*genres):
         c = badge_color_for(g)
         spans.append(f'<span class="gp-genre" style="background:{hex_to_rgba(c,0.16)};color:{c};">{g}</span>')
     return '<span class="gp-genres">' + ''.join(spans) + '</span>'
+
+# --- Oyun açıklamalarını başlık + video altına taşı (sıralama zaten tabloda) ---
+def move_game_descriptions(html, game_names):
+    """Sıralamayı TABLO olarak verdiğimiz yazılarda ("Çıkış Sırası", "Oynama Sırası"),
+    gövdede "Oyun Adı: açıklama" biçiminde duran paragrafları ilgili oyunun
+    BAŞLIĞI + FRAGMANI altına taşır ve baştaki "Oyun Adı:" önekini kaldırır.
+
+    Neden: sıra tabloda verildiği için aynı bilgi iki kez okunuyor; açıklama, oyunun
+    kendi bölümünde videodan hemen sonra daha yararlı.
+
+    DİKKAT - eşleşme sırası: adlar UZUNDAN KISAYA denenir ve eşleşen paragraf
+    "sahiplenilir". Yoksa "Halo 3", "Halo 3: ODST: ..." paragrafını kapar
+    (ikisi de "Halo 3:" ile başlıyor). Başlık eşleşmesi de TAM ad üzerinden yapılır.
+    Karşılığı olmayan paragraf yerinde bırakılır (ör. bölümü olmayan bir oyun).
+
+    Döndürür: (yeni_html, tasinanlar) - tasinanlar {oyun: onek_kaldirilmis_metin}."""
+    adlar = sorted(set(game_names), key=len, reverse=True)
+    paragraflar = [(mm.start(), mm.end(), mm.group(1)) for mm in re.finditer(r'<p>(.*?)</p>', html, re.S)]
+    sahiplenen = set()
+    tasinan, kaldirilacak = {}, []
+
+    for ad in adlar:
+        for idx, (a, b, ic) in enumerate(paragraflar):
+            if idx in sahiplenen:
+                continue
+            duz = re.sub(r'<[^>]+>', '', ic).strip()
+            if not duz.startswith(ad + ':'):
+                continue
+            sahiplenen.add(idx)
+            onek = r'^\s*(<(?:strong|b)>)?\s*' + re.escape(ad) + r'\s*:\s*(</(?:strong|b)>)?\s*'
+            yeni = re.sub(onek, '', ic, count=1).strip()
+            if yeni:
+                yeni = yeni[0].upper() + yeni[1:]
+            tasinan[ad] = yeni
+            kaldirilacak.append((a, b))
+            break
+
+    for a, b in sorted(kaldirilacak, reverse=True):
+        html = html[:a] + html[b:]
+
+    for ad, metin in tasinan.items():
+        basdes = (r'<(h[1-6])\b[^>]*class="gp-game-head"[^>]*>.*?'
+                  r'<span class="gp-game-name">\s*' + re.escape(ad) + r'\s*</span>.*?</\1>')
+        bas = re.search(basdes, html, re.S)
+        if not bas:
+            continue
+        son = bas.end()
+        yt = re.match(r'\s*<div class="gp-yt-wrap".*?</div>', html[son:son + 1500], re.S)
+        if yt:
+            son += yt.end()
+        html = html[:son] + '\n<p>' + metin + '</p>' + html[son:]
+    return html, tasinan
+
 
 # --- Tablo oyun hücresi: isim (+link) + altında "Stüdyo · Yıl" (kural 11 ile tutarlı) ---
 def render_game_cell(name, meta=None, href=None):
@@ -1037,45 +1148,32 @@ def category_url_for(badge):
     return GFN_CATEGORY_URLS.get(_fold(badge))
 
 # --- Card-Table: compact rows with text-like tags ---
-def render_card_table(title, games):
-    """games: list of {name, badge, badge_color, meta, anchor (optional)}
-    Rozet sütunu TÜM satırlarda AYNI genişlikte (en uzun rozete göre) -> oyun isimleri HİZALI kalır
-    ve uzun/birleşik rozetler (AKSİYON-MACERA vb.) KIRPILMAZ. Genişlik --gp-bw ile kapsayıcıya verilir."""
-    _bl = [len(g.get('badge') or '') for g in games if g.get('badge')]
-    bw = max(120, round(10.2 * max(_bl)) + 24) if _bl else 120
+def render_card_table(title, games, headers=("Oyun", "Tür", "Stüdyo · Yıl")):
+    """"En İyi N ..." / "Çıkış Sırası" listesi. v10.9'dan beri GFN oyun tablosuyla AYNI yapı:
+    gerçek <table> + <thead> + `.table-wrap` sarmalayıcı. Böylece başlık satırı, satır hover
+    vurgusu, yana kaydırma ve tipografi tek yerden (tablo kuralları) geliyor.
+    games: [{name, badge, badge_color, meta, anchor (opsiyonel), badge_href (opsiyonel)}]
+    Oyun adı `anchor` verilirse yazı içindeki bölüme bağlanır."""
     rows = []
     for g in games:
         color = badge_color_for(g.get("badge"), g.get("badge_color"))
-        tint = hex_to_rgba(color, 0.16)
-        badge_text = _badge_text(color)
         badge_html = ''
         if g.get('badge'):
-            badge_html = (f'<span class="gp-badge" style="color:{badge_text};background:{tint};">'
-                          f'{g["badge"]}</span>')
-        meta_html = f'<div class="gp-meta">{g["meta"]}</div>' if g.get('meta') else ''
-        name_html = f'<div class="gp-name">{g["name"]}</div>'
+            badge_html = (f'<span class="gp-genre" style="background:{hex_to_rgba(color,0.16)};'
+                          f'color:{_badge_text(color)};">{g["badge"]}</span>')
+            if g.get('badge_href'):
+                badge_html = f'<a class="gp-badge-link" href="{g["badge_href"]}">{badge_html}</a>'
+            badge_html = f'<span class="gp-genres">{badge_html}</span>'
+        ad = g["name"]
         if g.get('anchor'):
-            row_tag, attrs = 'a', f' href="#{g["anchor"]}"'
-        else:
-            row_tag, attrs = 'div', ''
-        # tür rozeti GFN kategorisine iç link - yalnızca satır kendisi link DEĞİLSE (iç içe <a> geçersiz)
-        if g.get('badge_href') and row_tag != 'a' and badge_html:
-            badge_html = f'<a class="gp-badge-link" href="{g["badge_href"]}">{badge_html}</a>'
-        rows.append(f'''  <{row_tag} class="card-row"{attrs} style="--row-c:{color};">
-    {badge_html}
-    {name_html}
-    {meta_html}
-  </{row_tag}>''')
+            ad = f'<a class="gp-tg-link" href="#{g["anchor"]}">{ad}</a>'
+        rows.append([ad, badge_html, g.get('meta', '')])
+    tablo = render_table(list(headers), rows)
     return f'''<div class="card-table-wrap">
   <div class="gp-ct-head">
     <h3>{SVG_TROPHY}<span class="gp-ct-title">{title}</span></h3>
   </div>
-  <div class="card-table gp-layer gp-card-table-inner" style="--gp-frame:rgba(255,201,0,0.22);--gp-bw:{bw}px;">
-    <div class="gp-card-rows">
-{chr(10).join(rows)}
-    </div>
-  </div>
-</div>
+{tablo}</div>
 '''
 
 # --- Game heading (H2/H3/H4) with inline tag + studio metadata (matches card-table style) ---
@@ -1384,7 +1482,9 @@ def verify_output(final_html, blog_type="general", n_games=None, expect_faq=Fals
     # 9) Oyun sayısı tutarlı: inline başlık == card-row == n_games (genel listicle)
     if n_games is not None:
         n_inline = final_html.count('class="gp-game-head"')               # render_game_h3_inline imzası
-        n_rows = final_html.count('class="card-row"')
+        # v10.9: card-table artık gerçek <table>; satırlar tbody içindeki <tr>
+        _ct = re.search(r'<div class="card-table-wrap">.*?</table>', final_html, re.S)
+        n_rows = len(re.findall(r'<tr\b', _ct.group(0).split("<tbody>")[-1])) if _ct else 0
         add(n_inline == n_games, "Inline oyun başlığı",
             f"{n_inline} başlık", f"{n_inline} inline başlık (beklenen {n_games}) — düz <hN>Oyun</hN> kalmış olabilir")
         add(n_rows == n_games, "Card-table satırı", f"{n_rows} satır", f"{n_rows} card-row (beklenen {n_games})")

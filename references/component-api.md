@@ -34,6 +34,12 @@ from gameplus_blog_components import *
 - `render_cta_paketler(h, d)` / `render_cta_oyunlar(h, d)` — glow'lu #161616 CTA kartı, sparkle eyebrow, New Science başlık; buton id: **packages-button / games-button**.
 - `render_end_cta(h, d, btn2_label, btn2_url, chip2=None, eyebrow="GAME+ • BULUT OYUN")` — glow'lu kapanış kartı; butonlar: dolu sarı (id **end-packages-button**) + kontur (id **end-games-button**). GFN'de btn2=GeForce NOW Oyunları.
 - `render_compact_cta(game, tagline, btn_label, btn_url, cta_id="featured-game-button")` — Öne Çıkan Oyun: glow + **gamepad ikonlu** eyebrow + sağda dolu sarı buton.
+- `render_card_table(title, games, headers=("Oyun","Tür","Stüdyo · Yıl"))` — **v10.9'dan beri GERÇEK TABLO**
+  (`render_table` çağırır): başlık satırı, satır hover vurgusu, yana kaydırma ve tipografi GFN oyun
+  tablosuyla birebir aynı. Kupa ikonlu gradient başlık tablonun üstünde. `anchor` verilirse oyun adı
+  yazı içindeki bölüme bağlanır.
+- `move_game_descriptions(html, game_names)` — "Oyun Adı: açıklama" paragraflarını ilgili oyunun
+  başlık + fragman bloğunun altına taşır, öneki kaldırır. Sıralama tablo olarak verilen yazılarda kullan.
 - `render_prev_weeks_cards([{url, date, label, img}])` — ilgili yazı kartları; `img` = yazının og:image kapağı (koyu overlay otomatik).
 - `render_floating_toc(items, title=None)` — İçindekiler kartı: #161616 + sarı 01/02 numaralar (yalnız h2'ler numaralanır).
   **İLK madde H1'dir** (yazı başlığı, yukarı-ok işaretli); hedefi başa-dön butonuyla aynıdır: sayfa başı. `inject_heading_ids` H1'i de toplar (level 1); `items`'ı FİLTRELEME (`l in (1,2)`), yoksa başlık maddesi düşer. level-1 yoksa `title=` ile verilebilir.

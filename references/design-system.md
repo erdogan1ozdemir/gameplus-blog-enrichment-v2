@@ -191,3 +191,48 @@ Yeni bileşen eklerken ölçüyü BU bloğa yaz, yoksa eski kurallar sonradan ge
   kaydırma kabı `.table-wrap > div.gp-table-scroll` seçicisiyle hedeflenir.
 
 **İç linkler altı çizgisizdir** (`.gp-content a { text-decoration: none }`); renk yeterli.
+
+## v10.9 - Tablolar tek yapıda: card-table gerçek tabloya çevrildi (4 Ağustos 2026)
+
+**Sorun:** "En İyi N / Çıkış Sırası" listesi (card-table) CSS grid'di; GFN oyun tablosu ise gerçek
+`<table>`. İkisi ayrı ayrı stillendiği için tipografi, hover ve kaydırma davranışı tutmuyordu.
+
+**Çözüm:** `render_card_table` artık `render_table`'ı çağırıyor. Çıktı: `.table-wrap` + `<thead>`
+(**Oyun · Tür · Stüdyo · Yıl**) + `.gp-table-scroll` + "Tabloyu yana kaydır ->" ipucu. Kupa ikonlu
+gradient başlık tablonun ÜSTÜNDE kalıyor. Oyun adı `anchor` verilirse `.gp-tg-link` ile yazı
+içindeki bölüme bağlanıyor; tür rozeti `.gp-genres` / `.gp-genre` (GFN tablosuyla aynı bileşen).
+Eski grid kuralları (`.card-row`, `.gp-name`, `.gp-badge`, `--gp-bw`) geriye dönük uyumluluk için durur.
+
+**Üç tablo tipi:**
+
+| Tip | Sarmalayıcı | Ne zaman |
+|---|---|---|
+| Oyun tablosu (GFN) | `table-wrap gp-table` | ilk sütun geniş (oyun adı) |
+| Sıralama tablosu | `table-wrap gp-table gp-table-rank` | ilk sütun KISA (<=4 karakter: sıra no) - `render_table` otomatik algılar |
+| Card-table | `card-table-wrap` + içinde oyun tablosu | `render_card_table` |
+
+**Sıralama tablosu (`gp-table-rank`) farkları:**
+- Hücreler beyaz + 600 (card-table'daki oyun adı görünümü).
+- Başlık ve hücreler SOLA yaslı; yalnız `gp-col-num` sütunu ortalı.
+- Hover / seçili satırda **tüm hücreler** #FFC900 olur. Genel hover kuralı yalnız `td:first-child`'ı
+  boyar; orada sıra numarası olduğu için oyun adları beyaz kalıyordu.
+- Mobilde iki sıra sütunu %44/%44, sıra-no %12; hücreler sarar (`white-space: normal`).
+
+**Sıra numarası sütunu (`gp-col-num`):** `width:1%`, `nowrap`, ortalı, iki yanda eşit dolgu
+(masaüstü 20 px, mobil 14 px). Mobildeki 170 px'lik ilk-sütun kuralı `:not(.gp-col-num)` ile bunu atlar.
+
+**Tür rozeti genişliği:** card-table rozet sütunu EN UZUN tür adından hesaplanır
+(`round(9.6*len)+22`); sabit taban yok. "FPS" -> 51 px, "Macera" -> 80 px.
+
+**Specificity tuzağı (not):** eski GFN 3-sütun kuralı
+`tr > :first-child:nth-last-child(3) ~ :nth-child(2)` (0,5,1) ağırlığında ve 2. sütunu ortalıyor.
+`.gp-table-rank tr td` (0,4,2) ile aşılamaz; aynı desen `.gp-table-rank` önekiyle tekrarlanıp
+(0,6,1) yapılmalıdır.
+
+## Oyun açıklamaları: başlık -> fragman -> açıklama
+
+`move_game_descriptions(html, game_names)` - sıralamayı tablo olarak verdiğimiz yazılarda
+"Oyun Adı: açıklama" paragraflarını ilgili oyunun başlık + fragman bloğunun altına taşır ve
+baştaki "Oyun Adı:" önekini kaldırır. Adlar UZUNDAN KISAYA denenir ve paragraf "sahiplenilir"
+(yoksa "Halo 3", "Halo 3: ODST: ..." paragrafını kapar). Başlık eşleşmesi `.gp-game-name` içinde
+TAM ad üzerinden yapılır. Karşılığı olmayan paragraf yerinde bırakılır.
