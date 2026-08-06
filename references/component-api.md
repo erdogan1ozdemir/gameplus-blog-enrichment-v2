@@ -29,8 +29,11 @@ from gameplus_blog_components import *
   `.gp-ct-title` başlığı basar (h-tag değil, H3 renk/ölçüsünde) ve bu başlık İçindekiler'e girer.
   Karşılaştırma tablolarında ne olduğunu anlatan bir başlık KONUR.
 - `render_table` (eski açıklama) — mobilde tablo sıkıştırılmaz, yana kaydırılır; çıktı
-  başına **"Tabloyu yana kaydır →"** ipucu (`.gp-table-hint`) basılır (masaüstünde gizli). Ölçüler:
-  `design-system.md` → "v10.8".
+  başına **"Tabloyu yana kaydır →"** ipucu (`.gp-table-hint`) basılır (masaüstünde gizli).
+  **v10.12'den beri ipucu `.table-wrap`'in DIŞINDA, hemen ÜSTÜNDEKİ kardeş öğedir** (eskiden kabın
+  içindeydi, çerçeveye taşıyordu). Gizleme `display` ile değil `.gp-hint-off` sınıfıyla yapılır -
+  bunu değiştirme, tablo üstü boşluk kardeş seçiciye bağlı. Ölçüler: `design-system.md` → "v10.8" ve
+  "v10.12".
 - `render_table` (eski açıklama) — #161616 kap; thead #1E1E18 + SARI ORTALI başlıklar; hücreler 16/20 gri (oyun adı dahil normal); satırlar #29292B ayraçlı; **hover'da satır sarı %7 + ad sarı**; `featured=[i]` kalıcı vurgu.
 - `render_genre_tags('Strateji','Aile')` — tür pill seti (tablo Tür hücresi); flex-wrap, üst üste binmez.
 - `render_game_cell(name, meta=None, href=None)` — tablo Oyun hücresi: isim (+link, alt çizgisiz, **yeni sekme**: `target="_blank" rel="noopener noreferrer"`) + altında "Stüdyo · Yıl" 12px gri. Stüdyo/yıl KAYNAKLI olmalı (Steam API / resmi sayfa); bilinmiyorsa meta=None.

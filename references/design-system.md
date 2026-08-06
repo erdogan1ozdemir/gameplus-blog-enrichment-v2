@@ -162,7 +162,7 @@ Yeni bileşen eklerken ölçüyü BU bloğa yaz, yoksa eski kurallar sonradan ge
 | Özet maddesi | 16/24 #B2B2B2 | 16/24 |
 | İçindekiler kutu başlığı | 24/32 #fff | 20/26 |
 | İçindekiler madde + numara | 16/20 | 12/16 |
-| İstatistik sayısı | 28/36 #FFC900 | 17/23 |
+| İstatistik sayısı | 27/35 #FFC900 (v10.12; rehber 28/36) | 17/23 |
 | İstatistik etiketi | 16/24 #B2B2B2 | 13/17 |
 | Editör Notu / Hatırlatma | 16/22 #fff | 15/22 |
 | CTA başlığı (compact + end) | 32/40 #fff | 19/25 |
@@ -289,3 +289,45 @@ temizlenmiş hali üretilir. `render_floating_toc` da `<script>` bloğunu aynı 
 boş satıra indirir. Yeni kural yazarken yorumu rahatça ekleyebilirsin - çıktıya düşmez.
 
 Etki: stil bloğu 44.993 -> 36.115 karakter; tipik yazı ~9.000 karakter küçüldü.
+
+## v10.12 - İstatistik kartlarında ortalama + tablo ipucu tablonun dışına (6 Ağustos 2026)
+
+Marka geri bildirimi. Kurallar `ANIMATED_BORDER_STYLE`'ın **EN SONUNDAKİ "v10.12" bloğunda**;
+v10.8 dahil önceki tüm `.gp-cell` / `.gp-table-hint` ölçülerini bilinçli ezer. Yeni kural yazarken
+ölçüyü BU bloğa yaz.
+
+**1. İstatistik kartları (`.gp-cell`) yatayda ve dikeyde ortalı.** Kartlar grid öğesi olduğu için
+`stretch` ile eşit yükseklik alıyordu, içerik ise kutunun üstüne yapışıyordu. Çözüm:
+
+```css
+.gp-content .gp-cell { display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center; }
+.gp-content .gp-cell > * { width: 100%; }
+```
+
+Değer iki satıra sardığında da (ör. "Battlefield 6 S4") kart dengeli kalıyor. Masaüstü ve mobilde
+üst/alt boşluk eşit ölçüldü (masaüstü 39/39 px, mobil 15/15 px).
+
+**2. Sarı değer masaüstünde 1 punto küçültüldü: `28/36` -> `27/35`.** Mobil ölçüler (17/23, <=400 px
+dahil) değişmedi. Rehberdeki 28/36'dan bilinçli ayrışma.
+
+**3. "Tabloyu yana kaydır ->" ipucu artık `.table-wrap`'in DIŞINDA, hemen ÜSTÜNDE.** Eskiden kabın
+içindeydi ve tablo çerçevesinin içine taşıyordu. Ölçü aynı (12/16 medium #B2B2B2), sola tablo
+kabıyla hizalı. `render_table` çıktısı:
+
+```html
+<div class="gp-ct-title">...</div>          <!-- varsa -->
+<div class="gp-table-hint">Tabloyu yana kaydır &rarr;</div>
+<div class="table-wrap gp-table">
+  <div class="gp-table-scroll"><table>...</table></div>
+</div>
+```
+
+**Boşluk mantığı (dikkat):** ipucu görünürken üstteki 24 px'i O taşır, `.table-wrap`'in üst boşluğu
+sıfırlanır; ipucu gizliyken kap 24 px'ini geri alır. Bu yüzden gizleme JS'te `display` ile DEĞİL
+`.gp-hint-off` sınıfıyla yapılır - kardeş seçici (`.gp-table-hint:not(.gp-hint-off) + .table-wrap`)
+sınıfı görebilsin diye. `display:none` ile gizlenseydi kardeş seçici yine eşleşir ve masaüstünde
+tablo bir önceki paragrafa yapışırdı.
+
+`render_floating_toc`'un `ipucuGuncelle` fonksiyonu ipucunu `.table-wrap`'in
+`previousElementSibling`'i olarak arar; bulamazsa eski (kap içi) yerleşime düşer.

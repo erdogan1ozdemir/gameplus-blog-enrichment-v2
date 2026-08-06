@@ -580,6 +580,20 @@
   .gp-content .gp-cell > div:last-child { font-size: 13px; line-height: 17px; }
   .gp-content .gp-cell > div:first-child { font-size: 17px; line-height: 23px; }
 }
+
+.gp-content .gp-cell { display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center; }
+.gp-content .gp-cell > * { width: 100%; }
+
+.gp-content .gp-cell-value { font-size: 27px; line-height: 35px; }
+
+.gp-content .gp-table-hint { display: none; font-size: 12px; line-height: 16px; font-weight: 500;
+  color: #B2B2B2; padding: 0; margin: 24px 0 8px; }
+@media (max-width: 700px) {
+  .gp-content .gp-table-hint { display: block; }
+  .gp-content .gp-table-hint.gp-hint-off { display: none; }
+  .gp-content .gp-table-hint:not(.gp-hint-off) + .table-wrap { margin-top: 0; }
+}
 </style>
 
 <h1 id="geforce-now-da-yeni-durak-path-of-exile-curse-of-the-allflam">GeForce NOW'da Yeni Durak: Path of Exile: Curse of the Allflame</h1>
@@ -633,8 +647,13 @@
 
   var ipucuGuncelle = function(){
     root.querySelectorAll('.gp-table-scroll').forEach(function(k){
-      var ip = k.parentNode.querySelector('.gp-table-hint');
-      if (ip) ip.style.display = (k.scrollWidth > k.clientWidth + 1) ? '' : 'none';
+      var kap = k.parentNode;
+      var ip = kap.previousElementSibling;
+      if (!ip || !ip.classList || !ip.classList.contains('gp-table-hint')) {
+        ip = kap.querySelector('.gp-table-hint');
+      }
+
+      if (ip) ip.classList.toggle('gp-hint-off', !(k.scrollWidth > k.clientWidth + 1));
     });
   };
 
@@ -727,8 +746,8 @@
 <div class="gp-yt-wrap" style="max-width:720px;margin:1.6em auto;"><iframe src="https://www.youtube.com/embed/0MxBFXH2a_U" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" style="display:block;width:100%;aspect-ratio:16/9;height:auto;border:0;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,0.5);"></iframe></div>
 <p>Spartanlar sahaya çıkmak için beklemek zorunda değil. Halo: Campaign Evolved Premium Sürümü'nü ön sipariş veren oyuncular, oyunun 28 Temmuz Salı günkü küresel lansmanından önce erken erişim ile mücadeleye başlayabilir.</p>
 <p>Ayrıca hafta sonuna GeForce NOW kütüphanesine katılan yepyeni oyunlarla başlayabilirsin:</p>
+<div class="gp-table-hint">Tabloyu yana kaydır &rarr;</div>
 <div class="table-wrap gp-table">
-  <div class="gp-table-hint">Tabloyu yana kaydır &rarr;</div>
   <div class="gp-table-scroll">
     <table>
       <thead><tr><th>Oyun</th><th>Tür</th><th>Platform/Çıkış</th></tr></thead>

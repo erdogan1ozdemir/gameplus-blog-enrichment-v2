@@ -807,6 +807,34 @@ _STYLE_KAYNAK = '''<style>
   .gp-content .gp-cell > div:last-child { font-size: 13px; line-height: 17px; }
   .gp-content .gp-cell > div:first-child { font-size: 17px; line-height: 23px; }
 }
+
+/* ================= v10.12 - info-card ortalama + tablo ipucu tablonun DIŞINDA =================
+   Bu blok EN SONDA durur; önceki tüm .gp-cell / .gp-table-hint kurallarını bilinçli ezer.
+   Yeni kural yazarken buraya ekle, yoksa yukarıdaki eski kurallar sonradan gelip ezer. */
+
+/* 1) İstatistik kartları: içerik yatayda VE dikeyde ortalı.
+   Grid öğeleri varsayılan olarak `stretch` ile eşit yükseklik alıyor; içerik ise kutunun
+   üstüne yapışıyordu. Flex kolon + justify-content:center ile dikeyde de ortalanır.
+   Değer iki satıra sarsa bile (ör. "Battlefield 6 S4") kart dengeli kalır. */
+.gp-content .gp-cell { display: flex; flex-direction: column;
+  align-items: center; justify-content: center; text-align: center; }
+.gp-content .gp-cell > * { width: 100%; }
+
+/* 2) Sarı değer masaüstünde 1 punto küçültüldü: 28/36 -> 27/35. Mobil ölçüler değişmedi. */
+.gp-content .gp-cell-value { font-size: 27px; line-height: 35px; }
+
+/* 3) "Tabloyu yana kaydır ->" ipucu artık .table-wrap'in DIŞINDA, hemen ÜSTÜNDE duruyor.
+   Eskiden kabın içindeydi ve tablo çerçevesinin içine taşıyordu. Ölçü aynı: 12/16 medium.
+   Boşluk mantığı: ipucu görünürken üstteki 24 px'i O taşır, tablo kabının kendi üst boşluğu
+   sıfırlanır. İpucu gizliyken (masaüstü ya da sığan tablo) kap 24 px'ini geri alır - bu yüzden
+   gizleme JS'te `display` ile değil `.gp-hint-off` sınıfıyla yapılır; kardeş seçici sınıfı görür. */
+.gp-content .gp-table-hint { display: none; font-size: 12px; line-height: 16px; font-weight: 500;
+  color: #B2B2B2; padding: 0; margin: 24px 0 8px; }
+@media (max-width: 700px) {
+  .gp-content .gp-table-hint { display: block; }
+  .gp-content .gp-table-hint.gp-hint-off { display: none; }
+  .gp-content .gp-table-hint:not(.gp-hint-off) + .table-wrap { margin-top: 0; }
+}
 </style>
 '''
 
@@ -1006,8 +1034,8 @@ def render_table(headers, rows, featured=None, first_col_strong=True, title=None
         tds = "".join(f'<td{kolon_cls if j == 0 else ""}>{c}</td>' for j, c in enumerate(row))
         body_rows.append(f'<tr{cls}>{tds}</tr>')
     ust = f'<div class="gp-ct-title" id="{slugify(title)}">{title}</div>\n' if title else ''
-    return f'''{ust}<div class="{sar_cls}">
-  <div class="gp-table-hint">Tabloyu yana kaydır &rarr;</div>
+    return f'''{ust}<div class="gp-table-hint">Tabloyu yana kaydır &rarr;</div>
+<div class="{sar_cls}">
   <div class="gp-table-scroll">
     <table>
       <thead><tr>{th}</tr></thead>
@@ -1372,8 +1400,16 @@ def render_floating_toc(items, title=None):
      Medya sorgusu yetmiyor: aynı genişlikte bir tablo sığarken diğeri taşabiliyor. */
   var ipucuGuncelle = function(){{
     root.querySelectorAll('.gp-table-scroll').forEach(function(k){{
-      var ip = k.parentNode.querySelector('.gp-table-hint');
-      if (ip) ip.style.display = (k.scrollWidth > k.clientWidth + 1) ? '' : 'none';
+      /* v10.12: ipucu artık .table-wrap'in DIŞINDA, hemen ÜSTÜNDEKİ kardeş öğe.
+         Eski çıktılarda kabın içindeydi; ikisi de desteklenir. */
+      var kap = k.parentNode;
+      var ip = kap.previousElementSibling;
+      if (!ip || !ip.classList || !ip.classList.contains('gp-table-hint')) {{
+        ip = kap.querySelector('.gp-table-hint');
+      }}
+      /* display yerine sınıf: kardeş seçici (.gp-table-hint:not(.gp-hint-off) + .table-wrap)
+         boşluğu buna göre ayarlıyor. */
+      if (ip) ip.classList.toggle('gp-hint-off', !(k.scrollWidth > k.clientWidth + 1));
     }});
   }};
   /* Script ToC ile birlikte gövdenin BAŞINDA duruyor; tablolar henüz DOM'da yok.
@@ -1601,6 +1637,11 @@ def verify_output(final_html, blog_type="general", n_games=None, expect_faq=Fals
 
     add("onclick=" not in final_html, "Inline onclick yok",
         "yok", "inline onclick var - CMS on* özniteliklerini siliyor, addEventListener kullan")
+
+    # v10.12: "Tabloyu yana kaydır" ipucu tablo kabının DIŞINDA, hemen ÜSTÜNDE olmalı.
+    _ipucu_icerde = re.search(r'<div class="table-wrap[^"]*">\s*<div class="gp-table-hint"', final_html)
+    add(_ipucu_icerde is None, "Tablo ipucu kabın dışında", "dışarıda",
+        "'Tabloyu yana kaydır' ipucu .table-wrap İÇİNDE - tablo çerçevesine taşar; kabın üstüne al")
 
     dengesiz = []
     for _t in ("div", "table", "tbody", "tr", "td", "th", "p", "details", "style", "ul", "li"):
