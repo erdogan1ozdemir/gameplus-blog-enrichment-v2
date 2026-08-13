@@ -44,8 +44,9 @@ Atananlar (tasarımda yoktu): Yarış `#FB923C` · Dövüş `#E11D48` · Platfor
 Pill: zemin renk %16, metin tam renk, r6, 4x10px, kenarlıksız, sentence case; çoklu pill flex-wrap 6x8px boşluk (üst üste binmez).
 
 ## Efektler ve ikonlar
-- **Dönen sarı glow (`gp-conic`, `--gp-glow:#FFC900`):** TLDR + CTA Paketler/Oyunlar + End CTA + Öne Çıkan Oyun.
-- İkonlar: TLDR + Editör Notu → doküman (SVG_DOC); Hatırlatma → ampul (SVG_BULB); Öne Çıkan eyebrow → **gamepad**; CTA eyebrow'ları (Paketler / Oyunlar / End) → **sparkle** (`SVG_SPARKLE`, 4 uçlu sarı yıldız). **★ karakteri hiçbir yerde kullanılmaz.**
+- **Dönen glow (`gp-conic`, `--gp-glow`):** TLDR + CTA Paketler/Oyunlar + End CTA + Öne Çıkan Oyun + **Ubisoft+ CTA**.
+  Renk `--gp-glow` ile verilir: GFN bloklarında `#FFC900`, Ubisoft+ CTA'da `#0061FF`.
+- İkonlar: TLDR + Editör Notu → doküman (SVG_DOC); Hatırlatma → ampul (SVG_BULB); Öne Çıkan eyebrow → **gamepad**; CTA eyebrow'ları (Paketler / Oyunlar / End / Ubisoft+) → **sparkle** (`SVG_SPARKLE`, 4 uçlu yıldız). Sparkle `fill="currentColor"`, yani eyebrow rengini miras alır (GFN'de sarı, Ubisoft+'ta mavi). **★ karakteri hiçbir yerde kullanılmaz.**
 - **TLDR okuma süresi:** başlığın sağında, 20px boşlukla, dikeyde ortalı gri "N dk okuma" (`render_tldr(items, reading_time=...)`; süre `estimate_reading_time(body)` ile gövdeden hesaplanır, sabit yazılmaz).
 - İlgili yazı kartları: gerçek kapak görseli (`img` alanı = og:image) + koyu gradient overlay + GFN THURSDAY etiketi.
 - Linkler: **alt çizgi yok, renk değişimi yeterli.** Dış platform linki: `color:inherit` + ↗ ikon (SVG_EXT_LINK).
@@ -110,6 +111,7 @@ tür renkleri, `--gp-glow`, `--row-c`, `--gp-bw` (card-table rozet sütunu), `--
 | info-card | `.info-card` `.gp-cell` `.gp-cell-value` `.gp-cell-label` `.gp-check-row` |
 | Not kutuları | `.editor-note` `.highlight-box` `.gp-note-bar` `.gp-note-eyebrow` |
 | CTA | `.gp-cta-eyebrow` `.gp-cta-title` `.gp-cta-desc` `.gp-cta-actions` `.gp-btn` + `.gp-btn-solid` / `.gp-btn-outline` / `.gp-btn-lg` `.gp-cta-compact-main` `.gp-cta-compact-tagline` |
+| CTA renk varyantı | `.cta-ubisoft` yalnızca `--gp-accent: #0061FF` ve `--gp-btn-fg: #FFFFFF` tanımlar. Eyebrow rengi, sparkle fill'i, dolu buton zemini ve kontur buton rengi bu iki token'dan okunur; yeni bir marka rengi gerekirse aynı desenle tek satırlık bir sınıf eklenir. |
 | Tablo | `.table-wrap` `.gp-table-scroll` `.gp-row-feat` `.gp-tg-link` `.gp-tg-meta` `.gp-ext` |
 | Tür rozeti | `.gp-genres` `.gp-genre` |
 | Card-table | `.card-table-wrap` `.gp-ct-head` `.gp-ct-title` `.gp-card-rows` `.card-row` `.gp-badge` `.gp-badge-link` `.gp-name` `.gp-meta` |

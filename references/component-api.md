@@ -53,7 +53,12 @@ from gameplus_blog_components import *
   **Konum/boyut stilleri inline YAZILMAZ** — `ANIMATED_BORDER_STYLE`'daki `.floating-toc` kuralları kullanılır (CLS).
   **Inline `onclick` KULLANILMAZ** — CMS siliyor; davranışlar `<script>` içinde `addEventListener` ile bağlanır.
 - `render_game_h3_inline(anchor, name, badge, badge_color, meta, level, badge_href=None)` — oyun başlığı: pill (paletten) + isim + "Stüdyo · Yıl". badge_href None=otomatik kategori linki (birleşikte her parça), False=link yok.
-- `render_faq_accordion(pairs)` · `render_ubisoft_cta(h, d)` (buton id **ubisoft-packages-button**).
+- `render_faq_accordion(pairs)`
+- `render_ubisoft_cta(headline, desc, eyebrow="UBISOFT+ · BULUT OYUN", btn_label=…, btn_url=…)` —
+  **CTA Paketler ile yapı olarak BİREBİR AYNI**: `gp-conic` çerçeve + `gp-cta-eyebrow` / `gp-cta-title` /
+  `gp-cta-desc` / `gp-btn gp-btn-solid`. Tek fark renk: `.cta-ubisoft` sınıfı `--gp-accent` ve `--gp-btn-fg`
+  token'larını Ubisoft mavisine (#0061FF / #FFFFFF) çevirir. Buton id **ubisoft-packages-button**.
+  Ayrı bir tipografi/zemin/padding değeri YOKTUR; inline stil yazma (yalnız `--gp-glow`).
 - `wrap_gp_content(html)` — **build'in EN SON adımı; atlanamaz.** Gövdeyi `.gp-content` sarmalayıcısına alır:
   `final = wrap_gp_content(ANIMATED_BORDER_STYLE + "\n" + body)`. Tüm CSS bu sınıfa bağlı olduğu için
   sarmalayıcı yoksa hiçbir stil uygulanmaz. `verify_output` eksikse FAIL verir.

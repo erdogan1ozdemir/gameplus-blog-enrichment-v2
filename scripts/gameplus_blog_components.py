@@ -575,15 +575,17 @@ _STYLE_KAYNAK = '''<style>
 /* ================= v10.7 - Geçiş 2: CTA blokları =================
    4 CTA tipi (paketler / oyunlar / end / compact) inline stilden sınıfa taşındı.
    .gp-content öneki specificity'yi yükselttiği için !important gerekmiyor. */
-.gp-content .cta-paketler, .gp-content .cta-oyunlar, .gp-content .cta-compact { margin: 32px 0; }
+.gp-content .cta-paketler, .gp-content .cta-oyunlar, .gp-content .cta-ubisoft,
+.gp-content .cta-compact { margin: 32px 0; }
 .gp-content .cta-end { margin: 40px 0 24px; }
 .gp-content .cta-paketler .gp-conic-inner, .gp-content .cta-oyunlar .gp-conic-inner,
+.gp-content .cta-ubisoft .gp-conic-inner,
 .gp-content .cta-end .gp-conic-inner, .gp-content .cta-compact .gp-conic-inner {
   border-radius: 10.5px; padding: 20px; background: transparent; }
 
 .gp-content .gp-cta-eyebrow { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
 .gp-content .cta-end .gp-cta-eyebrow { margin-bottom: 24px; }
-.gp-content .gp-cta-eyebrow span { color: #FFC900; font-size: 11px; line-height: 16px; font-weight: 700;
+.gp-content .gp-cta-eyebrow span { color: var(--gp-accent,#FFC900); font-size: 11px; line-height: 16px; font-weight: 700;
   letter-spacing: 0.08em; display: inline-flex; align-items: center; }
 
 .gp-content .gp-cta-title { font-family: 'New Science', GreycliffCF, -apple-system, sans-serif;
@@ -598,10 +600,15 @@ _STYLE_KAYNAK = '''<style>
 .gp-content .gp-btn { display: inline-flex; align-items: center; justify-content: center;
   padding: 12px 16px; border-radius: 8px; font-weight: 700; font-size: 16px; line-height: 20px;
   text-decoration: none; white-space: normal; text-wrap: balance; box-sizing: border-box; }
-.gp-content .gp-btn-solid { background: #FFC900; color: #131313; }
-.gp-content .gp-btn-outline { background: transparent; border: 1px solid #FFC900; color: #FFC900; }
-.gp-content a.gp-btn-solid:hover { color: #131313; }
-.gp-content a.gp-btn-outline:hover { color: #FFC900; }
+.gp-content .gp-btn-solid { background: var(--gp-accent,#FFC900); color: var(--gp-btn-fg,#131313); }
+.gp-content .gp-btn-outline { background: transparent; border: 1px solid var(--gp-accent,#FFC900);
+  color: var(--gp-accent,#FFC900); }
+.gp-content a.gp-btn-solid:hover { color: var(--gp-btn-fg,#131313); }
+.gp-content a.gp-btn-outline:hover { color: var(--gp-accent,#FFC900); }
+
+/* Ubisoft+ CTA: GFN CTA ile yapi, tipografi ve zemin birebir ayni; yalniz aksan rengi degisir.
+   Tek fark iki token: --gp-accent (Ubisoft mavisi) ve --gp-btn-fg (dolu butonda beyaz metin). */
+.gp-content .cta-ubisoft { --gp-accent: #0061FF; --gp-btn-fg: #FFFFFF; }
 
 /* compact CTA (öne çıkan oyun) */
 .gp-content .cta-compact .gp-conic-inner { display: flex; align-items: center;
@@ -612,13 +619,15 @@ _STYLE_KAYNAK = '''<style>
 
 @media (max-width: 700px) {
   .gp-content .cta-paketler .gp-conic-inner, .gp-content .cta-oyunlar .gp-conic-inner,
+  .gp-content .cta-ubisoft .gp-conic-inner,
   .gp-content .cta-end .gp-conic-inner, .gp-content .cta-compact .gp-conic-inner { padding: 14px; }
   .gp-content .gp-cta-eyebrow, .gp-content .cta-end .gp-cta-eyebrow { margin-bottom: 8px; }
   .gp-content .gp-cta-title { font-size: 19px; line-height: 25px; margin-bottom: 4px; }
   .gp-content .cta-end .gp-cta-title { font-size: 20px; line-height: 26px; }
   .gp-content .gp-cta-desc, .gp-content .cta-end .gp-cta-desc { margin-bottom: 12px; }
   .gp-content .gp-btn { padding-top: 9px; padding-bottom: 9px; }
-  .gp-content .cta-paketler .gp-btn, .gp-content .cta-oyunlar .gp-btn { flex: 1 1 100%; }
+  .gp-content .cta-paketler .gp-btn, .gp-content .cta-oyunlar .gp-btn,
+  .gp-content .cta-ubisoft .gp-btn { flex: 1 1 100%; }
   /* End CTA: iki buton mobilde YAN YANA (alt alta 2 satır yerine tek sıra) */
   .gp-content .gp-cta-actions { gap: 8px; flex-wrap: nowrap; }
   .gp-content .gp-cta-actions .gp-btn { flex: 1 1 0; min-width: 0;
@@ -697,8 +706,10 @@ _STYLE_KAYNAK = '''<style>
 .gp-content .gp-pw-title { font-size: 20px; line-height: 24px; font-weight: 700; color: #fff; }
 
 /* Küçük metin (12/16): eyebrow, meta, ToC numarası, tür etiketi, tarih, ToC madde metni */
+/* NOT: eyebrow rengi burada da --gp-accent'ten okunur. Bu kural 588. satırdaki kuralla aynı
+   specificity'de ve SONRA geldiği için sabit renk yazılırsa Ubisoft+ CTA'nın mavisini ezer. */
 .gp-content .gp-cta-eyebrow span, .gp-content .gp-note-eyebrow, .gp-content .gp-pw-tag
-  { font-size: 12px; line-height: 16px; font-weight: 700; color: #FFC900; }
+  { font-size: 12px; line-height: 16px; font-weight: 700; color: var(--gp-accent,#FFC900); }
 /* İçindekiler masaüstünde daha okunur: madde metni ve numarası 16/20 */
 .gp-content .gp-toc-num { font-size: 16px; line-height: 20px; font-weight: 700; color: #FFC900; }
 .gp-content .gp-genre, .gp-content .gp-badge, .gp-content .gp-game-badge {
@@ -853,7 +864,7 @@ ANIMATED_BORDER_STYLE = _yorumsuz(_STYLE_KAYNAK)
 
 
 # --- Sparkle (4 uçlu yıldız) — CTA eyebrow'larında ★ yerine kullanılır ---
-SVG_SPARKLE = ('<svg width="14" height="14" viewBox="0 0 24 24" fill="#FFC900" style="flex-shrink:0;'
+SVG_SPARKLE = ('<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;'
                'margin-right:6px;vertical-align:-2px;"><path d="M12 1.5c.3 4.6 2.4 7.4 6.9 8.2'
                '.7.1.7 1.1 0 1.2-4.5.8-6.6 3.6-6.9 8.2 0 .8-1.1.8-1.2 0-.3-4.6-2.4-7.4-6.9-8.2'
                '-.7-.1-.7-1.1 0-1.2 4.5-.8 6.6-3.6 6.9-8.2.1-.8 1.2-.8 1.2 0z"/></svg>')
@@ -1003,15 +1014,20 @@ def render_end_cta(headline, desc, btn2_label="Güncel Fırsatlar", btn2_url="ht
 </div>
 '''
 
-# --- Ubisoft+ CTA (premium Ubisoft blue, SVG arrow) ---
-def render_ubisoft_cta(headline, desc):
-    return f'''<div class="cta-ubisoft" style="background:{_surface()};border:1px solid #29292b;border-left:3px solid #0061ff;border-radius:10px;padding:22px 24px;margin:30px 0;box-shadow:0 2px 12px rgba(0,0,0,0.4);">
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-    <span style="display:inline-block;background:#0061ff;color:#fff;padding:4px 11px;border-radius:999px;font-size:0.6em;font-weight:800;letter-spacing:0.12em;text-transform:uppercase;box-shadow:inset 0 1px 0 rgba(255,255,255,0.18);">Ubisoft+</span>
-  </div>
-  <div style="font-weight:800;font-size:1.2em;margin-bottom:8px;line-height:1.3;color:#fff;letter-spacing:-0.01em;">{headline}</div>
-  <p style="color:#B2B2B2;margin:0 0 16px 0;line-height:1.55;font-size:0.93em;">{desc}</p>
-  <a id="ubisoft-packages-button" href="https://gameplus.com.tr/ubisoft/paketler" style="display:inline-flex;align-items:center;background:#0061ff;color:#fff;padding:11px 22px;border-radius:6px;font-weight:700;text-decoration:none;letter-spacing:-0.005em;font-size:0.94em;box-shadow:0 2px 8px rgba(0,97,255,0.4);">Ubisoft+ Paketlerini İncele{SVG_ARROW}</a>
+# --- Ubisoft+ CTA ---
+# Yapi olarak CTA Paketler ile BIREBIR AYNI: gp-conic cerceve, gp-cta-eyebrow / gp-cta-title /
+# gp-cta-desc / gp-btn siniflari. Tek fark renk: .cta-ubisoft sinifi --gp-accent ve --gp-btn-fg
+# token'larini Ubisoft mavisine cevirir (CSS'te tanimli). Burada inline stil YOK; --gp-glow haric.
+def render_ubisoft_cta(headline, desc, eyebrow="UBISOFT+ &bull; BULUT OYUN",
+                       btn_label="Ubisoft+ Paketlerini İncele",
+                       btn_url="https://gameplus.com.tr/ubisoft/paketler"):
+    return f'''<div class="cta-ubisoft gp-conic" style="--gp-glow:#0061FF;">
+<div class="gp-conic-inner">
+  <div class="gp-cta-eyebrow"><span>{SVG_SPARKLE}{eyebrow}</span></div>
+  <div class="gp-cta-title">{headline}</div>
+  <p class="gp-cta-desc">{desc}</p>
+  <a class="gp-btn gp-btn-solid" id="ubisoft-packages-button" href="{btn_url}">{btn_label} &rarr;</a>
+</div>
 </div>
 '''
 
