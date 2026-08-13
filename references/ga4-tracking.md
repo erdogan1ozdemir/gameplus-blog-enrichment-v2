@@ -9,6 +9,7 @@ Blog gövdesindeki CTA butonları **sabit `id`** taşır. Id'ler her yazıda AYN
 | `packages-button` | `render_cta_paketler` | GeForce NOW Paketleri → | `/gfn/paketler` |
 | `games-button` | `render_cta_oyunlar` | GeForce NOW Oyunları → | `/gfn/oyunlar` |
 | `end-packages-button` | `render_end_cta` (dolu sarı, birincil) | GeForce NOW Paketleri → | `/gfn/paketler` |
+| `end-packages-button` | `render_ubisoft_end_cta` (Ubisoft+ yazıları) | GAME+ Paketleri → | `/paketler` (**GFN değil**, bkz. Kural 18) |
 | `end-games-button` | `render_end_cta` (çerçeveli, ikincil) | değişken | genelde `/gfn/oyunlar` |
 | `featured-game-button` | `render_compact_cta` (Öne Çıkan Oyun) | değişken | genelde `/gfn/paketler` |
 | `ubisoft-packages-button` | `render_ubisoft_cta` | Ubisoft+ Paketlerini İncele | `/ubisoft/paketler` |
@@ -16,7 +17,8 @@ Blog gövdesindeki CTA butonları **sabit `id`** taşır. Id'ler her yazıda AYN
 ## Hangi yazıda hangileri
 - **GFN Thursday:** `featured-game-button` + `end-packages-button` + `end-games-button`
 - **Rehber / listicle:** `packages-button` + `end-packages-button` + `end-games-button` (`games-button` opsiyonel)
-- **Ubisoft yazıları:** ek olarak `ubisoft-packages-button`
+- **Ubisoft yazıları:** ek olarak `ubisoft-packages-button`; kapanış CTA'sı `render_ubisoft_end_cta` ile
+  kurulur ve `end-packages-button` `/paketler`e gider (Kural 18).
 
 ## GTM kurulumu (linkler aynı domaine gittiği için GA4 otomatik ölçmez)
 1. **Değişken:** yerleşik `Click ID` aktif (Variables → Configure → Click ID).

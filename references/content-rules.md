@@ -134,3 +134,19 @@ pazarlama kampanyası olarak okunuyor. Kullanım:
 | kampanya modu | hikaye modu |
 
 Aynı kural GFN Thursday yerelleştirmesinde de geçerlidir (İngilizce "campaign" -> "hikaye modu").
+
+## Kural 18: Ubisoft+ yazılarında CTA yönlendirmesi GAME+ paketlerine
+
+Ubisoft+'a özgü yazılarda (Ubisoft+ aylık derlemesi, Ubisoft+ oyun/DLC yazıları):
+
+- **Kapanış CTA'sı GFN paketlerine DEĞİL, GAME+ paketlerine gider:** `https://gameplus.com.tr/paketler`.
+  `render_end_cta` yerine **`render_ubisoft_end_cta`** kullanılır; birincil buton "GAME+ Paketleri".
+- **İletişimde Ubisoft+ ile GeForce NOW'ı bir arada sunan GAME+ paketi önerilir.** Kapanış metni tek
+  başına GeForce NOW'a değil, ikisini birleştiren pakete yönlendirir.
+- **Yazı içi Ubisoft+ CTA'sının eyebrow'u "GAME+ · UBISOFT+"** (`render_ubisoft_cta` varsayılanı).
+  Bu blok Ubisoft+ kütüphanesine (`/ubisoft/paketler`) yönlendirmeye devam eder; değişen yalnız kapanış.
+- Ubisoft+ CTA bloğu GFN CTA'sıyla **yapı olarak birebir aynıdır**; yalnız aksan rengi mavi (bkz. design-system).
+
+**Otomatik safeguard:** `verify_output`, gövdede `cta-ubisoft` varken kapanış CTA'sı `/gfn/paketler`e
+gidiyorsa **FAIL** verir ("Kural 18: Ubisoft yazısı kapanış CTA'sı").
+

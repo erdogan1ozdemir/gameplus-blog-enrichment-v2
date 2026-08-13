@@ -1000,25 +1000,37 @@ def render_cta_oyunlar(headline, desc):
 
 # --- End CTA (Figma "CTA - Bulutta Oyun Keyfi": #161616 kart, ★ eyebrow, New Science 32 başlık,
 #     dolu sarı + kontur sarı buton; GA4 id=end-packages-button / end-games-button) ---
-def render_end_cta(headline, desc, btn2_label="Güncel Fırsatlar", btn2_url="https://gameplus.com.tr/firsatlar", chip2=None, eyebrow="GAME+ &bull; BULUT OYUN"):
+def render_end_cta(headline, desc, btn2_label="Güncel Fırsatlar", btn2_url="https://gameplus.com.tr/firsatlar",
+                   chip2=None, eyebrow="GAME+ &bull; BULUT OYUN",
+                   btn1_label="GeForce NOW Paketleri", btn1_url="https://gameplus.com.tr/gfn/paketler"):
     return f'''<div class="cta-end gp-conic" style="--gp-glow:#FFC900;">
 <div class="gp-conic-inner">
   <div class="gp-cta-eyebrow"><span>{SVG_SPARKLE}{eyebrow}</span></div>
   <div class="gp-cta-title">{headline}</div>
   <p class="gp-cta-desc">{desc}</p>
   <div class="gp-cta-actions">
-    <a class="gp-btn gp-btn-solid" id="end-packages-button" href="https://gameplus.com.tr/gfn/paketler">GeForce NOW Paketleri &rarr;</a>
+    <a class="gp-btn gp-btn-solid" id="end-packages-button" href="{btn1_url}">{btn1_label} &rarr;</a>
     <a class="gp-btn gp-btn-outline" id="end-games-button" href="{btn2_url}">{btn2_label}</a>
   </div>
 </div>
 </div>
 '''
 
+# --- Ubisoft+ yazilarinin KAPANIS CTA'si ---
+# Kural 18: Ubisoft+'a ozgu yazilarda kapanis CTA'si GFN paketlerine DEGIL, GAME+ paketlerine gider
+# (https://gameplus.com.tr/paketler) ve iletisimde Ubisoft+ ile GeForce NOW'i bir arada sunan
+# GAME+ paketi onerilir. Govde/tipografi render_end_cta ile birebir ayni.
+def render_ubisoft_end_cta(headline, desc, btn2_label="Ubisoft+ Oyunları",
+                           btn2_url="https://gameplus.com.tr/ubisoft/oyunlar"):
+    return render_end_cta(headline, desc, btn2_label=btn2_label, btn2_url=btn2_url,
+                          eyebrow="GAME+ &bull; UBISOFT+",
+                          btn1_label="GAME+ Paketleri", btn1_url="https://gameplus.com.tr/paketler")
+
 # --- Ubisoft+ CTA ---
 # Yapi olarak CTA Paketler ile BIREBIR AYNI: gp-conic cerceve, gp-cta-eyebrow / gp-cta-title /
 # gp-cta-desc / gp-btn siniflari. Tek fark renk: .cta-ubisoft sinifi --gp-accent ve --gp-btn-fg
 # token'larini Ubisoft mavisine cevirir (CSS'te tanimli). Burada inline stil YOK; --gp-glow haric.
-def render_ubisoft_cta(headline, desc, eyebrow="UBISOFT+ &bull; BULUT OYUN",
+def render_ubisoft_cta(headline, desc, eyebrow="GAME+ &bull; UBISOFT+",
                        btn_label="Ubisoft+ Paketlerini İncele",
                        btn_url="https://gameplus.com.tr/ubisoft/paketler"):
     return f'''<div class="cta-ubisoft gp-conic" style="--gp-glow:#0061FF;">
@@ -1675,6 +1687,16 @@ def verify_output(final_html, blog_type="general", n_games=None, expect_faq=Fals
         f"'kampanya' {_kamp} kez geçiyor - oyunun hikaye moduna 'kampanya' denmez; "
         f"'hikaye modu (campaign)' kullan (oyun adının parçasıysa aynen kalır)", warn=True)
 
+
+    # 10b) Kural 18 — Ubisoft+ yazısında kapanış CTA'sı GAME+ paketlerine gitmeli
+    if 'cta-ubisoft' in final_html:
+        _ecta = re.search(r'id="end-packages-button"[^>]*href="([^"]+)"', final_html) or \
+                re.search(r'href="([^"]+)"[^>]*id="end-packages-button"', final_html)
+        _href = _ecta.group(1) if _ecta else ""
+        add('/gfn/paketler' not in _href, "Kural 18: Ubisoft yazısı kapanış CTA'sı",
+            f"GAME+ paketlerine gidiyor ({_href or 'kapanış CTA yok'})",
+            "Ubisoft+ yazısında kapanış CTA'sı /gfn/paketler'e gidiyor — "
+            "render_ubisoft_end_cta kullan (https://gameplus.com.tr/paketler)")
 
     # 11) PlayStation (GFN platform/lisans/CTA bağlamında YASAK — WARN, haber yazıları hariç)
     if re.search(r'playstation', final_html, re.I):
