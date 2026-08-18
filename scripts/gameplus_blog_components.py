@@ -980,60 +980,61 @@ def render_highlight(text, title="Hatırlatma"):
 # Anchor'lar Google Ads arama hacmiyle secildi (TR, location 2792, Agustos 2026 anlik degeri).
 # Hacim bilgi amaclidir; anchor her zaman cumleye DOGAL oturmalidir, zorlama link kurulmaz.
 CATEGORY_ANCHORS = {
-    # url: (birincil anchor, aylik arama hacmi, dogal varyantlar)
-    "https://gameplus.com.tr/gfn/oyunlar/oynamasi-ucretsiz": ("ücretsiz oyunlar", 823000,
-        ("ücretsiz oyunu", "ücretsiz oyunlara", "ücretsiz oyunların", "oynaması ücretsiz oyunlar")),
-    "https://gameplus.com.tr/gfn/oyunlar/populer-oyunlar":   ("popüler oyunlar", 18100,
-        ("popüler oyunu", "popüler oyunlara", "popüler yapımlar")),
-    "https://gameplus.com.tr/gfn/oyunlar/bulmaca":           ("bulmaca oyunları", 14800,
-        ("bulmaca oyunu", "bulmaca oyunlarına", "puzzle oyunları")),
-    "https://gameplus.com.tr/gfn/oyunlar/dovus-oyunu":       ("dövüş oyunları", 14800,
-        ("dövüş oyunu", "dövüş oyunlarına")),
-    "https://gameplus.com.tr/gfn/oyunlar/yaris":             ("yarış oyunları", 9900,
-        ("yarış oyunu", "yarış oyunlarına", "yarış oyunlarını")),
-    "https://gameplus.com.tr/gfn/oyunlar/macera":            ("macera oyunları", 5400,
-        ("macera oyunu", "macera oyunlarına", "aksiyon-macera oyunları")),
-    "https://gameplus.com.tr/gfn/oyunlar/strateji":          ("strateji oyunları", 5400,
-        ("strateji oyunu", "strateji oyunlarına")),
-    "https://gameplus.com.tr/gfn/oyunlar/xbox":              ("Xbox oyunları", 4400,
-        ("Xbox kütüphanesi", "Xbox oyunu")),
-    "https://gameplus.com.tr/gfn/oyunlar/fps":               ("FPS oyunları", 3600,
-        ("FPS oyunu", "FPS oyunlarına", "FPS türü", "nişancı oyunlar")),
-    "https://gameplus.com.tr/gfn/oyunlar/steam":             ("Steam oyunları", 3600,
-        ("Steam kütüphanesi", "Steam kütüphanen")),
-    "https://gameplus.com.tr/gfn/oyunlar/simulasyon":        ("simülasyon oyunları", 2900,
-        ("simülasyon oyunu", "simülasyon türü")),
-    "https://gameplus.com.tr/gfn/oyunlar/spor":              ("spor oyunları", 2400,
-        ("spor oyunu", "spor oyunlarına")),
-    "https://gameplus.com.tr/gfn/oyunlar/aksiyon":           ("aksiyon oyunları", 1900,
-        ("aksiyon oyunu", "aksiyon oyunlarına", "aksiyon türü")),
-    "https://gameplus.com.tr/gfn/oyunlar/aile-dostu":        ("aile oyunları", 1000,
-        ("aile dostu oyunlar", "aile dostu yapımlar")),
-    "https://gameplus.com.tr/gfn/oyunlar/basit-eglence":     ("basit oyunlar", 1000,
-        ("basit eğlence", "hafif oyunlar")),
-    "https://gameplus.com.tr/gfn/oyunlar/mmo":               ("MMO oyunlar", 880,
-        ("MMO oyunları", "MMORPG oyunlar", "çok oyunculu online")),
-    "https://gameplus.com.tr/gfn/oyunlar/ea-app":            ("EA oyunları", 880,
-        ("EA App kütüphanesi", "EA App")),
-    "https://gameplus.com.tr/gfn/oyunlar/ubisoft-connect":   ("Ubisoft oyunları", 880,
-        ("Ubisoft Connect kütüphanesi", "Ubisoft Connect")),
-    "https://gameplus.com.tr/gfn/oyunlar/demo":              ("demo oyunlar", 720,
-        ("demo sürümleri", "demo oyunları")),
-    "https://gameplus.com.tr/gfn/oyunlar/epic-games":        ("Epic Games oyunları", 720,
-        ("Epic Games kütüphanesi", "Epic Games Store kütüphanesi")),
-    "https://gameplus.com.tr/gfn/oyunlar/arcade":            ("arcade oyunları", 590,
-        ("arcade oyunu", "arcade türü")),
-    "https://gameplus.com.tr/gfn/oyunlar/canlandirma":       ("anime oyunları", 590,
-        ("anime oyunu", "anime tarzı oyunlar")),
-    "https://gameplus.com.tr/gfn/oyunlar/platform":          ("platform oyunları", 590,
-        ("platform oyunu", "platform türü")),
-    "https://gameplus.com.tr/gfn/oyunlar/bagimsiz":          ("indie oyunlar", 320,
-        ("bağımsız oyunlar", "bağımsız yapımlar", "indie yapımlar")),
-    "https://gameplus.com.tr/gfn/oyunlar/moba":              ("MOBA oyunlar", 210,
-        ("MOBA oyunları", "MOBA türü")),
-    "https://gameplus.com.tr/gfn/oyunlar/gog":               ("GOG oyunları", 110,
-        ("GOG kütüphanesi",)),
-    "https://gameplus.com.tr/gfn/oyunlar/diger":             ("diğer oyunlar", None, ()),
+    # url: (birincil anchor, aylik arama hacmi, dogal varyantlar - tekil ve cekimli hallerle)
+    "https://gameplus.com.tr/gfn/oyunlar/oynamasi-ucretsiz":
+        ("ücretsiz oyunlar", 823000, ("ücretsiz oyunu", "ücretsiz oyunları", "ücretsiz oyunlara", "ücretsiz oyunların", "ücretsiz oyunlarda", "oynaması ücretsiz oyunlar", "ücretsiz yapımlar",)),
+    "https://gameplus.com.tr/gfn/oyunlar/populer-oyunlar":
+        ("popüler oyunlar", 18100, ("popüler oyunu", "popüler oyunları", "popüler oyunlara", "popüler yapımlar",)),
+    "https://gameplus.com.tr/gfn/oyunlar/bulmaca":
+        ("bulmaca oyunları", 14800, ("bulmaca oyunu", "bulmaca oyunlarına", "bulmaca oyunlarını", "bulmaca türü", "puzzle oyunları",)),
+    "https://gameplus.com.tr/gfn/oyunlar/dovus-oyunu":
+        ("dövüş oyunları", 14800, ("dövüş oyunu", "dövüş oyunlarına", "dövüş oyunlarını", "dövüş türü",)),
+    "https://gameplus.com.tr/gfn/oyunlar/yaris":
+        ("yarış oyunları", 9900, ("yarış oyunu", "yarış oyunlarına", "yarış oyunlarını", "yarış oyunlarında", "yarış türü",)),
+    "https://gameplus.com.tr/gfn/oyunlar/macera":
+        ("macera oyunları", 5400, ("macera oyunu", "macera oyunlarına", "macera oyunlarını", "macera oyunlarında", "macera türü", "aksiyon-macera oyunları",)),
+    "https://gameplus.com.tr/gfn/oyunlar/strateji":
+        ("strateji oyunları", 5400, ("strateji oyunu", "strateji oyunlarına", "strateji oyunlarını", "strateji oyunlarında", "strateji türü",)),
+    "https://gameplus.com.tr/gfn/oyunlar/xbox":
+        ("Xbox oyunları", 4400, ("Xbox oyunu", "Xbox kütüphanesi",)),
+    "https://gameplus.com.tr/gfn/oyunlar/fps":
+        ("FPS oyunları", 3600, ("FPS oyunu", "FPS oyunlarına", "FPS oyunlarını", "FPS oyunlarında", "FPS türü", "nişancı oyunlar",)),
+    "https://gameplus.com.tr/gfn/oyunlar/steam":
+        ("Steam oyunları", 3600, ("Steam oyunu", "Steam kütüphanesi", "Steam kütüphanen",)),
+    "https://gameplus.com.tr/gfn/oyunlar/simulasyon":
+        ("simülasyon oyunları", 2900, ("simülasyon oyunu", "simülasyon oyunlarına", "simülasyon oyunlarını", "simülasyon türü",)),
+    "https://gameplus.com.tr/gfn/oyunlar/spor":
+        ("spor oyunları", 2400, ("spor oyunu", "spor oyunlarına", "spor oyunlarını", "spor türü",)),
+    "https://gameplus.com.tr/gfn/oyunlar/aksiyon":
+        ("aksiyon oyunları", 1900, ("aksiyon oyunu", "aksiyon oyunlarına", "aksiyon oyunlarını", "aksiyon oyunlarında", "aksiyon türü",)),
+    "https://gameplus.com.tr/gfn/oyunlar/aile-dostu":
+        ("aile oyunları", 1000, ("aile oyunu", "aile dostu oyunlar", "aile dostu oyunları", "aile dostu yapımlar",)),
+    "https://gameplus.com.tr/gfn/oyunlar/basit-eglence":
+        ("basit oyunlar", 1000, ("basit oyunları", "basit eğlence", "hafif oyunlar",)),
+    "https://gameplus.com.tr/gfn/oyunlar/mmo":
+        ("MMO oyunlar", 880, ("MMO oyunu", "MMO oyunları", "MMORPG oyunlar", "MMORPG oyunları", "çok oyunculu online",)),
+    "https://gameplus.com.tr/gfn/oyunlar/ea-app":
+        ("EA oyunları", 880, ("EA App kütüphanesi", "EA App",)),
+    "https://gameplus.com.tr/gfn/oyunlar/ubisoft-connect":
+        ("Ubisoft oyunları", 880, ("Ubisoft Connect kütüphanesi", "Ubisoft Connect",)),
+    "https://gameplus.com.tr/gfn/oyunlar/demo":
+        ("demo oyunlar", 720, ("demo oyunu", "demo oyunları", "demo sürümleri",)),
+    "https://gameplus.com.tr/gfn/oyunlar/epic-games":
+        ("Epic Games oyunları", 720, ("Epic Games kütüphanesi", "Epic Games Store kütüphanesi",)),
+    "https://gameplus.com.tr/gfn/oyunlar/arcade":
+        ("arcade oyunları", 590, ("arcade oyunu", "arcade oyunlarına", "arcade türü", "retro oyunlar",)),
+    "https://gameplus.com.tr/gfn/oyunlar/canlandirma":
+        ("anime oyunları", 590, ("anime oyunu", "anime oyunlarına", "anime tarzı oyunlar", "canlandırma oyunları",)),
+    "https://gameplus.com.tr/gfn/oyunlar/platform":
+        ("platform oyunları", 590, ("platform oyunu", "platform oyunlarına", "platform türü",)),
+    "https://gameplus.com.tr/gfn/oyunlar/bagimsiz":
+        ("indie oyunlar", 320, ("indie oyunu", "bağımsız oyunlar", "bağımsız oyunları", "bağımsız yapımlar", "indie yapımlar",)),
+    "https://gameplus.com.tr/gfn/oyunlar/moba":
+        ("MOBA oyunlar", 210, ("MOBA oyunu", "MOBA oyunları", "MOBA türü",)),
+    "https://gameplus.com.tr/gfn/oyunlar/gog":
+        ("GOG oyunları", 110, ("GOG kütüphanesi",)),
+    "https://gameplus.com.tr/gfn/oyunlar/diger":
+        ("diğer oyunlar", None, ("diğer oyunları",)),
 }
 
 
@@ -1604,6 +1605,35 @@ def wrap_gp_content(html):
     return '<div class="gp-content">\n' + html + '\n</div>\n'
 
 # --- FAQ Accordion (premium dark, Game+ '+' indicator that rotates) ---
+def _faq_duz_metin(html):
+    t = re.sub(r"<[^>]+>", " ", html)
+    t = (t.replace("&nbsp;", " ").replace("&amp;", "&").replace("&rarr;", "->")
+          .replace("&lt;", "<").replace("&gt;", ">").replace("&bull;", "-")
+          .replace("&quot;", '"').replace("&#39;", "'"))
+    t = re.sub(r"\s+", " ", t).strip()
+    return re.sub(r"\s+([,.;:!?%\)])", r"\1", t)
+
+
+def render_faq_schema(pairs):
+    """FAQPage JSON-LD. Sorular ve cevaplar GORUNEN FAQ metniyle BIREBIR ayni olmali; bu yuzden
+    `render_faq_accordion`a verdigin `pairs` listesinin AYNISI gecilir. Cikti gövdenin SONUNA konur.
+
+    Not: Google FAQ zengin sonucunu artik yalnizca resmi kurum ve saglik sitelerinde gosteriyor;
+    isaretlemenin bugunku degeri AI Overviews / GEO tarafinda."""
+    import json
+    veri = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {"@type": "Question", "name": _faq_duz_metin(q),
+             "acceptedAnswer": {"@type": "Answer", "text": _faq_duz_metin(a)}}
+            for q, a in pairs
+        ],
+    }
+    govde = json.dumps(veri, ensure_ascii=False, indent=2).replace("</", "<\\/")
+    return f'<script type="application/ld+json">\n{govde}\n</script>\n'
+
+
 def render_faq_accordion(pairs):
     items = []
     for q, a in pairs:
@@ -1818,6 +1848,11 @@ def verify_output(final_html, blog_type="general", n_games=None, expect_faq=Fals
     add(not _blok_cakisma, "CTA bloğu içi çakışma yok", "yok",
         f"kapanış CTA'sının iki butonu aynı adrese gidiyor: {sorted(set(_end.values()))}")
 
+    # v10.15: FAQ akordiyonu varsa FAQPage JSON-LD de bulunmalı.
+    if 'class="faq-block"' in final_html:
+        add("FAQPage" in final_html and "application/ld+json" in final_html, "FAQ Schema", "var",
+            "FAQ akordiyonu var ama FAQPage JSON-LD yok - render_faq_schema(pairs) ekle")
+
     # v10.14 / Kural 20: gövde paragraflarında 1-2 GFN kategori linki.
     # Rozet linkleri (oyun başlığındaki tür etiketi) SAYILMAZ - onlar zaten ayrı kural.
     _govde_p = re.findall(r"<p\b(?![^>]*(?:gp-cta-desc|gp-tldr|editor-note|highlight-box))[^>]*>(.*?)</p>",
@@ -1889,7 +1924,10 @@ def verify_source_preserved(original_html, final_html, min_ratio=0.97):
         h = re.sub(r'<[^>]+>', ' ', h)
         h = (h.replace('&amp;', '&').replace('&nbsp;', ' ')
                .replace('&#39;', "'").replace('&quot;', '"').replace('&lt;', '<').replace('&gt;', '>'))
-        return re.sub(r'\s+', ' ', h).strip()
+        h = re.sub(r'\s+', ' ', h).strip()
+        # Etiketler bosluga cevrildigi icin gövdeye inline <a> eklenince "oyunları</a>:" ->
+        # "oyunları :" oluyordu ve metin kaybi sanilip yanlis alarm veriyordu.
+        return re.sub(r'\s+([,.;:!?%\)])', r'\1', h)
     def chunks(h):
         out = []
         for m in re.findall(r'<(?:p|h[1-6]|li)\b[^>]*>(.*?)</(?:p|h[1-6]|li)>', h, flags=re.S | re.I):
