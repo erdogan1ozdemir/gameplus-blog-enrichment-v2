@@ -105,4 +105,5 @@ build'in ZORUNLU son adımıdır. `print_report()` False dönerse çıktı TESL�
 |---|---|---|
 | Fırsatlar linki yok | FAIL | Gövdede `gameplus.com.tr/firsatlar` var. CTA hedefleri: `/gfn/paketler`, `/gfn/oyunlar`, Ubisoft'ta `/paketler` (Kural 19). |
 | CTA bloğu içi çakışma yok | FAIL | Kapanış CTA'sının iki butonu aynı adrese gidiyor. `btn2_url` != `btn1_url` olmalı. |
-| CTA hedefi sayfada tekrarlamıyor | UYARI | Aynı hedef birden çok CTA id'sinde. **Mevcut iskelette beklenen bir durumdur**, build'i durdurmaz: GFN Thursday'de `featured-game-button` + `end-packages-button` -> `/gfn/paketler`; listicle'da `packages-button` + `end-packages-button` ve `games-button` + `end-games-button`. Tekrar istenmiyorsa ara CTA'nın hedefini değiştir. |
+| Kategori linki 1-2 arası | FAIL | Gövdede 3'ten fazla GFN kategori linki var (Kural 20). |
+| Gövde içi kategori linki | UYARI | Gövdede hiç kategori linki yok. Doğal yer varsa `auto_link_categories` ile 1-2 tane eklenir; yer yoksa uyarı bırakılır. |

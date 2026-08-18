@@ -361,3 +361,20 @@ stil bloğunu daima dışarıda bırak.
 | Fırsatlar linki yok | FAIL | gövdede `gameplus.com.tr/firsatlar` |
 | CTA bloğu içi çakışma yok | FAIL | kapanış CTA'sının iki butonu aynı adrese gidiyor |
 | CTA hedefi sayfada tekrarlamıyor | UYARI | aynı hedef birden çok CTA id'sinde (hangi id'ler olduğunu yazar) |
+
+## v10.14 - Gövde içi kategori linkleri (18 Ağustos 2026)
+
+**1. Sayfa geneli CTA tekrar uyarısı KALDIRILDI.** Marka kararı: farklı CTA bloklarının aynı hedefe
+gitmesi sorun değil. Tek kural, **aynı bloğun iki butonunun aynı adrese gitmemesi** (FAIL olarak
+duruyor).
+
+**2. `CATEGORY_ANCHORS` + `auto_link_categories` / `link_categories`.** Gövde paragraflarında doğal
+geçen kategori ifadelerini GFN kategori sayfalarına bağlar (Kural 20). Anchor'lar Google Ads TR
+arama hacmiyle sıralı; her kategori için çekim varyantları tanımlı ("FPS oyunu", "yarış oyunlarına").
+
+**Linklenmeyen yerler:** başlık, tablo, liste, CTA metni, Hızlı Özet, Editör Notu, Hatırlatma ve
+lisans/mağaza sayımı içeren cümleler. **Mağaza kategorileri** (Steam, Xbox, Epic Games, EA App,
+Ubisoft Connect, GOG, Diğer) otomatik seçimden hariç - bu adlar gövdede mağaza bağlamında geçtiği
+için otomatik link yanlış yere düşüyordu.
+
+**Safeguard:** "Kategori linki 1-2 arası" (3'ü aşarsa FAIL) + "Gövde içi kategori linki" (0 ise UYARI).

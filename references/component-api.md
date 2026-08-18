@@ -54,6 +54,11 @@ from gameplus_blog_components import *
   **Inline `onclick` KULLANILMAZ** — CMS siliyor; davranışlar `<script>` içinde `addEventListener` ile bağlanır.
 - `render_game_h3_inline(anchor, name, badge, badge_color, meta, level, badge_href=None)` — oyun başlığı: pill (paletten) + isim + "Stüdyo · Yıl". badge_href None=otomatik kategori linki (birleşikte her parça), False=link yok.
 - `render_faq_accordion(pairs)`
+- `auto_link_categories(html, max_links=2, haric=())` -> `(html, kurulanlar)` — gövdede DOĞAL geçen
+  kategori ifadelerini GFN kategori sayfalarına bağlar (Kural 20). Hacmi yüksek anchor önce denenir.
+  Zorlama yok; doğal yer yoksa link kurulmaz. Mağaza kategorileri otomatikten hariç (`OTOMATIK_HARIC`).
+- `link_categories(html, [(ifade, url), ...], max_links=2)` — belirli ifadeleri elle bağlar.
+- `CATEGORY_ANCHORS` — url -> (birincil anchor, aylık arama hacmi, varyantlar).
 - `render_end_cta(..., btn1_label="GeForce NOW Paketleri", btn1_url="https://gameplus.com.tr/gfn/paketler")` —
   birincil buton artık parametreli; varsayılanlar GFN, GFN yazılarında hiçbir şey değişmez.
 - `render_ubisoft_end_cta(headline, desc, btn2_label=…, btn2_url=…)` — **Ubisoft+ yazılarının kapanış CTA'sı.**

@@ -166,18 +166,41 @@ gitmez. Kullanılacak hedefler:
 `render_end_cta`'nın ikinci buton varsayılanı bu yüzden **GeForce NOW Oyunları ->
 `/gfn/oyunlar`** olarak değişti (eskiden "Güncel Fırsatlar" -> `/firsatlar`).
 
-**CTA hedef çakışması.** İki ayrı durum var, ikisi de otomatik denetleniyor:
+**CTA hedef çakışması.** Kural tek: **aynı CTA bloğunun iki butonu aynı adrese gidemez.**
+`render_end_cta` çağrılırken `btn2_url`, `btn1_url` ile aynı verilmemelidir. **Farklı CTA bloklarının
+aynı hedefe gitmesi sorun değildir** (marka kararı); ör. GFN Thursday'de öne çıkan oyun CTA'sı ile
+kapanış CTA'sının ikisi de `/gfn/paketler`e gidebilir.
 
-- **Blok içi çakışma (FAIL):** kapanış CTA'sının iki butonu aynı adrese gidemez. `render_end_cta`
-  çağrılırken `btn2_url`, `btn1_url` ile aynı verilmemelidir.
-- **Sayfa içi tekrar (UYARI):** aynı hedefin birden çok CTA'da geçmesi yapısal olarak normaldir ve
-  build'i durdurmaz, ama bilinçli bir tercih olmalıdır. Mevcut iskelette iki tipik tekrar var:
-  - **GFN Thursday:** `featured-game-button` ve `end-packages-button` ikisi de `/gfn/paketler`.
-  - **Rehber / listicle:** `packages-button` + `end-packages-button` -> `/gfn/paketler` ve
-    `games-button` + `end-games-button` -> `/gfn/oyunlar`, yani iki hedef de ikişer kez.
+**Otomatik safeguard:** `verify_output` -> "Fırsatlar linki yok" (FAIL), "CTA bloğu içi çakışma yok" (FAIL).
 
-  Tekrar istenmiyorsa ara CTA'nın hedefini değiştir (ör. GFN Thursday'de öne çıkan oyun CTA'sını
-  `/gfn/oyunlar`a al) ya da ara CTA'yı kaldır. Uyarı listesi hangi id'lerin çakıştığını yazar.
+## Kural 20: Gövde içinde 1-2 GFN kategori linki
 
-**Otomatik safeguard:** `verify_output` -> "Fırsatlar linki yok" (FAIL), "CTA bloğu içi çakışma yok"
-(FAIL), "CTA hedefi sayfada tekrarlamıyor" (UYARI).
+CTA'lara ve mevcut iç linklere **ek olarak**, yazı gövdesinde uygun yer varsa **1-2 GFN kategori
+sayfası** linki verilir. Amaç kategori sayfalarına bağlam içinden iç link akıtmak.
+
+**Kurallar:**
+- **Zorlama YOK.** İfade yazıda zaten doğal olarak geçiyorsa linklenir; link kurmak için cümle
+  yazılmaz, kelime eklenmez. Doğal yer yoksa link verilmez (`verify_output` yalnız UYARI verir).
+- **En fazla 2-3 link.** Fazlası iç link stuffing'e döner; 3'ü aşarsa FAIL.
+- **Anchor, hedefi tarif etmeli.** "FPS oyunu" -> `/fps`, "macera oyunları" -> `/macera`.
+- **Nerede linklenmez:** başlıklar, tablolar, listeler, CTA metinleri, Hızlı Özet, Editör Notu,
+  Hatırlatma ve **lisans/mağaza sayımı içeren cümleler** ("... Steam, Epic Games Store, Xbox, EA App
+  veya Battle.net üzerinde lisansa sahip olman gerekir" gibi). Oradaki mağaza adları kategori
+  önerisi değil, mağaza listesidir.
+- **Mağaza/platform kategorileri otomatik linklenmez** (Steam, Xbox, Epic Games, EA App, Ubisoft
+  Connect, GOG, Diğer). Bu adlar gövdede sürekli mağaza bağlamında geçtiği için otomatik seçim
+  yanlış yere düşüyor; gerçekten uygunsa `link_categories` ile ELLE verilir.
+- Tür rozetlerinin kategori linkleri (Kural 12) bu sayıma dahil değildir, ayrı kuraldır.
+
+**Kullanım:**
+```python
+body, kat_linkler = auto_link_categories(body, max_links=2)   # doğal geçişleri bulur
+# ya da elle:
+body, kat_linkler = link_categories(body, [("yarış oyunları", ".../gfn/oyunlar/yaris")])
+```
+
+**Anchor seçimi:** `CATEGORY_ANCHORS` her kategori için birincil anchor'ı, Google Ads aylık arama
+hacmini (TR, Ağustos 2026) ve doğal çekim varyantlarını tutar. `auto_link_categories` hacmi yüksek
+olanı önce dener. En yüksek hacimliler: ücretsiz oyunlar (823.000), popüler oyunlar (18.100),
+bulmaca oyunları (14.800), dövüş oyunları (14.800), yarış oyunları (9.900), macera oyunları (5.400),
+strateji oyunları (5.400), FPS oyunları (3.600).

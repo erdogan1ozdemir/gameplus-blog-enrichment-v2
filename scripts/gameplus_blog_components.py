@@ -975,6 +975,141 @@ def render_highlight(text, title="Hatırlatma"):
 </div>
 '''
 
+
+# --- Govde ici GFN kategori linkleri (Kural 20) ---
+# Anchor'lar Google Ads arama hacmiyle secildi (TR, location 2792, Agustos 2026 anlik degeri).
+# Hacim bilgi amaclidir; anchor her zaman cumleye DOGAL oturmalidir, zorlama link kurulmaz.
+CATEGORY_ANCHORS = {
+    # url: (birincil anchor, aylik arama hacmi, dogal varyantlar)
+    "https://gameplus.com.tr/gfn/oyunlar/oynamasi-ucretsiz": ("ücretsiz oyunlar", 823000,
+        ("ücretsiz oyunu", "ücretsiz oyunlara", "ücretsiz oyunların", "oynaması ücretsiz oyunlar")),
+    "https://gameplus.com.tr/gfn/oyunlar/populer-oyunlar":   ("popüler oyunlar", 18100,
+        ("popüler oyunu", "popüler oyunlara", "popüler yapımlar")),
+    "https://gameplus.com.tr/gfn/oyunlar/bulmaca":           ("bulmaca oyunları", 14800,
+        ("bulmaca oyunu", "bulmaca oyunlarına", "puzzle oyunları")),
+    "https://gameplus.com.tr/gfn/oyunlar/dovus-oyunu":       ("dövüş oyunları", 14800,
+        ("dövüş oyunu", "dövüş oyunlarına")),
+    "https://gameplus.com.tr/gfn/oyunlar/yaris":             ("yarış oyunları", 9900,
+        ("yarış oyunu", "yarış oyunlarına", "yarış oyunlarını")),
+    "https://gameplus.com.tr/gfn/oyunlar/macera":            ("macera oyunları", 5400,
+        ("macera oyunu", "macera oyunlarına", "aksiyon-macera oyunları")),
+    "https://gameplus.com.tr/gfn/oyunlar/strateji":          ("strateji oyunları", 5400,
+        ("strateji oyunu", "strateji oyunlarına")),
+    "https://gameplus.com.tr/gfn/oyunlar/xbox":              ("Xbox oyunları", 4400,
+        ("Xbox kütüphanesi", "Xbox oyunu")),
+    "https://gameplus.com.tr/gfn/oyunlar/fps":               ("FPS oyunları", 3600,
+        ("FPS oyunu", "FPS oyunlarına", "FPS türü", "nişancı oyunlar")),
+    "https://gameplus.com.tr/gfn/oyunlar/steam":             ("Steam oyunları", 3600,
+        ("Steam kütüphanesi", "Steam kütüphanen")),
+    "https://gameplus.com.tr/gfn/oyunlar/simulasyon":        ("simülasyon oyunları", 2900,
+        ("simülasyon oyunu", "simülasyon türü")),
+    "https://gameplus.com.tr/gfn/oyunlar/spor":              ("spor oyunları", 2400,
+        ("spor oyunu", "spor oyunlarına")),
+    "https://gameplus.com.tr/gfn/oyunlar/aksiyon":           ("aksiyon oyunları", 1900,
+        ("aksiyon oyunu", "aksiyon oyunlarına", "aksiyon türü")),
+    "https://gameplus.com.tr/gfn/oyunlar/aile-dostu":        ("aile oyunları", 1000,
+        ("aile dostu oyunlar", "aile dostu yapımlar")),
+    "https://gameplus.com.tr/gfn/oyunlar/basit-eglence":     ("basit oyunlar", 1000,
+        ("basit eğlence", "hafif oyunlar")),
+    "https://gameplus.com.tr/gfn/oyunlar/mmo":               ("MMO oyunlar", 880,
+        ("MMO oyunları", "MMORPG oyunlar", "çok oyunculu online")),
+    "https://gameplus.com.tr/gfn/oyunlar/ea-app":            ("EA oyunları", 880,
+        ("EA App kütüphanesi", "EA App")),
+    "https://gameplus.com.tr/gfn/oyunlar/ubisoft-connect":   ("Ubisoft oyunları", 880,
+        ("Ubisoft Connect kütüphanesi", "Ubisoft Connect")),
+    "https://gameplus.com.tr/gfn/oyunlar/demo":              ("demo oyunlar", 720,
+        ("demo sürümleri", "demo oyunları")),
+    "https://gameplus.com.tr/gfn/oyunlar/epic-games":        ("Epic Games oyunları", 720,
+        ("Epic Games kütüphanesi", "Epic Games Store kütüphanesi")),
+    "https://gameplus.com.tr/gfn/oyunlar/arcade":            ("arcade oyunları", 590,
+        ("arcade oyunu", "arcade türü")),
+    "https://gameplus.com.tr/gfn/oyunlar/canlandirma":       ("anime oyunları", 590,
+        ("anime oyunu", "anime tarzı oyunlar")),
+    "https://gameplus.com.tr/gfn/oyunlar/platform":          ("platform oyunları", 590,
+        ("platform oyunu", "platform türü")),
+    "https://gameplus.com.tr/gfn/oyunlar/bagimsiz":          ("indie oyunlar", 320,
+        ("bağımsız oyunlar", "bağımsız yapımlar", "indie yapımlar")),
+    "https://gameplus.com.tr/gfn/oyunlar/moba":              ("MOBA oyunlar", 210,
+        ("MOBA oyunları", "MOBA türü")),
+    "https://gameplus.com.tr/gfn/oyunlar/gog":               ("GOG oyunları", 110,
+        ("GOG kütüphanesi",)),
+    "https://gameplus.com.tr/gfn/oyunlar/diger":             ("diğer oyunlar", None, ()),
+}
+
+
+OTOMATIK_HARIC = (
+    "https://gameplus.com.tr/gfn/oyunlar/steam",
+    "https://gameplus.com.tr/gfn/oyunlar/xbox",
+    "https://gameplus.com.tr/gfn/oyunlar/epic-games",
+    "https://gameplus.com.tr/gfn/oyunlar/ea-app",
+    "https://gameplus.com.tr/gfn/oyunlar/ubisoft-connect",
+    "https://gameplus.com.tr/gfn/oyunlar/gog",
+    "https://gameplus.com.tr/gfn/oyunlar/diger",
+)
+
+
+def auto_link_categories(html, max_links=2, haric=()):
+    """Govdede DOGAL olarak gecen kategori ifadelerini bulur ve en cok `max_links` tanesini
+    ilgili GFN kategori sayfasina baglar (Kural 20). Arama hacmi yuksek olan once denenir.
+
+    Zorlama YOK: ifade yazida gecmiyorsa link kurulmaz. Baslik, tablo, liste, CTA, ozet ve
+    not kutulari dokunulmaz. `haric` ile belirli URL'ler atlanabilir.
+    Donus: (html, kurulanlar)."""
+    govde_p = re.findall(r"<p\b(?![^>]*(?:gp-cta-desc|gp-tldr|editor-note|highlight-box))[^>]*>(.*?)</p>",
+                         html, flags=re.S)
+    metin = " ".join(p for p in govde_p if "<a " not in p)
+    adaylar = []
+    for url, (birincil, hacim, varyantlar) in CATEGORY_ANCHORS.items():
+        if url in haric or url in OTOMATIK_HARIC:
+            continue
+        for ifade in (birincil,) + tuple(varyantlar):
+            if re.search(r"(?<!\w)" + re.escape(ifade) + r"(?!\w)", metin, re.I):
+                adaylar.append((hacim or 0, ifade, url))
+                break
+    adaylar.sort(key=lambda x: -x[0])
+    return link_categories(html, [(i, u) for _, i, u in adaylar], max_links=max_links)
+
+
+# Bilesen paragraflari (CTA metni, ozet, not kutulari, tablo) linklenmez; yalniz duz gövde.
+_LINK_YASAK = re.compile(r"gp-cta-desc|gp-tldr|editor-note|highlight-box|gp-note|faq-|table-wrap")
+# Lisans/magaza sayimi iceren cumleler linklenmez: oradaki "Steam", "EA App" gibi adlar
+# kategori onerisi degil, magaza listesidir.
+_LINK_YASAK_METIN = re.compile(r"oyun satmaz|lisans|abonelik gerekir|hesab[ıi]n[ıi] baglaman")
+
+
+def link_categories(html, pairs, max_links=2):
+    """Govde paragraflarinda gecen ifadeleri GFN kategori sayfalarina baglar (Kural 20).
+
+    pairs: [(ifade, kategori_url), ...] - ifade yazida GERCEKTEN gecmeli, zorlama yapilmaz.
+    Yalniz duz <p> icinde, ifadenin ILK gecisi linklenir; zaten <a> icindeyse atlanir.
+    Baslik, tablo, liste, CTA ve not kutulari dokunulmaz. En cok `max_links` link kurulur.
+    Donus: (html, kurulanlar) - kurulanlar [(ifade, url), ...]."""
+    kurulan = []
+    for ifade, url in pairs:
+        if len(kurulan) >= max_links:
+            break
+        desen = re.compile(r"(?<![\w>])(" + re.escape(ifade) + r")(?![\w<])", re.I)
+        yeni_html, yapildi = [], False
+        son = 0
+        for m in re.finditer(r"<p\b([^>]*)>(.*?)</p>", html, flags=re.S | re.I):
+            if yapildi:
+                break
+            oz, ic = m.group(1), m.group(2)
+            if (_LINK_YASAK.search(oz) or _LINK_YASAK_METIN.search(ic)
+                    or "<a " in ic or not desen.search(ic)):
+                continue
+            yeni_ic = desen.sub(f'<a href="{url}">\\1</a>', ic, count=1)
+            yeni_html.append(html[son:m.start()])
+            yeni_html.append(f"<p{oz}>{yeni_ic}</p>")
+            son = m.end()
+            yapildi = True
+        if yapildi:
+            yeni_html.append(html[son:])
+            html = "".join(yeni_html)
+            kurulan.append((ifade, url))
+    return html, kurulan
+
+
 # --- CTA Paketler (Figma CTA kart dili: #161616, ★ eyebrow, dolu sarı buton; GA4 id=packages-button) ---
 def render_cta_paketler(headline, desc):
     return f'''<div class="cta-paketler gp-conic" style="--gp-glow:#FFC900;">
@@ -1682,12 +1817,16 @@ def verify_output(final_html, blog_type="general", n_games=None, expect_faq=Fals
     _blok_cakisma = len(_end) > 1 and len(set(_end.values())) < len(_end)
     add(not _blok_cakisma, "CTA bloğu içi çakışma yok", "yok",
         f"kapanış CTA'sının iki butonu aynı adrese gidiyor: {sorted(set(_end.values()))}")
-    _sayac = {}
-    for h, i in _pairs:
-        _sayac.setdefault(h, set()).add(i)
-    _tekrar = {h: sorted(v) for h, v in _sayac.items() if len(v) > 1}
-    add(not _tekrar, "CTA hedefi sayfada tekrarlamıyor", "tekrar yok",
-        f"aynı hedef birden çok CTA'da: {_tekrar}", warn=True)
+
+    # v10.14 / Kural 20: gövde paragraflarında 1-2 GFN kategori linki.
+    # Rozet linkleri (oyun başlığındaki tür etiketi) SAYILMAZ - onlar zaten ayrı kural.
+    _govde_p = re.findall(r"<p\b(?![^>]*(?:gp-cta-desc|gp-tldr|editor-note|highlight-box))[^>]*>(.*?)</p>",
+                          final_html.split("</style>")[-1], flags=re.S)
+    _kat_link = len(re.findall(r'href="https://gameplus\.com\.tr/gfn/oyunlar/[a-z-]+"', "".join(_govde_p)))
+    add(_kat_link <= 3, "Kategori linki 1-2 arası", f"{_kat_link} link",
+        f"gövdede {_kat_link} kategori linki var - en fazla 2-3 olmalı (Kural 20)")
+    add(_kat_link >= 1, "Gövde içi kategori linki", f"{_kat_link} link",
+        "gövdede GFN kategori linki yok - uygun yer varsa 1-2 tane eklenebilir (Kural 20)", warn=True)
 
     # v10.12: "Tabloyu yana kaydır" ipucu tablo kabının DIŞINDA, hemen ÜSTÜNDE olmalı.
     _ipucu_icerde = re.search(r'<div class="table-wrap[^"]*">\s*<div class="gp-table-hint"', final_html)
