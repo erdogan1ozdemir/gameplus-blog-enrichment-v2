@@ -27,7 +27,7 @@ Sıra:
 9. **Editör notu 2 / Ubisoft CTA:** ilgili bölümden sonra (Ubisoft oyunu geçiyorsa Ubisoft CTA).
 10. **Hatırlatma (highlight):** lisans/GFN uyarısının olduğu paragraftan önce.
 11. **FAQ accordion:** "Sıkça Sorulan Sorular" H2'sinden sonraki H3+P çiftlerini bul, hepsini tek accordion ile değiştir.
-12. **End CTA:** SSS H2'sinden HEMEN ÖNCE (dual buton: Paketler + Fırsatlar).
+12. **End CTA:** SSS H2'sinden HEMEN ÖNCE (dual buton: Paketler + Oyunlar; **Fırsatlar DEĞİL**).
 
 ## GFN Thursday (haftalık derleme)
 

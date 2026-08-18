@@ -385,15 +385,17 @@
   .gp-content .editor-note p, .gp-content .highlight-box p { font-size: 17px; line-height: 26px; }
 }
 
-.gp-content .cta-paketler, .gp-content .cta-oyunlar, .gp-content .cta-compact { margin: 32px 0; }
+.gp-content .cta-paketler, .gp-content .cta-oyunlar, .gp-content .cta-ubisoft,
+.gp-content .cta-compact { margin: 32px 0; }
 .gp-content .cta-end { margin: 40px 0 24px; }
 .gp-content .cta-paketler .gp-conic-inner, .gp-content .cta-oyunlar .gp-conic-inner,
+.gp-content .cta-ubisoft .gp-conic-inner,
 .gp-content .cta-end .gp-conic-inner, .gp-content .cta-compact .gp-conic-inner {
   border-radius: 10.5px; padding: 20px; background: transparent; }
 
 .gp-content .gp-cta-eyebrow { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
 .gp-content .cta-end .gp-cta-eyebrow { margin-bottom: 24px; }
-.gp-content .gp-cta-eyebrow span { color: #FFC900; font-size: 11px; line-height: 16px; font-weight: 700;
+.gp-content .gp-cta-eyebrow span { color: var(--gp-accent,#FFC900); font-size: 11px; line-height: 16px; font-weight: 700;
   letter-spacing: 0.08em; display: inline-flex; align-items: center; }
 
 .gp-content .gp-cta-title { font-family: 'New Science', GreycliffCF, -apple-system, sans-serif;
@@ -408,10 +410,13 @@
 .gp-content .gp-btn { display: inline-flex; align-items: center; justify-content: center;
   padding: 12px 16px; border-radius: 8px; font-weight: 700; font-size: 16px; line-height: 20px;
   text-decoration: none; white-space: normal; text-wrap: balance; box-sizing: border-box; }
-.gp-content .gp-btn-solid { background: #FFC900; color: #131313; }
-.gp-content .gp-btn-outline { background: transparent; border: 1px solid #FFC900; color: #FFC900; }
-.gp-content a.gp-btn-solid:hover { color: #131313; }
-.gp-content a.gp-btn-outline:hover { color: #FFC900; }
+.gp-content .gp-btn-solid { background: var(--gp-accent,#FFC900); color: var(--gp-btn-fg,#131313); }
+.gp-content .gp-btn-outline { background: transparent; border: 1px solid var(--gp-accent,#FFC900);
+  color: var(--gp-accent,#FFC900); }
+.gp-content a.gp-btn-solid:hover { color: var(--gp-btn-fg,#131313); }
+.gp-content a.gp-btn-outline:hover { color: var(--gp-accent,#FFC900); }
+
+.gp-content .cta-ubisoft { --gp-accent: #0061FF; --gp-btn-fg: #FFFFFF; }
 
 .gp-content .cta-compact .gp-conic-inner { display: flex; align-items: center;
   justify-content: space-between; gap: 24px; flex-wrap: wrap; }
@@ -421,13 +426,15 @@
 
 @media (max-width: 700px) {
   .gp-content .cta-paketler .gp-conic-inner, .gp-content .cta-oyunlar .gp-conic-inner,
+  .gp-content .cta-ubisoft .gp-conic-inner,
   .gp-content .cta-end .gp-conic-inner, .gp-content .cta-compact .gp-conic-inner { padding: 14px; }
   .gp-content .gp-cta-eyebrow, .gp-content .cta-end .gp-cta-eyebrow { margin-bottom: 8px; }
   .gp-content .gp-cta-title { font-size: 19px; line-height: 25px; margin-bottom: 4px; }
   .gp-content .cta-end .gp-cta-title { font-size: 20px; line-height: 26px; }
   .gp-content .gp-cta-desc, .gp-content .cta-end .gp-cta-desc { margin-bottom: 12px; }
   .gp-content .gp-btn { padding-top: 9px; padding-bottom: 9px; }
-  .gp-content .cta-paketler .gp-btn, .gp-content .cta-oyunlar .gp-btn { flex: 1 1 100%; }
+  .gp-content .cta-paketler .gp-btn, .gp-content .cta-oyunlar .gp-btn,
+  .gp-content .cta-ubisoft .gp-btn { flex: 1 1 100%; }
 
   .gp-content .gp-cta-actions { gap: 8px; flex-wrap: nowrap; }
   .gp-content .gp-cta-actions .gp-btn { flex: 1 1 0; min-width: 0;
@@ -483,7 +490,7 @@
 .gp-content .gp-pw-title { font-size: 20px; line-height: 24px; font-weight: 700; color: #fff; }
 
 .gp-content .gp-cta-eyebrow span, .gp-content .gp-note-eyebrow, .gp-content .gp-pw-tag
-  { font-size: 12px; line-height: 16px; font-weight: 700; color: #FFC900; }
+  { font-size: 12px; line-height: 16px; font-weight: 700; color: var(--gp-accent,#FFC900); }
 
 .gp-content .gp-toc-num { font-size: 16px; line-height: 20px; font-weight: 700; color: #FFC900; }
 .gp-content .gp-genre, .gp-content .gp-badge, .gp-content .gp-game-badge {
@@ -776,7 +783,7 @@
 
 <div class="cta-end gp-conic" style="--gp-glow:#FFC900;">
 <div class="gp-conic-inner">
-  <div class="gp-cta-eyebrow"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="#FFC900" style="flex-shrink:0;margin-right:6px;vertical-align:-2px;"><path d="M12 1.5c.3 4.6 2.4 7.4 6.9 8.2.7.1.7 1.1 0 1.2-4.5.8-6.6 3.6-6.9 8.2 0 .8-1.1.8-1.2 0-.3-4.6-2.4-7.4-6.9-8.2-.7-.1-.7-1.1 0-1.2 4.5-.8 6.6-3.6 6.9-8.2.1-.8 1.2-.8 1.2 0z"/></svg>GAME+ &bull; BULUT OYUN</span></div>
+  <div class="gp-cta-eyebrow"><span><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;margin-right:6px;vertical-align:-2px;"><path d="M12 1.5c.3 4.6 2.4 7.4 6.9 8.2.7.1.7 1.1 0 1.2-4.5.8-6.6 3.6-6.9 8.2 0 .8-1.1.8-1.2 0-.3-4.6-2.4-7.4-6.9-8.2-.7-.1-.7-1.1 0-1.2 4.5-.8 6.6-3.6 6.9-8.2.1-.8 1.2-.8 1.2 0z"/></svg>GAME+ &bull; BULUT OYUN</span></div>
   <div class="gp-cta-title">Game+ ile bulutta oyun keyfine hazır mısın?</div>
   <p class="gp-cta-desc">Performance ve Ultimate paketleri, kütüphanendeki GeForce NOW destekli yapımları güçlü bir donanım olmadan oynamanı sağlar. Bu hafta eklenen oyunları ve tüm kütüphaneyi hemen inceleyebilirsin.</p>
   <div class="gp-cta-actions">

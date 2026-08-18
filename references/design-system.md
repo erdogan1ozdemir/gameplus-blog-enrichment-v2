@@ -333,3 +333,31 @@ tablo bir önceki paragrafa yapışırdı.
 
 `render_floating_toc`'un `ipucuGuncelle` fonksiyonu ipucunu `.table-wrap`'in
 `previousElementSibling`'i olarak arar; bulamazsa eski (kap içi) yerleşime düşer.
+
+## v10.13 - Fırsatlar linki kaldırıldı, iki doküman hatası düzeltildi (18 Ağustos 2026)
+
+**1. `/firsatlar` yönlendirmesi kalktı (marka kararı).** `render_end_cta`'nın ikinci buton
+varsayılanı `"Güncel Fırsatlar" -> /firsatlar` iken **`"GeForce NOW Oyunları" -> /gfn/oyunlar`**
+oldu. Kural ve hedef tablosu: `content-rules.md` -> Kural 19.
+
+**2. `SVG_CHECK_GREEN` -> `SVG_CHECK`.** Sabitin adı yanıltıcıydı: içindeki `stroke` değeri
+`#FFC900`, yani ikon yeşil değil SARI basıyor. `SVG_CHECK_GREEN` geriye dönük uyumluluk için
+takma ad olarak duruyor (DEPRECATED), yeni kodda `SVG_CHECK` kullanılır. Kullanıldığı yerler:
+`render_list(marker="check")` ve `render_info_card(style="checkmark")`.
+
+**3. Hızlı Özet madde işareti = SARI `•`, tik DEĞİL.** `SKILL.md`'deki "✓ tikli maddeler" yorumu
+v9'dan kalma yanlış bir nottu; `render_tldr` her zaman `<span class="gp-tldr-bullet">&bull;</span>`
+basar ve CSS rengi `#FFC900`'dür. Kategori skill'iyle bu noktada fark YOKTUR.
+
+**4. Kural 18'in tetikleyicisi düzeltildi.** Kontrol `'cta-ubisoft' in final_html` idi; bu sınıf
+PAYLAŞILAN stil bloğunda da geçtiği için her yazıda tetikleniyordu. Artık yalnızca gövdeye bakıyor:
+`final_html.split('</style>')[-1]`. Sınıf adına göre "bu bir Ubisoft yazısı mı" kararı verirken
+stil bloğunu daima dışarıda bırak.
+
+**Yeni safeguard'lar (`verify_output`):**
+
+| Kontrol | Tip | Ne yakalar |
+|---|---|---|
+| Fırsatlar linki yok | FAIL | gövdede `gameplus.com.tr/firsatlar` |
+| CTA bloğu içi çakışma yok | FAIL | kapanış CTA'sının iki butonu aynı adrese gidiyor |
+| CTA hedefi sayfada tekrarlamıyor | UYARI | aynı hedef birden çok CTA id'sinde (hangi id'ler olduğunu yazar) |

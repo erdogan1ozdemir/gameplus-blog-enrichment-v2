@@ -113,7 +113,8 @@ def embed_fonts(html):
 # DEPRECATED (v10.10): kupa ikonu kaldırıldı, artık kullanılmıyor. Yeni içerikte ÇAĞIRMA.
 SVG_TROPHY = '<svg width="24" height="24" viewBox="0 0 24 24" style="vertical-align:-6px;margin-right:10px;flex-shrink:0;"><defs><linearGradient id="gp-grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#FFC900"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs><path fill="url(#gp-grad)" d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94.63 1.5 1.98 2.63 3.61 2.96V19H7v2h10v-2h-4v-3.1c1.63-.33 2.98-1.46 3.61-2.96C19.08 12.63 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.82C5.84 10.4 5 9.3 5 8zm14 0c0 1.3-.84 2.4-2 2.82V7h2v1z"/></svg>'
 # Green checkmark for TLDR/info-card items
-SVG_CHECK_GREEN = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFC900" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg>'
+SVG_CHECK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFC900" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><polyline points="20 6 9 17 4 12"/></svg>'
+SVG_CHECK_GREEN = SVG_CHECK  # DEPRECATED: adı yanıltıcıydı (renk #FFC900), SVG_CHECK kullan
 # External link icon (small arrow up-right)
 SVG_EXT_LINK = '<svg class="gp-ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>'
 # Old gradient star (kept for backward compat)
@@ -912,7 +913,7 @@ def render_list(items, marker="dot", accent="#FFC900"):
     lis = []
     for x in items:
         if marker == "check":
-            m = f'<span class="gp-list-check">{SVG_CHECK_GREEN}</span>'
+            m = f'<span class="gp-list-check">{SVG_CHECK}</span>'
         else:
             m = '<span class="gp-list-dot"></span>'
         lis.append(f'<li>{m}<span>{x}</span></li>')
@@ -925,7 +926,7 @@ def render_info_card(badges, style="grid"):
     Değer sayı olmak ZORUNDA DEĞİL; kısa tut (<=22 karakter) ve yazının İÇİNDEN gelsin.
     Stiller .gp-content sınıflarında (v10.7)."""
     if style == "checkmark":
-        items = [f'<div class="gp-check-row">{SVG_CHECK_GREEN}<span>{v}</span></div>' for v in badges]
+        items = [f'<div class="gp-check-row">{SVG_CHECK}<span>{v}</span></div>' for v in badges]
         return f'''<div class="info-card gp-check">
 {chr(10).join(items)}
 </div>
@@ -1000,7 +1001,7 @@ def render_cta_oyunlar(headline, desc):
 
 # --- End CTA (Figma "CTA - Bulutta Oyun Keyfi": #161616 kart, ★ eyebrow, New Science 32 başlık,
 #     dolu sarı + kontur sarı buton; GA4 id=end-packages-button / end-games-button) ---
-def render_end_cta(headline, desc, btn2_label="Güncel Fırsatlar", btn2_url="https://gameplus.com.tr/firsatlar",
+def render_end_cta(headline, desc, btn2_label="GeForce NOW Oyunları", btn2_url="https://gameplus.com.tr/gfn/oyunlar",
                    chip2=None, eyebrow="GAME+ &bull; BULUT OYUN",
                    btn1_label="GeForce NOW Paketleri", btn1_url="https://gameplus.com.tr/gfn/paketler"):
     return f'''<div class="cta-end gp-conic" style="--gp-glow:#FFC900;">
@@ -1666,6 +1667,28 @@ def verify_output(final_html, blog_type="general", n_games=None, expect_faq=Fals
     add("onclick=" not in final_html, "Inline onclick yok",
         "yok", "inline onclick var - CMS on* özniteliklerini siliyor, addEventListener kullan")
 
+    # v10.13: /firsatlar'a yönlendirme YOK (marka kararı) - CTA'lar Paketler / Oyunlar'a gider.
+    add("gameplus.com.tr/firsatlar" not in final_html, "Fırsatlar linki yok", "yok",
+        "/firsatlar linki var - CTA'lar /gfn/paketler, /gfn/oyunlar veya /paketler'e yönlendirmeli")
+
+    # v10.13: CTA hedef çakışması. Aynı CTA bloğunda iki buton aynı yere gidemez (FAIL);
+    # sayfada aynı hedefin birden çok CTA'da tekrarı bilgi amaçlı UYARI'dır.
+    _ctas = re.findall(r'<a\b[^>]*?href="([^"]+)"[^>]*?id="([a-z0-9-]+-button)"', final_html) \
+          + re.findall(r'<a\b[^>]*?id="([a-z0-9-]+-button)"[^>]*?href="([^"]+)"', final_html)
+    _pairs = []
+    for a, b in _ctas:
+        _pairs.append((b, a) if b.startswith("http") else (a, b))
+    _end = {i: h for h, i in _pairs if i.startswith("end-")}
+    _blok_cakisma = len(_end) > 1 and len(set(_end.values())) < len(_end)
+    add(not _blok_cakisma, "CTA bloğu içi çakışma yok", "yok",
+        f"kapanış CTA'sının iki butonu aynı adrese gidiyor: {sorted(set(_end.values()))}")
+    _sayac = {}
+    for h, i in _pairs:
+        _sayac.setdefault(h, set()).add(i)
+    _tekrar = {h: sorted(v) for h, v in _sayac.items() if len(v) > 1}
+    add(not _tekrar, "CTA hedefi sayfada tekrarlamıyor", "tekrar yok",
+        f"aynı hedef birden çok CTA'da: {_tekrar}", warn=True)
+
     # v10.12: "Tabloyu yana kaydır" ipucu tablo kabının DIŞINDA, hemen ÜSTÜNDE olmalı.
     _ipucu_icerde = re.search(r'<div class="table-wrap[^"]*">\s*<div class="gp-table-hint"', final_html)
     add(_ipucu_icerde is None, "Tablo ipucu kabın dışında", "dışarıda",
@@ -1689,7 +1712,7 @@ def verify_output(final_html, blog_type="general", n_games=None, expect_faq=Fals
 
 
     # 10b) Kural 18 — Ubisoft+ yazısında kapanış CTA'sı GAME+ paketlerine gitmeli
-    if 'cta-ubisoft' in final_html:
+    if 'cta-ubisoft' in final_html.split('</style>')[-1]:
         _ecta = re.search(r'id="end-packages-button"[^>]*href="([^"]+)"', final_html) or \
                 re.search(r'href="([^"]+)"[^>]*id="end-packages-button"', final_html)
         _href = _ecta.group(1) if _ecta else ""

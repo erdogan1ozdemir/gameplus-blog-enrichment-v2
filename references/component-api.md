@@ -38,7 +38,7 @@ from gameplus_blog_components import *
 - `render_genre_tags('Strateji','Aile')` — tür pill seti (tablo Tür hücresi); flex-wrap, üst üste binmez.
 - `render_game_cell(name, meta=None, href=None)` — tablo Oyun hücresi: isim (+link, alt çizgisiz, **yeni sekme**: `target="_blank" rel="noopener noreferrer"`) + altında "Stüdyo · Yıl" 12px gri. Stüdyo/yıl KAYNAKLI olmalı (Steam API / resmi sayfa); bilinmiyorsa meta=None.
 - `render_cta_paketler(h, d)` / `render_cta_oyunlar(h, d)` — glow'lu #161616 CTA kartı, sparkle eyebrow, New Science başlık; buton id: **packages-button / games-button**.
-- `render_end_cta(h, d, btn2_label, btn2_url, chip2=None, eyebrow="GAME+ • BULUT OYUN")` — glow'lu kapanış kartı; butonlar: dolu sarı (id **end-packages-button**) + kontur (id **end-games-button**). GFN'de btn2=GeForce NOW Oyunları.
+- `render_end_cta(h, d, btn2_label, btn2_url, chip2=None, eyebrow="GAME+ • BULUT OYUN")` — glow'lu kapanış kartı; butonlar: dolu sarı (id **end-packages-button**) + kontur (id **end-games-button**). GFN'de btn2=GeForce NOW Oyunları. **v10.13: `btn2` varsayılanı `GeForce NOW Oyunları` -> `/gfn/oyunlar`** (eskiden Fırsatlar; `/firsatlar` artık hiçbir yerde kullanılmaz, bkz. Kural 19). `btn2_url`, `btn1_url` ile aynı verilemez - `verify_output` FAIL verir.
 - `render_compact_cta(game, tagline, btn_label, btn_url, cta_id="featured-game-button")` — Öne Çıkan Oyun: glow + **gamepad ikonlu** eyebrow + sağda dolu sarı buton.
 - `render_card_table(title, games, headers=("Oyun","Tür","Stüdyo · Yıl"))` — **v10.9'dan beri GERÇEK TABLO**
   (`render_table` çağırır): başlık satırı, satır hover vurgusu, yana kaydırma ve tipografi GFN oyun

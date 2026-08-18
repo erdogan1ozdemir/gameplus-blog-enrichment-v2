@@ -59,7 +59,7 @@ toc_items = []  # inject_heading_ids doldurur
 body, toc_items = inject_heading_ids(body)
 body = shrink_youtube_embeds(body)
 
-tldr   = render_tldr(["<strong>…:</strong> …", ...])           # ✓ tikli maddeler (meta header EKLENMEZ)
+tldr   = render_tldr(["<strong>…:</strong> …", ...])           # sarı • maddeler (meta header EKLENMEZ)
 liste  = render_list(["…", "…"], marker="check")               # uygun yerlerde bullet listesi (content-rules 14)
 info   = render_info_card([("İncelenen", "12 Yapım"), ...])    # her iki blog tipinde de ZORUNLU (GFN'de metrikleri o haftaya göre seç)
 toc    = render_floating_toc(toc_items)
@@ -119,6 +119,7 @@ Detaylar **`references/design-system.md`**'de. Özet:
 - **Linkler:** alt çizgi yok, renk yeterli; platform linkleri `color:inherit` + ↗. **Mağaza linkleri yeni sekmede** (`target="_blank" rel="noopener noreferrer"`).
 - **Mobil:** tablo başlıkları hücreye ortalı; İçindekiler `bottom:16px`'e iner.
 - **GA4 id'leri (statik):** packages-button · games-button · end-packages-button · end-games-button · featured-game-button · ubisoft-packages-button.
+- **`/firsatlar`'a yönlendirme YOK** (v10.13, marka kararı). CTA hedefleri: `/gfn/paketler`, `/gfn/oyunlar`, Ubisoft yazılarında `/paketler` ve `/ubisoft/*`. `render_end_cta` ikinci butonunun varsayılanı artık **GeForce NOW Oyunları → `/gfn/oyunlar`**. `verify_output` fırsatlar linkini ve CTA hedef çakışmasını denetler.
 
 ## İçerik kuralları (zorunlu)
 

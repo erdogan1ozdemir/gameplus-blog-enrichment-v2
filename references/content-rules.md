@@ -150,3 +150,34 @@ Ubisoft+'a özgü yazılarda (Ubisoft+ aylık derlemesi, Ubisoft+ oyun/DLC yazı
 **Otomatik safeguard:** `verify_output`, gövdede `cta-ubisoft` varken kapanış CTA'sı `/gfn/paketler`e
 gidiyorsa **FAIL** verir ("Kural 18: Ubisoft yazısı kapanış CTA'sı").
 
+
+## Kural 19: Fırsatlar sayfasına yönlendirme YOK + CTA hedef çakışması
+
+**Marka kararı (v10.13):** hiçbir CTA ve hiçbir gövde linki `gameplus.com.tr/firsatlar` adresine
+gitmez. Kullanılacak hedefler:
+
+| Bağlam | Hedef |
+|---|---|
+| GFN paket dönüşümü | `https://gameplus.com.tr/gfn/paketler` |
+| Kütüphane / oyun keşfi | `https://gameplus.com.tr/gfn/oyunlar` |
+| Ubisoft+ yazılarında kapanış (Kural 18) | `https://gameplus.com.tr/paketler` |
+| Ubisoft+ ara CTA | `https://gameplus.com.tr/ubisoft/paketler` · `/ubisoft/oyunlar` |
+
+`render_end_cta`'nın ikinci buton varsayılanı bu yüzden **GeForce NOW Oyunları ->
+`/gfn/oyunlar`** olarak değişti (eskiden "Güncel Fırsatlar" -> `/firsatlar`).
+
+**CTA hedef çakışması.** İki ayrı durum var, ikisi de otomatik denetleniyor:
+
+- **Blok içi çakışma (FAIL):** kapanış CTA'sının iki butonu aynı adrese gidemez. `render_end_cta`
+  çağrılırken `btn2_url`, `btn1_url` ile aynı verilmemelidir.
+- **Sayfa içi tekrar (UYARI):** aynı hedefin birden çok CTA'da geçmesi yapısal olarak normaldir ve
+  build'i durdurmaz, ama bilinçli bir tercih olmalıdır. Mevcut iskelette iki tipik tekrar var:
+  - **GFN Thursday:** `featured-game-button` ve `end-packages-button` ikisi de `/gfn/paketler`.
+  - **Rehber / listicle:** `packages-button` + `end-packages-button` -> `/gfn/paketler` ve
+    `games-button` + `end-games-button` -> `/gfn/oyunlar`, yani iki hedef de ikişer kez.
+
+  Tekrar istenmiyorsa ara CTA'nın hedefini değiştir (ör. GFN Thursday'de öne çıkan oyun CTA'sını
+  `/gfn/oyunlar`a al) ya da ara CTA'yı kaldır. Uyarı listesi hangi id'lerin çakıştığını yazar.
+
+**Otomatik safeguard:** `verify_output` -> "Fırsatlar linki yok" (FAIL), "CTA bloğu içi çakışma yok"
+(FAIL), "CTA hedefi sayfada tekrarlamıyor" (UYARI).

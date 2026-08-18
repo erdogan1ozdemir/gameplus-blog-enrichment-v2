@@ -98,3 +98,11 @@ build durur; kural unutulsa bile çıktıya sızamaz.
 Mevcut kontrollerle birlikte (tek H1, tek stil bloğu, em dash yok, `.gp-content` scope, ToC ilk
 madde = H1, Editör Notu/Hatırlatma zorunlu, oyun sayısı tutarlılığı ...) `verify_output` her
 build'in ZORUNLU son adımıdır. `print_report()` False dönerse çıktı TESLİM EDİLMEZ.
+
+## v10.13 safeguard'ları
+
+| Kontrol | Tip | Anlamı |
+|---|---|---|
+| Fırsatlar linki yok | FAIL | Gövdede `gameplus.com.tr/firsatlar` var. CTA hedefleri: `/gfn/paketler`, `/gfn/oyunlar`, Ubisoft'ta `/paketler` (Kural 19). |
+| CTA bloğu içi çakışma yok | FAIL | Kapanış CTA'sının iki butonu aynı adrese gidiyor. `btn2_url` != `btn1_url` olmalı. |
+| CTA hedefi sayfada tekrarlamıyor | UYARI | Aynı hedef birden çok CTA id'sinde. **Mevcut iskelette beklenen bir durumdur**, build'i durdurmaz: GFN Thursday'de `featured-game-button` + `end-packages-button` -> `/gfn/paketler`; listicle'da `packages-button` + `end-packages-button` ve `games-button` + `end-games-button`. Tekrar istenmiyorsa ara CTA'nın hedefini değiştir. |
