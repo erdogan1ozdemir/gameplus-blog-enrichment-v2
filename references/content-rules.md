@@ -204,3 +204,25 @@ hacmini (TR, Ağustos 2026) ve doğal çekim varyantlarını tutar. `auto_link_c
 olanı önce dener. En yüksek hacimliler: ücretsiz oyunlar (823.000), popüler oyunlar (18.100),
 bulmaca oyunları (14.800), dövüş oyunları (14.800), yarış oyunları (9.900), macera oyunları (5.400),
 strateji oyunları (5.400), FPS oyunları (3.600).
+
+## Kural 21: Link politikası - dış linkler nofollow, tüm linkler yeni sekmede
+
+| Link tipi | `rel` | `target` |
+|---|---|---|
+| **Dış link** (mağaza, haber, video, üretici) | `nofollow noopener noreferrer` | `_blank` |
+| **İç link** (`gameplus.com.tr`) | `noopener noreferrer` - **nofollow YOK** | `_blank` |
+| **Sayfa içi çapa** (`#bolum`) | dokunulmaz | dokunulmaz |
+
+**Gerekçe.** Dış linklerde otorite akmasın: Steam, GOG, Xbox, Battle.net, EA, Epic, YouTube ve
+üretici blogları gibi hedeflere link juice aktarmıyoruz. İç linklerde nofollow KULLANILMAZ - kendi
+sayfalarımız arasında otorite akması istenen şeydir.
+
+**Sayfa içi çapalar bilinçle dışarıda.** `#bolum` linklerine `target="_blank"` eklenirse İçindekiler
+her tıklamada yeni sekme açar ve başa-dön butonu bozulur.
+
+**Uygulama:** `body, sayac = apply_link_policy(body)` - `ensure_leading_h1`den HEMEN ÖNCE çağrılır,
+yani tüm bileşenler yerleştikten sonra. Mevcut `rel` değeri korunur, eksik olan eklenir; iki kez
+çalıştırmak zarar vermez.
+
+**Otomatik safeguard (`verify_output`):** "Dış linkler nofollow" (FAIL), "Linkler yeni sekmede"
+(FAIL), "Sayfa içi çapalar korunmuş" (FAIL - çapaya target/nofollow eklenmişse).

@@ -1592,6 +1592,54 @@ def render_floating_toc(items, title=None):
     return _yorumsuz(_cikti)
 
 
+# --- Link politikasi (Kural 21) ---
+# DIS linkler: rel="nofollow noopener noreferrer" + target="_blank"
+#   Otorite akmasin, magaza/haber sitelerine link juice gitmesin.
+# IC linkler (gameplus.com.tr): target="_blank" + rel="noopener noreferrer"
+#   nofollow YOK - ic linkler otorite tasimali.
+# Sayfa ici capa (#...): DOKUNULMAZ - ayni sekmede kalir, yoksa Icindekiler bozulur.
+_IC_ALAN = "gameplus.com.tr"
+
+
+def _rel_birlestir(mevcut, eklenecek):
+    var = [x for x in (mevcut or "").split() if x]
+    for e in eklenecek:
+        if e not in var:
+            var.append(e)
+    return " ".join(var)
+
+
+def apply_link_policy(html):
+    """Govdedeki tum <a> ogelerine link politikasini uygular. Donus: (html, sayac)."""
+    sayac = {"dis": 0, "ic": 0, "capa": 0}
+
+    def _bir(m):
+        tam = m.group(0)
+        href_m = re.search(r'href="([^"]*)"', tam)
+        if not href_m:
+            return tam
+        href = href_m.group(1).strip()
+        if href.startswith("#") or not href:
+            sayac["capa"] += 1
+            return tam                                   # sayfa ici capa: dokunma
+        ic = (_IC_ALAN in href) or href.startswith("/")
+        gerekli = ["noopener", "noreferrer"] if ic else ["nofollow", "noopener", "noreferrer"]
+        sayac["ic" if ic else "dis"] += 1
+
+        rel_m = re.search(r'\srel="([^"]*)"', tam)
+        if rel_m:
+            tam = tam[:rel_m.start()] + f' rel="{_rel_birlestir(rel_m.group(1), gerekli)}"' + tam[rel_m.end():]
+        else:
+            tam = tam[:-1].rstrip() + f' rel="{" ".join(gerekli)}"' + ">"
+
+        if not re.search(r'\starget="', tam):
+            tam = tam[:-1].rstrip() + ' target="_blank"' + ">"
+        return tam
+
+    html = re.sub(r"<a\b[^>]*>", _bir, html)
+    return html, sayac
+
+
 def wrap_gp_content(html):
     """Gövdeyi .gp-content wrapper'ına alır — build'in EN SON adımı:
         final = wrap_gp_content(ANIMATED_BORDER_STYLE + "\\n" + body)
@@ -1852,6 +1900,23 @@ def verify_output(final_html, blog_type="general", n_games=None, expect_faq=Fals
     if 'class="faq-block"' in final_html:
         add("FAQPage" in final_html and "application/ld+json" in final_html, "FAQ Schema", "var",
             "FAQ akordiyonu var ama FAQPage JSON-LD yok - render_faq_schema(pairs) ekle")
+
+    # v10.17 / Kural 21: dış link nofollow + yeni sekme; iç link yeni sekme (nofollow YOK);
+    # sayfa içi çapa dokunulmamış olmalı.
+    _govde_link = final_html.split("</style>")[-1]
+    _dis = [t for t in re.findall(r"<a\b[^>]*>", _govde_link)
+            if re.search(r'href="https?://', t) and "gameplus.com.tr" not in t]
+    _dis_eksik = [t for t in _dis if "nofollow" not in t]
+    add(not _dis_eksik, "Dış linkler nofollow", f"{len(_dis)} dış link",
+        f"{len(_dis_eksik)} dış linkte rel=nofollow yok (Kural 21)")
+    _sekme_eksik = [t for t in re.findall(r"<a\b[^>]*>", _govde_link)
+                    if re.search(r'href="(?:https?://|/)', t) and 'target="_blank"' not in t]
+    add(not _sekme_eksik, "Linkler yeni sekmede", "tümü _blank",
+        f"{len(_sekme_eksik)} linkte target=_blank yok (Kural 21)")
+    _capa_bozuk = [t for t in re.findall(r'<a\b[^>]*href="#[^"]*"[^>]*>', _govde_link)
+                   if 'target="_blank"' in t or "nofollow" in t]
+    add(not _capa_bozuk, "Sayfa içi çapalar korunmuş", "dokunulmamış",
+        f"{len(_capa_bozuk)} çapa linkine target/nofollow eklenmiş - İçindekiler bozulur")
 
     # v10.14 / Kural 20: gövde paragraflarında 1-2 GFN kategori linki.
     # Rozet linkleri (oyun başlığındaki tür etiketi) SAYILMAZ - onlar zaten ayrı kural.

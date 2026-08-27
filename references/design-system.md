@@ -378,3 +378,9 @@ Ubisoft Connect, GOG, Diğer) otomatik seçimden hariç - bu adlar gövdede mağ
 için otomatik link yanlış yere düşüyordu.
 
 **Safeguard:** "Kategori linki 1-2 arası" (3'ü aşarsa FAIL) + "Gövde içi kategori linki" (0 ise UYARI).
+
+## v10.17 - Link politikası (Kural 21)
+
+Dış linkler `rel="nofollow noopener noreferrer"`, iç linkler `rel="noopener noreferrer"` (nofollow
+YOK), ikisi de `target="_blank"`. Sayfa içi çapalar (`#bolum`) dokunulmaz - aksi halde İçindekiler
+her tıklamada yeni sekme açar. Uygulama `apply_link_policy(body)`; üç otomatik kontrolle denetlenir.

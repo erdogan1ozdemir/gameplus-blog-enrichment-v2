@@ -54,6 +54,10 @@ from gameplus_blog_components import *
   **Inline `onclick` KULLANILMAZ** — CMS siliyor; davranışlar `<script>` içinde `addEventListener` ile bağlanır.
 - `render_game_h3_inline(anchor, name, badge, badge_color, meta, level, badge_href=None)` — oyun başlığı: pill (paletten) + isim + "Stüdyo · Yıl". badge_href None=otomatik kategori linki (birleşikte her parça), False=link yok.
 - `render_faq_accordion(pairs)`
+- `apply_link_policy(html)` -> `(html, sayac)` — Kural 21. Dış linke `nofollow noopener noreferrer`,
+  iç linke `noopener noreferrer` ekler; ikisine de `target="_blank"`. Sayfa içi çapalara (`#...`)
+  DOKUNMAZ. `ensure_leading_h1`den hemen önce, tüm bileşenler yerleştikten sonra çağrılır.
+- `render_faq_schema(pairs)` — FAQPage JSON-LD; görünen SSS ile birebir aynı olmalı.
 - `auto_link_categories(html, max_links=2, haric=())` -> `(html, kurulanlar)` — gövdede DOĞAL geçen
   kategori ifadelerini GFN kategori sayfalarına bağlar (Kural 20). Hacmi yüksek anchor önce denenir.
   Zorlama yok; doğal yer yoksa link kurulmaz. Mağaza kategorileri otomatikten hariç (`OTOMATIK_HARIC`).

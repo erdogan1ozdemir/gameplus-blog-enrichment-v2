@@ -119,6 +119,8 @@ Detaylar **`references/design-system.md`**'de. Özet:
 - **Linkler:** alt çizgi yok, renk yeterli; platform linkleri `color:inherit` + ↗. **Mağaza linkleri yeni sekmede** (`target="_blank" rel="noopener noreferrer"`).
 - **Mobil:** tablo başlıkları hücreye ortalı; İçindekiler `bottom:16px`'e iner.
 - **GA4 id'leri (statik):** packages-button · games-button · end-packages-button · end-games-button · featured-game-button · ubisoft-packages-button.
+- **Link politikası (Kural 21):** `body, sayac = apply_link_policy(body)` — dış linkler `nofollow`,
+  tüm linkler yeni sekmede, sayfa içi çapalara dokunulmaz. `ensure_leading_h1`den hemen önce.
 - **Gövde içinde 1-2 GFN kategori linki** (Kural 20): `body, kat = auto_link_categories(body, max_links=2)`.
   Zorlama yok, doğal geçiş yoksa link kurulmaz. Anchor'lar `CATEGORY_ANCHORS`'ta arama hacmiyle sıralı.
 - **`/firsatlar`'a yönlendirme YOK** (v10.13, marka kararı). CTA hedefleri: `/gfn/paketler`, `/gfn/oyunlar`, Ubisoft yazılarında `/paketler` ve `/ubisoft/*`. `render_end_cta` ikinci butonunun varsayılanı artık **GeForce NOW Oyunları → `/gfn/oyunlar`**. `verify_output` fırsatlar linkini ve CTA hedef çakışmasını denetler.
