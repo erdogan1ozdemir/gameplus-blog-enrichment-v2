@@ -1927,7 +1927,7 @@ def verify_source_preserved(original_html, final_html, min_ratio=0.97):
         h = re.sub(r'\s+', ' ', h).strip()
         # Etiketler bosluga cevrildigi icin gövdeye inline <a> eklenince "oyunları</a>:" ->
         # "oyunları :" oluyordu ve metin kaybi sanilip yanlis alarm veriyordu.
-        return re.sub(r'\s+([,.;:!?%\)])', r'\1', h)
+        return re.sub(r'\s+([,.;:!?%\)\u2019\u2018\'])', r'\1', h)
     def chunks(h):
         out = []
         for m in re.findall(r'<(?:p|h[1-6]|li)\b[^>]*>(.*?)</(?:p|h[1-6]|li)>', h, flags=re.S | re.I):
