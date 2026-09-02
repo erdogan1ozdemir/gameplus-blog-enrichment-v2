@@ -1640,6 +1640,155 @@ def apply_link_policy(html):
     return html, sayac
 
 
+# --- Kural 22: DOM genisligi (Sitebulb "Avoid excessive DOM width") ---
+# Sitebulb esigi: bir ebeveynin 60'tan FAZLA cocuk DUGUMU (element + metin dugumu).
+# .gp-content dogrudan cocuklari <section> altinda gruplanir; her <h2> yeni bir bolum baslatir.
+# CSS acisindan guvenli: kutuphanede tek bir ".gp-content >" secicisi yok ve tum
+# kardes/konum secicileri (.table-wrap, .gp-cell, .tldr-block, .gp-card-table-inner) bolum icinde kaliyor.
+_VOID_ETIKET = {'area','base','br','col','embed','hr','img','input','link','meta',
+                'param','source','track','wbr'}
+_HAM_ETIKET  = {'script','style','textarea'}
+# Bolum disinda, en ust seviyede kalanlar
+_SEC_DISI    = {'h1', 'style', 'script'}
+
+
+def _ust_seviye_dugumler(html):
+    """Metni en ust seviye dugumlere ayirir. Hicbir karakter kaybolmaz/yeniden yazilmaz;
+    yalnizca dilimlenir. Donen liste: ('metin', s) veya ('el', s, etiket, sinif)."""
+    out, i, n = [], 0, len(html)
+    while i < n:
+        j = html.find('<', i)
+        if j < 0:
+            out.append(('metin', html[i:])); break
+        if j > i:
+            out.append(('metin', html[i:j]))
+        if html.startswith('<!--', j):
+            k = html.find('-->', j); k = n if k < 0 else k + 3
+            out.append(('metin', html[j:k])); i = k; continue
+        if html.startswith('<!', j) or html.startswith('<?', j):
+            k = html.find('>', j); k = n if k < 0 else k + 1
+            out.append(('metin', html[j:k])); i = k; continue
+        m = re.match(r'<([a-zA-Z][-\w]*)', html[j:])
+        if not m:
+            out.append(('metin', html[j:j+1])); i = j + 1; continue
+        etiket = m.group(1).lower()
+        k = _element_sonu(html, j, etiket)
+        parca = html[j:k]
+        sm = re.match(r'<[a-zA-Z][-\w]*[^>]*?\sclass="([^"]*)"', parca)
+        out.append(('el', parca, etiket, sm.group(1) if sm else ''))
+        i = k
+    return out
+
+
+def _element_sonu(html, bas, etiket):
+    """bas konumundaki elementin bittigi (kapanis etiketinden sonraki) indeksi dondurur."""
+    ac_son = html.find('>', bas)
+    if ac_son < 0:
+        return len(html)
+    ac_son += 1
+    if etiket in _VOID_ETIKET or html[ac_son-2:ac_son] == '/>':
+        return ac_son
+    if etiket in _HAM_ETIKET:
+        # DIKKAT: html.lower() KULLANILMAZ - Turkce 'İ' kucultulunce iki karaktere
+        # donusur ('i' + birlesik nokta) ve tum indeksleri kaydirir. Buyuk/kucuk harf
+        # duyarsizlik regex ile saglanir.
+        m2 = re.compile(r'</' + etiket, re.I).search(html, ac_son)
+        if not m2:
+            return len(html)
+        k2 = html.find('>', m2.start())
+        return len(html) if k2 < 0 else k2 + 1
+    derinlik, i, n = 1, ac_son, len(html)
+    while i < n and derinlik > 0:
+        j = html.find('<', i)
+        if j < 0:
+            return n
+        if html.startswith('<!--', j):
+            k = html.find('-->', j); i = n if k < 0 else k + 3; continue
+        m = re.match(r'</?([a-zA-Z][-\w]*)', html[j:])
+        if not m:
+            i = j + 1; continue
+        ad = m.group(1).lower()
+        kapanis = html[j+1] == '/'
+        k = html.find('>', j)
+        if k < 0:
+            return n
+        k += 1
+        if not kapanis and ad in _HAM_ETIKET:
+            i = _element_sonu(html, j, ad); continue
+        if kapanis:
+            derinlik -= 1
+        elif ad not in _VOID_ETIKET and html[k-2:k] != '/>':
+            derinlik += 1
+        i = k
+    return i
+
+
+def gp_content_dom_genisligi(final_html):
+    """(cocuk_dugum, cocuk_element) - .gp-content'in DOM cocuk sayisi.
+    Sitebulb "Avoid excessive DOM width" esigi: bir ebeveynde 60'tan FAZLA cocuk DUGUM
+    (element + metin dugumu). Bileşenler "\n" ile birlestigi icin her elemanin yaninda
+    bir bosluk metin dugumu olusur; tarayicidaki sayim bu yuzden elemanin ~2 kati olur."""
+    m = re.search(r'<div class="gp-content"[^>]*>', final_html)
+    ic = final_html[m.end():final_html.rfind('</div>')] if m else final_html
+    d = _ust_seviye_dugumler(ic)
+    return len(d), sum(1 for x in d if x[0] == 'el')
+
+
+def group_into_sections(body_html, sinif="gp-sec", esik=50):
+    """.gp-content dogrudan cocuklarini <section> altinda gruplar (Kural 22).
+
+    Sitebulb "Avoid excessive DOM width" esigi: bir ebeveynde 60'tan FAZLA cocuk DUGUM.
+    Varsayilan `esik` bilerek 50'de tutulur; icerik buyudukce sinira dayanmamasi icin pay birakir.
+    Bolme UYARLANABILIR: once her <h2> yeni bir bolum baslatir; esigi hala asan bolum
+    kalirsa o bolum <h3> ile, gerekirse <h4> ile alt bolumlere ayrilir (ic ice degil,
+    kardes olarak). Kategori sayfalarinda gövdede tek H2 bulundugu icin bolme
+    kendiliginden H3'e iner.
+
+    Bolum DISINDA kalanlar: <h1>, <style>, en ust seviye <script> ve floating ToC
+    (position: fixed oldugu icin bir ata elemana transform gelmemesi adina sarmalanmaz).
+
+    Yazar metnine ve mevcut isaretlemeye DOKUNMAZ - yalnizca dilimler ve sarmalar."""
+    dugumler = _ust_seviye_dugumler(body_html)
+    ogeler = []          # ('disi', metin) | ('grup', [dugum, ...])
+    for d in dugumler:
+        if d[0] == 'metin':
+            if ogeler and ogeler[-1][0] == 'grup':
+                ogeler[-1][1].append(d)
+            else:
+                ogeler.append(('disi', d[1]))
+            continue
+        _, parca, etiket, sinif_attr = d
+        if etiket in _SEC_DISI or 'floating-toc' in sinif_attr:
+            ogeler.append(('disi', parca)); continue
+        if etiket == 'h2' or not (ogeler and ogeler[-1][0] == 'grup'):
+            ogeler.append(('grup', [d]))
+        else:
+            ogeler[-1][1].append(d)
+
+    for seviye in ('h3', 'h4'):
+        yeni_ogeler = []
+        for tur, icerik in ogeler:
+            if tur != 'grup' or len(icerik) <= esik:
+                yeni_ogeler.append((tur, icerik)); continue
+            alt = []
+            for d in icerik:
+                if d[0] == 'el' and d[2] == seviye and alt:
+                    yeni_ogeler.append(('grup', alt)); alt = []
+                alt.append(d)
+            if alt:
+                yeni_ogeler.append(('grup', alt))
+        ogeler = yeni_ogeler
+
+    cikti = []
+    for tur, icerik in ogeler:
+        if tur == 'disi':
+            cikti.append(icerik.strip('\n') if icerik.strip() else '')
+            continue
+        govde = ''.join(x[1] for x in icerik).strip()
+        cikti.append(f'<section class="{sinif}">\n{govde}\n</section>' if govde else '')
+    return '\n'.join(p for p in cikti if p)
+
+
 def wrap_gp_content(html):
     """Gövdeyi .gp-content wrapper'ına alır — build'in EN SON adımı:
         final = wrap_gp_content(ANIMATED_BORDER_STYLE + "\\n" + body)
@@ -1964,6 +2113,14 @@ def verify_output(final_html, blog_type="general", n_games=None, expect_faq=Fals
     if re.search(r'playstation', final_html, re.I):
         add(False, "PlayStation geçiyor", "",
             "'PlayStation' var — GFN platform/lisans/CTA bağlamında OLMADIĞINDAN emin ol", warn=True)
+
+
+    # 12) Kural 22 — DOM genisligi (Sitebulb "Avoid excessive DOM width", esik 60 cocuk dugum)
+    _dw_dugum, _dw_el = gp_content_dom_genisligi(final_html)
+    add(_dw_dugum <= 60, "DOM genişliği (Kural 22)",
+        f"{_dw_dugum} çocuk düğüm / {_dw_el} element",
+        f"{_dw_dugum} çocuk düğüm / {_dw_el} element — Sitebulb eşiği 60 çocuk düğüm; "
+        f"build'de wrap_gp_content'ten ÖNCE group_into_sections(body) çağır", warn=True)
 
     return r
 

@@ -74,8 +74,22 @@ from gameplus_blog_components import *
   `gp-cta-desc` / `gp-btn gp-btn-solid`. Tek fark renk: `.cta-ubisoft` sınıfı `--gp-accent` ve `--gp-btn-fg`
   token'larını Ubisoft mavisine (#0061FF / #FFFFFF) çevirir. Buton id **ubisoft-packages-button**.
   Ayrı bir tipografi/zemin/padding değeri YOKTUR; inline stil yazma (yalnız `--gp-glow`).
+- `group_into_sections(body, sinif="gp-sec", esik=50)` — **Kural 22 (DOM genişliği).** `wrap_gp_content`ten
+  HEMEN ÖNCE çağrılır: `wrap_gp_content(ANIMATED_BORDER_STYLE + "\n" + group_into_sections(body))`.
+  `.gp-content` doğrudan çocuklarını `<section class="gp-sec">` altında gruplar. Bölme uyarlanabilir:
+  önce her `<h2>` yeni bölüm başlatır; `esik`i aşan bölüm kalırsa o bölüm `<h3>`, gerekirse `<h4>` ile
+  kardeş alt bölümlere ayrılır (iç içe değil). Kategori sayfalarında gövdede tek H2 bulunduğu için
+  bölme kendiliğinden H3'e iner. **Bölüm dışında kalanlar:** `<h1>`, `<style>`, en üst seviye `<script>`,
+  floating ToC (`position: fixed` olduğu için bir ata elemana transform gelmemesi adına sarmalanmaz).
+  Metni ve işaretlemeyi DEĞİŞTİRMEZ - yalnızca dilimler ve sarar. CSS güvenli: kütüphanede `.gp-content >`
+  seçicisi yok, tüm kardeş/konum seçicileri (`.table-wrap`, `.gp-cell`, `.tldr-block`, `.gp-card-table-inner`)
+  bölüm içinde kalıyor.
+- `gp_content_dom_genisligi(final_html)` — `(çocuk_düğüm, çocuk_element)` döndürür. Sitebulb eşiği **60 çocuk
+  düğüm** (element + metin düğümü). Bileşenler `"\n"` ile birleştiği için tarayıcıdaki sayım element sayısının
+  yaklaşık iki katıdır. `verify_output` / `verify_category_output` bu değeri "DOM genişliği (Kural 22)"
+  kontrolünde kullanır (60'ı aşarsa UYARI).
 - `wrap_gp_content(html)` — **build'in EN SON adımı; atlanamaz.** Gövdeyi `.gp-content` sarmalayıcısına alır:
-  `final = wrap_gp_content(ANIMATED_BORDER_STYLE + "\n" + body)`. Tüm CSS bu sınıfa bağlı olduğu için
+  `final = wrap_gp_content(ANIMATED_BORDER_STYLE + "\n" + group_into_sections(body))`. Tüm CSS bu sınıfa bağlı olduğu için
   sarmalayıcı yoksa hiçbir stil uygulanmaz. `verify_output` eksikse FAIL verir.
 
 ## v10.7 notu — bileşenler SINIF tabanlıdır

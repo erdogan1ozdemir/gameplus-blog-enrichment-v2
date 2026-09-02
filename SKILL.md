@@ -80,10 +80,16 @@ faq    = render_faq_accordion([(soru, cevap), ...])
 - **FAQ accordion** → SSS bölümündeki H3+P çiftlerinin yerine
 
 ### 5. Birleştir ve çıktı al
-- `final = wrap_gp_content(ANIMATED_BORDER_STYLE + "\n" + enriched_body)` — stil bloğu bir kez en başta,
+- `final = wrap_gp_content(ANIMATED_BORDER_STYLE + "\n" + group_into_sections(enriched_body))` — stil bloğu bir kez en başta,
   ardından gövde tek bir `.gp-content` sarmalayıcısına alınır. **Bu son adım atlanamaz:** tüm CSS seçicileri
   `.gp-content` önekiyle yazılıdır, sarmalayıcı yoksa hiçbir stil uygulanmaz (`verify_output` FAIL verir).
   Sarmalayıcı aynı zamanda stillerin sol menü/footer gibi site alanlarına taşmasını engeller.
+- **`group_into_sections(body)` — Kural 22, DOM genişliği.** Sarmalamadan HEMEN ÖNCE çağrılır. `.gp-content`
+  doğrudan çocuklarını `<section class="gp-sec">` altında gruplar: her `<h2>` yeni bölüm başlatır, eşiği
+  (varsayılan 50 çocuk düğüm) aşan bölüm kalırsa o bölüm `<h3>`, gerekirse `<h4>` ile alt bölümlere ayrılır.
+  `<h1>`, `<style>`, en üst seviye `<script>` ve floating ToC bölüm dışında kalır (ToC `position: fixed`).
+  Gerekçe: Sitebulb "Avoid excessive DOM width" bir ebeveynde 60'tan fazla çocuk düğüm olduğunda uyarıyor
+  ve `.gp-content` sayfadaki en geniş ebeveyndi. Metne ve işaretlemeye dokunmaz; `verify_output` denetler.
 - **Bileşenler sınıf tabanlıdır (v10.7); renderer'lar inline stil yazmaz.** Yeni bileşen eklerken sınıf tanımla
   ve kuralı stil bloğuna `@media`'lardan ÖNCE ekle. Inline yalnız dinamik değerler için (tür rengi, `--gp-glow`,
   `--row-c`, `--gp-bw`, `--gp-thumb`). Detay: `references/design-system.md` -> "v10.6 / v10.7".

@@ -384,3 +384,36 @@ için otomatik link yanlış yere düşüyordu.
 Dış linkler `rel="nofollow noopener noreferrer"`, iç linkler `rel="noopener noreferrer"` (nofollow
 YOK), ikisi de `target="_blank"`. Sayfa içi çapalar (`#bolum`) dokunulmaz - aksi halde İçindekiler
 her tıklamada yeni sekme açar. Uygulama `apply_link_policy(body)`; üç otomatik kontrolle denetlenir.
+
+## v10.18 - DOM genişliği: bileşenler `<section>` altında (Kural 22)
+
+Sitebulb taraması iki blog sayfasında **"Avoid excessive DOM width"** uyarısı verdi. Hint'in eşiği
+**bir ebeveynde 60'tan fazla çocuk düğüm**, önem derecesi **Low**. Ölçümde eşiği aşan tek eleman
+`.gp-content` çıktı: cozy-games 67 element / 135 çocuk düğüm, 26 Ağustos GFN 52 element / 105 düğüm.
+Sitenin kendi elemanları en fazla 5-13 çocuk taşıyor, yani genişlik tamamen bizim kabımızdan geliyordu.
+(Sitebulb "child nodes" saydığı için bileşenler arasındaki satır sonları da sayıma giriyor.)
+
+**Çözüm:** `group_into_sections(body)` - `wrap_gp_content`ten hemen önce çağrılır. Her `<h2>` yeni bir
+`<section class="gp-sec">` başlatır; eşiği (varsayılan 50) aşan bölüm kalırsa `<h3>`, gerekirse `<h4>`
+ile kardeş alt bölümlere ayrılır. `<h1>`, `<style>`, en üst seviye `<script>` ve floating ToC bölüm
+dışında kalır - ToC `position: fixed` olduğu için bir ata elemana transform gelmesi riskine girilmez.
+
+**Neden CSS güvenli:** kütüphanede tek bir `.gp-content >` doğrudan-çocuk seçicisi yok; tüm kardeş ve
+konum seçicileri (`.table-wrap`, `.gp-cell`, `.tldr-block`, `.gp-card-table-inner`) bölüm içinde kalıyor.
+`.gp-table-hint:not(.gp-hint-off) + .table-wrap` çifti hiçbir zaman bölüm sınırında ayrılmıyor.
+`.gp-content` düz blok (flex/grid değil), `<section>` de varsayılan kenar boşluğu taşımıyor.
+
+**Ölçülen sonuç (27 Ağustos yazısı):** `.gp-content` 105 -> 19 çocuk düğüm, en büyük bölüm 29 düğüm,
+maliyet +176 karakter / +5 düğüm. 1280 px ve 390 px'te 53 öğenin konum ve boyutu birebir aynı;
+toplam yükseklik 7393 px ve 11115 px olarak değişmedi. 28 kategori sayfasında `.gp-content` ortalama
+141 -> 35 düğüm; kategori sayfasında da 88 öğede fark sıfır.
+
+**Kural 22 kontrolü:** `verify_output` ve `verify_category_output` içinde "DOM genişliği (Kural 22)";
+60 çocuk düğümü aşarsa UYARI verir ve `group_into_sections` çağrılmasını hatırlatır.
+
+**Ayrı hint - "Avoid excessive DOM size" (1500 element):** bizim yazılarımızı ilgilendirmiyor.
+Blog sayfaları 615-702 element bandında; eşiği aşanlar site şablon sayfaları (`/blog` 2075, `/destek` 2008).
+
+**Parser notu:** `_element_sonu` içinde `html.lower()` KULLANILMAZ. Türkçe `İ` küçültülünce iki karaktere
+("i" + birleşik nokta) dönüşüp tüm indeksleri kaydırıyor; script kapanışı yanlış yerde bulunuyordu.
+Büyük/küçük harf duyarsızlık `re.compile(..., re.I)` ile sağlanıyor.
