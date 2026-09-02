@@ -417,3 +417,22 @@ Blog sayfaları 615-702 element bandında; eşiği aşanlar site şablon sayfala
 **Parser notu:** `_element_sonu` içinde `html.lower()` KULLANILMAZ. Türkçe `İ` küçültülünce iki karaktere
 ("i" + birleşik nokta) dönüşüp tüm indeksleri kaydırıyor; script kapanışı yanlış yerde bulunuyordu.
 Büyük/küçük harf duyarsızlık `re.compile(..., re.I)` ile sağlanıyor.
+
+## v10.19 - Yazım güvenlik ağı: Türkçe İ tuzağı (Kural 23)
+
+Kategori skilinde (v12.3) "Indie" yazımı otomatik düzeltiliyor. Blogda yazarın metni
+DEĞİŞTİRİLMEZ, bu yüzden aynı kural burada otomatik düzeltici olarak değil **iki uyarı**
+olarak duruyor:
+
+1. **"Yazım: İngilizce terimde Türkçe İ"** - gövdede `İndie`, `İntel`, `İnstagram`, `İnput`,
+   `İnterface`, `İnventory`, `İtem`, `İndex`, `İnstall`, `İOS`, `İD` geçerse uyarır.
+   İngilizce sözcükler Türkçe büyük İ ile yazılmaz. (`İnternet` Türkçeleşmiş sözcük olduğu
+   için listede yoktur.)
+
+2. **"Büyük harf tuzağı (lang=tr)"** - `.gp-gic-badge`, `.gp-note-eyebrow` ve `.gp-cta-eyebrow`
+   CSS'te `text-transform: uppercase` taşır. Sayfa `lang="tr"` olduğu için tarayıcı `i` harfini
+   Türkçe kuralıyla `İ`ye çevirir: kaynakta `Indie` yazan etiket ekranda **INDİE** görünür
+   (tarayıcıda doğrulandı). Bu yüzden CSS ile büyütülen etiketlerin metninde küçük `i`
+   bulunmamalı; etiket kaynakta doğru büyük harfle yazılır (İngilizce terim düz I, Türkçe İ).
+
+Mevcut çıktılarda ikisi de temiz; kontroller ileride bozulmaması için var.

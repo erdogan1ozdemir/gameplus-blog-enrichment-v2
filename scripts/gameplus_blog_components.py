@@ -2122,6 +2122,30 @@ def verify_output(final_html, blog_type="general", n_games=None, expect_faq=Fals
         f"{_dw_dugum} çocuk düğüm / {_dw_el} element — Sitebulb eşiği 60 çocuk düğüm; "
         f"build'de wrap_gp_content'ten ÖNCE group_into_sections(body) çağır", warn=True)
 
+
+    # 13) Yazim: Ingilizce terimde Turkce buyuk I (Kural 23)
+    #     'Indie' Ingilizce sozcuk; Turkce buyuk I ile yazilmaz. Blogda yazarin metni
+    #     DEGISTIRILMEZ - bu yuzden otomatik duzeltme degil UYARI verilir.
+    _yanlis = [w for w in ("İndie", "İntel", "İnstagram", "İnput", "İnterface", "İnventory",
+                           "İtem", "İndex", "İnstall", "İOS", "İD")
+               if w in _govde]
+    add(not _yanlis, "Yazım: İngilizce terimde Türkçe İ", "temiz",
+        f"{_yanlis} - İngilizce sözcükler Türkçe büyük İ ile yazılmaz (Indie, Intel...)", warn=True)
+
+    # 14) Buyuk harf tuzagi: lang=tr + CSS text-transform:uppercase (Kural 23)
+    #     Turkce yerelde 'i' -> 'İ' donusur; INDIE yerine INDİE basilir. CSS ile buyutulen
+    #     ogelerin metninde kucuk 'i' bulunmamali (kaynakta dogru harflemeyle yazilmali).
+    _ust_sinif = ("gp-gic-badge", "gp-note-eyebrow", "gp-cta-eyebrow")
+    _tuzak = []
+    for _c in _ust_sinif:
+        for _m in re.finditer(r'<([a-z]+) class="[^"]*' + _c + r'[^"]*"', _govde):
+            _t = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", _govde[_m.start():_element_sonu(_govde, _m.start(), _m.group(1))])).strip()
+            if "i" in _t:
+                _tuzak.append(f"{_c}: '{_t[:40]}'")
+    add(not _tuzak, "Büyük harf tuzağı (lang=tr)", "CSS ile büyütülen etiketlerde küçük 'i' yok",
+        f"{_tuzak[:2]} - lang=tr'de 'i' harfi 'İ' olur (INDIE -> INDİE); etiketi kaynakta doğru "
+        f"büyük harfle yaz", warn=True)
+
     return r
 
 
