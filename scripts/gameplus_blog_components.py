@@ -1527,20 +1527,33 @@ def render_floating_toc(items, title=None):
   var t = document.querySelector('.floating-toc');
   if (!t) return;
   var close = function(){{ if (t.hasAttribute('open')) t.removeAttribute('open'); }};
+  /* v10.20: hedef sayfanin en ustu DEGIL, yazinin ILK BASLIGI. Canlida sayfa basi site
+     menusune/hero gorseline denk geliyordu (yazi basligi ~666px asagida). */
+  var basaDonHedefi = function(){{
+    var kok = t.closest('.gp-content') || document;
+    var ilk = t.querySelector('.gp-toc-top');
+    var kimlik = (ilk && ilk.getAttribute('href')) ? ilk.getAttribute('href').slice(1) : '';
+    var el = kimlik ? document.getElementById(kimlik) : null;   /* ToC ilk maddesi = yazi basligi */
+    if (!el) el = kok.querySelector('h1, h2');                  /* govdede H1 yoksa ilk H2 */
+    if (!el) el = document.querySelector('h1');                 /* basligi CMS basiyorsa */
+    return el || kok;
+  }};
   var toTop = function(e){{
     e.stopPropagation(); e.preventDefault(); close();
     var y = window.pageYOffset || document.documentElement.scrollTop || 0;
-    try {{ window.scrollTo({{top:0, behavior:'smooth'}}); }} catch (err) {{ window.scrollTo(0,0); }}
-    /* Güvenlik ağı: smooth animasyon başlamazsa (bazı gömülü/webview ortamları) anında başa al */
+    var el = basaDonHedefi();
+    var hedef = Math.max(0, Math.round(el.getBoundingClientRect().top + y - 28));
+    try {{ window.scrollTo({{top:hedef, behavior:'smooth'}}); }} catch (err) {{ window.scrollTo(0, hedef); }}
+    /* Güvenlik ağı: smooth animasyon başlamazsa (bazı gömülü/webview ortamları) anında git */
     setTimeout(function(){{
       var y2 = window.pageYOffset || document.documentElement.scrollTop || 0;
-      if (y2 > 0 && y2 >= y - 1) window.scrollTo(0, 0);
+      if (Math.abs(y2 - y) < 2 && Math.abs(y2 - hedef) > 4) window.scrollTo(0, hedef);
     }}, 400);
   }};
   var btn = t.querySelector('.gp-toptop');
   if (btn) btn.addEventListener('click', toTop);
   var first = t.querySelector('.gp-toc-top');
-  if (first) first.addEventListener('click', toTop);
+  if (first) first.addEventListener('click', toTop);   /* ilk madde de ayni hedefe gider */
   t.querySelectorAll('ul li a').forEach(function(a){{ a.addEventListener('click', close); }});
   window.addEventListener('scroll', close, {{passive:true}});
   document.addEventListener('click', function(e){{ if (!t.contains(e.target)) close(); }}, true);
@@ -1549,7 +1562,7 @@ def render_floating_toc(items, title=None):
   /* İç bağlantılarda (ToC + card-table) yumuşak kaydırma artık burada. */
   var root = t.closest('.gp-content') || document;
   root.querySelectorAll('a[href^="#"]').forEach(function(a){{
-    if (a.classList.contains('gp-toc-top')) return;      /* o zaten sayfa başına gidiyor */
+    if (a.classList.contains('gp-toc-top')) return;      /* o zaten ilk başlığa gidiyor */
     a.addEventListener('click', function(e){{
       var id = a.getAttribute('href').slice(1);
       if (!id) return;

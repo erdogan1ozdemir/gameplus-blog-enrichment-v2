@@ -129,6 +129,7 @@ Detaylar **`references/design-system.md`**'de. Özet:
   tüm linkler yeni sekmede, sayfa içi çapalara dokunulmaz. `ensure_leading_h1`den hemen önce.
 - **Gövde içinde 1-2 GFN kategori linki** (Kural 20): `body, kat = auto_link_categories(body, max_links=2)`.
   Zorlama yok, doğal geçiş yoksa link kurulmaz. Anchor'lar `CATEGORY_ANCHORS`'ta arama hacmiyle sıralı.
+- **Başa dön butonu ilk başlığa gider** (v10.20). `.gp-toptop` ve İçindekiler'in ilk maddesi artık `scrollTo(top:0)` yapmaz; hedef, İçindekiler ilk maddesinin çapası (yoksa gövdedeki ilk H1/H2, o da yoksa CMS'in bastığı H1) ve 28px üst boşlukla konumlanır. Canlıda sayfa başı site menüsüne/hero görseline denk geliyordu (yazı başlığı ~370-670px aşağıdaydı). **Script her yazının gövdesine gömülü olduğu için yayındaki yazılar bu düzeltmeyi kendiliğinden almaz;** güncel script bloğuyla değiştirilmeli (`scripts/basa_don_yamasi.py`).
 - **`/firsatlar`'a yönlendirme YOK** (v10.13, marka kararı). CTA hedefleri: `/gfn/paketler`, `/gfn/oyunlar`, Ubisoft yazılarında `/paketler` ve `/ubisoft/*`. `render_end_cta` ikinci butonunun varsayılanı artık **GeForce NOW Oyunları → `/gfn/oyunlar`**. `verify_output` fırsatlar linkini ve CTA hedef çakışmasını denetler.
 
 ## İçerik kuralları (zorunlu)

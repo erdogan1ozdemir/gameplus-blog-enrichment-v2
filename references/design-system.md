@@ -84,8 +84,21 @@ eleman parse edilmeden önce uygulanıyor; ilk boyama doğru konumda (ölçülen
 Başa-dön'de güvenlik ağı var: smooth animasyon başlamazsa 400 ms sonra anında başa alınır.
 
 **3. H1 ToC'nin ilk maddesi.** `inject_heading_ids` artık H1'i de toplar (level 1) ve ToC'nin ilk maddesi
-yazı başlığı olur (yukarı-ok işaretli). Hedefi başa-dön butonuyla aynıdır: sayfa başı.
+yazı başlığı olur (yukarı-ok işaretli). Hedefi başa-dön butonuyla aynıdır.
 `render_floating_toc(items)` çağrısında items'ı `l == 2` diye filtreleme; `l in (1, 2)` kullan.
+
+**4. Başa dön hedefi: sayfa başı DEĞİL, yazının ilk başlığı (v10.20).** Canlıda ölçüldü
+(`/blog/yapay-zeka-oyunlari-nasil-degistiriyor-unity-7-ve-ai-npc-ler`): script çalışıyordu, ancak
+`window.scrollTo({top:0})` kullanıcıyı yazı başlığının ~370-670px üstüne, site menüsü ve hero
+görselinin olduğu alana bırakıyordu. `basaDonHedefi()` sırayla şuna bakar: İçindekiler ilk maddesinin
+çapası -> `.gp-content` içindeki ilk `h1, h2` -> sayfadaki `h1`. Hedef `getBoundingClientRect().top +
+pageYOffset - 28` ile hesaplanır (28px, başlıkların `scroll-margin-top` değeriyle aynı). Güvenlik ağı
+korunur: 400 ms sonra hiç hareket olmamışsa anında hedefe atlanır. Ölçüm: hangi noktadan tıklanırsa
+tıklansın başlık ekranın 16-28px altında duruyor.
+
+**Script yayındaki yazılara geriye dönük gitmez** - her yazının gövdesinde kendi kopyası var.
+Mevcut çıktıları güncellemek için: `python3 scripts/basa_don_yamasi.py <dosya...>` (eski script
+bloğunu bulup güncel bloğuyla değiştirir, zaten güncel olanı atlar).
 
 ## v10.6 / v10.7 - CSS izolasyonu, sınıf tabanlı bileşenler, tipografi
 
