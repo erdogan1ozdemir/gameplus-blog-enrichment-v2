@@ -274,7 +274,12 @@ _STYLE_KAYNAK = '''<style>
 .gp-content .gp-game-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 12px;
   line-height: 16px; font-weight: 700; white-space: nowrap; }
 .gp-content .gp-game-badge-link { text-decoration: none; display: contents; }
-.gp-content .gp-game-name { font-weight: 700; letter-spacing: -0.01em; }
+/* v10.21: isim rozetin SAGINDAN baslar. flex ogesi varsayilan olarak kirilmaz; uzun isim
+   (Skull and Bones(TM) - Year 3 Season 2) tek parca halinde alt satira duserek rozeti yalniz
+   birakiyordu. flex-basis 0 sart: 'auto' ile varsayimsal ana boyut icerik genisligi olur ve oge
+   satira sigmayip asagi duser; 0 ile hep rozetin yanina yerlesir, sonra buyuyup kendi icinde
+   satira boluniyor (min-width:0 tasmayi engeller). */
+.gp-content .gp-game-name { flex: 1 1 0%; min-width: 0; font-weight: 700; letter-spacing: -0.01em; }
 .gp-content .gp-game-meta { font-size: 0.52em; color: #B2B2B2; font-weight: 500; letter-spacing: 0.02em;
   flex-basis: 100%; margin-top: -4px; }
 
