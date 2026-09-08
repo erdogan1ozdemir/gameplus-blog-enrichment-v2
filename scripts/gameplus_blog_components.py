@@ -59,7 +59,7 @@ PAGE_HEAD = '''<!DOCTYPE html>
 <title>__TITLE__</title>
 <style>
   /* Onizleme tipografisi Figma "Blog Detail (GFN Thursday)" ile: baslikar New Science SemiBold Extended, govde Greycliff CF, 1200px kolon. Yalnizca onizleme; CMS govdesi etkilenmez. */
-  @font-face { font-family:'New Science'; font-style:normal; font-weight:600; font-display:swap; src:url('https://gameplus.com.tr/_next/static/media/NewScience-SemiBoldExt.otf') format('opentype'); }
+  @font-face { font-family:'New Science'; font-style:normal; font-weight:600; font-display:swap; src:url('https://gameplus.com.tr/_next/static/media/New_Science_SemiBold_Extended.76fa0214.otf') format('opentype'); }
   @font-face { font-family:'GreycliffCF'; font-style:normal; font-weight:400; font-display:swap; src:url('https://gameplus.com.tr/_next/static/media/GreycliffCF-Regular.55993c60.otf') format('opentype'); }
   @font-face { font-family:'GreycliffCF'; font-style:normal; font-weight:500; font-display:swap; src:url('https://gameplus.com.tr/_next/static/media/GreycliffCF-Medium.b24079d5.woff2') format('woff2'); }
   @font-face { font-family:'GreycliffCF'; font-style:normal; font-weight:700; font-display:swap; src:url('https://gameplus.com.tr/_next/static/media/GreycliffCF-Bold.d881132f.woff2') format('woff2'); }
@@ -96,7 +96,7 @@ def embed_fonts(html):
     import base64, os
     base = os.path.join(os.path.dirname(__file__), "_fonts")
     mapping = {
-        "https://gameplus.com.tr/_next/static/media/NewScience-SemiBoldExt.otf": ("new-science-semibold-ext.otf", "font/otf"),
+        "https://gameplus.com.tr/_next/static/media/New_Science_SemiBold_Extended.76fa0214.otf": ("new-science-semibold-ext.otf", "font/otf"),
         "https://gameplus.com.tr/_next/static/media/GreycliffCF-Regular.55993c60.otf": ("reg.otf", "font/otf"),
         "https://gameplus.com.tr/_next/static/media/GreycliffCF-Medium.b24079d5.woff2": ("med.woff2", "font/woff2"),
         "https://gameplus.com.tr/_next/static/media/GreycliffCF-Bold.d881132f.woff2": ("bold.woff2", "font/woff2"),
