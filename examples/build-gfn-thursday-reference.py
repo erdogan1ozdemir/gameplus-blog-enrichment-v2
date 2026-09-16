@@ -208,6 +208,7 @@ toc = render_floating_toc(toc_items)  # inject_heading_ids zaten yalnız H1 + H2
 tldr = render_tldr(TLDR_ITEMS, reading_time=estimate_reading_time(body))
 body = body.replace('</h1>', '</h1>\n' + toc + tldr + info, 1)
 body = ensure_leading_h1(body)
+body, _ps = insert_preferred_source(body)   # v10.22: tercih edilen kaynak kartı, ortada bir başlıktan önce
 final = wrap_gp_content(ANIMATED_BORDER_STYLE + "\n" + group_into_sections(body))  # Kural 22
 # ================= KONTROL NOKTALARI =================
 print("=== 1) Çıktı yapısı ===")

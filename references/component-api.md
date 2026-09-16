@@ -92,6 +92,23 @@ from gameplus_blog_components import *
   `final = wrap_gp_content(ANIMATED_BORDER_STYLE + "\n" + group_into_sections(body))`. Tüm CSS bu sınıfa bağlı olduğu için
   sarmalayıcı yoksa hiçbir stil uygulanmaz. `verify_output` eksikse FAIL verir.
 
+## v10.22 - Tercih edilen kaynak kartı
+
+| Fonksiyon | Dönüş | Not |
+|---|---|---|
+| `render_preferred_source()` | kart HTML'i | Canlı Ubisoft Ağustos kartının birebir işaretlemesi. CSS stil bloğunda (`.gpps`). |
+| `insert_preferred_source(body, hedef=0.5)` | `(body, bilgi)` | Kartı ortaya en yakın uygun başlığın önüne koyar. `bilgi`: `durum`, `baslik`, `oran`. Kart zaten varsa dokunmaz. |
+| `PREFERRED_SOURCE_URL` | sabit | `https://www.google.com/preferences/source?q=gameplus.com.tr` |
+
+GA4/GTM: kart `id="preferred-source-button"`, bağlantı `id="preferred-source-link"`. Google'ın gömme butonu
+(iframe) kullanılmaz; tıklaması ölçülemez.
+
+## v10.22 - Oyun başlığı satır içi akış
+
+`render_game_h3_inline` artık rozet ile isim arasına boşluk karakteri koymaz. `.gp-game-head` flex değil
+`display:block`; rozet `inline-block` + `vertical-align:middle` + `margin-right:12px`. İsim uzunsa alt satır
+rozetin altından (başlığın sol kenarından) devam eder. Yayındaki çıktılar: `scripts/oyun_basligi_yamasi.py`.
+
 ## v10.7 notu — bileşenler SINIF tabanlıdır
 Renderer'lar artık inline stil yazmaz; kurallar `ANIMATED_BORDER_STYLE` içindedir. Yeni bir bileşen
 eklerken **inline stil kullanma** — sınıf tanımla ve kuralı stil bloğuna, `@media` bloklarından ÖNCE ekle.

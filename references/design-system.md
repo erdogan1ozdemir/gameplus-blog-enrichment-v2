@@ -449,3 +449,28 @@ olarak duruyor:
    bulunmamalı; etiket kaynakta doğru büyük harfle yazılır (İngilizce terim düz I, Türkçe İ).
 
 Mevcut çıktılarda ikisi de temiz; kontroller ileride bozulmaması için var.
+
+
+## v10.22 - Oyun başlığı hizası ve tercih edilen kaynak kartı
+
+**1. Oyun başlığı satır içi akışa geçti.** v10.21'de başlık flex'ti: isim kendi kutusunda sarıyordu. Mobilde
+uzun isim iki satıra indiğinde ikinci satır rozetin altına değil ismin sol kenarına hizalanıyor, rozet de iki
+satırlık ismin dikey ortasında kalıyordu (canlı Ubisoft Ağustos yazısı, "Tom Clancy's Ghost Recon Wildlands").
+İstenen: rozet ilk satırla aynı hizada, isim alt satırda başlığın sol kenarından devam eder.
+
+| Öğe | v10.21 | v10.22 |
+|---|---|---|
+| `.gp-game-head` | `display:flex; align-items:center; gap:12px` | `display:block` |
+| `.gp-game-badge` | `inline-block` | `inline-block; vertical-align:middle; margin-right:12px` |
+| `.gp-game-name` | `flex:1 1 0%; min-width:0` | `display:inline` |
+| `.gp-game-meta` | `flex-basis:100%; margin-top:-4px` | `display:block; margin-top:8px` |
+| İşaretleme | rozet + satır sonu + isim | rozet ile isim bitişik (boşluk karakteri yok) |
+
+Ölçüm (390 px, 19 px başlık): rozet sol 0, isim rozetten 12 px sonra başlıyor, ikinci satırın sol kenarı 0
+(rozet hizası). 1440 px'de tek satır başlıklarda görünüm değişmedi. Yayındaki yazılar:
+`python3 scripts/oyun_basligi_yamasi.py <dosya...>` (v10.20/v10.21 CSS bloğunu değiştirir, rozet boşluğunu siler).
+
+**2. Tercih edilen kaynak kartı (`.gpps`).** Canlı Ubisoft Ağustos yazısında yayınlanan kartın CSS'i stil
+bloğunun sonunda. Zemin `#0D0D0D`, kenarlık `#29292B`, köşe 12 px, başlık New Science 20/28 (mobil 18/24),
+açıklama 16/24 `#B2B2B2`, buton sarı çerçeveli şeffaf, en az 44 px yükseklik. 900 px altında logo + başlık
+üstte, açıklama altta, buton tam genişlik. Kategori stiline girmez (`category_components` filtresinde `gpps`).

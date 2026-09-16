@@ -266,22 +266,21 @@ _STYLE_KAYNAK = '''<style>
   font-weight: 500; letter-spacing: 0.01em; }
 
 /* --- Oyun başlığı (tür rozeti + isim + "Stüdyo · Yıl") --- */
-.gp-content .gp-game-head { display: flex; flex-wrap: wrap; align-items: center; gap: 12px;
-  margin: 32px 0 14px; line-height: 1.4; }
+/* v10.22: flex DEGIL satir ici akis. Flex'te isim kendi kutusunda sariyordu: alt satir rozetin
+   altina degil ismin sol kenarina iniyor, rozet de iki satirlik ismin dikey ortasinda kaliyordu.
+   Artik rozet ilk satirla ayni hizada duruyor, isim alt satira indiginde baslik hizasindan
+   (rozetin sol kenarindan) devam ediyor - metni saran satir ici bir etiket gibi. */
+.gp-content .gp-game-head { display: block; margin: 32px 0 14px; line-height: 1.4; }
 /* Oyun adı, başlığın KENDİ seviyesinin ölçüsünü kullanır (h3 ise h3 gibi görünür).
    Bunun çalışması için mobil başlık ölçeğinin azalan olması şart: h1 > h2 > h3 > h4. */
 .gp-content .gp-game-head .gp-game-name { color: #fff; }
-.gp-content .gp-game-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 12px;
+.gp-content .gp-game-badge { display: inline-block; vertical-align: middle; margin-right: 12px;
+  padding: 4px 10px; border-radius: 6px; font-size: 12px;
   line-height: 16px; font-weight: 700; white-space: nowrap; }
 .gp-content .gp-game-badge-link { text-decoration: none; display: contents; }
-/* v10.21: isim rozetin SAGINDAN baslar. flex ogesi varsayilan olarak kirilmaz; uzun isim
-   (Skull and Bones(TM) - Year 3 Season 2) tek parca halinde alt satira duserek rozeti yalniz
-   birakiyordu. flex-basis 0 sart: 'auto' ile varsayimsal ana boyut icerik genisligi olur ve oge
-   satira sigmayip asagi duser; 0 ile hep rozetin yanina yerlesir, sonra buyuyup kendi icinde
-   satira boluniyor (min-width:0 tasmayi engeller). */
-.gp-content .gp-game-name { flex: 1 1 0%; min-width: 0; font-weight: 700; letter-spacing: -0.01em; }
-.gp-content .gp-game-meta { font-size: 0.52em; color: #B2B2B2; font-weight: 500; letter-spacing: 0.02em;
-  flex-basis: 100%; margin-top: -4px; }
+.gp-content .gp-game-name { display: inline; font-weight: 700; letter-spacing: -0.01em; }
+.gp-content .gp-game-meta { display: block; font-size: 0.52em; color: #B2B2B2; font-weight: 500;
+  letter-spacing: 0.02em; margin-top: 8px; }
 
 /* --- Tablo oyun hücresi + dış link ikonu --- */
 .gp-content .gp-tg-link { color: inherit; text-decoration: none; }
@@ -852,6 +851,33 @@ _STYLE_KAYNAK = '''<style>
   .gp-content .gp-table-hint.gp-hint-off { display: none; }
   .gp-content .gp-table-hint:not(.gp-hint-off) + .table-wrap { margin-top: 0; }
 }
+
+/* ================= v10.22 - Google "tercih edilen kaynak" kartı (.gpps) =================
+   Canlıdaki Ubisoft Ağustos yazısında onaylanan kartın birebir CSS'i. Kart da buton da
+   yayıncınındır: Google'ın gömme butonu (iframe) değil, google.com/preferences/source bağlantısı.
+   Masaüstü: logo | başlık+açıklama | buton. 900px altı: logo+başlık, açıklama, tam genişlik buton. */
+.gp-content .gpps{--gpps-bg:#0D0D0D;--gpps-line:#29292B;--gpps-ink:#FFFFFF;--gpps-sub:#B2B2B2;--gpps-accent:#FFC900;display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"mark ttl act" "mark sub act";align-items:center;column-gap:20px;row-gap:6px;margin:32px 0;padding:20px 24px;background:var(--gpps-bg);border:1px solid var(--gpps-line);border-radius:12px;font-family:GreycliffCF,-apple-system,system-ui,"Segoe UI",Roboto,sans-serif;color:var(--gpps-ink);box-sizing:border-box}
+.gp-content .gpps *{box-sizing:border-box}
+.gp-content .gpps .gpps__mark{grid-area:mark;display:flex;align-items:center}
+.gp-content .gpps .gpps__mark svg{display:block;width:90px;height:auto}
+.gp-content .gpps strong.gpps__ttl{grid-area:ttl;align-self:end;font-family:"New Science",GreycliffCF,-apple-system,system-ui,sans-serif;font-size:20px;line-height:28px;font-weight:600;color:var(--gpps-ink);letter-spacing:-.01em}
+.gp-content .gpps span.gpps__sub{grid-area:sub;align-self:start;font-size:16px;line-height:24px;color:var(--gpps-sub)}
+.gp-content .gpps .gpps__act{grid-area:act;display:flex;align-items:center;min-height:44px}
+.gp-content .gpps a.gpps__btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:11px 20px;border:1px solid var(--gpps-accent);border-radius:8px;background:transparent;color:var(--gpps-accent);font-family:inherit;font-size:16px;line-height:20px;font-weight:700;text-decoration:none;white-space:nowrap;transition:background-color .2s ease}
+.gp-content .gpps a.gpps__btn .gpps__g{flex:0 0 auto;display:block}
+.gp-content .gpps a.gpps__btn:hover{background:rgba(255,201,0,0.12)}
+.gp-content .gpps a.gpps__btn:focus-visible{outline:2px solid var(--gpps-accent);outline-offset:3px}
+@media (max-width:900px){
+.gp-content .gpps{grid-template-columns:auto 1fr;grid-template-areas:"mark ttl" "sub sub" "act act";column-gap:14px;row-gap:12px;padding:18px}
+.gp-content .gpps .gpps__mark svg{width:72px}
+.gp-content .gpps strong.gpps__ttl{align-self:center;font-size:18px;line-height:24px}
+.gp-content .gpps span.gpps__sub{align-self:auto}
+.gp-content .gpps .gpps__act{width:100%}
+.gp-content .gpps a.gpps__btn{width:100%}
+}
+@media (prefers-reduced-motion:reduce){
+.gp-content .gpps a.gpps__btn{transition:none}
+}
 </style>
 '''
 
@@ -970,6 +996,74 @@ def render_editor_note(text, title="GAME+ EDİTÖR NOTU"):
 '''
 
 # --- Hatırlatma (Figma: rgba(255,255,255,0.04) zemin + 4px sarı sol bar + sarı eyebrow; gövde beyaz 20/32) ---
+
+# --- Google "tercih edilen kaynak" (preferred source) kartı - v10.22 ---
+# Canlıdaki Ubisoft Ağustos yazısında yayınlanan kartın birebir işaretlemesi. CSS stil bloğunda
+# (.gpps). GA4/GTM kimlikleri: kart #preferred-source-button, bağlantı #preferred-source-link.
+# Buton Google'ın gömme iframe'i DEĞİL; tıklama sayfada gerçekleştiği için GA4'te ölçülebilir.
+PREFERRED_SOURCE_URL = "https://www.google.com/preferences/source?q=gameplus.com.tr"
+
+_PREFERRED_SOURCE_KART = """<div class="gpps" id="preferred-source-button">
+  <div class="gpps__mark"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 106 24" role="img" aria-label="GAME+"><g fill="none" fill-rule="evenodd"><g fill="#FFC516"><path d="M103.635 12.37l1.37-5.413h-20.97l-1.332 5.412z"></path><path d="M94.518 19.327h-5.865L93.712 0h5.865z"></path></g><path fill="#FFF" d="M12.56 19.327H2.816a2.815 2.815 0 01-2.73-3.5l3.44-13.698A2.815 2.815 0 016.256 0h17.021l-1.37 5.447H8.975c-.117 0-.222.076-.316.228a2.73 2.73 0 00-.21.404l-1.793 7.168a.647.647 0 000 .422c.047.141.128.211.246.211h6.642c.093 0 .193-.07.298-.21.105-.141.182-.282.229-.423l.21-.878h-5.13l1.37-5.411h11.034l-3.092 12.369C18.416 19.443 11.611 24 11.4 24l1.16-4.673zM34.052 5.929l-7.908 13.398h-6.501L31.977 0h6.29l2.67 19.327H35zm18.614 13.398l-2.038-9.699-2.424 9.699H42.3L47.114 0h7.415l2.108 9.769L63.63 0h8.363l-4.814 19.327h-5.903L63.7 9.628l-6.887 9.699zM91.566 0H73.68l-4.814 19.327H86.75l1.37-5.447H76.175l2.074-8.433h11.947z"></path><path fill="#FFF" d="M80.906 12.37h-4.582l1.35-5.412h4.58z"></path></g></svg></div>
+  <strong class="gpps__ttl">Google'da Game+'ı tercih edilen kaynaklarına ekle</strong>
+  <span class="gpps__sub">Arama sonuçlarında Game+ içeriklerini daha üstte görmek istersen, Google'ın tercih edilen kaynaklar ekranından Game+'ı seçebilirsin.</span>
+  <div class="gpps__act"><a class="gpps__btn" id="preferred-source-link" href="https://www.google.com/preferences/source?q=gameplus.com.tr" target="_blank" rel="noopener noreferrer"><svg class="gpps__g" viewBox="0 0 48 48" width="18" height="18" aria-hidden="true" focusable="false"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>Tercih edilen kaynaklara ekle</a></div>
+</div>"""
+
+
+def render_preferred_source():
+    """Tercih edilen kaynak kartı. Her blogda TEK kez, yazının ortalarında bir başlıktan hemen önce.
+    Elle yerleştirmek yerine insert_preferred_source(body) kullan."""
+    return _PREFERRED_SOURCE_KART
+
+
+def _gorunur_uzunluk(html):
+    """Etiketler, stil ve script atıldıktan sonra kalan görünür metnin uzunluğu."""
+    html = re.sub(r"<(style|script)\b.*?</\1>", "", html, flags=re.S)
+    return len(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", html)))
+
+
+def insert_preferred_source(body, hedef=0.5):
+    """Kartı yazının ortasına en yakın UYGUN başlığın hemen önüne yerleştirir.
+
+    Çağrı sırası: gövde, bileşenler ve ToC/TLDR yerleştikten SONRA, group_into_sections'tan ÖNCE.
+    Kart böylece önceki bölümün sonunda kalır, başlık yeni bölümü açar (canlı örnekle aynı).
+
+    Aday başlık kuralları:
+    - h2 / h3 (oyun başlıkları dahil). H1 ve kapanış CTA'sı / SSS bölümünden sonrası aday olmaz.
+    - Başlığın hemen öncesi düz metin olmalı (</p>, </ul>, </ol>). CTA, tablo, not, video gibi bir
+      bileşenin hemen arkasına kart konmaz; iki kutu üst üste binmiş görünür.
+    - Görünür metnin ilk yüzde 15'i aday olmaz (kart girişte değil, yazının içinde durur).
+    Seçim: yüzde 30-70 bandındaki adaylar önceliklidir, aralarından yüzde 50'ye en yakını seçilir.
+    Dönüş: (body, bilgi) - bilgi yerleştirilen başlığın metnini ve konum oranını taşır."""
+    if 'id="preferred-source-button"' in body:
+        return body, {"durum": "zaten var"}
+    bas_m = re.search(r"</h1>", body)
+    bas = bas_m.end() if bas_m else 0
+    sinir = len(body)
+    for isaret in ('class="cta-end', 'class="faq-block"', "FAQPage"):
+        i = body.find(isaret, bas)
+        if i != -1:
+            sinir = min(sinir, body.rfind("<", 0, i))
+    toplam = _gorunur_uzunluk(body[bas:sinir]) or 1
+    adaylar = []
+    for m in re.finditer(r"<h[23]\b", body[bas:sinir]):
+        pos = bas + m.start()
+        if not re.search(r"</(p|ul|ol)>$", body[bas:pos].rstrip()):
+            continue
+        oran = _gorunur_uzunluk(body[bas:pos]) / toplam
+        if oran < 0.15:
+            continue
+        baslik = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", body[pos:body.find("</h", pos)])).strip()
+        adaylar.append((not (0.30 <= oran <= 0.70), abs(oran - hedef), pos, oran, baslik))
+    if not adaylar:
+        return body, {"durum": "uygun başlık bulunamadı"}
+    adaylar.sort(key=lambda a: (a[0], a[1]))
+    _, _, pos, oran, baslik = adaylar[0]
+    body = body[:pos] + render_preferred_source() + "\n" + body[pos:]
+    return body, {"durum": "eklendi", "baslik": baslik, "oran": round(oran, 2)}
+
+
 def render_highlight(text, title="Hatırlatma"):
     return f'''<div class="highlight-box">
   <div class="gp-note-bar"></div>
@@ -1439,9 +1533,10 @@ def render_game_h3_inline(anchor, name, badge, badge_color, meta_text, level="h3
     if whole_href:
         # display:contents -> anchor kutu üretmez; rozet linksizle birebir aynı yerleşir.
         badge_html = f'<a class="gp-game-badge-link" href="{whole_href}">{badge_html}</a>'
+    # v10.22: rozet ile isim ARASINDA bosluk karakteri yok. Baslik satir ici akista; aradaki
+    # bosluk/satir sonu margin-right'a ~5px ekleyip mesafeyi tutarsiz yapar.
     return f'''<{level} id="{anchor}" class="gp-game-head">
-  {badge_html}
-  <span class="gp-game-name">{name}</span>
+  {badge_html}<span class="gp-game-name">{name}</span>
   <span class="gp-game-meta">{meta_text}</span>
 </{level}>'''
 
@@ -2094,6 +2189,34 @@ def verify_output(final_html, blog_type="general", n_games=None, expect_faq=Fals
         f"gövdede {_kat_link} kategori linki var - en fazla 2-3 olmalı (Kural 20)")
     add(_kat_link >= 1, "Gövde içi kategori linki", f"{_kat_link} link",
         "gövdede GFN kategori linki yok - uygun yer varsa 1-2 tane eklenebilir (Kural 20)", warn=True)
+
+    # v10.22: Google tercih edilen kaynak kartı - her blogda tek kez, bir başlıktan hemen önce,
+    # yazının ortalarında. Kart GA4 kimliklerini ve kendi CSS'ini taşımalı.
+    _ps_n = final_html.count('id="preferred-source-button"')
+    add(_ps_n == 1, "Tercih edilen kaynak kartı", "1 kart",
+        f"{_ps_n} kart (tam 1 olmalı) - insert_preferred_source(body) çağır")
+    if _ps_n == 1:
+        add(".gp-content .gpps{" in final_html, "Tercih edilen kaynak CSS", "var",
+            "kart var ama .gpps CSS'i yok - ANIMATED_BORDER_STYLE güncel değil")
+        _ps_a = re.search(r'<a\b[^>]*id="preferred-source-link"[^>]*>', final_html)
+        add(bool(_ps_a) and PREFERRED_SOURCE_URL in _ps_a.group(0) and 'target="_blank"' in _ps_a.group(0),
+            "Tercih edilen kaynak bağlantısı", "Google tercihler ekranı, yeni sekme",
+            "bağlantı yok, adresi farklı ya da yeni sekmede açılmıyor")
+        _ps_i = final_html.rfind("<", 0, final_html.index('id="preferred-source-button"'))
+        _ps_son, _derin = _ps_i, 0
+        for _m in re.finditer(r"<(/?)div\b[^>]*>", final_html[_ps_i:]):
+            _derin += -1 if _m.group(1) else 1
+            if _derin == 0:
+                _ps_son = _ps_i + _m.end()
+                break
+        _sonraki = re.match(r"\s*(?:</section>\s*<section[^>]*>\s*)?<(h[2-4])\b", final_html[_ps_son:])
+        add(bool(_sonraki), "Kart başlıktan hemen önce",
+            f"ardından {_sonraki.group(1) if _sonraki else ''}",
+            "kartın hemen ardından başlık gelmiyor - yazı akışında bir başlığın önüne yerleştir")
+        _gb = max(final_html.find("</h1>"), 0)
+        _oran = _gorunur_uzunluk(final_html[_gb:_ps_i]) / (_gorunur_uzunluk(final_html[_gb:]) or 1)
+        add(0.25 <= _oran <= 0.75, "Kart yazının ortalarında", f"yüzde {round(_oran * 100)}",
+            f"yüzde {round(_oran * 100)} konumda (25-75 bandı önerilir)", warn=True)
 
     # v10.12: "Tabloyu yana kaydır" ipucu tablo kabının DIŞINDA, hemen ÜSTÜNDE olmalı.
     _ipucu_icerde = re.search(r'<div class="table-wrap[^"]*">\s*<div class="gp-table-hint"', final_html)

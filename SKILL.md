@@ -78,6 +78,13 @@ faq    = render_faq_accordion([(soru, cevap), ...])
 - Genel blogda VE etkinlik özetlerinde (State of Play vb.) her oyun H3'ü → `render_game_h3_inline()` ile **tür etiketi + isim + "Stüdyo · Yıl"** formatına çevir (ZORUNLU, düz başlık bırakma)
 - **End CTA** → SSS H2'sinden önce
 - **FAQ accordion** → SSS bölümündeki H3+P çiftlerinin yerine
+- **Tercih edilen kaynak kartı (v10.22, HER BLOGDA, GFN Thursday dahil)** → yazının ortalarında bir başlığın
+  hemen öncesine, tek kez. Elle yerleştirilmez: `body, bilgi = insert_preferred_source(body)`. Çağrı sırası
+  `auto_link_categories` sonrası, `apply_link_policy` ve `group_into_sections` öncesi. Aday başlık h2/h3
+  (oyun başlıkları dahil); başlığın önü düz metin olmalı (CTA, tablo, not, video arkasına konmaz); yüzde
+  30-70 bandında yüzde 50'ye en yakın aday seçilir; kapanış CTA'sı ve SSS sonrası aday olmaz. Kart canlıdaki
+  Ubisoft Ağustos yazısındaki kartın birebir işaretlemesidir (`render_preferred_source()`), GA4 kimlikleri
+  `#preferred-source-button` ve `#preferred-source-link`. Bağlantı Google tercihler ekranına gider, yeni sekmede açılır.
 
 ### 5. Birleştir ve çıktı al
 - `final = wrap_gp_content(ANIMATED_BORDER_STYLE + "\n" + group_into_sections(enriched_body))` — stil bloğu bir kez en başta,
@@ -108,7 +115,7 @@ from gameplus_blog_components import verify_output, print_report
 res = verify_output(final_body, blog_type="general", n_games=12, expect_faq=True)  # GFN: blog_type="gfn", n_games=None
 ok  = print_report(res)   # FAIL varsa TESLİM ETME, düzelt
 ```
-Otomatik doğrulananlar: **DOM genişliği (Kural 22)**, **yazım - İngilizce terimde Türkçe İ** ve **büyük harf tuzağı (lang=tr + CSS uppercase; `Indie` -> ekranda `INDİE`)**, **tek H1 + ilk başlık H1**, **meta header yok**, ANIMATED_BORDER_STYLE 1x, **em dash yok**, floating ToC + TLDR (3-6 madde) + info-card, FAQ (varsa), oyun sayısı (**inline başlık = card-row = n_games**, düz `<hN>Oyun</hN>` kalmamış), YouTube embed `aspect-ratio` (kare-bug yok), PlayStation uyarısı. **FAIL = kural ihlali.** Ayrıca **`verify_source_preserved(original_body, final)` + `print_source_report`** ile yazarın metninin birebir korunduğunu doğrula (halüsinasyon/silme). Yargı gerektiren maddeler için **`references/qa-checklist.md`**'yi gözden geçir (yazarın cümleleri korundu mu, tür taksonomisi tutarlı mı, CTA dürüstlüğü, lisans hatırlatması, GFN tarih sütununda "-").
+Otomatik doğrulananlar: **tercih edilen kaynak kartı (tek kart, CSS, bağlantı, başlıktan hemen önce, yüzde 25-75 bandı)**, **DOM genişliği (Kural 22)**, **yazım - İngilizce terimde Türkçe İ** ve **büyük harf tuzağı (lang=tr + CSS uppercase; `Indie` -> ekranda `INDİE`)**, **tek H1 + ilk başlık H1**, **meta header yok**, ANIMATED_BORDER_STYLE 1x, **em dash yok**, floating ToC + TLDR (3-6 madde) + info-card, FAQ (varsa), oyun sayısı (**inline başlık = card-row = n_games**, düz `<hN>Oyun</hN>` kalmamış), YouTube embed `aspect-ratio` (kare-bug yok), PlayStation uyarısı. **FAIL = kural ihlali.** Ayrıca **`verify_source_preserved(original_body, final)` + `print_source_report`** ile yazarın metninin birebir korunduğunu doğrula (halüsinasyon/silme). Yargı gerektiren maddeler için **`references/qa-checklist.md`**'yi gözden geçir (yazarın cümleleri korundu mu, tür taksonomisi tutarlı mı, CTA dürüstlüğü, lisans hatırlatması, GFN tarih sütununda "-").
 
 ## Tasarım sistemi (v10.3 — "Game+ UI", Figma tabanlı)
 

@@ -28,6 +28,12 @@ Sıra:
 10. **Hatırlatma (highlight):** lisans/GFN uyarısının olduğu paragraftan önce.
 11. **FAQ accordion:** "Sıkça Sorulan Sorular" H2'sinden sonraki H3+P çiftlerini bul, hepsini tek accordion ile değiştir.
 12. **End CTA:** SSS H2'sinden HEMEN ÖNCE (dual buton: Paketler + Oyunlar; **Fırsatlar DEĞİL**).
+13. **Tercih edilen kaynak kartı (v10.22):** yazının ortalarında, bir başlığın HEMEN ÖNCESİNE, tek kez.
+    `body, bilgi = insert_preferred_source(body)` - `auto_link_categories`'ten sonra, `apply_link_policy` ve
+    `group_into_sections`'tan önce çağrılır. Kart böylece önceki bölümün sonunda kalır, başlık yeni bölümü açar.
+    Listicle'da iki oyun başlığı arasına düşebilir (canlı Ubisoft Ağustos örneği: Ghost Recon Wildlands bölümünün
+    son paragrafı ile Brawlhalla başlığı arasında). Bileşen arkasına konmaz (CTA, tablo, not, video); önü düz
+    metin olan başlık seçilir. Build çıktısındaki `bilgi` seçilen başlığı ve konum oranını verir.
 
 ## GFN Thursday (haftalık derleme)
 
@@ -42,6 +48,7 @@ Farklar:
 4. **Oyun listeleri → GERÇEK TABLO**, card-table DEĞİL. `render_table(["Oyun","Platform ve Çıkış"], rows)` kullan; rozetsiz card-table sol sütunu boş bırakıp "tablo gibi" durmuyor. Her satır: `["<strong>Oyun Adı</strong>", platform/çıkış bilgisi]`; ikinci sütundaki platform adlarını **docx'teki gerçek mağaza linkleriyle** bağla (linkify_platforms arama linki üretir; varsa docx'in tam ürün URL'lerini tercih et). Birden fazla liste varsa (bu hafta eklenenler / ayın geri kalanı / önceki ay öne çıkanlar) her biri için **ayrı H3 + tablo**. **(content-rules kural 11)** Tutarlılık için GFN tablosu da oyunun **türü + stüdyosu + çıkış yılını** taşımalı: tabloya bir **"Tür"** sütunu ekle ve mümkünse stüdyo + çıkış yılını ver (platform/eklenme bilgisini koruyarak, örn. `["<strong>Oyun</strong>", "Tür", "Stüdyo", "Platform · Çıkış"]`). Haftanın öne çıkan oyununun kendi bölümü varsa başlığını inline formatla (`render_game_h3_inline`) ver.
 5. **Hatırlatma:** lisans uyarısı (`render_highlight`).
 6. **End CTA (TEK):** `btn2_label="GeForce NOW Oyunları", btn2_url=".../gfn/oyunlar", chip2="Oyunlar"`. İkinci ayrı CTA bloğu koyma — tek blok Paketler + Oyunlar'ı kapsar.
+6b. **Tercih edilen kaynak kartı:** genel blogla aynı kural (`insert_preferred_source`); End CTA'dan ve "Önceki Haftalar"dan önceki gövdede kalır.
 7. **"Önceki Haftalarda Neler Oldu?" bölümü EN ALTTA** (End CTA'dan SONRA, yazının son bloğu olarak): H2 + giriş paragrafı + `render_prev_weeks_cards()` grid. Kart alt etiketi **"Haftanın haberlerini oku →"** tarzında olsun; oyun-spesifik ("o haftanın yeni oyunları") yazma.
 
 ## Genel kurallar
