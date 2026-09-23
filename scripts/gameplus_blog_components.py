@@ -274,8 +274,11 @@ _STYLE_KAYNAK = '''<style>
 /* Oyun adı, başlığın KENDİ seviyesinin ölçüsünü kullanır (h3 ise h3 gibi görünür).
    Bunun çalışması için mobil başlık ölçeğinin azalan olması şart: h1 > h2 > h3 > h4. */
 .gp-content .gp-game-head .gp-game-name { color: #fff; }
+/* v10.23: 'vertical-align: middle' rozetin merkezini TABAN CIZGISI + x-yuksekliginin yarisina
+   koyar. Baslik metninde gozun gordugu merkez ise buyuk harf (cap-height) ortasidir; ikisi
+   arasindaki fark kadar (~2px) rozet asagida duruyordu. relative/top ile geri kaldiriliyor. */
 .gp-content .gp-game-badge { display: inline-block; vertical-align: middle; margin-right: 12px;
-  padding: 4px 10px; border-radius: 6px; font-size: 12px;
+  position: relative; top: -2px; padding: 4px 10px; border-radius: 6px; font-size: 12px;
   line-height: 16px; font-weight: 700; white-space: nowrap; }
 .gp-content .gp-game-badge-link { text-decoration: none; display: contents; }
 .gp-content .gp-game-name { display: inline; font-weight: 700; letter-spacing: -0.01em; }
@@ -1508,6 +1511,13 @@ def render_game_h3_inline(anchor, name, badge, badge_color, meta_text, level="h3
     kategorisine; **BİRLEŞİK rozet (AKSİYON-MACERA) HER PARÇAYI ayrı ayrı** linkler (AKSİYON→/aksiyon,
     MACERA→/macera). **badge_href=False = link YOK** (tek-tür seride link stuffing'i önlemek için). **URL =
     tüm rozeti o URL'e linkle.**"""
+    # v10.23: GFN Thursday basliklarinda tur rozeti KULLANILMAZ (marka karari). badge None ya da
+    # bos verilirse baslik rozetsiz kurulur: yalniz isim + "Studyo · Yil".
+    if not badge:
+        return f'''<{level} id="{anchor}" class="gp-game-head">
+  <span class="gp-game-name">{name}</span>
+  <span class="gp-game-meta">{meta_text}</span>
+</{level}>'''
     badge_color = badge_color_for(badge, badge_color)  # tür -> standart palet rengi (tüm içerikte aynı)
     tint = hex_to_rgba(badge_color, 0.16)
     border = hex_to_rgba(badge_color, 0.45)
@@ -2189,6 +2199,15 @@ def verify_output(final_html, blog_type="general", n_games=None, expect_faq=Fals
         f"gövdede {_kat_link} kategori linki var - en fazla 2-3 olmalı (Kural 20)")
     add(_kat_link >= 1, "Gövde içi kategori linki", f"{_kat_link} link",
         "gövdede GFN kategori linki yok - uygun yer varsa 1-2 tane eklenebilir (Kural 20)", warn=True)
+
+    # v10.23: GFN Thursday başlıklarında tür rozeti YOK (marka kararı). Rozet yalnız genel blogda
+    # (rehber/listicle) kullanılır; haftalık derlemede başlık = isim + "Stüdyo · Yıl".
+    _rozetli_baslik = len(re.findall(r'<h[1-6][^>]*class="gp-game-head".*?</h[1-6]>', final_html, re.S))
+    _rozet_sayisi = len(re.findall(r'class="gp-game-badge"', final_html))
+    if blog_type == "gfn":
+        add(_rozet_sayisi == 0, "GFN başlığında tür rozeti yok", "rozetsiz",
+            f"{_rozet_sayisi} başlıkta tür rozeti var - GFN Thursday'de başlığa tür etiketi konmaz "
+            f"(render_game_h3_inline'a badge=None ver)")
 
     # v10.22: Google tercih edilen kaynak kartı - her blogda tek kez, bir başlıktan hemen önce,
     # yazının ortalarında. Kart GA4 kimliklerini ve kendi CSS'ini taşımalı.

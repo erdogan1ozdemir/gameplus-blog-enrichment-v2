@@ -474,3 +474,16 @@ satırlık ismin dikey ortasında kalıyordu (canlı Ubisoft Ağustos yazısı, 
 bloğunun sonunda. Zemin `#0D0D0D`, kenarlık `#29292B`, köşe 12 px, başlık New Science 20/28 (mobil 18/24),
 açıklama 16/24 `#B2B2B2`, buton sarı çerçeveli şeffaf, en az 44 px yükseklik. 900 px altında logo + başlık
 üstte, açıklama altta, buton tam genişlik. Kategori stiline girmez (`category_components` filtresinde `gpps`).
+
+
+## v10.23 - Rozetin optik hizası ve GFN başlıklarında rozetsiz kullanım
+
+**1. Rozet ~2 px yukarı alındı.** `vertical-align: middle` bir satır içi kutunun merkezini taban
+çizgisi + x-yüksekliğinin yarısına hizalar. Başlıkta gözün gördüğü merkez ise büyük harf yüksekliğinin
+(cap-height) ortasıdır; aradaki fark kadar rozet aşağıda duruyor, "alta yakın" görünüyordu. Rozet
+`position: relative; top: -2px` ile kaldırıldı. Ölçüm (390 px, 19 px başlık): rozet merkezi ile ilk
+satırın büyük harf merkezi arasındaki fark 1.9 px -> 0.1 px.
+
+**2. GFN Thursday başlıklarında tür rozeti yok.** `render_game_h3_inline(..., badge=None, ...)` rozetsiz
+başlık kurar: yalnız oyun adı + "Stüdyo · Yıl". Marka kararı; gerekçe ve kontrol için content-rules
+kural 11 ve `verify_output(blog_type="gfn")`.

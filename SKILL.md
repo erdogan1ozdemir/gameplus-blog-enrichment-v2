@@ -31,6 +31,7 @@ Skill iki blog tipini ayırt eder; bileşen seti farklıdır:
 | CTA sayısı | **2-3** (her zaman 3 şart değil): Paketler + dual End zorunlu, CTA Oyunlar opsiyonel | **Tek** End CTA + 1 compact featured CTA |
 | Compact CTA | yok | ✅ öne çıkan oyun için (Controller-Tag) |
 | Önceki haftalar | yok | ✅ soft-border kart grid |
+| Oyun başlığı | tür rozeti + isim + "Stüdyo · Yıl" | **rozet YOK** - isim + "Stüdyo · Yıl" (`badge=None`, v10.23) |
 | Editör notu / Hatırlatma | ihtiyaç oldukça | ihtiyaç oldukça |
 
 Detaylı yerleşim kuralları: **`references/placement-rules.md`**.
@@ -75,7 +76,7 @@ faq    = render_faq_accordion([(soru, cevap), ...])
 - Karşılaştırma tablosu → ilgili kavram paragrafından sonra
 - **CTA Paketler** → 2. H2'den önce
 - **Card-table** → listicle'ın yerine, ilk oyun H3'ünden ÖNCE (genel blog); GFN'de oyun listesi yerine
-- Genel blogda VE etkinlik özetlerinde (State of Play vb.) her oyun H3'ü → `render_game_h3_inline()` ile **tür etiketi + isim + "Stüdyo · Yıl"** formatına çevir (ZORUNLU, düz başlık bırakma)
+- Genel blogda VE etkinlik özetlerinde (State of Play vb.) her oyun H3'ü → `render_game_h3_inline()` ile **tür etiketi + isim + "Stüdyo · Yıl"** formatına çevir (ZORUNLU, düz başlık bırakma). **GFN Thursday'de tür rozeti KULLANILMAZ** (`badge=None`): başlık = isim + "Stüdyo · Yıl" (content-rules 11)
 - **End CTA** → SSS H2'sinden önce
 - **FAQ accordion** → SSS bölümündeki H3+P çiftlerinin yerine
 - **Tercih edilen kaynak kartı (v10.22, HER BLOGDA, GFN Thursday dahil)** → yazının ortalarında bir başlığın
@@ -115,7 +116,7 @@ from gameplus_blog_components import verify_output, print_report
 res = verify_output(final_body, blog_type="general", n_games=12, expect_faq=True)  # GFN: blog_type="gfn", n_games=None
 ok  = print_report(res)   # FAIL varsa TESLİM ETME, düzelt
 ```
-Otomatik doğrulananlar: **tercih edilen kaynak kartı (tek kart, CSS, bağlantı, başlıktan hemen önce, yüzde 25-75 bandı)**, **DOM genişliği (Kural 22)**, **yazım - İngilizce terimde Türkçe İ** ve **büyük harf tuzağı (lang=tr + CSS uppercase; `Indie` -> ekranda `INDİE`)**, **tek H1 + ilk başlık H1**, **meta header yok**, ANIMATED_BORDER_STYLE 1x, **em dash yok**, floating ToC + TLDR (3-6 madde) + info-card, FAQ (varsa), oyun sayısı (**inline başlık = card-row = n_games**, düz `<hN>Oyun</hN>` kalmamış), YouTube embed `aspect-ratio` (kare-bug yok), PlayStation uyarısı. **FAIL = kural ihlali.** Ayrıca **`verify_source_preserved(original_body, final)` + `print_source_report`** ile yazarın metninin birebir korunduğunu doğrula (halüsinasyon/silme). Yargı gerektiren maddeler için **`references/qa-checklist.md`**'yi gözden geçir (yazarın cümleleri korundu mu, tür taksonomisi tutarlı mı, CTA dürüstlüğü, lisans hatırlatması, GFN tarih sütununda "-").
+Otomatik doğrulananlar: **GFN Thursday'de başlık tür rozeti yok**, **tercih edilen kaynak kartı (tek kart, CSS, bağlantı, başlıktan hemen önce, yüzde 25-75 bandı)**, **DOM genişliği (Kural 22)**, **yazım - İngilizce terimde Türkçe İ** ve **büyük harf tuzağı (lang=tr + CSS uppercase; `Indie` -> ekranda `INDİE`)**, **tek H1 + ilk başlık H1**, **meta header yok**, ANIMATED_BORDER_STYLE 1x, **em dash yok**, floating ToC + TLDR (3-6 madde) + info-card, FAQ (varsa), oyun sayısı (**inline başlık = card-row = n_games**, düz `<hN>Oyun</hN>` kalmamış), YouTube embed `aspect-ratio` (kare-bug yok), PlayStation uyarısı. **FAIL = kural ihlali.** Ayrıca **`verify_source_preserved(original_body, final)` + `print_source_report`** ile yazarın metninin birebir korunduğunu doğrula (halüsinasyon/silme). Yargı gerektiren maddeler için **`references/qa-checklist.md`**'yi gözden geçir (yazarın cümleleri korundu mu, tür taksonomisi tutarlı mı, CTA dürüstlüğü, lisans hatırlatması, GFN tarih sütununda "-").
 
 ## Tasarım sistemi (v10.3 — "Game+ UI", Figma tabanlı)
 

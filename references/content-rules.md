@@ -64,8 +64,15 @@ GFN yazılarının iki ritmi var; info-card ve TLDR metrikleri buna göre deği�
 - Haftalık metrikleri o haftanın GERÇEK içeriğine göre seç. Örnekler: "Bu Hafta Eklenen" (yalnızca gerçekten yeni oyun varsa sayı ver), "Haftanın Öne Çıkanı" (oyun), "Öne Çıkan Güncelleme / DLC / Yeni Sezon", "Geri Dönen Oyun", "Platformlar" (Steam · Epic · Xbox).
 - TLDR ilk maddesi de aynı mantıkla: yeni oyun yoksa "Bu hafta: N yeni oyun" deme; "Bu hafta öne çıkan: X'in yeni sezonu / Y güncellemesi / geri dönen Z" gibi o haftaya özgü bir özet ver.
 
-## 11. Oyun giriş formatı: tür + stüdyo + yıl (HER YAZIDA AYNI — zorunlu)
-**Yazıda birden fazla oyundan bahsediliyorsa**, her oyunun başına bir oyun başlığı ekle ve 3 veri taşı: **(1) tür etiketi, (2) yapımcı stüdyo, (3) çıkış yılı/dönemi.** (Tek bir oyun anlatılıyorsa oyun başlığı şart değil.) Format bütün yazılarda (genel blog, listicle, etkinlik özeti, GFN) aynıdır.
+## 11. Oyun giriş formatı: tür + stüdyo + yıl (genel blog) / stüdyo + yıl (GFN Thursday)
+> **GFN Thursday istisnası (v10.23, marka kararı): haftalık derleme başlıklarında TÜR ROZETİ KULLANILMAZ.**
+> `render_game_h3_inline(anchor, isim, None, None, "Stüdyo · Yıl", level=...)` ile rozetsiz başlık kurulur;
+> başlık yalnız oyun adı + "Stüdyo · Yıl" taşır. Rozet yalnızca **genel blogda** (rehber, listicle, "en iyi X",
+> etkinlik özeti) kullanılır. 17 Eylül 2026 yazısı canlıda rozetli çıktığı için kural eklendi; `verify_output`
+> `blog_type="gfn"` çağrısında başlıkta rozet bulursa FAIL verir. GFN **tablolarındaki** "Tür" sütunu kuralın
+> dışındadır, kalmaya devam eder.
+
+**Yazıda birden fazla oyundan bahsediliyorsa**, her oyunun başına bir oyun başlığı ekle ve 3 veri taşı: **(1) tür etiketi (GFN Thursday'de YOK), (2) yapımcı stüdyo, (3) çıkış yılı/dönemi.** (Tek bir oyun anlatılıyorsa oyun başlığı şart değil.) Format bütün yazılarda (genel blog, listicle, etkinlik özeti, GFN) aynıdır; tek fark GFN'de rozetin bulunmamasıdır.
 - **Oyun başlığı H2, H3 veya H4 olabilir** — çevredeki başlık seviyesine uy. `render_game_h3_inline(anchor, "Oyun Adı", "TÜR", renk, "Stüdyo · Yıl", level="h2|h3|h4")` ile ver. **Düz `<h2/h3/h4 id="x">Oyun Adı</…>` BIRAKMA.** Yazarın başlık metnini koru, sadece tür rozeti + stüdyo·yıl ekle.
 - **Başlık metnine RENK atama.** CMS başlık rengini zaten verir (render_game_h3_inline başlığa renk basmaz; bu yük azaltır). Rozetin kendi rengi (tür rengi) ve meta'nın soluk rengi kalır.
 - **Card-table satırı:** `badge` = tür, `meta` = "Stüdyo · Yıl". Başlık ile card-table verisi **birebir aynı** olmalı.
@@ -75,7 +82,7 @@ GFN yazılarının iki ritmi var; info-card ve TLDR metrikleri buna göre deği�
 - **Tür taksonomisi kural 5 ile tutarlı.** (Tematik istisna: tekno-tanıtımda rozet türün yerine temayı gösterebilir, ör. DLSS açıklayıcısında "DLSS"/"RAY TRACING"; stüdyo · yıl yine bulunur.)
 
 ## 12. Tür rozeti → GFN kategorisine iç link
-Tür rozeti markanın **linklenebilir GFN kategorilerinden** birine fit ediyorsa, rozet o kategori sayfasına iç link olur (`category_url_for(badge)` URL'i döndürür). Linklenebilir kategoriler: `strateji, aksiyon, simulasyon, dovus-oyunu, yaris, fps, mmo, macera, steam, canlandirma, moba, bagimsiz, arcade, bulmaca, basit-eglence, aile-dostu, platform, spor, ubisoft-connect, populer-oyunlar`.
+**Yalnızca genel blogda** (GFN Thursday başlıklarında rozet yok, bkz. kural 11). Tür rozeti markanın **linklenebilir GFN kategorilerinden** birine fit ediyorsa, rozet o kategori sayfasına iç link olur (`category_url_for(badge)` URL'i döndürür). Linklenebilir kategoriler: `strateji, aksiyon, simulasyon, dovus-oyunu, yaris, fps, mmo, macera, steam, canlandirma, moba, bagimsiz, arcade, bulmaca, basit-eglence, aile-dostu, platform, spor, ubisoft-connect, populer-oyunlar`.
 - **Tek/saf rozet → tüm rozet kendi kategorisine** linklenir (ör. saf "Aksiyon" → /aksiyon, "RPG" → /canlandirma). **Birleşik/çift rozette (Aksiyon-Macera, Aksiyon-RPG, Indie-RPG) HER PARÇA AYRI AYRI kendi kategorisine** linklenir: "Aksiyon-Macera" → **Aksiyon** = /gfn/oyunlar/aksiyon + **Macera** = /gfn/oyunlar/macera; eşleşmeyen parça (GFN kategorisi değilse) düz kalır. `render_game_h3_inline(badge_href=None)` (varsayılan) bunu **otomatik** yapar (parça-bazlı `<a color:inherit>`, tek rozette tüm rozet `<a display:contents>`). **`badge_href=False` verirsen rozet hiç linklenmez** — tek-tür seride (ör. hepsi FPS olan Call of Duty) 20+ özdeş /fps linki = stuffing olmaması için bunu kullan. Çok kelimeli tekil kategoriler boşlukla yazıldığından ("Dövüş Oyunu", "Aile Dostu") tek rozet gibi linklenir.
 - **DEDUP YOK — aynı yazıda eşleşen HER rozet linklenir.** İki oyunun da rozeti "RPG" ise ikisi de /canlandirma'ya, iki oyun "Aksiyon" ise ikisi de /aksiyon'a linklenir. (Bunlar farklı oyunların rozetleri; bağlamsal gezinme linkidir, link stuffing değil.)
 - Rozet linki **yalnızca oyun başlığında** verilir (`render_game_h3_inline(..., badge_href=url)`). **Card-table indeksi ve master tabloda kategori linki VERİLMEZ** — card-table satırı zaten bölüme jump-link (iç içe `<a>` geçersiz), liste/tabloda kategori linki istenmiyor.
