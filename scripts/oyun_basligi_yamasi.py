@@ -48,6 +48,8 @@ def rozetleri_kaldir(html):
 
 
 def yamala(yol, gfn=False):
+    if not os.path.isfile(yol):
+        return f"  BULUNAMADI: {yol}"
     s = io.open(yol, encoding="utf-8").read()
     if "gp-game-head" not in s:
         return f"  atlandi (oyun basligi yok): {yol}"
@@ -66,5 +68,12 @@ def yamala(yol, gfn=False):
 if __name__ == "__main__":
     arg = sys.argv[1:]
     gfn = "--gfn" in arg
-    for y in [a for a in arg if not a.startswith("--")]:
+    dosyalar = [a for a in arg if not a.startswith("--")]
+    if not dosyalar:
+        print(__doc__.strip())
+        print("\nOrnek:")
+        print("  python3 oyun_basligi_yamasi.py ~/Desktop/'Claude Projects'/Dispatch/27-agustos-gfn-html.txt")
+        print("  python3 oyun_basligi_yamasi.py --gfn ~/Desktop/'Claude Projects'/Dispatch/gfn-17-eylul-2026-html-v10.23.txt")
+        sys.exit(1)
+    for y in dosyalar:
         print(yamala(y, gfn=gfn))
