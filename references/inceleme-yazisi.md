@@ -241,6 +241,8 @@ tabloya "-" satırı olarak ya da metne "henüz oluşmamıştı" açıklaması o
 
 ## 11. Linkler
 
+İç linklerin sayısı, anchor'ları ve seçimi için bkz. `references/ic-linkleme.md` (v10.30).
+
 | Link | Durum | Not |
 |---|---|---|
 | OpenCritic, Metacritic, HowLongToBeat, SteamDB | **Verilir** | Puan ve süre cümlesinin içinde, kaynak adı anchor olur |

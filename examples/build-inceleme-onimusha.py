@@ -62,7 +62,7 @@ p(f"{AD}, Capcom'un geliştirip yayınladığı, Japon tarihi ile karanlık fant
   "Switch 2 için çıktı. Serinin tanıdık formülü korunuyor: kılıç dövüşü, iblislerden toplanan "
   "ruhlar ve bu ruhlarla güçlenen bir kahraman.")
 yt("Gbmd6YFm5oU", "Onimusha: Way of the Sword Çıkış Fragmanı")
-p("Bu bir remake değil. İlk oyunun yeniden düzenlenmiş sürümü 2019'da çıkmıştı; Way of the Sword ise "
+p("Bu bir <a href=\"https://gameplus.com.tr/blog/remake-nedir-en-iyi-en-cok-beklenen-remake-oyunlar\">remake</a> değil. İlk oyunun yeniden düzenlenmiş sürümü 2019'da çıkmıştı; Way of the Sword ise "
   "sıfırdan yazılmış yeni bir hikaye anlatıyor. Proje 2020'de onay aldı, yapımcı koltuğunda Akihito "
   "Kadowaki, yönetmen koltuğunda Satoru Nihei oturuyor. Hikaye önceki oyunlardan ve Netflix'teki "
   "animasyon dizisinden bağımsız ilerlediği için seriye ilk kez başlayacaklar için de uygun bir "
@@ -100,11 +100,15 @@ p("Capcom, kılıç hareketlerini gerçek kılıç ustalarıyla hareket yakalama
 h2(f"{AD} Sekiro Gibi mi, Zor mu?")
 p(f"Hayır, {AD} tam olarak Sekiro gibi değil: savuşturmayı merkeze alması benzer, ancak yönetmen "
   "Satoru Nihei oyunun bir Soulslike olmadığını açıkça söylüyor. Ölüm cezası, kontrol noktası "
-  "düzeni ve genel zorluk, türün sert örneklerine göre daha erişilebilir tutulmuş.")
+  "düzeni ve genel zorluk, türün sert örneklerine göre daha erişilebilir tutulmuş. Boss savaşları "
+  "iddialı olsa da <a href=\"https://gameplus.com.tr/blog/oyun-tarihinin-en-zor-10-bossu-unutulmaz-boss-fightlar-ve-efsanevi-oyun-bosslar\">"
+  "oyun tarihinin en zor boss'ları</a> arasına girecek bir sertlikte tasarlanmamış.")
 p("Bu tercih iki farklı tepki topluyor. Sekiro ya da Nioh gibi oyunlardan gelen oyuncuların bir "
   "kısmı oyunu fazla kolay buluyor ve yol arkadaşlarının sık sık ipucu vermesini gereksiz "
   "görüyor. Türe yeni başlayanlar içinse bu erişilebilirlik, Onimusha'yı savuşturma odaklı "
-  "dövüşe girmek için rahat bir başlangıç noktası yapıyor.")
+  "dövüşe girmek için rahat bir başlangıç noktası yapıyor. Türe buradan adım atmak isteyenler için "
+  "<a href=\"https://gameplus.com.tr/blog/souls-like-yeni-baslayanlar-icin-en-iyi-souls-like-oyunlar\">souls like oyunlar</a> "
+  "listemiz iyi bir sonraki durak olabilir.")
 
 h2(f"{AD} Puanları: Metacritic ve OpenCritic")
 p(f"{AD}, 24 Eylül 2026 itibarıyla <a href=\"{OC}\">OpenCritic</a>'te 86, "
@@ -129,7 +133,8 @@ p("Globaldeki oyuncu toplulukları en çok dövüşün akıcılığını, boss s
 h2(f"{AD} Türkçe mi, Kaç Saat Sürüyor?")
 p(f"Hayır, {AD} Türkçe dil desteği sunmuyor; 24 Eylül 2026 itibarıyla Steam sayfasındaki dil "
   "listesinde Türkçe yer almıyor. \"Türkçe yama\" aramalarının sık yapılması da bu yüzden; resmi "
-  "bir Türkçe güncellemesi duyurulmuş değil.")
+  "bir Türkçe güncellemesi duyurulmuş değil. Türkçe desteği olan yapımlar arıyorsan "
+  "<a href=\"https://gameplus.com.tr/blog/2026-da-oynanabilecek-en-iyi-t%C3%BCrkce-dublajli-ve-altyazili-oyunlar\">Türkçe altyazılı oyunlar</a> listemize bakabilirsin.")
 p(f"Süre tarafında oyun orta uzunlukta. <a href=\"{HLTB}\">HowLongToBeat</a> verilerine göre ana "
   "hikaye 20 saatin biraz üzerinde, yan içeriklerle birlikte 30 saat civarı sürüyor; her şeyi "
   "tamamlamak isteyenler 50 saate yakın zaman ayırıyor. Donanım tarafında minimum listede GTX 1660 "
@@ -163,15 +168,17 @@ p(f"{AD}, serinin 20 yıllık aradan sonra geri dönüşünü sağlam bir temele
 p("Eksikleri de görünüyor: yan içerikler yer yer dolgu hissi veriyor, tempo bazı bölümlerde "
   "düşüyor ve zorluk seviyesi deneyimli oyuncular için düşük kalabiliyor. Yine de 86 ortalama ve "
   "eleştirmenlerin %95'inin tavsiye etmesi, oyunun bu eksiklere rağmen serinin güçlü bir dönüşü "
-  "olduğunu gösteriyor. Benzer tarzda başka yapımlar arıyorsan GeForce NOW kütüphanesindeki aksiyon "
-  "oyunları iyi bir başlangıç noktası.")
+  "olduğunu gösteriyor. Benzer tarzda başka yapımlar arıyorsan GeForce NOW kütüphanesindeki "
+  "<a href=\"https://gameplus.com.tr/gfn/oyunlar/aksiyon\">aksiyon oyunları</a> iyi bir başlangıç noktası; feodal "
+  "Japonya'yı farklı bir türde görmek istersen <a href=\"https://gameplus.com.tr/blog/samuray-mi-shinobi-mi-assassins-creed-shadows-ile-japonya-macerasi-baslasin\">"
+  "Assassin's Creed Shadows</a> da iyi bir alternatif.")
 
 h2(f"{AD} GeForce NOW'da Oynanır mı?")
-p(f"Evet, {AD} 4 Eylül'deki çıkışıyla aynı gün GeForce NOW kütüphanesine eklendi; oyunun buluta "
+p(f"Evet, {AD} 4 Eylül'deki çıkışıyla aynı gün <a href=\"https://gameplus.com.tr/gfn\">GeForce NOW</a> kütüphanesine eklendi; oyunun buluta "
   f"gelişi <a href=\"{GFN_YAZI}\">3 Eylül 2026 tarihli GFN Thursday yazısında</a> da yer aldı. 50 "
   "GB'lık kurulumu beklemeden buluttan başlatabiliyor, önerilen listedeki ekran kartına sahip "
   "olmasan da farklı cihazlardan oynayabiliyorsun; işi bulut tarafındaki RTX sunucuları yapıyor ve "
-  "kayıtların mağaza hesabında durduğu için kaldığın yerden devam ediyorsun.")
+  "kayıtların mağaza hesabında durduğu için kaldığın yerden devam ediyorsun. Güncel <a href=\"https://gameplus.com.tr/gfn/paketler\">GeForce NOW fiyat</a> bilgisine ve kütüphanedeki diğer <a href=\"https://gameplus.com.tr/gfn/oyunlar\">GeForce NOW oyunlarına</a> de göz atabilirsin.")
 
 h2("Sıkça Sorulan Sorular")
 
@@ -306,7 +313,7 @@ toc = render_floating_toc(toc_items)
 m = re.search(r"</h1>", body)
 body = body[:m.end()] + "\n" + toc + "\n" + tldr + "\n" + info + "\n" + body[m.end():]
 
-body, _kat = auto_link_categories(body, max_links=2)
+body, _kat = auto_link_categories(body, max_links=2, haric=("https://gameplus.com.tr/gfn/oyunlar/aksiyon",))
 body, ps_bilgi = insert_preferred_source(body)
 body, _link = apply_link_policy(body)
 body = ensure_leading_h1(body)

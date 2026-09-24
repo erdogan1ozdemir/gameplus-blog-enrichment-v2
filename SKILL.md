@@ -169,6 +169,10 @@ Tam liste **`references/content-rules.md`**'de. En kritikleri:
   dövüş/oynanış bölümünde, başlığa özel sistem videosu ilgili bölümde); listicle'da oyun başına bir
   video olabilir (10 oyun = 10 video); rehberde içeriğe göre. Yayıncı/platform kanalı, basın kanalı yok,
   yaş kısıtı tarayıcıda test edilir.
+- **İç linkleme (v10.30, yeni içerik):** yazı başına 7-11 gövde içi iç link: sabit üçlü (`/gfn`
+  "GeForce NOW", `/gfn/paketler` "GeForce NOW fiyat", `/gfn/oyunlar` "GeForce NOW oyunları"),
+  1-2 GFN kategori, 2-4 ilgili blog yazısı (headline ile doğrulanmış), ilgili GFN Thursday.
+  Anchor aranan kelime biçiminde. Detay: `references/ic-linkleme.md`.
 - **Doc biçimi:** içerik kısmında başlıklar ve metin siyah (Word mavi teması yok), önce yazı sonra HTML.
 - **Özet (TLDR) madde sayısı:** duruma göre **3-6 madde** (her zaman 4 olması şart değil).
 - **Oyun giriş formatı (HER YAZIDA AYNI):** **Yazıda birden fazla oyundan bahsediliyorsa** her oyunun başına oyun başlığı ekle; **tür etiketi + Stüdyo · Yıl** taşı. Başlık **H2/H3/H4** olabilir (çevredeki seviyeye uy): `render_game_h3_inline(anchor, isim, "TÜR", renk, "Stüdyo · Yıl", level="h2|h3|h4")`. Düz `<h2/h3/h4>Oyun Adı</…>` bırakma. **Başlık metnine RENK atama** (CMS verir, yük azalır). Card-table'da `badge`=tür, `meta`="Stüdyo · Yıl". Yıl yoksa dönem ("2027 (beklenen)", "Belirsiz", "Yayında"). Tek oyun anlatılıyorsa başlık şart değil. Detay: `content-rules.md` kural 11.

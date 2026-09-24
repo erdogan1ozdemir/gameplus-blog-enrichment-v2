@@ -299,6 +299,8 @@ bu kurala tabidir. Ayrıntı ve örnekler: `references/inceleme-yazisi.md` böl�
 12. **Video sayısı (v10.29):** incelemede 2-4 video (fragman, oynanış, başlığa özel sistem videosu),
     her biri ilgili bölümün altında; listicle'da oyun başına bir video olabilir; rehberde içeriğe göre.
     Basın kanalı gömülmez, yaş kısıtı tarayıcıda test edilir. Detay: inceleme-yazisi.md bölüm 6.
+13. **İç linkleme (v10.30):** yeni içerikte 7-11 gövde içi iç link; sabit üçlü + 1-2 kategori +
+    2-4 ilgili blog + GFN Thursday. Yöntem: `references/ic-linkleme.md`.
 
 ## Kural 21: Link politikası - dış linkler nofollow, tüm linkler yeni sekmede
 

@@ -2315,6 +2315,19 @@ def verify_output(final_html, blog_type="general", n_games=None, expect_faq=Fals
         f"oluşmamış veri açıklaması var ({sorted(set(x.lower() for x in _bos_veri))[:4]}) - "
         f"veri yoksa satır ve cümle tamamen kaldırılır", warn=not yeni_icerik)
 
+    # v10.30 (Kural 25.13, references/ic-linkleme.md): yeni icerikte 7-11 govde ici ic link ve
+    # sabit uclu (/gfn, /gfn/paketler, /gfn/oyunlar). CTA dugmeleri sayilmaz. Yalniz yeni icerikte, UYARI.
+    if yeni_icerik:
+        _govde = final_html.split("</style>")[-1]
+        _ic = [m.group(1).split("?")[0].rstrip("/") for m in re.finditer(
+            r'<a\b(?![^>]*gp-btn)[^>]*href="(https://gameplus\.com\.tr/[^"#]*)"', _govde)]
+        _uclu_eksik = [u for u in ("/gfn", "/gfn/paketler", "/gfn/oyunlar")
+                       if "https://gameplus.com.tr" + u not in _ic]
+        add(7 <= len(_ic) <= 12 and not _uclu_eksik, "İç link sayısı (7-11) ve sabit üçlü",
+            f"{len(_ic)} iç link",
+            f"{len(_ic)} gövde içi iç link; eksik sabit link: {_uclu_eksik or 'yok'} (bkz. ic-linkleme.md)",
+            warn=True)
+
     # v10.25 (Kural 25): yeni yazida yayin tarihine bagli goreli zaman ifadesi kullanilmaz.
     # Yazar taslaginda olabilir (dokunulmaz), bu yuzden UYARI. GFN Thursday'de "bu hafta" dogaldir.
     if blog_type == "general":
