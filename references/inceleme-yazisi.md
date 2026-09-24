@@ -1,10 +1,10 @@
-# İnceleme yazısı: yapı, dil ve doğrulama (v10.24)
+# Yeni içerik yazımı: yapı, dil, SEO/GEO ve doğrulama (v10.25)
 
 Tek bir oyunu değerlendiren yazılar için. Marka onayıyla oturan tarz, ilk olarak
 **The Blood of Dawnwalker İncelemesi** (24 Eylül 2026) ile uygulandı; üretim dosyası
 `examples/build-inceleme-reference.py`.
 
-Bu dosya yalnız inceleme için değil, **genel blog yazılarının dili** için de geçerlidir:
+Bu dosya yalnız inceleme için değil, **listicle, rehber ve derleme dahil her yeni blog içeriği** için geçerlidir:
 sayı yuvarlama, topluluk ifadeleri, öneri dili ve kaynak doğrulama maddeleri her yazıda uygulanır.
 
 > **Kapsam uyarısı.** Buradaki tarz kuralları **yeni içerik yazarken** geçerlidir. Kullanıcı hazır
@@ -19,17 +19,22 @@ Sıra sabit değil ama bu iskelet onaylandı:
 1. **Başlıksız giriş (2 paragraf).** İlk paragraf oyunu tek cümlede kurar (kim, nerede, ne yapıyor);
    ikinci paragraf stüdyoyu, çıkış tarihini ve varsa satış/ilgi verisini verir ve yazının sorusunu koyar.
 2. **`{Oyun} Nedir?`** - tür, yayıncı, motor, platformlar, stüdyo geçmişi. Fragman bu bölümde.
-3. **Hikaye** - kurulum, ton, anlatı yapısı. Spoiler yok.
+3. **`{Oyun} Hikayesi Neyi Anlatıyor?`** - kurulum, ton, anlatı yapısı. Spoiler yok.
 4. **Oyunun en çok tartışılan sistemi** - ne olduğu, nasıl işlediği (madde listesi), eleştirmen
    ve oyuncu tarafının nasıl ayrıştığı. Editör notu buraya girer.
-5. **Oynanış ve dövüş** - mekanikler, ilerleme, eleştiriler.
-6. **`Eleştirmenler ve Oyuncular Ne Dedi?`** - puan tablosu + yorum. Tablonun başlığında **ölçüm
-   tarihi** bulunur ("Puan Tablosu (24 Eylül 2026)").
-7. **Teknik taraf** - Türkçe dil desteği, süre, donanımın iki cümlelik özeti.
-8. **`Kimler Sevecek, Kimler İki Kez Düşünmeli?`** - madde listesi, dürüst ayrım.
+5. **`{Oyun}'da Dövüş Nasıl İşliyor?`** - mekanikler, ilerleme, eleştiriler.
+6. **`{Oyun} Puanları: Metacritic ve OpenCritic`** - puan tablosu + yorum. İlk cümle puanı tarihle
+   verir, tablonun başlığında da **ölçüm tarihi** bulunur ("Puan Tablosu (24 Eylül 2026)").
+7. **`{Oyun} Türkçe mi, Kaç Saat Sürüyor?`** - Türkçe dil desteği, süre, donanımın iki cümlelik özeti.
+8. **`{Oyun} Alınır mı?`** - ilk cümle doğrudan cevap; ardından "tam sana göre" (tikli) ve
+   "beklentini ayarla" (noktalı) diye **iki ayrı liste**. Olumlu ve uyarı maddeleri aynı tikli
+   listede durmaz; işaret ile içerik çelişir.
 9. **`Genel Değerlendirme`** - iki paragraf: ne iyi, ne eksik. Kendi puanımızı vermeyiz.
-10. **GeForce NOW bölümü** - **tek paragraf** (bkz. 4).
-11. **SSS** - 5 soru.
+10. **`{Oyun} GeForce NOW'da Oynanır mı?`** - **tek paragraf**, "Evet, ..." ile açılır (bkz. 4).
+11. **SSS** - 6-8 soru, arama talebinden (bkz. 9).
+
+Listicle ve rehberde bölüm akışı içeriğe göre değişir; **7-11. bölümlerdeki SEO/GEO kuralları
+her yeni içerikte aynen geçerlidir.**
 
 Zorunlu bileşenler değişmez: Hızlı Özet (3-6 madde), info-card (4 metrik), İçindekiler, CTA Paketler,
 Editör Notu, Hatırlatma, tercih edilen kaynak kartı, kapanış CTA'sı, FAQ akordiyonu + FAQ şeması.
@@ -63,7 +68,9 @@ gibi küçük kesin değerler (152, 70) olduğu gibi kalır. Tarih ve sürüm nu
 
 ## 4. GeForce NOW bölümü ve sistem gereksinimleri
 
-- **GFN bölümü tek paragraf.** Şunları taşır: oyunun kütüphanede olup olmadığı (kaynağıyla),
+- **GFN bölümü tek paragraf.** Oyunun kütüphaneye eklendiği bilgisi doğrudan yazılır
+  ("NVIDIA'nın duyurusuna göre" gibi atıf yapılmaz, paket şartı yazılmaz). Paragraf şunları taşır:
+  oyunun kütüphanede olup olmadığı,
   indirme boyutunu beklemeden başlama, donanımın bulutta kalması, kayıtların mağaza hesabında
   durması. Ardından **Hatırlatma** bloğu (lisans) gelir.
 - **Oyun detay sayfası henüz yayında olmadığı için o sayfaya link verilmez.** Açıldığında bu kural
@@ -127,3 +134,68 @@ python3 scripts/video_yas_testi.py <video_id_1> <video_id_2> ...   # test sayfas
 Üretilen sayfa tarayıcıda açılır, oynatıcıda uyarı çıkan adaylar elenir. Kısıtsız bir resmi video
 bulunamazsa yayıncının genel bakış videosu ya da mağaza kanalının (GOG, PlayStation) fragmanı
 tercih edilir; hiçbiri uygun değilse yazı videosuz yayınlanır.
+
+## 7. Yazmadan önce: arama verisi (brief adımı)
+
+Detay sayfalarında olduğu gibi blogda da metin, arama verisi toplandıktan sonra yazılır. Dawnwalker
+ve CONTROL Resonant incelemelerinde bu adım atlandığı için SEO/GEO denetiminde 72-80 puan çıktı;
+eksiklerin çoğu bu adımdan kaynaklandı.
+
+DataForSEO ile (Türkiye `location_code` 2792, `language_code` "tr"):
+
+| Ne | Endpoint | Neden |
+|---|---|---|
+| Hacim | `keywords_data/google_ads/search_volume/live` | Ana kelime, kısa ad, **alternatif ad**, niyet ekleri (inceleme, türkçe, kaç saat, sistem gereksinimleri, metacritic, çıkış tarihi) |
+| SERP | `serp/google/organic/live/advanced` (`people_also_ask_click_depth: 1`) | PAA soruları, ilgili aramalar, Türkçe rakipler, bilgi paneli |
+
+Yeni çıkan oyunda 12 aylık ortalama yanıltır; **çıkış ayının hacmi** ayrıca okunur (Dawnwalker:
+ortalama 2.400, Ağustos 6.600; "metacritic" eki ortalama 50, Ağustos 590). Rakip analizinde Türkçe
+inceleme olup olmadığına bakılır: Dawnwalker'da ilk 20'de hiç Türkçe inceleme yoktu (fırsat),
+CONTROL Resonant'ta Oyungezer 12. sıradaydı.
+
+## 8. Başlık ve ilk cümle (answer-first)
+
+- **Her H2'nin ilk cümlesi başlığın sorusunu yanıtlar.** Geçiş cümlesiyle açılmaz.
+
+| Önce | Sonra |
+|---|---|
+| "Oyunun en çok konuşulan tarafı bu." | "Zaman, yalnızca hikayeyi etkileyen adımlar attığında ilerliyor; açık dünyada gezmek takvimden gün götürmüyor." |
+| "Gündüz Coen bir insan." | "Dövüş, Coen'in o anki haline göre ikiye ayrılıyor: gündüz ... kılıçla, gece ... pençe ve ısırıkla." |
+| "En büyük değişiklik burada." | "Dövüş, ilk oyundaki silah ve telekinezi ağırlıklı yapıdan yakın dövüşe geçti." |
+
+- **H2'lerin çoğunda oyun adı geçer** ve başlık arama niyetini taşır ("Alınır mı?", "Türkçe mi,
+  Kaç Saat Sürüyor?", "Puanları: Metacritic ve OpenCritic"). Hepsine zorla eklenmez.
+- Başlık en fazla iki konu taşır.
+
+## 9. SSS: arama talebinden
+
+- Sıra: PAA ve ilgili aramalardaki sorular önce (alınır mı, kaç saat, platformlar, sistem
+  gereksinimleri, çıkış tarihi, alternatif ad), ardından marka soruları.
+- **Türkçe dil ve GeForce NOW soruları her yazıda kalır.**
+- Doğrulanamayan soru yazılmaz (Dawnwalker PAA'sındaki "romance" sorusu kaynak bulunamadığı için
+  alınmadı).
+- 20-60 kelime, ilk cümle doğrudan cevap, gövdedeki cümleyi birebir tekrar etmez.
+
+## 10. Zaman ifadeleri: tarihli yaz
+
+Yayın tarihi belli olmadığı için göreli ifade yazılmaz; puanlar yine verilir ama tarihle.
+
+| Yazılmaz | Yazılır |
+|---|---|
+| "bugün çıktı" | "24 Eylül 2026'da çıktı" |
+| "Oyun bu yazı hazırlanırken yeni çıktığı için Steam'de kullanıcı incelemesi bulunmuyor" | "24 Eylül 2026 itibarıyla Steam'de kullanıcı incelemesi bulunmuyordu" |
+| "Oyun, çıkışından üç hafta sonra olumlu bir tabloya sahip" | "24 Eylül 2026 itibarıyla ... puana sahip" |
+| "çıkıştan bir hafta sonra" | "çıkışı izleyen hafta içinde" |
+
+## 11. Linkler
+
+| Link | Durum | Not |
+|---|---|---|
+| OpenCritic, Metacritic, HowLongToBeat, SteamDB | **Verilir** | Puan ve süre cümlesinin içinde, kaynak adı anchor olur |
+| Mağazalar, resmi geliştirici/yayıncı sitesi | Verilir | Gerekiyorsa |
+| **Oyun basını / rakip yayınlar** (GameSpot, IGN, PC Gamer, Eurogamer, Oyungezer, Technopat ...) | **ASLA** | Metinde kaynak olarak anılır, link verilmez. `apply_link_policy` çözer, `verify_output` FAIL verir |
+| İlgili GFN Thursday yazısı | Verilir (iç link) | GFN bölümünde bir kez; önce `headline` ile doğrulanır (site soft 404 veriyor) |
+| GFN kategori sayfası | 1-2 (Kural 20) | Doğal geçiş varsa |
+
+Dış linkler `nofollow noopener noreferrer` + yeni sekme alır; iç linkler `noopener noreferrer` +
+yeni sekme (Kural 21, `apply_link_policy` otomatik).

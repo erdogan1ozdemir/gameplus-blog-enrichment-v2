@@ -1732,9 +1732,38 @@ def _rel_birlestir(mevcut, eklenecek):
     return " ".join(var)
 
 
+# v10.25 (Kural 25): oyun basini ve rakip yayin sitelerine ASLA link verilmez. Bu sitelerden
+# bilgi aliniyorsa yalniz metinde kaynak olarak anilir ("GameSpot'un olcumune gore").
+# Veri ve toplayici siteler (OpenCritic, Metacritic, HowLongToBeat, SteamDB), magazalar ve resmi
+# gelistirici/yayinci siteleri serbesttir; dis link oldugu icin nofollow noopener noreferrer alir.
+YASAK_MEDYA_ALANLARI = (
+    "gamespot.com", "ign.com", "pcgamer.com", "eurogamer.net", "gamesradar.com", "polygon.com",
+    "kotaku.com", "thegamer.com", "gameinformer.com", "rockpapershotgun.com", "destructoid.com",
+    "vg247.com", "dualshockers.com", "hardcoregamer.com", "tomsguide.com", "giantbomb.com",
+    "shacknews.com", "rpgsite.net", "rpgfan.com", "videogameschronicle.com", "gamerant.com",
+    "screenrant.com", "wccftech.com", "insider-gaming.com", "windowscentral.com", "pushsquare.com",
+    "oyungezer.com.tr", "technopat.net", "merlininkazani.com", "donanimhaber.com", "webtekno.com",
+    "shiftdelete.net", "gamegaraj.com", "bolumsonucanavari.com", "playstationturkiye.com",
+    "gamerbros.co", "turkgamer.net",
+)
+
+
+def _yasak_medya_mi(href):
+    alan = re.sub(r"^https?://(www\.)?", "", (href or "").strip().lower()).split("/")[0]
+    return any(alan == y or alan.endswith("." + y) for y in YASAK_MEDYA_ALANLARI)
+
+
 def apply_link_policy(html):
-    """Govdedeki tum <a> ogelerine link politikasini uygular. Donus: (html, sayac)."""
-    sayac = {"dis": 0, "ic": 0, "capa": 0}
+    """Govdedeki tum <a> ogelerine link politikasini uygular. Donus: (html, sayac).
+    v10.25: yasak medya alanlarina giden linkler COZULUR (metin kalir, <a> kalkar)."""
+    sayac = {"dis": 0, "ic": 0, "capa": 0, "medya_cozuldu": 0}
+
+    def _coz(m):
+        if _yasak_medya_mi(m.group(1)):
+            sayac["medya_cozuldu"] += 1
+            return m.group(2)
+        return m.group(0)
+    html = re.sub(r'<a\b[^>]*href="([^"]*)"[^>]*>(.*?)</a>', _coz, html, flags=re.S)
 
     def _bir(m):
         tam = m.group(0)
@@ -2236,6 +2265,23 @@ def verify_output(final_html, blog_type="general", n_games=None, expect_faq=Fals
         _oran = _gorunur_uzunluk(final_html[_gb:_ps_i]) / (_gorunur_uzunluk(final_html[_gb:]) or 1)
         add(0.25 <= _oran <= 0.75, "Kart yazının ortalarında", f"yüzde {round(_oran * 100)}",
             f"yüzde {round(_oran * 100)} konumda (25-75 bandı önerilir)", warn=True)
+
+    # v10.25 (Kural 25): oyun basini / rakip yayin sitelerine link YOK.
+    _medya = [h for h in re.findall(r'<a\b[^>]*href="([^"]+)"', final_html.split("</style>")[-1])
+              if _yasak_medya_mi(h)]
+    add(not _medya, "Medya sitesine link yok", "yok",
+        f"{len(_medya)} link oyun basini/rakip yayina gidiyor ({_medya[:2]}) - apply_link_policy cozmeli")
+
+    # v10.25 (Kural 25): yeni yazida yayin tarihine bagli goreli zaman ifadesi kullanilmaz.
+    # Yazar taslaginda olabilir (dokunulmaz), bu yuzden UYARI. GFN Thursday'de "bu hafta" dogaldir.
+    if blog_type == "general":
+        _gov_metin = re.sub(r"<[^>]+>", " ", re.sub(r"<(script|style)\b.*?</\1>", "",
+                                                   final_html, flags=re.S))
+        _goreli = re.findall(r"\b(bugün|dün|yarın|bu yazı hazırlanırken|geçen hafta|önümüzdeki hafta|"
+                             r"\w+ hafta sonra|\w+ gün önce|şu anda)\b", _gov_metin, flags=re.I)
+        add(not _goreli, "Göreli zaman ifadesi yok", "yok",
+            f"{len(_goreli)} göreli ifade ({sorted(set(x.lower() for x in _goreli))[:4]}) - "
+            f"yayın tarihi belli değil, tarihli kalıp kullan ('24 Eylül 2026 itibarıyla')", warn=True)
 
     # v10.12: "Tabloyu yana kaydır" ipucu tablo kabının DIŞINDA, hemen ÜSTÜNDE olmalı.
     _ipucu_icerde = re.search(r'<div class="table-wrap[^"]*">\s*<div class="gp-table-hint"', final_html)

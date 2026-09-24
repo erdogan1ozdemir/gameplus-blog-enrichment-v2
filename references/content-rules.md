@@ -212,7 +212,9 @@ olanı önce dener. En yüksek hacimliler: ücretsiz oyunlar (823.000), popüler
 bulmaca oyunları (14.800), dövüş oyunları (14.800), yarış oyunları (9.900), macera oyunları (5.400),
 strateji oyunları (5.400), FPS oyunları (3.600).
 
-## Kural 22: İnceleme ve genel blog yazım tarzı
+## Kural 24: Yeni içerik yazım tarzı (inceleme, listicle, rehber)
+
+> Numara notu: bu kural ilk eklendiğinde "Kural 22" adını almıştı; Kural 22 (DOM genişliği) ve Kural 23 (Türkçe İ tuzağı) ile çakışmaması için 24 olarak yeniden numaralandı.
 
 **Kapsam: YALNIZCA yazıyı bu skill ile BİZ yazarken.** Kullanıcı hazır bir taslak (docx, html, metin)
 ilettiğinde bu kuralların hiçbiri yazarın cümlelerine uygulanmaz: sayılar yuvarlanmaz, kelime
@@ -236,6 +238,46 @@ Tarz `references/inceleme-yazisi.md`'de tanımlıdır. Bağlayıcı maddeler:
   URL'deki slug doğru görünse de içerik başka oyuna ait olabilir (OpenCritic id tuzağı).
 - **Yaş kısıtlı YouTube videosu gömülmez.** Kontrol tarayıcıda yapılır:
   `python3 scripts/video_yas_testi.py <id...>`.
+
+## Kural 25: Yeni içerikte SEO/GEO - yazmadan önce ve yazarken (v10.25)
+
+**Kapsam: YENİ içerik (inceleme, listicle, rehber, derleme - tür fark etmez).** Hazır taslakta
+yazarın metnine dokunulmaz (kural 1); orada yalnız link politikası ve bizim eklediğimiz parçalar
+bu kurala tabidir. Ayrıntı ve örnekler: `references/inceleme-yazisi.md` bölüm 7-11.
+
+1. **Yazmadan önce arama verisi toplanır (brief adımı).** DataForSEO ile Türkiye / Türkçe:
+   ana kelime ve kısa adları (the blood of dawnwalker / blood of dawnwalker / dawnwalker), alternatif
+   ad (control resonant / **control 2**), niyet ekleri (inceleme, türkçe, kaç saat, sistem
+   gereksinimleri, metacritic, çıkış tarihi) için hacim; ana kelime için SERP'teki **PAA soruları,
+   ilgili aramalar ve Türkçe rakipler**. Yeni oyunlarda 12 aylık ortalama yanında çıkış ayı da okunur.
+2. **Her H2'nin ilk cümlesi başlığın sorusunu doğrudan yanıtlar.** "Oyunun en çok konuşulan tarafı
+   bu.", "En büyük değişiklik burada." gibi geçiş cümleleri ilk cümle olamaz. AI Overview ve
+   yapay zekâ cevapları neredeyse her zaman bölümün ilk cümlesini alıntılıyor.
+3. **H2'lerin çoğunda ana kelime (oyun adı) geçer** ve arama niyetine göre adlandırılır:
+   "{Oyun} Nedir?", "{Oyun} Hikayesi Neyi Anlatıyor?", "{Oyun} Puanları: Metacritic ve OpenCritic",
+   "{Oyun} Türkçe mi, Kaç Saat Sürüyor?", "{Oyun} Alınır mı?", "{Oyun} GeForce NOW'da Oynanır mı?".
+   Başlık en fazla iki konu taşır; her başlığı zorlamak gerekmez ("Genel Değerlendirme" kalabilir).
+4. **SSS arama talebinden kurulur:** PAA ve ilgili aramalardaki sorular (alınır mı, kaç saat,
+   hangi platformlarda, sistem gereksinimleri, çıkış tarihi, alternatif ad) önceliklidir. **Türkçe
+   dil ve GeForce NOW soruları her yazıda kalır.** Doğrulanamayan soru (ör. romantik ilişki var mı)
+   yazılmaz. Cevap 20-60 kelime, ilk cümle doğrudan cevap.
+5. **Alternatif ad metinde geçer.** Oyun başka bir adla da aranıyorsa ("Control 2") girişte ve
+   Nedir bölümünde bir kez, SSS'de soru olarak bir kez anılır.
+6. **Göreli zaman yok, tarih var.** Yazının yayın tarihi belli olmadığından "bugün", "henüz",
+   "bu yazı hazırlanırken", "üç hafta sonra" yazılmaz. Puanlar yine verilir ama tarihle:
+   "24 Eylül 2026 itibarıyla OpenCritic'te 84". Puan tablosunun başlığında da tarih bulunur.
+   `verify_output` genel blogda göreli ifade görürse UYARI verir.
+7. **Dış link politikası:** veri ve toplayıcı siteler (OpenCritic, Metacritic, HowLongToBeat,
+   SteamDB), mağazalar ve resmi geliştirici/yayıncı siteleri linklenebilir; dış link olduğu için
+   `nofollow noopener noreferrer` + yeni sekme alır (Kural 21 otomatik ekler). **Oyun basını ve
+   rakip yayın sitelerine (GameSpot, IGN, PC Gamer, Eurogamer, Oyungezer, Technopat vb.) ASLA link
+   verilmez;** bilgi alındıysa yalnız metinde kaynak olarak anılır ("GameSpot'un ölçümüne göre").
+   `apply_link_policy` bu sitelere giden linkleri çözer (metin kalır), `verify_output` kalırsa FAIL
+   verir. Liste: `YASAK_MEDYA_ALANLARI`.
+8. **İç link: oyunun GeForce NOW'a gelişini duyuran GFN Thursday yazısı** GFN bölümünde bir kez
+   linklenir ("3 Eylül 2026 tarihli GFN Thursday yazısında da yer aldı"). **Site olmayan adrese de
+   200 döndürüyor (soft 404);** linkten önce sayfanın `headline` değeri okunup doğru yazı olduğu
+   doğrulanır.
 
 ## Kural 21: Link politikası - dış linkler nofollow, tüm linkler yeni sekmede
 

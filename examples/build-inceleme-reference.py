@@ -37,9 +37,14 @@ def yt(vid, baslik): P.append(("yt", (vid, baslik)))
 
 h1(TITLE)
 
+OC = "https://opencritic.com/game/20499/the-blood-of-dawnwalker"
+MC = "https://www.metacritic.com/game/the-blood-of-dawnwalker/"
+HLTB = "https://howlongtobeat.com/game/144338"
+GFN_YAZI = "https://gameplus.com.tr/blog/gfn-thursday-geforce-now-da-bu-hafta-3-eylul-2026"
+
 p("Veba Avrupa'yı kırıp geçirirken, savaşlar da köyleri boşaltmış durumda. Vampirler tam olarak bu "
   "boşluğu bekliyordu. <strong>The Blood of Dawnwalker</strong> seni bu karanlığın ortasına bırakıyor "
-  "ve gündüz insan, gece vampir olan Coen'in yerine koyuyor. Elinde ailesini kurtarmak için sadece "
+  "ve gündüz insan, gece vampir olan Coen'in yerine koyuyor. Elinde ailesini kurtarmak için yalnızca "
   "30 gün var.")
 
 p("Oyunu yapan ekip de en az konusu kadar dikkat çekici. Rebel Wolves'un kadrosunda The Witcher 3: "
@@ -48,25 +53,24 @@ p("Oyunu yapan ekip de en az konusu kadar dikkat çekici. Rebel Wolves'un kadros
   "çıkan iş, arkasındaki isimlerin gölgesinde kalıyor mu, yoksa kendi kimliğini kurmayı başarıyor mu?")
 
 h2("The Blood of Dawnwalker Nedir?")
-p("The Blood of Dawnwalker, 14. yüzyıl Avrupası'nda geçen açık dünya aksiyon rol yapma oyunu. "
-  "Bandai Namco tarafından yayınlanıyor, Unreal Engine 5 ile geliştirilmiş ve PC'nin yanı sıra "
-  "PlayStation 5 ile Xbox Series X|S'te de oynanabiliyor. Oyun, Karpatlar'da vampirlerin kontrolüne "
-  "geçmiş kurgusal bir vadide, Vale Sangora'da geçiyor.")
+p("The Blood of Dawnwalker, 14. yüzyıl Avrupası'nda geçen, açık dünyalı bir karanlık fantezi aksiyon "
+  "rol yapma oyunu. Rebel Wolves tarafından Unreal Engine 5 ile geliştirildi, Bandai Namco tarafından "
+  "yayınlandı ve PC, PlayStation 5 ile Xbox Series X|S'te oynanabiliyor. Oyun, Karpatlar'da "
+  "vampirlerin kontrolüne geçmiş kurgusal bir vadide, Vale Sangora'da geçiyor.")
 yt("_U88fNicSPg", "The Blood of Dawnwalker Genel Bakış Videosu")
 p("Rebel Wolves 2022'de kuruldu ve Dawnwalker'ı tek seferlik bir yapım olarak değil, Coen'in "
   "farklı dönemlerde geçen kendi içinde kapalı hikayelerinden oluşan bir serinin ilk halkası olarak "
-  "tasarladı. Çıkıştan bir hafta sonra stüdyonun devam oyunu için ilan vermeye başlaması da bu planın "
+  "tasarladı. Stüdyonun çıkışı izleyen hafta içinde devam oyunu için ilan vermeye başlaması da bu planın "
   "işlediğini gösteriyor. Oyun tamamen tek kişilik; çok oyunculu bir mod bulunmuyor, kontrolcü desteği "
   "tam ve stüdyo oyunu gamepad ile oynamayı öneriyor.")
 p("Ana karakter Coen, köylü bir genç iken vampir kanıyla dönüşüme uğruyor ve iki tarafın arasında "
   "sıkışıyor: gündüz insan kalıyor, gece vampir güçlerine kavuşuyor. Bu ikili yapı yalnızca bir "
   "hikaye detayı değil, oyunun bütün sistemlerinin üzerine kurulduğu temel.")
 
-h2("Hikaye: Vale Sangora'da Geçen 30 Gün")
-p("Coen'in derdi dünyayı kurtarmak değil, ailesini vampir lordu Brencis'in elinden almak. Oyun bu "
-  "hedefi bir zaman sınırına bağlıyor ve sana 30 oyun günü veriyor. Klasik anlamda çizgisel bir ana "
-  "görev zinciri yok; hikaye senin hangi görevi hangi sırayla aldığına, kimi dinlediğine ve neyi "
-  "atladığına göre şekilleniyor.")
+h2("The Blood of Dawnwalker Hikayesi Neyi Anlatıyor?")
+p("Oyun, ailesini vampir lordu Brencis'in elinden kurtarmaya çalışan Coen'in 30 günlük mücadelesini "
+  "anlatıyor. Klasik anlamda çizgisel bir ana görev zinciri yok; hikaye senin hangi görevi hangi "
+  "sırayla aldığına, kimi dinlediğine ve neyi atladığına göre şekilleniyor.")
 p("Oyunun tonu baştan sona karanlık. Vebanın kol gezdiği köyler, kendi arasında bölünmüş bir "
   "vadi ve gece olunca kapıların sürgülendiği bir dünya var. Rebel Wolves bunu \"anlatı temelli "
   "açık dünya\" olarak tarifliyor: masaüstü rol yapma oyunlarındaki gibi, bir görevi kimin lehine "
@@ -84,9 +88,8 @@ p("Karşılaştırma kaçınılmaz olsa da her inceleme aynı yere varmıyor. Th
   "işaretlerini tek tek temizlediğin bir düzen yok, oyun seni neyi bırakacağına karar vermeye zorluyor.")
 
 h2("30 Günlük Zaman Sistemi Nasıl İşliyor?")
-p("Oyunun en çok konuşulan tarafı bu. Zaman, sen açık dünyada gezerken ilerlemiyor. Yani ormanda "
-  "dolaşmak, eşya toplamak ya da bir mağarayı keşfetmek gününden bir şey götürmüyor. Takvim yalnızca "
-  "hikayeyi etkileyen adımlar attığında ilerliyor:")
+p("Zaman, yalnızca hikayeyi etkileyen adımlar attığında ilerliyor; açık dünyada gezmek, eşya "
+  "toplamak ya da bir mağarayı keşfetmek takvimden gün götürmüyor. Günü harcayan başlıklar şunlar:")
 P.append(("liste", [
     "<strong>Görevler:</strong> ana hikayeyi ve önemli yan hatları ilerleten adımlar günün bir "
     "bölümünü harcıyor.",
@@ -100,21 +103,21 @@ p("Eleştirmenler bu sistemde ikiye ayrıldı. IGN, zamanı bir kaynak gibi harc
   "gösterdi. PC Gamer ise baskının pratikte sandığı kadar hissedilmediğini, sınırın çoğu zaman "
   "kağıt üzerinde kaldığını yazdı. Game Informer tarafında ise ters yönde bir eleştiri var: "
   "sınır yüzünden oyunu gereğinden fazla temkinli oynadığını belirtti.")
-p("Oyuncu tarafında da tablo benzer. Yerli oyuncu topluluklarının yorumlarında 30 günün \"aceleye getirdiği\" "
-  "yönünde sitemler var; buna karşılık ikinci kez oynamayı bu sınır sayesinde anlamlı bulanlar da "
-  "az değil. Pratikte tek cümleyle özetlemek gerekirse: her görevi toplayıp sonra tek tek bitirme "
-  "alışkanlığın varsa bu oyun o alışkanlığı bozuyor.")
-
+p("Oyuncu tarafında da tablo benzer. Yerli oyuncu topluluklarının yorumlarında 30 günün \"aceleye "
+  "getirdiği\" yönünde sitemler var; buna karşılık ikinci kez oynamayı bu sınır sayesinde anlamlı "
+  "bulanlar da az değil. Pratikte tek cümleyle özetlemek gerekirse: her görevi toplayıp sonra tek tek "
+  "bitirme alışkanlığın varsa bu oyun o alışkanlığı bozuyor.")
 p("Sistem pratikte şuna benziyor: bir görev zincirine girdiğinde saatler ilerliyor, gece oluyor, "
   "vampir tarafın açılıyor ve o sırada elindeki başka bir işin şartları değişiyor. Bu yüzden "
   "\"önce şu bölgeyi temizleyeyim, sonra ana göreve dönerim\" mantığı burada her zaman işlemiyor. "
   "İlk oynayışta bunu bir eksik gibi değil, hikayeyi kendi yolundan okumanın bedeli gibi düşünmek "
   "daha sağlıklı.")
 
-h2("Gündüz İnsan, Gece Vampir: Dövüş ve Oynanış")
-p("Gündüz Coen bir insan. Kılıçla, yön tabanlı bir dövüş sistemiyle savaşıyor; köylülerle konuşup "
-  "işleri kan dökmeden çözme ihtimali de daha yüksek. Gece ise vampir tarafı devreye giriyor: "
-  "pençeler, ısırık saldırıları ve gündüz çıkamadığın yerlere tırmanmanı sağlayan hareket kabiliyeti.")
+h2("The Blood of Dawnwalker'da Dövüş Nasıl İşliyor?")
+p("Dövüş, Coen'in o anki haline göre ikiye ayrılıyor: gündüz insan olarak kılıçla, yön tabanlı bir "
+  "sistemle savaşıyor; gece vampir tarafı devreye giriyor ve pençeler, ısırık saldırıları ile gündüz "
+  "çıkamadığın yerlere tırmanmanı sağlayan hareket kabiliyeti açılıyor. Gündüz köylülerle konuşup "
+  "işleri kan dökmeden çözme ihtimali de daha yüksek.")
 p("Vampir tarafının bir de faturası var. Gece boyunca kan susuzluğunu yönetmen gerekiyor; "
   "beslenmezsen bunun bedelini çevrendeki insanlar ödüyor. Görev veren bir karakteri ya da bir "
   "tüccarı kaybetmek mümkün, bu da o hikaye kolunu tamamen değiştiriyor. Karakter gelişimi üç ayrı "
@@ -125,59 +128,66 @@ p("Dövüş, incelemelerde genel olarak olumlu karşılandı ama eleştirisiz de
   "benzediğini yazdı. Steam yorumlarında da benzer bir sitem var: yön tabanlı savuşturma bir süre "
   "sonra tekrara düşebiliyor ve düşman çeşitliliği yeterli bulunmuyor.")
 
-h2("Eleştirmenler ve Oyuncular Ne Dedi?")
-p("Oyun, çıkışından üç hafta sonra hem basın hem oyuncu tarafında olumlu bir tabloya sahip. "
-  "Aşağıdaki değerler 24 Eylül 2026 itibarıyla geçerli:")
+h2("The Blood of Dawnwalker Puanları: Metacritic ve OpenCritic")
+p(f"The Blood of Dawnwalker, 24 Eylül 2026 itibarıyla <a href=\"{OC}\">OpenCritic</a>'te 84, "
+  f"<a href=\"{MC}\">Metacritic</a>'te 83 puana sahip; Steam'deki oyuncu incelemelerinin %87'si "
+  "olumlu. Tablo aynı tarihteki değerleri gösteriyor:")
 P.append(("puan_tablo", None))
-p("Yerli oyuncu toplulukları için ayrı bir not düşmek gerekiyor: Steam'deki Türkçe yorumların büyük bölümü "
-  "olumlu ve bunların önemli bir kısmı doğrudan Türkçe dil desteğine teşekkür ediyor. Bu ölçekteki "
-  "bir yapımda Türkçe arayüz ve altyazının çıkışta hazır olması, yorumlarda puanı yukarı çeken "
-  "belirgin bir etken.")
-p("Globaldeki oyuncu topluluklarında olumsuz yorumların öne çıkan başlıkları ise performans dalgalanmaları, gamepad ile hareket "
-  "kontrollerinin ilk günlerdeki tuhaflığı ve yukarıda değindiğimiz zaman baskısı. Oyunun ilk "
-  "haftasında çıkan yamalar bazı kontrol sorunlarını çözdü, ancak optimizasyon hâlâ yorumlarda "
-  "tartışılan bir konu.")
+p("Yerli oyuncu toplulukları için ayrı bir not düşmek gerekiyor: Steam'deki Türkçe yorumların büyük "
+  "bölümü olumlu ve bunların önemli bir kısmı doğrudan Türkçe dil desteğine teşekkür ediyor. Bu "
+  "ölçekteki bir yapımda Türkçe arayüz ve altyazının çıkışta hazır olması, yorumlarda puanı yukarı "
+  "çeken belirgin bir etken.")
+p("Globaldeki oyuncu topluluklarında olumsuz yorumların öne çıkan başlıkları ise performans "
+  "dalgalanmaları, gamepad ile hareket kontrollerinin ilk günlerdeki tuhaflığı ve yukarıda "
+  "değindiğimiz zaman baskısı. Çıkışı izleyen yamalar bazı kontrol sorunlarını çözdü, ancak "
+  "optimizasyon yorumlarda tartışılmaya devam eden bir konu.")
 
-h2("Teknik Taraf: Türkçe Dil, Süre ve Donanım")
-p("Oyun Türkçe arayüz ve altyazı desteğiyle geliyor; Türkçe seslendirme bulunmuyor. Süre tarafında "
-  "HowLongToBeat verileri şöyle: ana hikayeye odaklanırsan 20 saatin üzerinde bir süre, yan "
-  "görevlerle birlikte 35 saat civarı, her şeyi görmek istersen 50 saate yakın bir oynayış. Zaman sınırı nedeniyle tek bir "
-  "oynayışta her şeyi görmek zaten mümkün değil.")
+h2("The Blood of Dawnwalker Türkçe mi, Kaç Saat Sürüyor?")
+p(f"Evet, The Blood of Dawnwalker Türkçe arayüz ve altyazıyla oynanıyor; Türkçe seslendirme "
+  f"bulunmuyor. <a href=\"{HLTB}\">HowLongToBeat</a> verilerine göre ana hikaye 20 saatin üzerinde, "
+  "yan görevlerle birlikte 35 saat civarında sürüyor; her şeyi görmek isteyenler 50 saate yakın bir "
+  "süreden söz ediyor. Zaman sınırı nedeniyle tek bir oynayışta her şeyi görmek zaten mümkün değil.")
 p("Oyunda 46 Steam başarımı, tam kontrolcü desteği ve DualSense uyumu bulunuyor. Tek kişilik bir "
   "yapım olduğu için çevrimiçi bir mod aramana gerek yok. Kayıtlar Steam Cloud ile senkronize "
   "ediliyor, bu da bilgisayar ile bulut arasında geçiş yapan oyuncular için pratik bir ayrıntı.")
 p("Donanım tarafında minimum listede GTX 1060 seviyesi bir ekran kartı yeterli görülüyor; "
   "önerilen liste RTX 4060 sınıfına çıkıyor. Kurulum için 60 GB boş alan ve SSD isteniyor.")
 
-h2("Kimler Sevecek, Kimler İki Kez Düşünmeli?")
-p("Oyunun neyi iyi yaptığı kadar kime hitap ettiği de net. Kısa bir değerlendirme:")
+h2("The Blood of Dawnwalker Alınır mı?")
+p("Hikaye odaklı rol yapma oyunlarını seviyorsan ve bir zaman sınırı altında karar vermek seni "
+  "rahatsız etmiyorsa, The Blood of Dawnwalker güçlü bir seçenek. Şunları arıyorsan oyun tam sana göre:")
 P.append(("liste2", [
     "<strong>Hikaye odaklı RPG sevenler:</strong> yazım ve karakterler oyunun en güçlü tarafı, "
     "The Witcher 3'ten sonra benzer bir doygunluk arayan oyuncular burada karşılığını buluyor.",
     "<strong>İkinci kez oynamaya niyetli olanlar:</strong> 30 gün sınırı her oynayışta farklı bir "
     "hikaye kolu görmeni sağlıyor.",
-    "<strong>Acelesiz keşif isteyenler:</strong> her görevi sırayla bitirmeyi seviyorsan zaman "
-    "sistemi seni rahatsız edebilir.",
-    "<strong>Yoğun aksiyon bekleyenler:</strong> dövüş tatmin edici ama temposu ölçülü; hızlı ve "
-    "sürekli çatışma arıyorsan beklentini buna göre ayarla.",
+    "<strong>Atmosfer arayanlar:</strong> 14. yüzyıl Karpatlar'ı, vampir kurgusu ve gece-gündüz "
+    "döngüsü oyunun kimliğini kuruyor.",
+]))
+p("Beklentini ayarlaman gereken iki nokta ise şöyle:")
+P.append(("liste", [
+    "<strong>Acelesiz keşif istiyorsan:</strong> her görevi sırayla bitirmeyi seviyorsan zaman "
+    "sistemi seni sıkıştırabilir.",
+    "<strong>Yoğun aksiyon bekliyorsan:</strong> dövüş tatmin edici ama temposu ölçülü; hızlı ve "
+    "sürekli çatışma arayanlara göre değil.",
 ]))
 
 h2("Genel Değerlendirme")
-p("The Blood of Dawnwalker, bir ilk oyun için beklenenin üzerinde bir iş. Yazım ve karakterler "
-  "türün üst sınıfında; gece ve gündüz ayrımı yalnızca görsel bir tema değil, oynanışı gerçekten "
-  "ikiye bölen bir sistem. Zaman sınırı ise oyunu sevip sevmeyeceğini belirleyen ana etken: bir "
-  "kısıtlama olarak görürsen sinir bozucu, bir kural olarak kabul edersen her kararı anlamlı kılan "
-  "bir tasarım.")
+p("The Blood of Dawnwalker, güçlü yazımı ve oynanışı gerçekten ikiye bölen gece-gündüz sistemiyle "
+  "bir ilk oyun için beklenenin üzerinde bir aksiyon rol yapma oyunu. Zaman sınırı ise oyunu sevip "
+  "sevmeyeceğini belirleyen ana etken: bir kısıtlama olarak görürsen sinir bozucu, bir kural olarak "
+  "kabul edersen her kararı anlamlı kılan bir tasarım.")
 p("Eksik taraflar da var. Dövüş uzun oynayışlarda tekrara düşebiliyor, düşman çeşitliliği "
   "beklentinin altında kalıyor ve performans hâlâ yama bekleyen bir konu. Yine de 84 ortalama ve "
   "Steam'deki %87 olumlu oran, bu eksiklerin oyunun bütününü gölgelemediğini gösteriyor. Türe yakın "
   "başka yapımlar arıyorsan GeForce NOW kütüphanesindeki macera oyunları iyi bir başlangıç noktası.")
 
-h2("The Blood of Dawnwalker'ı GeForce NOW ile Bulutta Oynamak")
-p("Oyun, çıkış günü GeForce NOW kütüphanesine eklendi. 60 GB'lık kurulumu beklemeden buluttan "
-  "başlatabiliyor, önerilen listedeki ekran kartına sahip olmasan da oynayabiliyorsun; işi senin "
-  "bilgisayarın yerine bulut tarafındaki RTX destekli sunucular yapıyor ve kayıtların Steam "
-  "hesabında durduğu için kaldığın yerden devam ediyorsun.")
+h2("The Blood of Dawnwalker GeForce NOW'da Oynanır mı?")
+p(f"Evet, The Blood of Dawnwalker çıkış günü GeForce NOW kütüphanesine eklendi; oyunun buluta "
+  f"gelişi <a href=\"{GFN_YAZI}\">3 Eylül 2026 tarihli GFN Thursday yazısında</a> da yer aldı. "
+  "60 GB'lık kurulumu beklemeden buluttan başlatabiliyor, önerilen listedeki ekran kartına sahip "
+  "olmasan da oynayabiliyorsun; işi bulut tarafındaki RTX destekli sunucular yapıyor ve kayıtların "
+  "Steam hesabında durduğu için kaldığın yerden devam ediyorsun.")
 
 h2("Sıkça Sorulan Sorular")
 
@@ -188,14 +198,26 @@ FAQ = [
     ("The Blood of Dawnwalker kaç saatte bitiyor?",
      "HowLongToBeat verilerine göre ana hikaye 20 saatin üzerinde, yan görevlerle birlikte 35 saat "
      "civarında sürüyor. Her şeyi görmeyi hedefleyen oyuncular 50 saate yakın bir süreden söz ediyor."),
-    ("30 günlük süre sistemi tam olarak nasıl işliyor?",
-     "Zaman, açık dünyada gezerken ilerlemiyor. Yalnızca hikayeyi etkileyen görevler ve yetenek "
-     "yatırımları günün bir bölümünü harcıyor. Ana hedefini bu 30 günlük takvim içinde tamamlaman "
-     "gerekiyor, bu yüzden hangi görevi alacağın bir tercihe dönüşüyor."),
+    ("The Blood of Dawnwalker alınır mı?",
+     "Hikaye odaklı rol yapma oyunlarını seviyorsan büyük ihtimalle evet. Oyun 24 Eylül 2026 "
+     "itibarıyla OpenCritic'te 84 puana sahip ve Steam incelemelerinin %87'si olumlu. Karar vermeden "
+     "önce 30 günlük zaman sınırını hesaba katmak gerekiyor; görevleri acelesiz bitirmeyi sevenler bu "
+     "yapıyı kısıtlayıcı bulabiliyor."),
+    ("The Blood of Dawnwalker hangi platformlarda var?",
+     "Oyun 3 Eylül 2026'da PC, PlayStation 5 ve Xbox Series X|S için çıktı. PC'de Steam ve GOG "
+     "üzerinden satın alınabiliyor; ayrıca GeForce NOW ile bulut üzerinden de oynanabiliyor."),
+    ("The Blood of Dawnwalker sistem gereksinimleri nedir?",
+     "Minimum listede Intel Core i5-11400F ya da AMD Ryzen 7 2700X işlemci, 16 GB RAM ve GTX 1060 ya "
+     "da RX 580 ekran kartı isteniyor. Önerilen listede RTX 4060 ya da RX 7600 XT yer alıyor; kurulum "
+     "için 60 GB SSD alanı gerekiyor."),
     ("The Blood of Dawnwalker GeForce NOW'da oynanabiliyor mu?",
      "Evet, oyun çıkış günü GeForce NOW kütüphanesine eklendi. Oynayabilmen için oyuna Steam gibi "
      "desteklenen bir mağazada sahip olman gerekiyor; GeForce NOW oyunu satmaz, senin kütüphanendeki "
      "oyunu bulutta çalıştırır."),
+    ("30 günlük süre sistemi tam olarak nasıl işliyor?",
+     "Zaman, açık dünyada gezerken ilerlemiyor. Yalnızca hikayeyi etkileyen görevler ve yetenek "
+     "yatırımları günün bir bölümünü harcıyor. Ana hedefini bu 30 günlük takvim içinde tamamlaman "
+     "gerekiyor, bu yüzden hangi görevi alacağın bir tercihe dönüşüyor."),
     ("The Witcher 2 sevenler The Blood of Dawnwalker'ı sever mi?",
      "The Witcher serisinin karanlık tonunu ve seçim ağırlıklı anlatımını sevdiysen bu oyun tanıdık "
      "gelir; ekipte The Witcher 3'ün yönetmeni yer alıyor ve incelemelerde iki seri sık sık yan yana "
@@ -260,7 +282,7 @@ for tip, veri in P:
         out.append(f"<p>{veri}</p>")
         if veri.startswith("Oyuncu tarafında da tablo benzer"):
             out.append(editor_note)
-        elif veri.startswith("Oyun, çıkış günü GeForce NOW kütüphanesine eklendi"):
+        elif veri.startswith("Evet, The Blood of Dawnwalker çıkış günü GeForce NOW"):
             out.append(hatirlatma)
     elif tip == "yt":
         out.append(ytembed(*veri))
@@ -283,7 +305,7 @@ tldr = render_tldr([
     "insan, gece vampir olan Coen'in ailesini kurtarma hikayesi.",
     "<strong>Ekip:</strong> The Witcher 3'ün yönetmeninin kurduğu Rebel Wolves'un ilk oyunu; ilk üç "
     "günde bir milyondan fazla sattı.",
-    "<strong>Puanlar:</strong> OpenCritic 84, Metacritic 83, Steam'de %87 olumlu (25 binden fazla inceleme).",
+    "<strong>Puanlar (24 Eylül 2026):</strong> OpenCritic 84, Metacritic 83, Steam'de %87 olumlu (25 binden fazla inceleme).",
     "<strong>En çok tartışılan yan:</strong> 30 günlük zaman sınırı. Keşif süreyi harcamıyor, "
     "yalnızca görevler ve yetenek yatırımları harcıyor.",
     "<strong>Türkçe:</strong> arayüz ve altyazı var, seslendirme yok. Oyun çıkış günü GeForce NOW "
