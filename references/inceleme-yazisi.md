@@ -7,6 +7,11 @@ Tek bir oyunu değerlendiren yazılar için. Marka onayıyla oturan tarz, ilk ol
 Bu dosya yalnız inceleme için değil, **genel blog yazılarının dili** için de geçerlidir:
 sayı yuvarlama, topluluk ifadeleri, öneri dili ve kaynak doğrulama maddeleri her yazıda uygulanır.
 
+> **Kapsam uyarısı.** Buradaki tarz kuralları **yeni içerik yazarken** geçerlidir. Kullanıcı hazır
+> bir taslak ilettiğinde yazarın metnine dokunulmaz: sayı yuvarlanmaz, kelime değiştirilmez, cümle
+> yumuşatılmaz (content-rules kural 1). Tarz o durumda yalnız bizim eklediğimiz parçalara
+> (Hızlı Özet, editör notu, hatırlatma, CTA metinleri, SSS yanıtları) uygulanır.
+
 ## 1. Bölüm akışı
 
 Sıra sabit değil ama bu iskelet onaylandı:

@@ -145,7 +145,8 @@ Detaylar **`references/design-system.md`**'de. Özet:
 Tam liste **`references/content-rules.md`**'de. En kritikleri:
 - **Yazarın cümlelerini ASLA değiştirme.** Sadece enrichment ekle.
 - **Yazıyı bu skill ile biz yazıyorsak** (inceleme, rehber, derleme) `references/inceleme-yazisi.md`
-  geçerlidir: ham büyük sayılar yuvarlanır (25.851 -> "25 binden fazla"), "Türk oyuncular" yerine
+  geçerlidir. **Hazır taslak geldiğinde bu tarz kuralları yazarın metnine UYGULANMAZ**, yalnız bizim
+  eklediğimiz parçalara (TLDR, editör notu, CTA, SSS) uygulanır. Kurallar: ham büyük sayılar yuvarlanır (25.851 -> "25 binden fazla"), "Türk oyuncular" yerine
   "yerli oyuncu toplulukları" / "globaldeki oyuncu toplulukları", editör notu buyurgan değil olanak
   dilinde, GFN bölümü tek paragraf, sistem gereksinimleri tablosu blogda yer almaz.
 - **Özet (TLDR) madde sayısı:** duruma göre **3-6 madde** (her zaman 4 olması şart değil).

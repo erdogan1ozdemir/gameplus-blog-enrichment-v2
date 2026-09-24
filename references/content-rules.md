@@ -214,8 +214,13 @@ strateji oyunları (5.400), FPS oyunları (3.600).
 
 ## Kural 22: İnceleme ve genel blog yazım tarzı
 
-Yazıyı bu skill ile biz yazıyorsak (yazar taslağını zenginleştirmiyorsak) tarz
-`references/inceleme-yazisi.md`'de tanımlıdır. Bağlayıcı maddeler:
+**Kapsam: YALNIZCA yazıyı bu skill ile BİZ yazarken.** Kullanıcı hazır bir taslak (docx, html, metin)
+ilettiğinde bu kuralların hiçbiri yazarın cümlelerine uygulanmaz: sayılar yuvarlanmaz, kelime
+değiştirilmez, cümle yumuşatılmaz. O durumda kural 1 geçerlidir (yazarın metni dokunulmaz, yalnız
+enrichment eklenir) ve `verify_source_preserved` bunu denetler. Aşağıdaki maddeler bizim yazdığımız
+gövde metni ve eklediğimiz enrichment metinleri (TLDR, editör notu, CTA, SSS) için bağlayıcıdır.
+
+Tarz `references/inceleme-yazisi.md`'de tanımlıdır. Bağlayıcı maddeler:
 
 - **Sayılar yuvarlanır, aşağı doğru:** 25.851 inceleme -> "25 binden fazla inceleme"; 21,5 saat ->
   "20 saatin üzerinde". Puanlar (84, %87) ve küçük kesin değerler (152 eleştirmen) olduğu gibi kalır.
