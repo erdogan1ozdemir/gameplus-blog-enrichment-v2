@@ -1,0 +1,10 @@
+# Lisansli fontlar (New Science, GreycliffCF) ASLA repoya girmez. Yalniz README izlenir.
+scripts/_fonts/*
+!scripts/_fonts/README*
+*.otf
+*.ttf
+*.woff
+*.woff2
+__pycache__/
+*.pyc
+*.skill
