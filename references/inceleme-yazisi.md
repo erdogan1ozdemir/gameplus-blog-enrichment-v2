@@ -145,6 +145,23 @@ python3 scripts/video_yas_testi.py <video_id_1> <video_id_2> ...   # test sayfas
 bulunamazsa yayıncının genel bakış videosu ya da mağaza kanalının (GOG, PlayStation) fragmanı
 tercih edilir; hiçbiri uygun değilse yazı videosuz yayınlanır.
 
+### Video sayısı ve yerleşimi (v10.29)
+
+Tek fragman yetmez; video, anlattığı bölümün hemen altına konur. Marka kararı (24 Eylül 2026):
+
+| İçerik tipi | Video sayısı | Yerleşim |
+|---|---|---|
+| **İnceleme** | **2-4 video**, abartılmaz | Fragman `{Oyun} Nedir?` bölümünde; **oynanış videosu** dövüş/oynanış bölümünde; başlığa birebir uyan bir video varsa (ör. Dawnwalker'da 30 gün sistemi, Resonant'ta yetenek ağaçları, Onimusha'da Issen/savuşturma) o bölümde |
+| **Listicle** | Oyun başına bir video olabilir (10 oyun = 10 video) | Her oyunun başlığının altında, oyunun kendi fragmanı ya da oynanışı |
+| **Rehber** | İçeriğe göre | Anlatılan adımı ya da mekaniği gösteren bölümün altında |
+
+- Aynı videonun iki farklı kesiti ya da aynı içerikli iki fragman konmaz; her video farklı bir şey gösterir
+  (tanıtım, oynanış, belirli bir sistem).
+- Kaynak önceliği: geliştirici/yayıncı kanalı, ardından platform kanalları (PlayStation, Xbox, GOG,
+  NVIDIA GeForce). **Oyun basını kanalları (IGN, GameSpot vb.) gömülmez**: basın adı kuralıyla aynı gerekçe.
+- Her aday `video_yas_testi.py` ile tarayıcıda denenir; kısıtlı olan elenir.
+- Brief Excel'inde "Link Verilecek Sayfalar" sütununa video id'leri ve hangi H2'nin altına gideceği yazılır.
+
 ## 7. Yazmadan önce: arama verisi (brief adımı)
 
 Detay sayfalarında olduğu gibi blogda da metin, arama verisi toplandıktan sonra yazılır. Dawnwalker

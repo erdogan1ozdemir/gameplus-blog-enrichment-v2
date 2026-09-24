@@ -165,6 +165,10 @@ Tam liste **`references/content-rules.md`**'de. En kritikleri:
 - **Veri yoksa alan yazılmaz (v10.28):** oluşmamış metrik (çıkış günü Steam kullanıcı incelemesi,
   Metacritic kullanıcı puanı "tbd") ne tabloya "-" olarak ne metne "henüz oluşmamıştı" diye girer;
   alan tamamen çıkarılır. `verify_output(..., yeni_icerik=True)` FAIL verir (content-rules 25.11).
+- **Video sayısı (v10.29):** incelemede **2-4 video** (fragman `Nedir?` bölümünde, oynanış videosu
+  dövüş/oynanış bölümünde, başlığa özel sistem videosu ilgili bölümde); listicle'da oyun başına bir
+  video olabilir (10 oyun = 10 video); rehberde içeriğe göre. Yayıncı/platform kanalı, basın kanalı yok,
+  yaş kısıtı tarayıcıda test edilir.
 - **Doc biçimi:** içerik kısmında başlıklar ve metin siyah (Word mavi teması yok), önce yazı sonra HTML.
 - **Özet (TLDR) madde sayısı:** duruma göre **3-6 madde** (her zaman 4 olması şart değil).
 - **Oyun giriş formatı (HER YAZIDA AYNI):** **Yazıda birden fazla oyundan bahsediliyorsa** her oyunun başına oyun başlığı ekle; **tür etiketi + Stüdyo · Yıl** taşı. Başlık **H2/H3/H4** olabilir (çevredeki seviyeye uy): `render_game_h3_inline(anchor, isim, "TÜR", renk, "Stüdyo · Yıl", level="h2|h3|h4")`. Düz `<h2/h3/h4>Oyun Adı</…>` bırakma. **Başlık metnine RENK atama** (CMS verir, yük azalır). Card-table'da `badge`=tür, `meta`="Stüdyo · Yıl". Yıl yoksa dönem ("2027 (beklenen)", "Belirsiz", "Yayında"). Tek oyun anlatılıyorsa başlık şart değil. Detay: `content-rules.md` kural 11.
