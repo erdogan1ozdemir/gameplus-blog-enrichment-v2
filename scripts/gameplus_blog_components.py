@@ -2305,6 +2305,16 @@ def verify_output(final_html, blog_type="general", n_games=None, expect_faq=Fals
         f"('değerlendirmelerin önemli bir kısmı', 'bir kesim eleştirmen')",
         warn=not yeni_icerik)
 
+    # v10.28 (Kural 25.11): veri yoksa alan yazilmaz. "- / henuz olusmamisti / tbd" gibi bos veri
+    # aciklamalari yeni icerikte FAIL, yazar taslaginda UYARI.
+    _gorunen = re.sub(r"<[^>]+>", " ", re.sub(r"<(script|style)\b.*?</\1>", "", final_html, flags=re.S))
+    _bos_veri = re.findall(r"(?:oluşmamış\w*|açılmamış\w*|\btbd\b|henüz (?:puan|inceleme|veri)\w* "
+                           r"(?:yok|bulunmuyor\w*)|kullanıcı (?:incelemesi|puanı) (?:yok|bulunmuyor\w*))",
+                           _gorunen, flags=re.I)
+    add(not _bos_veri, "Veri yoksa alan yok", "yok",
+        f"oluşmamış veri açıklaması var ({sorted(set(x.lower() for x in _bos_veri))[:4]}) - "
+        f"veri yoksa satır ve cümle tamamen kaldırılır", warn=not yeni_icerik)
+
     # v10.25 (Kural 25): yeni yazida yayin tarihine bagli goreli zaman ifadesi kullanilmaz.
     # Yazar taslaginda olabilir (dokunulmaz), bu yuzden UYARI. GFN Thursday'de "bu hafta" dogaldir.
     if blog_type == "general":

@@ -211,9 +211,16 @@ Yayın tarihi belli olmadığı için göreli ifade yazılmaz; puanlar yine veri
 | Yazılmaz | Yazılır |
 |---|---|
 | "bugün çıktı" | "24 Eylül 2026'da çıktı" |
-| "Oyun bu yazı hazırlanırken yeni çıktığı için Steam'de kullanıcı incelemesi bulunmuyor" | "24 Eylül 2026 itibarıyla Steam'de kullanıcı incelemesi bulunmuyordu" |
+| "Oyun bu yazı hazırlanırken yeni çıktığı için Steam'de kullanıcı incelemesi bulunmuyor" | Hiç yazılmaz: veri yoksa alan kaldırılır (bkz. aşağı) |
 | "Oyun, çıkışından üç hafta sonra olumlu bir tabloya sahip" | "24 Eylül 2026 itibarıyla ... puana sahip" |
 | "çıkıştan bir hafta sonra" | "çıkışı izleyen hafta içinde" |
+
+### Veri yoksa alan yazılmaz (v10.28)
+
+Oluşmamış bir metrik (çıkış gününde Steam kullanıcı incelemesi, Metacritic kullanıcı puanı "tbd")
+tabloya "-" satırı olarak ya da metne "henüz oluşmamıştı" açıklaması olarak girmez; alan tamamen
+çıkarılır ve yazı mevcut veriyle kurulur. Puan tablosu o durumda yalnız eleştirmen verisini taşır
+(OpenCritic, Metacritic, puan aralığı). Marka kararı, CONTROL Resonant incelemesi (24 Eylül 2026).
 
 ## 11. Linkler
 

@@ -290,6 +290,12 @@ bu kurala tabidir. Ayrıntı ve örnekler: `references/inceleme-yazisi.md` böl�
    Liste: `BASIN_ADLARI`.
 10. **Doc biçimi:** doc'un içerik kısmında başlıklar ve metin **siyah**; Word'ün mavi tema rengi
     kullanılmaz. Yapı: önce okunur yazı, sonra "HTML" satırı ve Courier New 7 pt ham HTML.
+11. **Veri yoksa alan yazılmaz (v10.28).** Bir metrik henüz oluşmamışsa (çıkış gününde Steam kullanıcı
+    incelemesi yok, Metacritic kullanıcı puanı "tbd") o metrik ne tabloya ne metne girer. "-" satırı,
+    "henüz oluşmamıştı", "açılmamıştı", "bu yüzden tablodaki değerlerin tamamı eleştirmen
+    puanlarından oluşuyor" gibi açıklamalar yazılmaz; alan sessizce çıkarılır, yazı mevcut veriyle
+    kurulur. Örnek: CONTROL Resonant incelemesinde Steam satırı ve oyuncu puanı paragrafı kaldırıldı.
+    `verify_output(..., yeni_icerik=True)` bu kalıpları görürse FAIL verir.
 
 ## Kural 21: Link politikası - dış linkler nofollow, tüm linkler yeni sekmede
 
