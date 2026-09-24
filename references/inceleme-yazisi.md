@@ -61,8 +61,18 @@ gibi küçük kesin değerler (152, 70) olduğu gibi kalır. Tarih ve sürüm nu
   tablo satırında kalabilir.
 - **Editör notu ve öneriler yumuşak kurulur.** "Fazla kafa yorma" gibi buyurgan ya da küçümser
   ifadeler yerine olanak dili: "**çok takılmadan ilerleyebilirsin**", "rahatça takip edebilirsin".
-- Eleştiri aktarılırken kaynak belirtilir ("IGN'e göre", "PC Gamer tarafında"), yargı markaya
-  mal edilmez.
+- **Basın/yayın adı verilmez (v10.26).** İncelemeler araştırılır, bulgular derlenip genel bir
+  inceleme gibi yazılır. "IGN'e göre", "GameSpot 9 verdi", "RPGFan'ın ifadesiyle" yazılmaz.
+
+| Yazılmaz | Yazılır |
+|---|---|
+| "RPG Site ve RPGFan gibi kaynaklar yan karakterlerin yazımını türün en iyileri arasında gösterdi." | "The Blood of Dawnwalker'da yan karakterlerin yazımı ve diyalogların kalitesi türün son yıllardaki en iyi örnekleri arasında gösteriliyor." |
+| "IGN sistemi yılın en cesur tercihi olarak gösterdi, PC Gamer baskının hissedilmediğini yazdı." | "Bir kesim eleştirmen sistemi yılın en cesur tasarım tercihlerinden biri olarak görüyor; diğerleri baskının pratikte sanıldığı kadar hissedilmediğini söylüyor." |
+| "GameSpot'un ölçümüne göre 30 saat" | "Eleştirmenlerin oynama sürelerine göre 30 saat civarı" |
+| Puan tablosunda GameSpot 9/10, IGN 8/10 satırları | "Eleştirmen puan aralığı: 3/5 ile 9/10 arası" |
+
+  Anılabilenler: toplayıcılar (OpenCritic, Metacritic), HowLongToBeat, mağazalar, geliştirici ve
+  yayıncı açıklamaları. `verify_output(..., yeni_icerik=True)` basın adında FAIL verir.
 - Olumsuz bulgular saklanmaz; "eksik taraflar da var" paragrafı yazının parçasıdır.
 - Em dash yok, klişe açılış yok, hype yok (content-rules kural 16).
 
@@ -103,7 +113,7 @@ gibi küçük kesin değerler (152, 70) olduğu gibi kalır. Tarih ve sürüm nu
 |---|---|
 | Stüdyo, yayıncı, çıkış, diller, sistem gereksinimleri, başarım | Steam `appdetails` API |
 | Oyuncu tepkisi ve inceleme sayısı | Steam `appreviews` API (`language=all` ve `language=turkish`) |
-| Eleştirmen ortalaması, tavsiye oranı, tek tek puanlar | OpenCritic oyun sayfası |
+| Eleştirmen ortalaması, tavsiye oranı, puan aralığı (tek tek site puanları metne yazılmaz) | OpenCritic oyun sayfası |
 | Metascore ve kullanıcı puanı | Metacritic oyun sayfası |
 | Yapım geçmişi, sistemler, eleştiri özeti | Wikipedia |
 | Süre (ana hikaye / yan görevler / %100) | HowLongToBeat |
@@ -152,6 +162,24 @@ Yeni çıkan oyunda 12 aylık ortalama yanıltır; **çıkış ayının hacmi** 
 ortalama 2.400, Ağustos 6.600; "metacritic" eki ortalama 50, Ağustos 590). Rakip analizinde Türkçe
 inceleme olup olmadığına bakılır: Dawnwalker'da ilk 20'de hiç Türkçe inceleme yoktu (fırsat),
 CONTROL Resonant'ta Oyungezer 12. sıradaydı.
+
+### Brief Excel'i (v10.27)
+
+Toplanan veri yazıya geçmeden önce **brief Excel'ine** bir satır olarak yazılır; sonraki yazılar da
+aynı dosyaya eklenir. **Yalnız yeni içerik taleplerinde** brief yazılır; kullanıcı hazır taslak
+ilettiğinde brief yok.
+
+- Dosya: `Game+  copy/Game+ Blogları/Game+ Blog Briefleri.xlsx` (sayfa: `Blog Briefleri`).
+- Script: `scripts/blog_brief_satiri.py` → `brief_yaz(yol, satir)`. Aynı "Oyun / Konu" satırı varsa
+  güncellenir, yoksa eklenir. Meta Title 60, Meta Description 160 karakteri aşarsa uyarı verir.
+- Sütunlar: A Tarih · B Oyun / Konu · C İçerik Tipi · D Main KW · E Main KW Hacim · F İkincil
+  Kelimeler · G Alt Başlıklar (H2) · H İçerik Kurgusu · **I Listelemede gözükecek başlık (Title)** ·
+  J Link Verilecek Sayfalar · K SSS'ler · L Yanıt Biçimi · **M Meta Title** · N Slug ·
+  **O Meta Description** · P Durum. I, M, O konumları markanın kendi tablosuyla aynı.
+- Hacim hücresine 12 aylık ortalama ile çıkış ayının hacmi birlikte yazılır ("1.000 (Ağustos 2026: 3.600)").
+- Listeleme başlığı yazının H1'i olur; Meta Title ondan kısa ve arama odaklıdır ("... İncelemesi ve Rehberi").
+- Meta Description soru ya da değer cümlesiyle açılır, "Gameplus'ta okuyabilirsin / keşfet" gibi
+  öneri diliyle kapanır (markanın Dawnwalker ve Resonant örnekleri).
 
 ## 8. Başlık ve ilk cümle (answer-first)
 

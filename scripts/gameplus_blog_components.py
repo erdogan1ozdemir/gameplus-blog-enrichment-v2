@@ -1748,6 +1748,31 @@ YASAK_MEDYA_ALANLARI = (
 )
 
 
+# v10.26 (Kural 25.9): yeni icerikte basin/yayin adi da METINDE GECMEZ. Incelemeler arastirilir,
+# bulgular derlenip genel ifadeyle yazilir ("degerlendirmelerin onemli bir kismi", "bir kesim
+# elestirmen"). Toplayicilar (OpenCritic, Metacritic, HowLongToBeat), magazalar ve gelistirici
+# aciklamalari anilabilir.
+BASIN_ADLARI = (
+    "GameSpot", "IGN", "PC Gamer", "Eurogamer", "GamesRadar", "Polygon", "Kotaku", "TheGamer",
+    "Game Informer", "Rock Paper Shotgun", "Destructoid", "VG247", "DualShockers", "Hardcore Gamer",
+    "Tom's Guide", "Giant Bomb", "Shacknews", "RPG Site", "RPGFan", "VGC", "Game Rant", "Screen Rant",
+    "Wccftech", "Insider Gaming", "Windows Central", "Push Square", "Oyungezer", "Technopat",
+    "Merlin'in Kazanı", "DonanımHaber", "Webtekno", "ShiftDelete", "Game Garaj", "Bölüm Sonu Canavarı",
+)
+
+
+def basin_adlarini_bul(html):
+    """Govde metninde (stil/script/link adresleri haric) gecen basin adlarini dondurur."""
+    metin = re.sub(r"<(script|style)\b.*?</\1>", " ", html, flags=re.S)
+    metin = re.sub(r"<[^>]+>", " ", metin)
+    bulunan = []
+    for ad in BASIN_ADLARI:
+        desen = r"(?<![\w])" + re.escape(ad) + r"(?![\w])"
+        if re.search(desen, metin):
+            bulunan.append(ad)
+    return bulunan
+
+
 def _yasak_medya_mi(href):
     alan = re.sub(r"^https?://(www\.)?", "", (href or "").strip().lower()).split("/")[0]
     return any(alan == y or alan.endswith("." + y) for y in YASAK_MEDYA_ALANLARI)
@@ -2071,7 +2096,7 @@ def shrink_youtube_embeds(html):
 # final body'yi (ANIMATED_BORDER_STYLE + enjekte edilmiş gövde) verir; print_report raporu basar.
 # FAIL = çıktı kuralı ihlali, teslimden ÖNCE düzelt. WARN = göz at, bağlama göre kabul edilebilir.
 # Bu programatik kontrol; yargı gerektiren maddeler için references/qa-checklist.md'ye de bak.
-def verify_output(final_html, blog_type="general", n_games=None, expect_faq=False):
+def verify_output(final_html, blog_type="general", n_games=None, expect_faq=False, yeni_icerik=False):
     """final_html: build'in son hali (ANIMATED_BORDER_STYLE + gövde).
     blog_type: 'general' (rehber/listicle) | 'gfn' (GFN Thursday).
     n_games: birden çok oyun anlatan yazıda oyun sayısı (inline başlık + card-row bununla eşleşmeli).
@@ -2271,6 +2296,14 @@ def verify_output(final_html, blog_type="general", n_games=None, expect_faq=Fals
               if _yasak_medya_mi(h)]
     add(not _medya, "Medya sitesine link yok", "yok",
         f"{len(_medya)} link oyun basini/rakip yayina gidiyor ({_medya[:2]}) - apply_link_policy cozmeli")
+
+    # v10.26 (Kural 25.9): basin adi metinde gecmez. Yeni icerikte FAIL, yazar taslaginda UYARI
+    # (yazarin metnine dokunulmaz; karar kullaniciya birakilir).
+    _basin = basin_adlarini_bul(final_html.split("</style>")[-1])
+    add(not _basin, "Basın adı geçmiyor", "yok",
+        f"metinde basın/yayın adı var: {_basin} - bulgular genel ifadeyle yazılmalı "
+        f"('değerlendirmelerin önemli bir kısmı', 'bir kesim eleştirmen')",
+        warn=not yeni_icerik)
 
     # v10.25 (Kural 25): yeni yazida yayin tarihine bagli goreli zaman ifadesi kullanilmaz.
     # Yazar taslaginda olabilir (dokunulmaz), bu yuzden UYARI. GFN Thursday'de "bu hafta" dogaldir.

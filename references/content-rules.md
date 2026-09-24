@@ -278,6 +278,18 @@ bu kurala tabidir. Ayrıntı ve örnekler: `references/inceleme-yazisi.md` böl�
    linklenir ("3 Eylül 2026 tarihli GFN Thursday yazısında da yer aldı"). **Site olmayan adrese de
    200 döndürüyor (soft 404);** linkten önce sayfanın `headline` değeri okunup doğru yazı olduğu
    doğrulanır.
+9. **Basın/yayın adı metinde geçmez (v10.26).** İncelemeler araştırılır ama bulgular derlenip
+   **genel bir inceleme gibi** yazılır: "IGN'e göre", "GameSpot 9 verdi", "RPGFan'ın ifadesiyle"
+   yazılmaz. Yerine: "Oyunun en çok övgü alan tarafı yazımı", "Değerlendirmelerin önemli bir kısmı
+   ...", "Bir kesim eleştirmen ..., diğerleri ...". Puan tablosu yalnız toplayıcıları (OpenCritic,
+   Metacritic) ve oyuncu verisini (Steam) taşır; tek tek site puanı yerine **puan aralığı** verilir
+   ("3/5 ile 9/10 arası"). Süre gibi ölçümler de "eleştirmenlerin oynama sürelerine göre" diye
+   genelleştirilir. Toplayıcılar, HowLongToBeat, mağazalar ve geliştirici açıklamaları ("oyun
+   yönetmeni ... söylüyor") anılabilir. `verify_output(..., yeni_icerik=True)` basın adı görürse
+   FAIL verir; yazar taslağında (yeni_icerik=False) UYARI verir, yazarın metnine dokunulmaz.
+   Liste: `BASIN_ADLARI`.
+10. **Doc biçimi:** doc'un içerik kısmında başlıklar ve metin **siyah**; Word'ün mavi tema rengi
+    kullanılmaz. Yapı: önce okunur yazı, sonra "HTML" satırı ve Courier New 7 pt ham HTML.
 
 ## Kural 21: Link politikası - dış linkler nofollow, tüm linkler yeni sekmede
 

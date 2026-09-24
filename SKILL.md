@@ -155,6 +155,14 @@ Tam liste **`references/content-rules.md`**'de. En kritikleri:
   ("Control 2"); göreli zaman yok, tarih var; veri sitelerine (OpenCritic, Metacritic, HowLongToBeat)
   nofollow link verilir, **oyun basınına (GameSpot, IGN, Oyungezer vb.) asla link verilmez**; ilgili
   GFN Thursday yazısına iç link (soft 404 nedeniyle önce başlığı doğrulanır).
+- **Basın adı metinde geçmez (v10.26):** incelemeler araştırılır ama "IGN'e göre", "GameSpot 9 verdi"
+  yazılmaz; bulgular genel ifadeyle derlenir, puan tablosunda site puanları yerine puan aralığı.
+  Yeni içerik build'lerinde `verify_output(..., yeni_icerik=True)` çağrılır (basın adında FAIL).
+- **Brief Excel'i (v10.27, yalnız yeni içerik):** yazmadan önce `scripts/blog_brief_satiri.py` ile
+  `Game+ Blogları/Game+ Blog Briefleri.xlsx`'e satır eklenir: KW + hacim, H2'ler, kurgu, linkler, SSS,
+  **I Listeleme başlığı (Title), M Meta Title, O Meta Description**. Hazır taslakta brief yazılmaz.
+  Detay: `references/inceleme-yazisi.md` bölüm 7.
+- **Doc biçimi:** içerik kısmında başlıklar ve metin siyah (Word mavi teması yok), önce yazı sonra HTML.
 - **Özet (TLDR) madde sayısı:** duruma göre **3-6 madde** (her zaman 4 olması şart değil).
 - **Oyun giriş formatı (HER YAZIDA AYNI):** **Yazıda birden fazla oyundan bahsediliyorsa** her oyunun başına oyun başlığı ekle; **tür etiketi + Stüdyo · Yıl** taşı. Başlık **H2/H3/H4** olabilir (çevredeki seviyeye uy): `render_game_h3_inline(anchor, isim, "TÜR", renk, "Stüdyo · Yıl", level="h2|h3|h4")`. Düz `<h2/h3/h4>Oyun Adı</…>` bırakma. **Başlık metnine RENK atama** (CMS verir, yük azalır). Card-table'da `badge`=tür, `meta`="Stüdyo · Yıl". Yıl yoksa dönem ("2027 (beklenen)", "Belirsiz", "Yayında"). Tek oyun anlatılıyorsa başlık şart değil. Detay: `content-rules.md` kural 11.
 - **Tür rozeti → GFN kategorisi iç linki:** `render_game_h3_inline(badge_href=None)` (varsayılan) otomatik: **tek/saf rozet → tüm rozet** kendi kategorisine; **birleşik rozet (Aksiyon-Macera, Aksiyon-RPG) → HER PARÇA ayrı ayrı** kendi kategorisine linklenir (Aksiyon-Macera → /aksiyon + /macera). `badge_href=False` = link yok (tek-tür seride stuffing önlemi). **Dedup YOK** — eşleşen her rozet linklenir (sadece oyun başlığında; liste/tabloda değil). Detay: `content-rules.md` kural 12.
