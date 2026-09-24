@@ -212,6 +212,26 @@ olanı önce dener. En yüksek hacimliler: ücretsiz oyunlar (823.000), popüler
 bulmaca oyunları (14.800), dövüş oyunları (14.800), yarış oyunları (9.900), macera oyunları (5.400),
 strateji oyunları (5.400), FPS oyunları (3.600).
 
+## Kural 22: İnceleme ve genel blog yazım tarzı
+
+Yazıyı bu skill ile biz yazıyorsak (yazar taslağını zenginleştirmiyorsak) tarz
+`references/inceleme-yazisi.md`'de tanımlıdır. Bağlayıcı maddeler:
+
+- **Sayılar yuvarlanır, aşağı doğru:** 25.851 inceleme -> "25 binden fazla inceleme"; 21,5 saat ->
+  "20 saatin üzerinde". Puanlar (84, %87) ve küçük kesin değerler (152 eleştirmen) olduğu gibi kalır.
+- **"Türk oyuncular" denmez:** yerel tepki "yerli oyuncu toplulukları", uluslararası tepki
+  "globaldeki oyuncu toplulukları".
+- **Öneri dili yumuşak:** "fazla kafa yorma" değil "çok takılmadan ilerleyebilirsin".
+- **GFN bölümü tek paragraf,** ardından lisans Hatırlatması. Oyun detay sayfası yayında olmadığı
+  için oraya link verilmez.
+- **Sistem gereksinimleri tablosu blogda yer almaz;** iki cümlelik özet kalır, tam tablo oyun detay
+  sayfasının işidir. SSS'deki "GeForce NOW'da oynanabiliyor mu" ve "Türkçe dil desteği var mı"
+  soruları blogda KALIR.
+- **Her sayı kaynaklıdır** ve kaynak sayfanın o oyuna ait olduğu `h1`/`<title>` ile doğrulanır;
+  URL'deki slug doğru görünse de içerik başka oyuna ait olabilir (OpenCritic id tuzağı).
+- **Yaş kısıtlı YouTube videosu gömülmez.** Kontrol tarayıcıda yapılır:
+  `python3 scripts/video_yas_testi.py <id...>`.
+
 ## Kural 21: Link politikası - dış linkler nofollow, tüm linkler yeni sekmede
 
 | Link tipi | `rel` | `target` |

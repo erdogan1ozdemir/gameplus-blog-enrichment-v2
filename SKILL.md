@@ -144,6 +144,10 @@ Detaylar **`references/design-system.md`**'de. Özet:
 
 Tam liste **`references/content-rules.md`**'de. En kritikleri:
 - **Yazarın cümlelerini ASLA değiştirme.** Sadece enrichment ekle.
+- **Yazıyı bu skill ile biz yazıyorsak** (inceleme, rehber, derleme) `references/inceleme-yazisi.md`
+  geçerlidir: ham büyük sayılar yuvarlanır (25.851 -> "25 binden fazla"), "Türk oyuncular" yerine
+  "yerli oyuncu toplulukları" / "globaldeki oyuncu toplulukları", editör notu buyurgan değil olanak
+  dilinde, GFN bölümü tek paragraf, sistem gereksinimleri tablosu blogda yer almaz.
 - **Özet (TLDR) madde sayısı:** duruma göre **3-6 madde** (her zaman 4 olması şart değil).
 - **Oyun giriş formatı (HER YAZIDA AYNI):** **Yazıda birden fazla oyundan bahsediliyorsa** her oyunun başına oyun başlığı ekle; **tür etiketi + Stüdyo · Yıl** taşı. Başlık **H2/H3/H4** olabilir (çevredeki seviyeye uy): `render_game_h3_inline(anchor, isim, "TÜR", renk, "Stüdyo · Yıl", level="h2|h3|h4")`. Düz `<h2/h3/h4>Oyun Adı</…>` bırakma. **Başlık metnine RENK atama** (CMS verir, yük azalır). Card-table'da `badge`=tür, `meta`="Stüdyo · Yıl". Yıl yoksa dönem ("2027 (beklenen)", "Belirsiz", "Yayında"). Tek oyun anlatılıyorsa başlık şart değil. Detay: `content-rules.md` kural 11.
 - **Tür rozeti → GFN kategorisi iç linki:** `render_game_h3_inline(badge_href=None)` (varsayılan) otomatik: **tek/saf rozet → tüm rozet** kendi kategorisine; **birleşik rozet (Aksiyon-Macera, Aksiyon-RPG) → HER PARÇA ayrı ayrı** kendi kategorisine linklenir (Aksiyon-Macera → /aksiyon + /macera). `badge_href=False` = link yok (tek-tür seride stuffing önlemi). **Dedup YOK** — eşleşen her rozet linklenir (sadece oyun başlığında; liste/tabloda değil). Detay: `content-rules.md` kural 12.
@@ -197,6 +201,10 @@ Tam liste **`references/content-rules.md`**'de. En kritikleri:
 - `references/component-api.md` — her `render_*` fonksiyonunun imzası, parametreleri, örnek çağrı
 - `references/docx-extract.md` — .docx'ten yapı çıkarma yöntemi
 - `references/ga4-tracking.md` — **CTA id'leri + GTM/GA4 kurulumu** (blog_cta_click); çalışır demo `examples/ga4-cta-tracking-demo.html`
+- `references/inceleme-yazisi.md` — **inceleme ve genel blog yazım tarzı (v10.24)**: bölüm akışı, sayı
+  yuvarlama, "yerli / globaldeki oyuncu toplulukları" ifadesi, yumuşak öneri dili, GFN bölümünün tek
+  paragraf olması, sistem gereksinimleri tablosunun detay sayfasına bırakılması, kaynak doğrulama ve
+  yaş kısıtlı video yasağı
 - `references/gfn-localization.md` — **GFN embargo (EN) → TR yerelleştirme** kuralları (canlı dil, kelime oyunu doğallığı, çıkış tarihi formatı, iç linkler, YouTube, önceki haftalar, teslim doc + `HTML Versiyon`)
 - `examples/` — v10.1 referans build script'leri (GFN Thursday + listicle) ve örnek gövde çıktısı
 
