@@ -1552,7 +1552,9 @@ def render_game_h3_inline(anchor, name, badge, badge_color, meta_text, level="h3
 
 # --- Inline Game Card (small, premium, in game description section) ---
 def render_inline_game_card(name, badge, badge_color, meta_lines):
-    """Small card to be floated alongside game description text."""
+    """KULLANILMAZ (v10.31). Metnin yanina sagdan yaslanan (float: right) kart paragraflari daraltip
+    duzeni bozuyordu (Cyberpunk 2077 Night City Rehberi, canlida). Tek oyunluk yazida oyun bilgisi
+    info-card'a, cok oyunlu yazida render_game_h3_inline basligina yazilir. verify_output FAIL verir."""
     meta_html = '<br>'.join(meta_lines)
     return f'''<aside class="gp-game-info-card">
   <span class="gp-gic-badge" style="background:{badge_color};">{badge}</span>
@@ -2314,6 +2316,11 @@ def verify_output(final_html, blog_type="general", n_games=None, expect_faq=Fals
     add(not _bos_veri, "Veri yoksa alan yok", "yok",
         f"oluşmamış veri açıklaması var ({sorted(set(x.lower() for x in _bos_veri))[:4]}) - "
         f"veri yoksa satır ve cümle tamamen kaldırılır", warn=not yeni_icerik)
+
+    # v10.31: metnin yanina yaslanan oyun karti (gp-game-info-card) kullanilmaz.
+    _yan_kart = final_html.count('class="gp-game-info-card"')
+    add(_yan_kart == 0, "Yana yaslı oyun kartı yok", "yok",
+        f"{_yan_kart} gp-game-info-card var - float kart paragrafları daraltıyor; bilgiyi info-card'a taşı")
 
     # v10.30 (Kural 25.13, references/ic-linkleme.md): yeni icerikte 7-11 govde ici ic link ve
     # sabit uclu (/gfn, /gfn/paketler, /gfn/oyunlar). CTA dugmeleri sayilmaz. Yalniz yeni icerikte, UYARI.

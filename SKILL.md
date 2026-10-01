@@ -173,6 +173,8 @@ Tam liste **`references/content-rules.md`**'de. En kritikleri:
   "GeForce NOW", `/gfn/paketler` "GeForce NOW fiyat", `/gfn/oyunlar` "GeForce NOW oyunları"),
   1-2 GFN kategori, 2-4 ilgili blog yazısı (headline ile doğrulanmış), ilgili GFN Thursday.
   Anchor aranan kelime biçiminde. Detay: `references/ic-linkleme.md`.
+- **Yana yaslı oyun kartı yok (v10.31):** `render_inline_game_card` (float: right) metni daraltıyor;
+  tek oyunluk yazıda oyun bilgisi info-card'a yazılır. `verify_output` FAIL verir.
 - **Doc biçimi:** içerik kısmında başlıklar ve metin siyah (Word mavi teması yok), önce yazı sonra HTML.
 - **Özet (TLDR) madde sayısı:** duruma göre **3-6 madde** (her zaman 4 olması şart değil).
 - **Oyun giriş formatı (HER YAZIDA AYNI):** **Yazıda birden fazla oyundan bahsediliyorsa** her oyunun başına oyun başlığı ekle; **tür etiketi + Stüdyo · Yıl** taşı. Başlık **H2/H3/H4** olabilir (çevredeki seviyeye uy): `render_game_h3_inline(anchor, isim, "TÜR", renk, "Stüdyo · Yıl", level="h2|h3|h4")`. Düz `<h2/h3/h4>Oyun Adı</…>` bırakma. **Başlık metnine RENK atama** (CMS verir, yük azalır). Card-table'da `badge`=tür, `meta`="Stüdyo · Yıl". Yıl yoksa dönem ("2027 (beklenen)", "Belirsiz", "Yayında"). Tek oyun anlatılıyorsa başlık şart değil. Detay: `content-rules.md` kural 11.

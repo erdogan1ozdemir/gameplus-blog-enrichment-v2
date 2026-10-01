@@ -296,6 +296,9 @@ bu kurala tabidir. Ayrıntı ve örnekler: `references/inceleme-yazisi.md` böl�
     puanlarından oluşuyor" gibi açıklamalar yazılmaz; alan sessizce çıkarılır, yazı mevcut veriyle
     kurulur. Örnek: CONTROL Resonant incelemesinde Steam satırı ve oyuncu puanı paragrafı kaldırıldı.
     `verify_output(..., yeni_icerik=True)` bu kalıpları görürse FAIL verir.
+12a. **Yana yaslı oyun kartı yok (v10.31):** `render_inline_game_card` (float: right) kullanılmaz;
+    paragrafları daraltıp düzeni bozuyor (Cyberpunk 2077 Night City Rehberi, canlıda). Tek oyunluk
+    yazıda oyun bilgisi (çıkış, süre, genişleme, Türkçe) info-card'a yazılır; `verify_output` FAIL verir.
 12. **Video sayısı (v10.29):** incelemede 2-4 video (fragman, oynanış, başlığa özel sistem videosu),
     her biri ilgili bölümün altında; listicle'da oyun başına bir video olabilir; rehberde içeriğe göre.
     Basın kanalı gömülmez, yaş kısıtı tarayıcıda test edilir. Detay: inceleme-yazisi.md bölüm 6.
